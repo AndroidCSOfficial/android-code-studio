@@ -1,1 +1,0 @@
-AndroidIDE is an IDE for Android to develop full featured Android apps.

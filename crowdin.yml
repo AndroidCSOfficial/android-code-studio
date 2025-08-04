@@ -1,7 +1,0 @@
-files:
-  - source: /resources/src/main/res/values/*strings.xml
-    translation: /resources/src/main/res/values-%android_code%/%original_file_name%
-    translatable_elements:
-      - /resources/string
-      - /resources/string-array/item
-      - /resources/plural/item
