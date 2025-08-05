@@ -111,7 +111,6 @@ include(
   ":logging:idestats",
   ":logging:logger",
   ":logging:logsender",
-  ":logging:logsender-sample",
   ":termux:application",
   ":termux:emulator",
   ":termux:shared",
