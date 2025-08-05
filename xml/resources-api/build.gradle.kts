@@ -15,31 +15,19 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.google.protobuf.gradle.id
 import com.itsaky.androidide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
   id("kotlin-android")
-  id("com.google.protobuf")
 }
 
 android {
   namespace = "${BuildConfig.packageName}.xml.resapi"
-}
-
-protobuf {
-  protoc {
-    artifact = "com.google.protobuf:protoc:4.27.0"
-  }
-
-  generateProtoTasks {
-    all().forEach {
-      it.builtins {
-        id("java") {
-          option("lite")
-        }
-      }
+  
+  sourceSets {
+    getByName("main") {
+      java.srcDir("src/main/proto_java")
     }
   }
 }
