@@ -31,9 +31,6 @@ import org.gradle.tooling.events.download.FileDownloadOperationDescriptor
 import org.gradle.tooling.events.task.TaskFinishEvent
 import org.gradle.tooling.events.task.TaskProgressEvent
 import org.gradle.tooling.events.task.TaskStartEvent
-import org.gradle.tooling.events.test.TestFinishEvent
-import org.gradle.tooling.events.test.TestProgressEvent
-import org.gradle.tooling.events.test.TestStartEvent
 import org.gradle.tooling.events.transform.TransformFinishEvent
 import org.gradle.tooling.events.transform.TransformProgressEvent
 import org.gradle.tooling.events.transform.TransformStartEvent
@@ -71,13 +68,6 @@ class ForwardingProgressListener : ProgressListener {
             is TaskStartEvent -> EventTransformer.taskStart(event)
             is TaskFinishEvent -> EventTransformer.taskFinish(event)
             else -> EventTransformer.taskProgress(event)
-          }
-
-        is TestProgressEvent ->
-          when (event) {
-            is TestStartEvent -> EventTransformer.testStart(event)
-            is TestFinishEvent -> EventTransformer.testFinish(event)
-            else -> EventTransformer.testProgress(event)
           }
 
         is TransformProgressEvent ->

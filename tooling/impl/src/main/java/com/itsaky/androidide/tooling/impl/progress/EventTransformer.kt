@@ -30,10 +30,6 @@ import com.itsaky.androidide.tooling.events.internal.DefaultStartEvent
 import com.itsaky.androidide.tooling.events.task.TaskFinishEvent
 import com.itsaky.androidide.tooling.events.task.TaskProgressEvent
 import com.itsaky.androidide.tooling.events.task.TaskStartEvent
-import com.itsaky.androidide.tooling.events.test.TestFinishEvent
-import com.itsaky.androidide.tooling.events.test.TestOperationResult
-import com.itsaky.androidide.tooling.events.test.TestProgressEvent
-import com.itsaky.androidide.tooling.events.test.TestStartEvent
 import com.itsaky.androidide.tooling.events.transform.TransformFinishEvent
 import com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor.SubjectDescriptor
 import com.itsaky.androidide.tooling.events.transform.TransformOperationResult
@@ -59,8 +55,6 @@ import org.gradle.tooling.events.task.TaskOperationDescriptor
 import org.gradle.tooling.events.task.TaskOperationResult
 import org.gradle.tooling.events.task.TaskSkippedResult
 import org.gradle.tooling.events.task.TaskSuccessResult
-import org.gradle.tooling.events.test.TestOperationDescriptor
-import org.gradle.tooling.events.test.TestSuccessResult
 import org.gradle.tooling.events.transform.TransformOperationDescriptor
 import org.gradle.tooling.events.transform.TransformSuccessResult
 import org.gradle.tooling.events.work.WorkItemOperationDescriptor
@@ -283,49 +277,6 @@ class EventTransformer {
           descriptor.dependencies.filterNotNull().mapNotNull { operationDescriptor(it) }.toSet(),
         originPlugin = PluginIdentifier(descriptor.originPlugin?.displayName ?: "Unknown plugin"),
         taskPath = descriptor.taskPath,
-        name = descriptor.name,
-        displayName = descriptor.displayName
-      )
-
-    // ----------------------- TEST -------------------------
-    @JvmStatic
-    fun testStart(event: org.gradle.tooling.events.test.TestStartEvent): TestStartEvent =
-      TestStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        operationDescriptor = testDescriptor(event.descriptor)
-      )
-
-    @JvmStatic
-    fun testProgress(event: org.gradle.tooling.events.test.TestProgressEvent): TestProgressEvent =
-      TestProgressEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = testDescriptor(event.descriptor)
-      )
-
-    @JvmStatic
-    fun testFinish(event: org.gradle.tooling.events.test.TestFinishEvent): TestFinishEvent =
-      TestFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        operationDescriptor = testDescriptor(event.descriptor),
-        result = testResult(event.result)
-      )
-
-    private fun testResult(
-      result: org.gradle.tooling.events.test.TestOperationResult
-    ): TestOperationResult =
-      TestOperationResult(
-        startTime = result.startTime,
-        endTime = result.endTime,
-        success = result is TestSuccessResult
-      )
-
-    private fun testDescriptor(
-      descriptor: TestOperationDescriptor
-    ): com.itsaky.androidide.tooling.events.test.TestOperationDescriptor =
-      com.itsaky.androidide.tooling.events.test.TestOperationDescriptor(
         name = descriptor.name,
         displayName = descriptor.displayName
       )

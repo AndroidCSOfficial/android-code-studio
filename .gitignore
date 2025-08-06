@@ -95,3 +95,10 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# R
+scripts/
+signing/
+local.properties
+build.log
+.androidide

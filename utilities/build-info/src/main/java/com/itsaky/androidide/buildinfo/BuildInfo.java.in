@@ -36,20 +36,7 @@ public class BuildInfo {
 
   public static final String VERSION_NAME = "@@VERSION_NAME@@";
   public static final String VERSION_NAME_SIMPLE = "@@VERSION_NAME_SIMPLE@@";
-  public static final String VERSION_NAME_PUBLISHING = "@@VERSION_NAME_PUBLISHING@@";
   public static final String VERSION_NAME_DOWNLOAD = "@@VERSION_NAME_DOWNLOAD@@";
-
-  // --------- CI info --------------------
-
-  public static final boolean CI_BUILD = @@CI_BUILD@@;
-  public static final String CI_GIT_BRANCH = "@@CI_GIT_BRANCH@@";
-  public static final String CI_GIT_COMMIT_HASH = "@@CI_COMMIT_HASH@@";
-
-  // --------- CI info --------------------
-
-  public static final boolean FDROID_BUILD = @@FDROID_BUILD@@;
-  public static final String FDROID_BUILD_VERSION_NAME = "@@FDROID_BUILD_VERSION_NAME@@";
-  public static final int FDROID_BUILD_VERSION_CODE = @@FDROID_BUILD_VERSION_CODE@@;
 
   // ------- SCM info --------------------
 

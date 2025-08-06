@@ -62,11 +62,6 @@ import com.itsaky.androidide.tooling.events.task.TaskProgressEvent
 import com.itsaky.androidide.tooling.events.task.TaskSkippedResult
 import com.itsaky.androidide.tooling.events.task.TaskStartEvent
 import com.itsaky.androidide.tooling.events.task.TaskSuccessResult
-import com.itsaky.androidide.tooling.events.test.TestFinishEvent
-import com.itsaky.androidide.tooling.events.test.TestOperationDescriptor
-import com.itsaky.androidide.tooling.events.test.TestOperationResult
-import com.itsaky.androidide.tooling.events.test.TestProgressEvent
-import com.itsaky.androidide.tooling.events.test.TestStartEvent
 import com.itsaky.androidide.tooling.events.transform.TransformFinishEvent
 import com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor
 import com.itsaky.androidide.tooling.events.transform.TransformProgressEvent
@@ -149,10 +144,6 @@ object ToolingApiLauncher {
       TaskStartEvent::class.java,
       TaskFinishEvent::class.java,
 
-      TestProgressEvent::class.java,
-      TestStartEvent::class.java,
-      TestFinishEvent::class.java,
-
       TransformProgressEvent::class.java,
       TransformStartEvent::class.java,
       TransformFinishEvent::class.java,
@@ -172,7 +163,6 @@ object ToolingApiLauncher {
       ProjectConfigurationOperationDescriptor::class.java,
       FileDownloadOperationDescriptor::class.java,
       TaskOperationDescriptor::class.java,
-      TestOperationDescriptor::class.java,
       TransformOperationDescriptor::class.java,
       WorkItemOperationDescriptor::class.java,
       DefaultOperationDescriptor::class.java
@@ -182,7 +172,6 @@ object ToolingApiLauncher {
       ProjectConfigurationOperationResult::class.java,
       FileDownloadResult::class.java,
       TaskOperationResult::class.java,
-      TestOperationResult::class.java,
       WorkItemOperationResult::class.java,
       DefaultOperationResult::class.java
     )

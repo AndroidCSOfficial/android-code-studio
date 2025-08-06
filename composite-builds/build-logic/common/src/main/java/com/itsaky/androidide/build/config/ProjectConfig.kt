@@ -86,6 +86,6 @@ val Project.downloadVersion: String
   get() {
       // sometimes, when working locally, Gradle fails to download the latest snapshot version
       // this may cause issues while initializing the project in AndroidIDE
-      VersionUtils.getLatestSnapshotVersion("gradle-plugin")
+      return VersionUtils.getLatestSnapshotVersion("gradle-plugin")
   }
   
