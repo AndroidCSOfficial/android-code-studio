@@ -82,21 +82,23 @@ dependencyResolutionManagement {
 
 // = App version name
 gradle.rootProject {
-  val version = "2.7.1-beta-R-1.0"
+  val sourceVersion = "2.7.1-beta"
+  val revVersion = "1.0"
+  var versionName = "$sourceVersion-rev-$revVersion"
+  
   val versionFile = rootProject.file("version.properties")
   if (versionFile.exists()) {
     val props = Properties().apply {
       versionFile.inputStream().use { load(it) }
     }
   
-    val sourceVersion = props.getProperty("version.name.source")
-    val revVersion = props.getProperty("version.name.rev")
-    if (!sourceVersion.isEmpty() && !revVersion.isEmpty()) {
-      version = "$sourceVersion-R-$revVersion"
+    val revVersionProp = props.getProperty("version.name.rev")
+    if (!revVersion.isEmpty()) {
+      versionName = "$sourceVersion-rev-$revVersionProp"
     }
   }
   
-  project.setProperty("version", version)
+  project.setProperty("version", versionName)
 }
 
 rootProject.name = "AndroidIDE"
