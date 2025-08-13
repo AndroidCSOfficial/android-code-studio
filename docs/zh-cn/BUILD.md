@@ -9,7 +9,7 @@
 
 - jdk: jdk-17
 - compileSdk: 34
-- buildTools: 34.0.4 / auto
+- buildTools: 34.0.4
 - gradle: 8.8
 
 # 构建前提
