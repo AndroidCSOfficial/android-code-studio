@@ -137,13 +137,28 @@ abstract class TreeSitterLanguage(
         if (indent == TreeSitterIndentProvider.INDENTATION_ERR) {
           return DEF_IDENT_ADV
         }
+        
+        // Fix: Int.MAX_VALUE
+        if (indent == TreeSitterIndentProvider.INDENT_AUTO) {
+          return DEF_IDENT_ADV
+        }
 
         return indent - (spaceCountOnLine + (tabCountOnLine * getTabSize()))
       }
 
       val (indentLine, indentNxtLine) = indents
+      
       if (indentLine == TreeSitterIndentProvider.INDENTATION_ERR
         || indentNxtLine == TreeSitterIndentProvider.INDENTATION_ERR) {
+        log.debug(
+          "expectedIndent[{}]={}, expectedIndentNextLine[{}]={}, returning default indent advance",
+          line, indentLine, line + 1, indentNxtLine)
+        return DEF_IDENT_ADV
+      }
+      
+      // Fix: Int.MAX_VALUE
+      if (indentLine == TreeSitterIndentProvider.INDENT_AUTO
+        || indentNxtLine == TreeSitterIndentProvider.INDENT_AUTO) {
         log.debug(
           "expectedIndent[{}]={}, expectedIndentNextLine[{}]={}, returning default indent advance",
           line, indentLine, line + 1, indentNxtLine)

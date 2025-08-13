@@ -6,7 +6,7 @@ junit-jupiter = "5.10.2"
 kotlin = "1.9.24"
 kotlin-coroutines = "1.8.1"
 tree-sitter = "4.3.1"
-editor = "0.23.5"
+editor = "0.23.7"
 glide = "4.16.0"
 androidx-vectordrawable = "1.2.0"
 androidx-navigation = "2.7.7"
@@ -46,7 +46,7 @@ androidide-ts-log = { module = "com.itsaky.androidide.treesitter:tree-sitter-log
 androidide-ts-xml = { module = "com.itsaky.androidide.treesitter:tree-sitter-xml", version.ref = "tree-sitter" }
 
 # Common
-common-editor = { module = "io.github.Rosemoe.sora-editor:editor", version.ref = "editor" }
+common-editor = { module = "io.github.rosemoe:sora", version.ref = "editor" }
 common-utilcode = { module = "com.blankj:utilcodex", version = "1.31.1" }
 common-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 common-glide_ap = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
