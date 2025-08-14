@@ -45,10 +45,6 @@ val Project.simpleVersionName: String
     val version = rootProject.version.toString()
     val simpleVersion = version
 
-    if (simpleVersion == null) {
-      return "1.0.0-beta-rev-1.0"
-    }
-
     if (shouldPrintVersionName) {
        logger.warn("Version name is '$simpleVersion'")
        shouldPrintVersionName = false
@@ -60,21 +56,17 @@ val Project.simpleVersionName: String
 private var shouldPrintVersionCode = true
 val Project.projectVersionCode: Int
   get() {
-    val version = simpleVersionName
+    val baseVersionCode = 271
+    
+    val commitCount = System.getenv("IDE_COMMIT_COUNT")
 
-    val versionCode = version.replace(Regex("\\D"), "")
-        .takeIf { it.isNotEmpty() }
-        ?.toInt()
-        ?.also { 
-            if (shouldPrintVersionCode) {
-                logger.warn("Version code is '$it' (from version ${version}).")
-                shouldPrintVersionCode = false
-            }
-        }
-        ?: throw IllegalStateException(
-            "Cannot extract version code. Invalid version string '$version' (no numeric characters found)."
-        )
-
+    val versionCode = "$baseVersionCode$commitCount".toInt()
+    
+    if (shouldPrintVersionCode) {
+      logger.warn("Version code is '$versionCode")
+      shouldPrintVersionCode = false
+    }
+    
     return versionCode
   }
   

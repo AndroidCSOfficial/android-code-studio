@@ -17,8 +17,6 @@
 
 @file:Suppress("UnstableApiUsage")
 
-import java.util.Properties
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -83,23 +81,11 @@ dependencyResolutionManagement {
 
 // = App version name
 gradle.rootProject {
-  val sourceVersion = "2.7.1-beta"
-  val revVersion = "1.0"
-  var versionName = "$sourceVersion-rev-$revVersion"
+  val baseVersion = "2.7.1"
   
-  val versionFile = rootProject.file("version.properties")
-  if (versionFile.exists()) {
-    val props = Properties().apply {
-      versionFile.inputStream().use { load(it) }
-    }
+  var commitHash = System.getenv("IDE_COMMIT_HASH")
   
-    val revVersionProp = props.getProperty("version.name.rev")
-    if (!revVersion.isEmpty()) {
-      versionName = "$sourceVersion-rev-$revVersionProp"
-    }
-  }
-  
-  project.setProperty("version", versionName)
+  project.setProperty("version", "$baseVersion+$commitHash")
 }
 
 rootProject.name = "AndroidIDE"
