@@ -30,6 +30,11 @@
 </p>
 
 
+## New Features
+
+- [x] NDK support (Currently implementing it...)
+- [x] Install via shizuku (implemented by [MiyazKaori](https://github.com/MiyazKaori))
+
 ## Features
 
 - [x] Gradle support.
@@ -54,7 +59,6 @@
 - [ ] String Translator
 - [ ] Asset Studio (Drawable & Icon Maker)
 - [x] Git
-- [x] Install via shizuku
 
 ## Installation
 
