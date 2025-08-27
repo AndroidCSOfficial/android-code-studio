@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Create local.properties
         run: |
-          echo "signing.storeFile=$PWD/core/app/signing/signing-key.jks" >> local.properties
+          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
           echo "signing.storePassword=123456" >> local.properties  
           echo "signing.keyAlias=android-ide" >> local.properties
           echo "signing.keyPassword=123456" >> local.properties
@@ -66,7 +66,7 @@ jobs:
           echo "=== Signing directory ==="
           ls -la core/app/signing/ || echo "core/app/signing directory not found"
       - name: Assemble Release APK
-        run: ./gradlew :core:app:assembleRelease -Pandroid.injected.signing.store.file=core/app/signing/signing-key.jks -Pandroid.injected.signing.store.password=123456 -Pandroid.injected.signing.key.alias=android-ide -Pandroid.injected.signing.key.password=123456
+        run: ./gradlew :core:app:assembleRelease
       - name: List APK files (debug)
         run: ls -la core/app/build/outputs/apk/release/
       - name: Upload arm64-v8a Release APK
