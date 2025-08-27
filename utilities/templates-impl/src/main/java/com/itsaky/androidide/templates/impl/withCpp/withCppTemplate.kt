@@ -34,17 +34,17 @@ fun withCppProject(): ProjectTemplate = baseProjectImpl {
   defaultAppModule {
     recipe = createRecipe {
       sources {
-        writewithCpp(this)
+        writeEmptyActivity(this)
       }
 
       res {
-        writewithCpp()
+        writeEmptyActivity()
       }
     }
   }
 }
 
-internal fun AndroidModuleTemplateBuilder.writewithCpp() {
+internal fun AndroidModuleTemplateBuilder.writeEmptyActivity() {
   res.apply {
     // layout/activity_main.xml
     writeXmlResource("activity_main", LAYOUT, source = ::emptyLayoutSrc)
@@ -52,7 +52,7 @@ internal fun AndroidModuleTemplateBuilder.writewithCpp() {
   }
 }
 
-internal fun AndroidModuleTemplateBuilder.writewithCpp(
+internal fun AndroidModuleTemplateBuilder.writeEmptyActivity(
   writer: SourceWriter
 ) {
   writeMainActivity(writer, ::withCppSrcKt, ::withCppSrcJava)
