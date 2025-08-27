@@ -32,7 +32,7 @@
 
 ## New Features
 
-- [x] NDK support (Currently implementing it...)
+- [x] NDK support (Only for `aarch64` android devices)
 - [x] Install via shizuku (implemented by [MiyazKaori](https://github.com/MiyazKaori))
 
 ## Features
