@@ -46,7 +46,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Assemble Release APK
-        run: ./gradlew :core:app: assembleRelease
+        run: ./gradlew :core:app:assembleRelease
       - name: Copy Release APK
         run: cp core/app/build/outputs/apk/release/app-*.apk ./
       - name: Upload arm64-v8a Release APK
