@@ -1,4 +1,3 @@
-
 /**
  * original author: Akash Yadav
  * modified version by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
@@ -21,11 +20,30 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.itsaky.androidide.templates.base.root
+package com.itsaky.androidide.templates.base.modules.android
 
 import com.itsaky.androidide.templates.Language
 import com.itsaky.androidide.templates.base.ProjectTemplateBuilder
 import java.io.File
+import com.itsaky.androidide.templates.Language.Kotlin
+import com.itsaky.androidide.templates.ModuleType
+import com.itsaky.androidide.templates.base.AndroidModuleTemplateBuilder
+import com.itsaky.androidide.templates.base.ModuleTemplateBuilder
+import com.itsaky.androidide.templates.base.modules.dependencies
+
+private const val compose_kotlinCompilerExtensionVersion = "1.3.2"
+
+private val AndroidModuleTemplateBuilder.androidPlugin: String
+  get() {
+    return if (data.type == ModuleType.AndroidLibrary) "com.android.library"
+    else "com.android.application"
+  }
+
+fun AndroidModuleTemplateBuilder.buildGradleSrc(isComposeModule: Boolean
+): String {
+  return if (data.useKts) buildGradleSrcKts(
+    isComposeModule) else buildGradleSrcGroovy(isComposeModule)
+}
 
 internal fun ProjectTemplateBuilder.buildGradleSrcKts(): String {
   return """
