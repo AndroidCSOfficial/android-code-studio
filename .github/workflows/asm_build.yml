@@ -1,0 +1,67 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ "dev", "main", "indexing", "release/**" ]
+    paths-ignore:
+      - '**.md'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
+  pull_request:
+    branches: [ "dev" ]
+    paths-ignore:
+      - '**.md'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
+  workflow_dispatch: { }
+
+jobs:
+  build_debug_apk:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Change Gradle wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Assemble Debug APK
+        run: ./gradlew :core:app:assembleDebug
+      - name: Copy Debug APK
+        run: cp core/app/build/outputs/apk/debug/app-*.apk ./
+      - name: Upload arm64-v8a Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-arm64-v8a-debug
+          path: app-arm64-v8a-debug.apk
+      - name: Upload armeabi-v7a Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-armeabi-v7a-debug
+          path: app-armeabi-v7a-debug.apk
+      - name: Upload x86_64 Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-x86_64-debug
+          path: app-x86_64-debug.apk
+          
