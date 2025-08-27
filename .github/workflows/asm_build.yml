@@ -49,10 +49,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Copy signing key and create local.properties
+      - name: Create local.properties
         run: |
-          mkdir -p core/app/signing
-          cp signing/signing-key.jks core/app/signing/
           echo "signing.storeFile=$PWD/core/app/signing/signing-key.jks" >> local.properties
           echo "signing.storePassword=123456" >> local.properties  
           echo "signing.keyAlias=android-ide" >> local.properties
@@ -66,9 +64,9 @@ jobs:
           cat local.properties || echo "local.properties not found"
           echo ""
           echo "=== Signing directory ==="
-          ls -la signing/ || echo "signing directory not found"
+          ls -la core/app/signing/ || echo "core/app/signing directory not found"
       - name: Assemble Release APK
-        run: ./gradlew :core:app:assembleRelease -Pandroid.injected.signing.store.file=signing/signing-key.jks -Pandroid.injected.signing.store.password=123456 -Pandroid.injected.signing.key.alias=android-ide -Pandroid.injected.signing.key.password=123456
+        run: ./gradlew :core:app:assembleRelease -Pandroid.injected.signing.store.file=core/app/signing/signing-key.jks -Pandroid.injected.signing.store.password=123456 -Pandroid.injected.signing.key.alias=android-ide -Pandroid.injected.signing.key.password=123456
       - name: List APK files (debug)
         run: ls -la core/app/build/outputs/apk/release/
       - name: Upload arm64-v8a Release APK
