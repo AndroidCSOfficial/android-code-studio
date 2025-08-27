@@ -58,9 +58,16 @@ internal fun AndroidModuleTemplateBuilder.writeEmptyActivity() {
 internal fun AndroidModuleTemplateBuilder.writeEmptyJniActivity() {
   val jni = AndroidModuleJniManager()
   jni.apply {
+    // Create C++ source file
     writeJniSource("tomaslib", CPPFILE, source = {
       createBasicJniCppSource(data.packageName, "MainActivity", "sayHello")
     })
+    
+    val androidMkFile = File(jniDir(), "Android.mk")
+    executor.save(createAndroidMkFile("tomaslib"), androidMkFile)
+    
+    val appMkFile = File(jniDir(), "Application.mk")
+    executor.save(createApplicationMkFile(), appMkFile)
   }
 }
 
