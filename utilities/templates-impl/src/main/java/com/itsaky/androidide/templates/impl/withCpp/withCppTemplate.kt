@@ -23,6 +23,7 @@ import com.itsaky.androidide.templates.base.modules.android.defaultAppModule
 import com.itsaky.androidide.templates.base.util.AndroidModuleResManager.ResourceType.LAYOUT
 import com.itsaky.androidide.templates.base.util.SourceWriter
 import com.itsaky.androidide.templates.base.util.AndroidModuleJniManager
+import com.itsaky.androidide.templates.base.util.AndroidModuleJniManager.JniFileType.CPPFILE
 import com.itsaky.androidide.templates.impl.R
 import com.itsaky.androidide.templates.impl.base.createRecipe
 import com.itsaky.androidide.templates.impl.base.emptyThemesAndColors
