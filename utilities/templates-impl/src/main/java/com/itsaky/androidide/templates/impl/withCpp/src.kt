@@ -32,6 +32,11 @@ import ${data.packageName}.databinding.ActivityMainBinding
 
 public class MainActivity : AppCompatActivity() {
 
+    companion object {
+        init {
+            System.loadLibrary("tomaslib")
+        }
+    }
     private var _binding: ActivityMainBinding? = null
     
     private val binding: ActivityMainBinding
@@ -64,6 +69,10 @@ import android.os.Bundle;
 import ${data.packageName}.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+    static {
+        System.loadLibrary("tomaslib");
+    }
+
     private ActivityMainBinding binding;
 
     @Override

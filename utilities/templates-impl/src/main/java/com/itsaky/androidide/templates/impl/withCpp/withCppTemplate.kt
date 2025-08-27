@@ -22,6 +22,7 @@ import com.itsaky.androidide.templates.base.AndroidModuleTemplateBuilder
 import com.itsaky.androidide.templates.base.modules.android.defaultAppModule
 import com.itsaky.androidide.templates.base.util.AndroidModuleResManager.ResourceType.LAYOUT
 import com.itsaky.androidide.templates.base.util.SourceWriter
+import com.itsaky.androidide.templates.base.util.AndroidModuleJniManager
 import com.itsaky.androidide.templates.impl.R
 import com.itsaky.androidide.templates.impl.base.createRecipe
 import com.itsaky.androidide.templates.impl.base.emptyThemesAndColors
@@ -49,6 +50,15 @@ internal fun AndroidModuleTemplateBuilder.writeEmptyActivity() {
     // layout/activity_main.xml
     writeXmlResource("activity_main", LAYOUT, source = ::emptyLayoutSrc)
     emptyThemesAndColors()
+  }
+}
+
+internal fun AndroidModuleTemplateBuilder.writeEmptyJniActivity() {
+  val jni = AndroidModuleJniManager()
+  jni.apply {
+    writeJniSource("tomaslib", CPPFILE, source = {
+      createBasicJniCppSource(data.packageName, "MainActivity", "sayHello")
+    })
   }
 }
 
