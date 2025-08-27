@@ -51,20 +51,29 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Assemble Release APK
         run: ./gradlew :core:app:assembleRelease
-      - name: Copy Release APK
-        run: cp core/app/build/outputs/apk/release/app-*.apk ./
+      - name: List APK files (debug)
+        run: ls -la core/app/build/outputs/apk/release/
       - name: Upload arm64-v8a Release APK
         uses: actions/upload-artifact@v4
         with:
           name: apk-arm64-v8a-release
-          path: app-arm64-v8a-release.apk
+          path: core/app/build/outputs/apk/release/*arm64-v8a*.apk
+        if: always()
       - name: Upload armeabi-v7a Release APK
         uses: actions/upload-artifact@v4
         with:
           name: apk-armeabi-v7a-release
-          path: app-armeabi-v7a-release.apk
+          path: core/app/build/outputs/apk/release/*armeabi-v7a*.apk
+        if: always()
       - name: Upload x86_64 Release APK
         uses: actions/upload-artifact@v4
         with:
           name: apk-x86_64-release
-          path: app-x86_64-release.apk
+          path: core/app/build/outputs/apk/release/*x86_64*.apk
+        if: always()
+      - name: Upload universal Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-universal-release
+          path: core/app/build/outputs/apk/release/*universal*.apk
+        if: always()
