@@ -22,9 +22,6 @@
 
 package com.itsaky.androidide.templates.base.modules.android
 
-import com.itsaky.androidide.templates.Language
-import com.itsaky.androidide.templates.base.ProjectTemplateBuilder
-import java.io.File
 import com.itsaky.androidide.templates.Language.Kotlin
 import com.itsaky.androidide.templates.ModuleType
 import com.itsaky.androidide.templates.base.AndroidModuleTemplateBuilder
@@ -45,260 +42,131 @@ fun AndroidModuleTemplateBuilder.buildGradleSrc(isComposeModule: Boolean
     isComposeModule) else buildGradleSrcGroovy(isComposeModule)
 }
 
-internal fun ProjectTemplateBuilder.buildGradleSrcKts(): String {
+private fun AndroidModuleTemplateBuilder.buildGradleSrcKts(
+  isComposeModule: Boolean
+): String {
   return """
-    // Top-level build file where you can add configuration options common to all sub-projects/modules.
-    plugins {
-        id("com.android.application") version "${data.version.gradlePlugin}" apply false
-        id("com.android.library") version "${data.version.gradlePlugin}" apply false
-        ${ktPlugin()}     
-    }
-
-    tasks.register<Delete>("clean") {
-        delete(rootProject.buildDir)
-    }
-  """.trimIndent()
+plugins {
+    id("$androidPlugin")
+    ${ktPlugin()}
 }
 
-internal fun ProjectTemplateBuilder.buildGradleSrcGroovy(): String {
-  return """
-    // Top-level build file where you can add configuration options common to all sub-projects/modules.
-    plugins {
-        id 'com.android.application' version '${data.version.gradlePlugin}' apply false
-        id 'com.android.library' version '${data.version.gradlePlugin}' apply false
-        ${ktPlugin()}     
-    }
-
-    task clean(type: Delete) {
-        delete rootProject.buildDir
-    }
-  """.trimIndent()
-}
-
-// Module-level build.gradle functions
-internal fun ProjectTemplateBuilder.moduleBuildGradleSrcKts(isComposeModule: Boolean = false): String {
-  return """
-    plugins {
-        id("com.android.application")
-        ${if (data.language == Language.Kotlin) "id(\"org.jetbrains.kotlin.android\")" else ""}
-        ${if (isComposeModule) "id(\"org.jetbrains.kotlin.plugin.compose\") version \"${data.version.kotlin}\"" else ""}
-    }
-
-    android {
-        namespace = "${data.packageName}"
-        compileSdk = ${data.version.compileSdk}
-
-        defaultConfig {
-            applicationId = "${data.packageName}"
-            minSdk = ${data.version.minSdk}
-            targetSdk = ${data.version.targetSdk}
-            versionCode = 1
-            versionName = "1.0"
-
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            ${if (hasNativeBuild()) "ndk { abiFilters += listOf(\"armeabi-v7a\", \"arm64-v8a\", \"x86\", \"x86_64\") }" else ""}
+android {
+    namespace = "${data.packageName}"
+    compileSdk = ${data.versions.compileSdk.api}
+    
+    defaultConfig {
+        applicationId = "${data.packageName}"
+        minSdk = ${data.versions.minSdk.api}
+        targetSdk = ${data.versions.targetSdk.api}
+        versionCode = 1
+        versionName = "1.0"
+        
+        vectorDrawables { 
+            useSupportLibrary = true
         }
-
-        buildTypes {
-            release {
-                isMinifyEnabled = false
-                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            }
-        }
-        
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
-        }
-        
-        ${if (data.language == Language.Kotlin) kotlinCompileOptions() else ""}
-        ${if (isComposeModule) composeOptions() else ""}
-        ${if (hasNativeBuild()) externalNativeBuildKts() else ""}
-    }
-
-    dependencies {
-        // Core dependencies
-        implementation("androidx.core:core-ktx:1.12.0")
-        implementation("androidx.appcompat:appcompat:1.6.1")
-        implementation("com.google.android.material:material:1.11.0")
-        implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-        
-        ${if (isComposeModule) composeDependencies() else ""}
-        
-        // Test dependencies
-        testImplementation("junit:junit:4.13.2")
-        androidTestImplementation("androidx.test.ext:junit:1.1.5")
-        androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    }
-  """.trimIndent()
-}
-
-internal fun ProjectTemplateBuilder.moduleBuildGradleSrcGroovy(isComposeModule: Boolean = false): String {
-  return """
-    plugins {
-        id 'com.android.application'
-        ${if (data.language == Language.Kotlin) "id 'org.jetbrains.kotlin.android'" else ""}
-        ${if (isComposeModule) "id 'org.jetbrains.kotlin.plugin.compose' version '${data.version.kotlin}'" else ""}
-    }
-
-    android {
-        namespace '${data.packageName}'
-        compileSdk ${data.version.compileSdk}
-
-        defaultConfig {
-            applicationId "${data.packageName}"
-            minSdk ${data.version.minSdk}
-            targetSdk ${data.version.targetSdk}
-            versionCode 1
-            versionName "1.0"
-
-            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-            ${if (hasNativeBuild()) "ndk { abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64' }" else ""}
-        }
-
-        buildTypes {
-            release {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            }
-        }
-        
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
-        }
-        
-        ${if (data.language == Language.Kotlin) kotlinCompileOptionsGroovy() else ""}
-        ${if (isComposeModule) composeOptionsGroovy() else ""}
-        ${if (hasNativeBuild()) externalNativeBuildGroovy() else ""}
-    }
-
-    dependencies {
-        // Core dependencies
-        implementation 'androidx.core:core-ktx:1.12.0'
-        implementation 'androidx.appcompat:appcompat:1.6.1'
-        implementation 'com.google.android.material:material:1.11.0'
-        implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-        
-        ${if (isComposeModule) composeDependenciesGroovy() else ""}
-        
-        // Test dependencies
-        testImplementation 'junit:junit:4.13.2'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.ktPlugin() = if (data.language == Language.Kotlin) {
-  if (data.useKts) ktPluginKts() else ktPluginGroovy()
-} else ""
-
-private fun ProjectTemplateBuilder.ktPluginKts(): String {
-  return """id("org.jetbrains.kotlin.android") version "${data.version.kotlin}" apply false"""
-}
-
-private fun ProjectTemplateBuilder.ktPluginGroovy(): String {
-  return "id 'org.jetbrains.kotlin.android' version '${data.version.kotlin}' apply false"
-}
-
-private fun ProjectTemplateBuilder.hasNativeBuild(): Boolean {
-  val androidMkFile = File(data.projectDir, "src/main/jni/Android.mk")
-  val cmakeFile = File(data.projectDir, "src/main/cpp/CMakeLists.txt")
-  return androidMkFile.exists() || cmakeFile.exists()
-}
-
-private fun ProjectTemplateBuilder.externalNativeBuildKts(): String {
-  return """
         externalNativeBuild {
             ndkBuild {
                 path = file("src/main/jni/Android.mk")
             }
         }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.externalNativeBuildGroovy(): String {
-  return """
-        externalNativeBuild {
-            ndkBuild {
-                path file('src/main/jni/Android.mk')
-            }
-        }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.kotlinCompileOptions(): String {
-  return """
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.kotlinCompileOptionsGroovy(): String {
-  return """
-        kotlinOptions {
-            jvmTarget '1.8'
-        }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.composeOptions(): String {
-  return """
-        buildFeatures {
-            compose = true
-        }
-        composeOptions {
-            kotlinCompilerExtensionVersion = "1.5.8"
-        }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.composeOptionsGroovy(): String {
-  return """
-        buildFeatures {
-            compose true
-        }
-        composeOptions {
-            kotlinCompilerExtensionVersion '1.5.8'
-        }
-  """.trimIndent()
-}
-
-private fun ProjectTemplateBuilder.composeDependencies(): String {
-  return """
-        // Compose BOM
-        implementation(platform("androidx.compose:compose-bom:2024.02.00"))
-        implementation("androidx.compose.ui:ui")
-        implementation("androidx.compose.ui:ui-tooling-preview")
-        implementation("androidx.compose.material3:material3")
-        implementation("androidx.activity:activity-compose:1.8.2")
         
-        // Compose testing
-        androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.00"))
-        androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-        debugImplementation("androidx.compose.ui:ui-tooling")
-        debugImplementation("androidx.compose.ui:ui-test-manifest")
-  """.trimIndent()
+    }
+    
+    compileOptions {
+        sourceCompatibility = ${data.versions.javaSource()}
+        targetCompatibility = ${data.versions.javaTarget()}
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+    }
+
+    buildFeatures {
+        ${if (!isComposeModule) "viewBinding = true" else ""}
+        ${if (isComposeModule) "compose = true" else ""}
+    }
+    ${if(isComposeModule) composeConfigKts() else ""}
+}
+${ktJvmTarget()}
+${dependencies()}
+"""
 }
 
-private fun ProjectTemplateBuilder.composeDependenciesGroovy(): String {
+private fun AndroidModuleTemplateBuilder.buildGradleSrcGroovy(
+  isComposeModule: Boolean
+): String {
   return """
-        // Compose BOM
-        implementation platform('androidx.compose:compose-bom:2024.02.00')
-        implementation 'androidx.compose.ui:ui'
-        implementation 'androidx.compose.ui:ui-tooling-preview'
-        implementation 'androidx.compose.material3:material3'
-        implementation 'androidx.activity:activity-compose:1.8.2'
-        
-        // Compose testing
-        androidTestImplementation platform('androidx.compose:compose-bom:2024.02.00')
-        androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-        debugImplementation 'androidx.compose.ui:ui-tooling'
-        debugImplementation 'androidx.compose.ui:ui-test-manifest'
-  """.trimIndent()
+plugins {
+    id '$androidPlugin'
+    ${ktPlugin()}
 }
+
+android {
+    namespace '${data.packageName}'
+    compileSdk ${data.versions.compileSdk.api}
+    
+    defaultConfig {
+        applicationId "${data.packageName}"
+        minSdk ${data.versions.minSdk.api}
+        targetSdk ${data.versions.targetSdk.api}
+        versionCode 1
+        versionName "1.0"
+        
+        vectorDrawables { 
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility ${data.versions.javaSource()}
+        targetCompatibility ${data.versions.javaTarget()}
+    }
+
+    buildFeatures {
+        ${if (!isComposeModule) "viewBinding true" else ""}
+        ${if (isComposeModule) "compose true" else ""}
+    }
+    ${if(isComposeModule) composeConfigGroovy() else ""}
+}
+${ktJvmTarget()}
+${dependencies()}
+"""
+}
+
+fun composeConfigGroovy(): String
+= """
+    composeOptions {
+        kotlinCompilerExtensionVersion '$compose_kotlinCompilerExtensionVersion'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+""".trim()
+
+fun composeConfigKts(): String
+  = """
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$compose_kotlinCompilerExtensionVersion"
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+""".trim()
 
 private fun ModuleTemplateBuilder.ktJvmTarget(): String {
   if (data.language != Kotlin) {
