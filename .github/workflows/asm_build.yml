@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Create local.properties for signing
         run: |
-          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
+          echo "signing.storeFile=../../signing/signing-key.jks" >> local.properties
           echo "signing.storePassword=123456" >> local.properties  
           echo "signing.keyAlias=android-ide" >> local.properties
           echo "signing.keyPassword=123456" >> local.properties
