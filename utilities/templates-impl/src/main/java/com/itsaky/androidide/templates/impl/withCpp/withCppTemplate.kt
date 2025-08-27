@@ -29,6 +29,7 @@ import com.itsaky.androidide.templates.impl.base.createRecipe
 import com.itsaky.androidide.templates.impl.base.emptyThemesAndColors
 import com.itsaky.androidide.templates.impl.base.writeMainActivity
 import com.itsaky.androidide.templates.impl.baseProjectImpl
+import java.io.File
 
 fun withCppProject(): ProjectTemplate = baseProjectImpl {
   templateName = R.string.template_cpp
