@@ -27,6 +27,7 @@ import com.itsaky.androidide.templates.ModuleType
 import com.itsaky.androidide.templates.base.AndroidModuleTemplateBuilder
 import com.itsaky.androidide.templates.base.ModuleTemplateBuilder
 import com.itsaky.androidide.templates.base.modules.dependencies
+import java.io.File
 
 private const val compose_kotlinCompilerExtensionVersion = "1.3.2"
 
@@ -42,9 +43,16 @@ fun AndroidModuleTemplateBuilder.buildGradleSrc(isComposeModule: Boolean
     isComposeModule) else buildGradleSrcGroovy(isComposeModule)
 }
 
+private fun AndroidModuleTemplateBuilder.hasNativeFiles(): Boolean {
+  val androidMkFile = File(data.projectDir, "src/main/jni/Android.mk")
+  val cmakeListsFile = File(data.projectDir, "src/main/jni/CMakeLists.txt")
+  return androidMkFile.exists() || cmakeListsFile.exists()
+}
+
 private fun AndroidModuleTemplateBuilder.buildGradleSrcKts(
   isComposeModule: Boolean
 ): String {
+  val hasNative = hasNativeFiles()
   return """
 plugins {
     id("$androidPlugin")
@@ -65,12 +73,13 @@ android {
         vectorDrawables { 
             useSupportLibrary = true
         }
+        ${if (hasNative) """
         externalNativeBuild {
             ndkBuild {
-                path = file("src/main/jni/Android.mk")
+                abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86_64", "x86"))
             }
         }
-        
+        """ else ""}
     }
     
     compileOptions {
@@ -84,7 +93,12 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
+    ${if (hasNative) """
+    externalNativeBuild {
+        ndkBuild {
+            path = file("src/main/jni/Android.mk")
+        }
+    }""" else ""}
     buildFeatures {
         ${if (!isComposeModule) "viewBinding = true" else ""}
         ${if (isComposeModule) "compose = true" else ""}
@@ -99,6 +113,7 @@ ${dependencies()}
 private fun AndroidModuleTemplateBuilder.buildGradleSrcGroovy(
   isComposeModule: Boolean
 ): String {
+  val hasNative = hasNativeFiles()
   return """
 plugins {
     id '$androidPlugin'
@@ -119,6 +134,13 @@ android {
         vectorDrawables { 
             useSupportLibrary true
         }
+        ${if (hasNative) """
+        externalNativeBuild {
+            ndkBuild {
+                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
+            }
+        }
+        """ else ""}
     }
 
     buildTypes {
@@ -133,6 +155,12 @@ android {
         targetCompatibility ${data.versions.javaTarget()}
     }
 
+    ${if (hasNative) """
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }""" else ""}
     buildFeatures {
         ${if (!isComposeModule) "viewBinding true" else ""}
         ${if (isComposeModule) "compose true" else ""}
