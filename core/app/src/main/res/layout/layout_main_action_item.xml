@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~  This file is part of AndroidIDE.
   ~
@@ -17,22 +16,31 @@
   ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<com.google.android.material.button.MaterialButton
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  style="@style/Widget.Material3.Button.TextButton.Icon"
-  android:layout_width="match_parent"
-  android:layout_height="56dp"
-  android:layout_marginTop="4dp"
-  android:layout_marginBottom="4dp"
-  android:elevation="0dp"
-  android:ellipsize="end"
-  android:singleLine="true"
-  android:textAlignment="textStart"
-  android:textColor="?attr/colorOnBackground"
-  android:textStyle="bold"
-  app:iconPadding="8dp"
-  app:iconTint="?attr/colorOnBackground"
-  tools:icon="@drawable/ic_add"
-  tools:text="@string/msg_create_new_project" />
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="0dp">
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:elevation="0dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAlignment="textStart"
+        android:textColor="?attr/colorOnBackground"
+        android:textStyle="bold"
+        app:iconPadding="8dp"
+        app:iconTint="?attr/colorOnBackground"
+        tools:icon="@drawable/ic_add"
+        tools:text="@string/msg_create_new_project" />
+
+</com.google.android.material.card.MaterialCardView>
