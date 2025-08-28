@@ -85,6 +85,15 @@
     app:layout_constraintStart_toStartOf="@id/auto_install_switch"
     app:layout_constraintTop_toBottomOf="@id/install_git" />
 
+  <com.google.android.material.checkbox.MaterialCheckBox
+    android:id="@+id/install_ndk"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:checked="true"
+    android:text="@string/action_install_ndk"
+    app:layout_constraintStart_toStartOf="@id/auto_install_switch"
+    app:layout_constraintTop_toBottomOf="@id/install_openssh" />
+
   <com.google.android.material.materialswitch.MaterialSwitch
     android:id="@+id/auto_install_switch"
     android:layout_width="0dp"

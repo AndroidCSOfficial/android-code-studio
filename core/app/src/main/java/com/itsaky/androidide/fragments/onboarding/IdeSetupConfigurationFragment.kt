@@ -49,7 +49,8 @@ import com.itsaky.androidide.utils.flashError
 import com.itsaky.androidide.utils.getConnectionInfo
 
 /**
- * @author Akash Yadav
+ * original @author Akash Yadav
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
  */
 class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
 
@@ -94,6 +95,7 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
         jdkVersionLayout.isEnabled = isChecked
         installGit.isEnabled = isChecked
         installOpenssh.isEnabled = isChecked
+        installNdk.isEnabled = isChecked
       }
 
       val sdkVersions = SdkVersion.entries.map { "SDK ${it.version}" }.reversed()
@@ -131,6 +133,9 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
     }
     if (content.installOpenssh.isChecked) {
       args.setArgument(IdeSetupArgument.WITH_OPENSSH)
+    }
+    if (content.installNdk.isChecked) {
+      args.setArgument(IdeSetupArgument.WITH_NDK)
     }
     return args.toTypedArray()
   }

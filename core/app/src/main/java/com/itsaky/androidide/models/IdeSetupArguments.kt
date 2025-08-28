@@ -29,6 +29,7 @@ enum class IdeSetupArgument(val argumentName: String, val requiresValue: Boolean
   WITH_GIT("--with-git"),
   ASSUME_YES("--assume-yes"),
   WITH_OPENSSH("--with-openssh"),
+  WITH_NDK("--with-ndk"),
   SDK_VERSION("--sdk", true),
   JDK_VERSION("--jdk", true)
 }
