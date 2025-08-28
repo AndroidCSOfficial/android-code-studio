@@ -83,9 +83,9 @@ dependencyResolutionManagement {
 gradle.rootProject {
   val baseVersion = "2.7.1"
   
-  var commitHash = System.getenv("IDE_COMMIT_HASH")
+  var commitHash = "e3c1585a"
   
-  project.setProperty("version", "$baseVersion+$commitHash")
+  project.setProperty("version", "$baseVersion-$commitHash")
 }
 
 rootProject.name = "AndroidIDE"
