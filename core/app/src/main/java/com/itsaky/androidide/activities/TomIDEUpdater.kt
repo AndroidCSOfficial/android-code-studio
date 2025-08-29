@@ -330,25 +330,3 @@ class TomIDEUpdater(private val context: Context) {
     }
 }
 
-// Usage example in your Activity/Fragment:
-/*
-class MainActivity : AppCompatActivity() {
-    private lateinit var tomIDEUpdater: TomIDEUpdater
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        tomIDEUpdater = TomIDEUpdater(this)
-        
-        // Check for updates on app start
-        tomIDEUpdater.checkForUpdates()
-        
-        // Or add a button to manually check
-        // updateButton.setOnClickListener { tomIDEUpdater.checkForUpdates() }
-    }
-    
-    override fun onDestroy() {
-        super.onDestroy()
-        tomIDEUpdater.cancelDownload()
-    }
-}

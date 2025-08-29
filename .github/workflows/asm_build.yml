@@ -9,12 +9,14 @@ on:
       - "release/**"
     paths-ignore:
       - '**.md'
+      - '**.json'
       - 'fastlane/**'
       - '.github/workflows/crowdin_contributors.yml'
   pull_request:
     branches: [ "dev" ]
     paths-ignore:
       - '**.md'
+      - '**.json'
       - 'fastlane/**'
       - '.github/workflows/crowdin_contributors.yml'
   workflow_dispatch: { }
