@@ -46,6 +46,7 @@ import java.io.File
 
 class MainActivity : EdgeToEdgeIDEActivity() {
 
+  private lateinit var tomIDEUpdater: TomIDEUpdater
   private val viewModel by viewModels<MainViewModel>()
   private var _binding: ActivityMainBinding? = null
 
