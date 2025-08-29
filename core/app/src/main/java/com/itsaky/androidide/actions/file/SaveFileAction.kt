@@ -26,6 +26,7 @@ import com.itsaky.androidide.projects.internal.ProjectManagerImpl
 import com.itsaky.androidide.resources.R
 import com.itsaky.androidide.utils.flashError
 import com.itsaky.androidide.utils.flashSuccess
+import com.itsaky.androidide.activities.editor.BaseEditorActivity
 import org.slf4j.LoggerFactory
 
 /** @author Akash Yadav */
@@ -92,6 +93,11 @@ class SaveFileAction(context: Context, override val order: Int) : EditorRelatedA
 
       if (saveResult.gradleSaved) {
         context.editorViewModel.isSyncNeeded = true
+      }
+
+      // Call onManualSave if the context is BaseEditorActivity
+      if (context is BaseEditorActivity) {
+        context.onManualSave()
       }
 
       context.invalidateOptionsMenu()
