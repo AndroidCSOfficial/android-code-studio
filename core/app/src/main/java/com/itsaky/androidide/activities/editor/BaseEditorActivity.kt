@@ -15,6 +15,9 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
+// ++ auto save
+
 package com.itsaky.androidide.activities.editor
 
 import android.content.Intent
@@ -118,6 +121,8 @@ import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
+import com.itsaky.androidide.actions.ActionData
+import com.itsaky.androidide.actions.file.SaveFileAction
 
 /**
  * Base class for EditorActivity which handles most of the view related things.
@@ -251,24 +256,37 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
    * Save a file. Subclasses can override this method to implement custom saving logic.
    * Default implementation attempts to save using the editor's save functionality.
    */
-  protected open fun doSaveFile(editor: CodeEditorView): Boolean {
-    return try {
-      // Try to use the editor's save method if available
-      val file = editor.file
-      if (file != null && file.exists() && file.canWrite()) {
-        // Get the text content from the editor
-        val content = editor.editor?.text?.toString() ?: ""
-        // Write to file
-        file.writeText(content)
-        true
-      } else {
+    protected open fun doSaveFile(editor: CodeEditorView): Boolean {
+      return try {
+        val file = editor.file ?: return false
+        
+        val actionData = ActionData().apply {
+          put(Context::class.java, this@BaseEditorActivity)
+        }
+        
+        val saveAction = SaveFileAction(this, 0)
+        saveAction.prepare(actionData)
+        
+        if (!saveAction.enabled) {
+          log.debug("SaveFileAction is not enabled for file: ${file.absolutePath}")
+          return false
+        }
+        
+        val result = kotlinx.coroutines.runBlocking {
+          saveAction.execAction(actionData)
+        }
+        
+        ThreadUtils.runOnUiThread {
+          saveAction.postExec(actionData, result)
+        }
+        
+        val wrapper = result as? SaveFileAction.ResultWrapper
+        wrapper?.result != null && !wrapper.isAlreadySaving
+      } catch (e: Exception) {
+        log.error("Failed to save file using SaveFileAction: ${editor.file?.absolutePath}", e)
         false
       }
-    } catch (e: Exception) {
-      log.error("Failed to save file: ${editor.file?.absolutePath}", e)
-      false
     }
-  }
 
   /**
    * Check if auto-save is enabled in preferences
@@ -354,41 +372,126 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
   /**
    * Perform auto-save for all pending files
    */
-  private suspend fun performAutoSave() {
-    if (pendingSaveFiles.isEmpty()) {
-      return
-    }
-
-    autoSaveMutex.withLock {
-      val filesToSave = pendingSaveFiles.keys.toList()
-      pendingSaveFiles.clear()
-      
-      for (file in filesToSave) {
-        try {
-          val editor = findEditorForFile(file)
-          if (editor != null) {
-            // Perform save on main thread
-            ThreadUtils.runOnUiThread {
-              try {
-                if (doSaveFile(editor)) {
-                  log.debug("Auto-saved file: ${file.absolutePath}")
-                  
-                  // Show subtle indication that file was auto-saved
-                  showAutoSaveIndicator(file.name)
-                } else {
-                  log.warn("Failed to auto-save file: ${file.absolutePath}")
-                }
+    private suspend fun performAutoSave() {
+      if (pendingSaveFiles.isEmpty()) {
+        return
+      }
+    
+      autoSaveMutex.withLock {
+        val filesToSave = pendingSaveFiles.keys.toList()
+        pendingSaveFiles.clear()
+        
+        for (file in filesToSave) {
+          try {
+            val editor = findEditorForFile(file)
+            if (editor != null) {
+              // Check if the file actually needs saving by comparing content
+              val currentContent = editor.editor?.text?.toString() ?: ""
+              val fileContent = try {
+                file.readText()
               } catch (e: Exception) {
-                log.error("Error auto-saving file: ${file.absolutePath}", e)
+                log.warn("Could not read file content for comparison: ${file.absolutePath}")
+                "" // Assume different content to trigger save
+              }
+              
+              if (currentContent != fileContent) {
+                // Perform save using SaveFileAction
+                ThreadUtils.runOnUiThread {
+                  try {
+                    if (doSaveFile(editor)) {
+                      log.debug("Auto-saved file using SaveFileAction: ${file.absolutePath}")
+                      showAutoSaveIndicator(file.name)
+                    } else {
+                      log.warn("SaveFileAction failed to auto-save file: ${file.absolutePath}")
+                      // Fallback to direct file writing if SaveFileAction fails
+                      fallbackSaveFile(editor, currentContent)
+                    }
+                  } catch (e: Exception) {
+                    log.error("Error auto-saving file with SaveFileAction: ${file.absolutePath}", e)
+                    // Fallback to direct file writing
+                    fallbackSaveFile(editor, currentContent)
+                  }
+                }
+              } else {
+                log.debug("File content unchanged, skipping auto-save: ${file.absolutePath}")
               }
             }
+          } catch (e: Exception) {
+            log.error("Error processing auto-save for file: ${file.absolutePath}", e)
           }
-        } catch (e: Exception) {
-          log.error("Error processing auto-save for file: ${file.absolutePath}", e)
         }
       }
     }
-  }
+
+    /**
+     * Fallback method to save file directly when SaveFileAction fails
+     */
+    private fun fallbackSaveFile(editor: CodeEditorView, content: String) {
+      try {
+        val file = editor.file
+        if (file != null && file.exists() && file.canWrite()) {
+          file.writeText(content)
+          log.debug("Fallback save successful for: ${file.absolutePath}")
+          showAutoSaveIndicator(file.name)
+        }
+      } catch (e: Exception) {
+        log.error("Fallback save failed for: ${editor.file?.absolutePath}", e)
+      }
+    }
+
+    /**
+     * Save all pending files immediately using SaveFileAction
+     */
+    protected fun saveAllPendingFilesImmediate() {
+      if (pendingSaveFiles.isEmpty()) {
+        return
+      }
+    
+      try {
+        // Create ActionData for the SaveFileAction
+        val actionData = ActionData().apply {
+          put(Context::class.java, this@BaseEditorActivity)
+        }
+        
+        // Use SaveFileAction to save all files
+        val saveAction = SaveFileAction(this, 0)
+        saveAction.prepare(actionData)
+        
+        if (saveAction.enabled) {
+          editorActivityScope.launch {
+            try {
+              val result = saveAction.execAction(actionData)
+              
+              // Handle post-execution on main thread
+              ThreadUtils.runOnUiThread {
+                saveAction.postExec(actionData, result)
+              }
+              
+              // Clear pending saves if successful
+              val wrapper = result as? SaveFileAction.ResultWrapper
+              if (wrapper?.result != null && !wrapper.isAlreadySaving) {
+                pendingSaveFiles.clear()
+                log.debug("All pending files saved using SaveFileAction")
+              }
+            } catch (e: Exception) {
+              log.error("Error saving all files using SaveFileAction", e)
+              // Fallback to individual auto-save
+              performAutoSave()
+            }
+          }
+        } else {
+          // Fallback to regular auto-save if SaveFileAction is not enabled
+          editorActivityScope.launch {
+            performAutoSave()
+          }
+        }
+      } catch (e: Exception) {
+        log.error("Error initializing SaveFileAction for save all", e)
+        editorActivityScope.launch {
+          performAutoSave()
+        }
+      }
+    }
 
   /**
    * Find the editor instance for a given file
@@ -453,18 +556,39 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
     log.debug("Cleaned up auto-save for file: ${editor.file?.absolutePath}")
   }
 
-  /**
-   * Save all pending files immediately
-   */
-  protected fun saveAllPendingFiles() {
-    if (pendingSaveFiles.isEmpty()) {
-      return
+    /**
+     * Save all pending files immediately
+     */
+    protected fun saveAllPendingFiles() {
+      if (pendingSaveFiles.isEmpty()) {
+        return
+      }
+      saveAllPendingFilesImmediate()
     }
 
-    editorActivityScope.launch {
-      performAutoSave()
+    /**
+     * Called when manual save is triggered to sync with auto-save state
+     */
+    protected fun onManualSave() {
+      // Clear any pending auto-saves since manual save handles everything
+      pendingSaveFiles.clear()
+      
+      // Update content hashes for all open editors
+      val openedFiles = getOpenedFiles()
+      for (i in openedFiles.indices) {
+        val editor = provideEditorAt(i)
+        if (editor != null) {
+          try {
+            val currentContent = editor.editor?.text?.toString() ?: ""
+            editorContentHashes[editor] = currentContent.hashCode()
+          } catch (e: Exception) {
+            log.error("Error updating content hash after manual save", e)
+          }
+        }
+      }
+      
+      log.debug("Manual save completed, auto-save state synchronized")
     }
-  }
 
   /**
    * Called when a new editor is created or file is opened
