@@ -25,8 +25,8 @@
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     app:cardElevation="1dp"
-    app:cardCornerRadius="24dp"
-    app:strokeWidth="0dp">
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="1dp">
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Material3.Button.TextButton.Icon"

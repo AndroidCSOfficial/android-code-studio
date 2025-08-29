@@ -87,7 +87,7 @@ class IDEApplication : TermuxApplication() {
   
   override fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)
-    // SilentInstaller.init(this)
+    SilentInstaller.init(this)
   }
 
 
