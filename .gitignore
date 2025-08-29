@@ -1,5 +1,6 @@
 # Properties file for F-Droid
 fdroid.properties
+autopush.sh
 
 # Crowdin
 crowdin.properties

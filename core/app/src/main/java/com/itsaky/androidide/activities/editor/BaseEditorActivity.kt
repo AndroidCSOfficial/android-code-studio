@@ -297,9 +297,8 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
         } catch (e: Exception) {
             log.error("Error checking content changes for file: ${editor.file?.absolutePath}", e)
           }
-        }
-      }
     }
+      
 
   /**
    * Start auto-save mechanism
