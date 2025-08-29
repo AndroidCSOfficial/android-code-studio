@@ -124,6 +124,8 @@ import kotlin.math.roundToLong
 import com.itsaky.androidide.actions.ActionData
 import com.itsaky.androidide.actions.file.SaveFileAction
 import android.content.Context 
+import kotlinx.coroutines.withContext
+
 /**
  * Base class for EditorActivity which handles most of the view related things.
  *
@@ -540,7 +542,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
     /**
      * Called when manual save is triggered to sync with auto-save state
      */
-    protected fun onManualSave() {
+    open fun onManualSave() { // Changed from protected to public
       // Clear any pending auto-saves since manual save handles everything
       pendingSaveFiles.clear()
       

@@ -374,37 +374,29 @@ open class EditorHandlerActivity : ProjectHandlerActivity(), IEditorHandler {
       return try {
         val index = findIndexOfEditorByFile(editor.file)
         if (index < 0) {
-          log.warn("Editor not found for file: ${editor.file?.absolutePath}")
           return false
         }
         
-        // Check if file is actually modified
         if (!editor.isModified) {
-          log.debug("File not modified, skipping save: ${editor.file?.absolutePath}")
           return true
         }
         
-        // Use the existing save functionality
-        val result = editor.save()
-        
-        if (result) {
-          // Update the tab to remove modification indicator
-          runOnUiThread {
-            val tab = content.tabs.getTabAt(index)
-            if (tab?.text?.startsWith('*') == true) {
-              tab.text = tab.text!!.substring(startIndex = 1)
+        // Use runBlocking since this method isn't suspend but editor.save() is
+        kotlinx.coroutines.runBlocking {
+          val result = editor.save()
+          
+          if (result) {
+            runOnUiThread {
+              val tab = content.tabs.getTabAt(index)
+              if (tab?.text?.startsWith('*') == true) {
+                tab.text = tab.text!!.substring(startIndex = 1)
+              }
+              editorViewModel.areFilesModified = hasUnsavedFiles()
             }
-            
-            // Update the files modified state
-            editorViewModel.areFilesModified = hasUnsavedFiles()
           }
           
-          log.debug("Successfully saved file: ${editor.file?.absolutePath}")
-        } else {
-          log.warn("Failed to save file: ${editor.file?.absolutePath}")
+          result
         }
-        
-        result
       } catch (e: Exception) {
         log.error("Error saving file: ${editor.file?.absolutePath}", e)
         false
