@@ -63,7 +63,7 @@ jobs:
           echo "=== local.properties content ==="
           cat local.properties || echo "local.properties not found"
           echo ""
-          echo "=== Signing directory ==="
+          echo "=== SigningDirectory ==="
           ls -la core/app/signing/ || echo "core/app/signing directory not found"
       - name: Assemble Debug APK
         run: ./gradlew :core:app:assembleDebug
