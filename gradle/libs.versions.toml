@@ -7,14 +7,14 @@ kotlin = "1.9.24"
 kotlin-coroutines = "1.8.1"
 tree-sitter = "4.3.1"
 editor = "0.23.7-patch1"
-glide = "5.0.0-rc01"
+glide = "4.16.0"
 androidx-vectordrawable = "1.2.0"
 androidx-navigation = "2.7.7"
 ksp = "1.9.24-1.0.20"
-antlr4 = "4.13.2"
+antlr4 = "4.13.1"
 androidx-work = "2.9.0"
 androidx-espresso = "3.5.1"
-retrofit = "3.0.0"
+retrofit = "2.9.0"
 markwon = "4.6.2"
 logback = "1.5.3"
 realm = "10.18.0"
@@ -50,19 +50,19 @@ common-editor = { module = "com.github.MiyazKaori:sora-editor", version.ref = "e
 common-utilcode = { module = "com.blankj:utilcodex", version = "1.31.1" }
 common-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 common-glide_ap = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-common-jsoup = { module = "org.jsoup:jsoup", version = "1.21.2" }
+common-jsoup = { module = "org.jsoup:jsoup", version = "1.17.2" }
 common-antlr4 = { module = "org.antlr:antlr4", version.ref = "antlr4" }
 common-antlr4-runtime = { module = "org.antlr:antlr4-runtime", version.ref = "antlr4" }
-common-javaparser = { module = "com.github.javaparser:javaparser-symbol-solver-core", version = "3.27.0" }
-common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
-common-io = { module = "commons-io:commons-io", version = "2.20.0" }
+common-javaparser = { module = "com.github.javaparser:javaparser-symbol-solver-core", version = "3.26.1" }
+common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.14.0" }
+common-io = { module = "commons-io:commons-io", version = "2.15.1" }
 common-kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 common-kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 common-jkotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 common-eventbus_ap = { module = "org.greenrobot:eventbus-annotation-processor", version = "3.3.1" }
 common-javapoet = { module = "com.squareup:javapoet", version = "1.13.0" }
 common-ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
-common-jsonrpc = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc", version = "0.24.0" }
+common-jsonrpc = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc", version = "0.22.0" }
 common-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.13" }
 common-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 common-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -70,7 +70,7 @@ common-markwon-core = { module = "io.noties.markwon:core", version.ref = "markwo
 common-markwon-extStrikethrough = { module = "io.noties.markwon:ext-strikethrough", version.ref = "markwon" }
 common-markwon-linkify = { module = "io.noties.markwon:linkify", version.ref = "markwon" }
 common-markwon-recycler = { module = "io.noties.markwon:recycler", version.ref = "markwon" }
-common-hiddenApiBypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version = "6.1" }
+common-hiddenApiBypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version = "4.3" }
 common-termuxAmLib = { module = "com.termux:termux-am-library", version = "v2.0.0" }
 common-charts = { module = "com.github.AppDevNext:AndroidChart", version = "3.1.0.21" }
 
@@ -132,10 +132,10 @@ xml-xercesImpl = { module = "xerces:xercesImpl", version = "2.12.2" }
 xml-apis = { module = "xml-apis:xml-apis", version = "2.0.2" }
 xml-remark = { module = "com.kotcrab.remark:remark", version = "1.2.0" }
 xml-resolver = { module = "xml-resolver:xml-resolver", version = "1.2" }
-xml-jb-annotations = { module = "org.jetbrains:annotations", version = "26.0.2" }
+xml-jb-annotations = { module = "org.jetbrains:annotations", version = "24.1.0" }
 
 # GIT
-git-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version = "7.3.0.202506031305-r" }
+git-jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version = "6.8.0.202311291450-r" }
 
 # Tests
 tests-junit = { module = "junit:junit", version = "4.13.2" }
