@@ -70,43 +70,43 @@ import java.time.Duration
 import kotlin.system.exitProcess
 import io.github.miyazkaori.silentinstaller.SilentInstaller
 import android.content.Context
-
+import android.util.Log
 
 class IDEApplication : TermuxApplication() {
 
   private var uncaughtExceptionHandler: UncaughtExceptionHandler? = null
-  private var ideLogcatReader: IDELogcatReader? = null
+  // private var ideLogcatReader: IDELogcatReader? = null
 
   init {
     if (!VMUtils.isJvm()) {
       TreeSitter.loadLibrary()
     }
 
-    RecyclableObjectPool.DEBUG = BuildConfig.DEBUG
+    // RecyclableObjectPool.DEBUG = BuildConfig.DEBUG
   }
   
   override fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)
-    SilentInstaller.init(this)
+    // SilentInstaller.init(this)
   }
 
 
   @OptIn(DelicateCoroutinesApi::class)
   override fun onCreate() {
     instance = this
-    uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-    Thread.setDefaultUncaughtExceptionHandler { thread, th -> handleCrash(thread, th) }
+    // uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+    // Thread.setDefaultUncaughtExceptionHandler { thread, th -> handleCrash(thread, th) }
 
     super.onCreate()
 
-    if (BuildConfig.DEBUG) {
-      StrictMode.setVmPolicy(
-        StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy()).penaltyLog().detectAll().build()
-      )
-      if (DevOpsPreferences.dumpLogs) {
-        startLogcatReader()
-      }
-    }
+    // if (BuildConfig.DEBUG) {
+      // StrictMode.setVmPolicy(
+        // StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy()).penaltyLog().detectAll().build()
+      // )
+      // if (DevOpsPreferences.dumpLogs) {
+        // startLogcatReader()
+      // }
+    // }
 
     EventBus.builder()
       .addIndex(AppEventsIndex())
@@ -142,7 +142,7 @@ class IDEApplication : TermuxApplication() {
     try {
       startActivity(intent)
     } catch (th: Throwable) {
-      log.error("Unable to start activity to show changelog", th)
+      // log.error("Unable to start activity to show changelog", th)
       flashError("Unable to start activity")
     }
   }
@@ -150,7 +150,7 @@ class IDEApplication : TermuxApplication() {
   fun reportStatsIfNecessary() {
 
     if (!StatPreferences.statOptIn) {
-      log.info("Stat collection is disabled.")
+      // log.info("Stat collection is disabled.")
       return
     }
 
@@ -162,7 +162,7 @@ class IDEApplication : TermuxApplication() {
 
     val workManager = WorkManager.getInstance(this)
 
-    log.info("reportStatsIfNecessary: Enqueuing StatUploadWorker...")
+    // log.info("reportStatsIfNecessary: Enqueuing StatUploadWorker...")
     val operation = workManager.enqueueUniquePeriodicWork(
       StatUploadWorker.WORKER_WORK_NAME,
       ExistingPeriodicWorkPolicy.UPDATE, request
@@ -171,7 +171,7 @@ class IDEApplication : TermuxApplication() {
     operation.state.observeForever(object : Observer<Operation.State> {
       override fun onChanged(value: Operation.State) {
         operation.state.removeObserver(this)
-        log.debug("reportStatsIfNecessary: WorkManager enqueue result: {}", value)
+        // log.debug("reportStatsIfNecessary: WorkManager enqueue result: {}", value)
       }
     })
   }
@@ -179,19 +179,7 @@ class IDEApplication : TermuxApplication() {
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun onPrefChanged(event: PreferenceChangeEvent) {
     val enabled = event.value as? Boolean?
-    if (event.key == StatPreferences.STAT_OPT_IN) {
-      if (enabled == true) {
-        reportStatsIfNecessary()
-      } else {
-        cancelStatUploadWorker()
-      }
-    } else if (event.key == DevOpsPreferences.KEY_DEVOPTS_DEBUGGING_DUMPLOGS) {
-      if (enabled == true) {
-        startLogcatReader()
-      } else {
-        stopLogcatReader()
-      }
-    } else if (event.key == GeneralPreferences.UI_MODE && GeneralPreferences.uiMode != AppCompatDelegate.getDefaultNightMode()) {
+    if (event.key == GeneralPreferences.UI_MODE && GeneralPreferences.uiMode != AppCompatDelegate.getDefaultNightMode()) {
       AppCompatDelegate.setDefaultNightMode(GeneralPreferences.uiMode)
     } else if (event.key == GeneralPreferences.SELECTED_LOCALE) {
 
@@ -205,60 +193,62 @@ class IDEApplication : TermuxApplication() {
     }
   }
 
-  private fun handleCrash(thread: Thread, th: Throwable) {
-    writeException(th)
+  // private fun handleCrash(thread: Thread, th: Throwable) {
+    // writeException(th)
 
-    try {
+    // try {
 
-      val intent = Intent()
-      intent.action = CrashHandlerActivity.REPORT_ACTION
-      intent.putExtra(CrashHandlerActivity.TRACE_KEY, getFullStackTrace(th))
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-      startActivity(intent)
-      if (uncaughtExceptionHandler != null) {
-        uncaughtExceptionHandler!!.uncaughtException(thread, th)
-      }
+      // val intent = Intent()
+      // intent.action = CrashHandlerActivity.REPORT_ACTION
+      // intent.putExtra(CrashHandlerActivity.TRACE_KEY, getFullStackTrace(th))
+      // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      // startActivity(intent)
+      // if (uncaughtExceptionHandler != null) {
+        // uncaughtExceptionHandler!!.uncaughtException(thread, th)
+      // }
 
-      exitProcess(1)
-    } catch (error: Throwable) {
-      log.error("Unable to show crash handler activity", error)
-    }
-  }
+      // exitProcess(1)
+    // } catch (error: Throwable) {
+      // log.error("Unable to show crash handler activity", error)
+    // }
+  // }
 
-  private fun cancelStatUploadWorker() {
-    log.info("Opted-out of stat collection. Cancelling StatUploadWorker if enqueued...")
-    val operation = WorkManager.getInstance(this)
-      .cancelUniqueWork(StatUploadWorker.WORKER_WORK_NAME)
-    operation.state.observeForever(object : Observer<Operation.State> {
-      override fun onChanged(value: Operation.State) {
-        operation.state.removeObserver(this)
-        log.info("StatUploadWorker: Cancellation result state: {}", value)
-      }
-    })
-  }
+  // private fun cancelStatUploadWorker() {
+    // log.info("Opted-out of stat collection. Cancelling StatUploadWorker if enqueued...")
+    // val operation = WorkManager.getInstance(this)
+      // .cancelUniqueWork(StatUploadWorker.WORKER_WORK_NAME)
+    // operation.state.observeForever(object : Observer<Operation.State> {
+      // override fun onChanged(value: Operation.State) {
+        // operation.state.removeObserver(this)
+        // log.info("StatUploadWorker: Cancellation result state: {}", value)
+      // }
+    // })
+  // }
 
-  private fun startLogcatReader() {
-    if (ideLogcatReader != null) {
-      // already started
-      return
-    }
+  // private fun startLogcatReader() {
+    // if (ideLogcatReader != null) {
+      // // already started
+      // return
+    // }
 
-    log.info("Starting logcat reader...")
-    ideLogcatReader = IDELogcatReader().also { it.start() }
-  }
+    // log.info("Starting logcat reader...")
+    // ideLogcatReader = IDELogcatReader().also { it.start() }
+  // }
 
-  private fun stopLogcatReader() {
-    log.info("Stopping logcat reader...")
-    ideLogcatReader?.stop()
-    ideLogcatReader = null
-  }
+  // private fun stopLogcatReader() {
+    // log.info("Stopping logcat reader...")
+    // ideLogcatReader?.stop()
+    // ideLogcatReader = null
+  // }
 
+  
   companion object {
 
-    private val log = LoggerFactory.getLogger(IDEApplication::class.java)
+    // private val log = LoggerFactory.getLogger(IDEApplication::class.java)
 
     @JvmStatic
     lateinit var instance: IDEApplication
       private set
   }
+
 }
