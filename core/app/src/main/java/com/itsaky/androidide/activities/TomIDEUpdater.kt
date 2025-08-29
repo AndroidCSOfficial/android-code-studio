@@ -368,6 +368,8 @@ class TomIDEUpdater(private val context: Context) {
         progressIndicator = null
         progressText = null
     }
+    
+    private fun openInBrowser(url: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
