@@ -283,7 +283,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
                 val file = editor.file ?: continue
                 
                 if (file.exists() && file.canWrite()) {
-                    val currentContent = editor.editor.text?.toString() ?: ""
+                    val currentContent = editor.editor?.text?.toString() ?: ""
                     val currentHash = currentContent.hashCode()
                     val lastHash = editorContentHashes[editor] ?: 0
                     
@@ -506,7 +506,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
             for (i in openedFiles.indices) {
                 val editor = provideEditorAt(i)
                 if (editor != null) {
-                    val currentContent = editor.editor.text?.toString() ?: ""
+                    val currentContent = editor.editor?.text?.toString() ?: ""
                     editorContentHashes[editor] = currentContent.hashCode()
                 }
             }
