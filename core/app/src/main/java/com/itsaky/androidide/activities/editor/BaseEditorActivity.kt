@@ -136,11 +136,12 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
   protected val pidToDatasetIdxMap = MutableIntIntMap(initialCapacity = 3)
 
   // Auto-save related properties
-  private val autoSaveJob: Job? = null
+  private var autoSaveCoroutineJob: Job? = null
   private val autoSaveMutex = Mutex()
   private val pendingSaveFiles = ConcurrentHashMap<File, Boolean>()
   private val editorTextWatchers = ConcurrentHashMap<CodeEditorView, TextWatcher>()
-  private var autoSaveCoroutineJob: Job? = null
+  private val editorContentHashes = ConcurrentHashMap<CodeEditorView, Int>()
+  private var lastAutoSaveCheck = 0L
 
   var isDestroying = false
     protected set
@@ -247,9 +248,27 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
   internal abstract fun doConfirmProjectClose()
 
   /**
-   * Abstract method to save a file. Subclasses should implement the actual file saving logic.
+   * Save a file. Subclasses can override this method to implement custom saving logic.
+   * Default implementation attempts to save using the editor's save functionality.
    */
-  protected abstract fun doSaveFile(editor: CodeEditorView): Boolean
+  protected open fun doSaveFile(editor: CodeEditorView): Boolean {
+    return try {
+      // Try to use the editor's save method if available
+      val file = editor.file
+      if (file != null && file.exists() && file.canWrite()) {
+        // Get the text content from the editor
+        val content = editor.editor.text.toString()
+        // Write to file
+        file.writeText(content)
+        true
+      } else {
+        false
+      }
+    } catch (e: Exception) {
+      log.error("Failed to save file: ${editor.file?.absolutePath}", e)
+      false
+    }
+  }
 
   /**
    * Check if auto-save is enabled in preferences
@@ -259,19 +278,34 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
   }
 
   /**
-   * Auto-save TextWatcher implementation
+   * Auto-save TextWatcher implementation - Alternative approach using content hash checking
    */
-  private inner class AutoSaveTextWatcher(private val editor: CodeEditorView) : SingleTextWatcher() {
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-      if (!isAutoSaveEnabled() || isDestroying) {
-        return
-      }
+  private fun checkForContentChanges() {
+    if (!isAutoSaveEnabled() || isDestroying) {
+      return
+    }
 
-      val file = editor.file
-      if (file != null && file.exists() && file.canWrite()) {
-        // Mark file as needing save
-        pendingSaveFiles[file] = true
-        log.debug("File marked for auto-save: ${file.absolutePath}")
+    val openedFiles = getOpenedFiles()
+    for (i in openedFiles.indices) {
+      val editor = provideEditorAt(i)
+      if (editor?.file != null) {
+        try {
+          val currentContent = editor.editor.text.toString()
+          val currentHash = currentContent.hashCode()
+          val lastHash = editorContentHashes[editor] ?: 0
+          
+          if (currentHash != lastHash && currentContent.isNotEmpty()) {
+            // Content has changed
+            editorContentHashes[editor] = currentHash
+            val file = editor.file!!
+            if (file.exists() && file.canWrite()) {
+              pendingSaveFiles[file] = true
+              log.debug("Content changed, marked for auto-save: ${file.absolutePath}")
+            }
+          }
+        } catch (e: Exception) {
+          log.error("Error checking content changes for file: ${editor.file?.absolutePath}", e)
+        }
       }
     }
   }
@@ -290,6 +324,13 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
           delay(AUTO_SAVE_DELAY_MS)
           
           if (isAutoSaveEnabled() && !isDestroying) {
+            // Check for content changes
+            ThreadUtils.runOnUiThread {
+              checkForContentChanges()
+            }
+            
+            // Perform auto-save for pending files
+            delay(100) // Small delay to let the content check complete
             performAutoSave()
           }
         } catch (e: Exception) {
@@ -380,32 +421,36 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
   }
 
   /**
-   * Add text watcher to an editor for auto-save functionality
+   * Initialize auto-save for an editor (alternative to TextWatcher)
    */
-  protected fun addAutoSaveTextWatcher(editor: CodeEditorView) {
+  protected fun initializeAutoSaveForEditor(editor: CodeEditorView) {
     if (!isAutoSaveEnabled()) {
       return
     }
 
-    // Remove existing watcher if present
-    removeAutoSaveTextWatcher(editor)
-    
-    val textWatcher = AutoSaveTextWatcher(editor)
-    editor.editor.addTextChangeListener(textWatcher)
-    editorTextWatchers[editor] = textWatcher
-    
-    log.debug("Added auto-save text watcher for file: ${editor.file?.absolutePath}")
+    // Initialize content hash for change detection
+    try {
+      val currentContent = editor.editor.text.toString()
+      editorContentHashes[editor] = currentContent.hashCode()
+      log.debug("Initialized auto-save for file: ${editor.file?.absolutePath}")
+    } catch (e: Exception) {
+      log.error("Failed to initialize auto-save for editor", e)
+    }
   }
 
   /**
-   * Remove text watcher from an editor
+   * Clean up auto-save for an editor
    */
-  protected fun removeAutoSaveTextWatcher(editor: CodeEditorView) {
-    val existingWatcher = editorTextWatchers.remove(editor)
-    if (existingWatcher != null) {
-      editor.editor.removeTextChangeListener(existingWatcher)
-      log.debug("Removed auto-save text watcher for file: ${editor.file?.absolutePath}")
+  protected fun cleanupAutoSaveForEditor(editor: CodeEditorView) {
+    editorContentHashes.remove(editor)
+    
+    // Remove from pending saves if present
+    val file = editor.file
+    if (file != null) {
+      pendingSaveFiles.remove(file)
     }
+    
+    log.debug("Cleaned up auto-save for file: ${editor.file?.absolutePath}")
   }
 
   /**
@@ -425,20 +470,14 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
    * Called when a new editor is created or file is opened
    */
   protected fun onEditorCreated(editor: CodeEditorView) {
-    addAutoSaveTextWatcher(editor)
+    initializeAutoSaveForEditor(editor)
   }
 
   /**
    * Called when an editor is closed or destroyed
    */
   protected fun onEditorDestroyed(editor: CodeEditorView) {
-    removeAutoSaveTextWatcher(editor)
-    
-    // Remove from pending saves if present
-    val file = editor.file
-    if (file != null) {
-      pendingSaveFiles.remove(file)
-    }
+    cleanupAutoSaveForEditor(editor)
   }
 
   protected open fun preDestroy() {
@@ -460,10 +499,8 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
       // Stop auto-save mechanism
       stopAutoSave()
       
-      // Clear text watchers
-      editorTextWatchers.keys.forEach { editor ->
-        removeAutoSaveTextWatcher(editor)
-      }
+      // Clear content hashes and pending files
+      editorContentHashes.clear()
       editorTextWatchers.clear()
       pendingSaveFiles.clear()
       
@@ -747,8 +784,8 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
     refreshSymbolInput(editorView)
     invalidateOptionsMenu()
     
-    // Ensure auto-save text watcher is attached to the newly selected editor
-    addAutoSaveTextWatcher(editorView)
+    // Initialize auto-save for the newly selected editor
+    initializeAutoSaveForEditor(editorView)
   }
 
   override fun onTabUnselected(tab: Tab) {}
@@ -916,11 +953,11 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
           tabs.visibility = View.VISIBLE
           viewContainer.displayedChild = 0
           
-          // Add auto-save text watchers to all open editors
+          // Add auto-save initialization to all open editors
           files.forEachIndexed { index, _ ->
             val editor = provideEditorAt(index)
             if (editor != null) {
-              addAutoSaveTextWatcher(editor)
+              initializeAutoSaveForEditor(editor)
             }
           }
         }
