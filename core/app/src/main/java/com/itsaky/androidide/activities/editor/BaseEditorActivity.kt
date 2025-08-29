@@ -257,7 +257,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
       val file = editor.file
       if (file != null && file.exists() && file.canWrite()) {
         // Get the text content from the editor
-        val content = editor.editor.text.toString()
+        val content = editor.editor?.text?.toString() ?: ""
         // Write to file
         file.writeText(content)
         true
@@ -290,7 +290,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
       val editor = provideEditorAt(i)
       if (editor?.file != null) {
         try {
-          val currentContent = editor.editor.text.toString()
+          val currentContent = editor.editor?.text?.toString() ?: ""
           val currentHash = currentContent.hashCode()
           val lastHash = editorContentHashes[editor] ?: 0
           
@@ -430,7 +430,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
 
     // Initialize content hash for change detection
     try {
-      val currentContent = editor.editor.text.toString()
+      val currentContent = editor.editor?.text?.toString() ?: ""
       editorContentHashes[editor] = currentContent.hashCode()
       log.debug("Initialized auto-save for file: ${editor.file?.absolutePath}")
     } catch (e: Exception) {
