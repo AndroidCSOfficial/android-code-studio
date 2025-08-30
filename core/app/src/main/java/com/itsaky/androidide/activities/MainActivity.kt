@@ -44,10 +44,6 @@ import com.itsaky.androidide.viewmodel.MainViewModel.Companion.SCREEN_TEMPLATE_L
 import com.itsaky.androidide.activities.TomIDEUpdater
 import java.io.File
 
-import com.itsaky.androidide.utils.Environment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import android.content.Context
-
 class MainActivity : EdgeToEdgeIDEActivity() {
 
   private lateinit var tomIDEUpdater: TomIDEUpdater
@@ -204,46 +200,10 @@ class MainActivity : EdgeToEdgeIDEActivity() {
     builder.show()
   }
 
-    internal fun openProject(root: File) {
-        IProjectManager.getInstance().openProject(root)
-        
-        val hasNative = hasNativeFiles(root)
-        val ndkInstalled = isNdkInstalled()
-        
-        if (hasNative && !ndkInstalled) {
-            showNdkNotInstalledDialog(this) {
-                //startActivity(Intent(this, EditorActivityKt::class.java))
-            }
-        } else {
-            startActivity(Intent(this, EditorActivityKt::class.java))
-        }
-    }
-    
-    private fun hasNativeFiles(projectRoot: File): Boolean {
-        val androidMkFile = File(projectRoot, "src/main/jni/Android.mk")
-        val cmakeListsFile = File(projectRoot, "src/main/jni/CMakeLists.txt")
-        return androidMkFile.exists() || cmakeListsFile.exists()
-    }
-    
-    private fun isNdkInstalled(): Boolean {
-        val ndkBuildFile = File(Environment.ANDROID_HOME, "ndk/27.1.12297006/ndk-build")
-        return ndkBuildFile.exists()
-    }
-    
-    private fun showNdkNotInstalledDialog(context: Context, onDismiss: () -> Unit = {}) {
-        MaterialAlertDialogBuilder(context)
-            .setTitle("NDK Not Found")
-            .setMessage("A compatible NDK (version 27.1.12297006) is not installed.\n\n" +
-                       "Native code features will be disabled for this project.\n\n" +
-                       "To enable native development, please install NDK version 27.1.12297006 " +
-                       "open a terminal then run: 'idesetup -y -c -wn'.")
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-                onDismiss()
-            }
-            .setCancelable(false)
-            .show()
-    }
+  internal fun openProject(root: File) {
+    IProjectManager.getInstance().openProject(root)
+    startActivity(Intent(this, EditorActivityKt::class.java))
+  }
 
   override fun onDestroy() {
     tomIDEUpdater.cancelDownload()

@@ -126,6 +126,9 @@ import com.itsaky.androidide.actions.file.SaveFileAction
 import android.content.Context 
 import kotlinx.coroutines.withContext
 
+import com.itsaky.androidide.utils.Environment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 /**
  * Base class for EditorActivity which handles most of the view related things.
  *
@@ -645,7 +648,7 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
 
     setSupportActionBar(content.editorToolbar)
 
-    // setupDrawers()
+    setupDrawers()
     content.tabs.addOnTabSelectedListener(this)
 
     setupViews()
@@ -921,6 +924,32 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
     return filesTreeFragment
   }
 
+    private fun hasNativeFiles(projectRoot: File): Boolean {
+        val androidMkFile = File(projectRoot, "src/main/jni/Android.mk")
+        val cmakeListsFile = File(projectRoot, "src/main/jni/CMakeLists.txt")
+        return androidMkFile.exists() || cmakeListsFile.exists()
+    }
+    
+    private fun isNdkInstalled(): Boolean {
+        val ndkBuildFile = File(Environment.ANDROID_HOME, "ndk/27.1.12297006/ndk-build")
+        return ndkBuildFile.exists()
+    }
+    
+    private fun showNdkNotInstalledDialog(context: Context, onDismiss: () -> Unit = {}) {
+        MaterialAlertDialogBuilder(context)
+            .setTitle("NDK Not Found")
+            .setMessage("A compatible NDK (version 27.1.12297006) is not installed.\n\n" +
+                       "Native code features will be disabled for this project.\n\n" +
+                       "To enable native development, please install NDK version 27.1.12297006 " +
+                       "open a terminal then run: 'idesetup -y -c -wn'.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+                onDismiss()
+            }
+            .setCancelable(false)
+            .show()
+    }
+    
   fun doSetStatus(text: CharSequence, @GravityInt gravity: Int) {
     editorViewModel.statusText = text
     editorViewModel.statusGravity = gravity
@@ -962,23 +991,23 @@ abstract class BaseEditorActivity : EdgeToEdgeIDEActivity(), TabLayout.OnTabSele
     text.replace(0, 0, endLine, text.getColumnCount(endLine), generated)
   }
 
-  // private fun setupDrawers() {
-    // val toggle = ActionBarDrawerToggle(
-      // this, binding.editorDrawerLayout, content.editorToolbar,
-      // string.app_name, string.app_name
-    // )
+  private fun setupDrawers() {
+    val toggle = ActionBarDrawerToggle(
+      this, binding.editorDrawerLayout, content.editorToolbar,
+      string.app_name, string.app_name
+    )
 
-    // binding.editorDrawerLayout.addDrawerListener(toggle)
-    // toggle.syncState()
-    // binding.apply {
-      // editorDrawerLayout.apply {
-        // childId = contentCard.id
-        // translationBehaviorStart = ContentTranslatingDrawerLayout.TranslationBehavior.FULL
-        // translationBehaviorEnd = ContentTranslatingDrawerLayout.TranslationBehavior.FULL
-        // setScrimColor(Color.TRANSPARENT)
-      // }
-    // }
-  // }
+    binding.editorDrawerLayout.addDrawerListener(toggle)
+    toggle.syncState()
+    binding.apply {
+      editorDrawerLayout.apply {
+        childId = contentCard.id
+        translationBehaviorStart = ContentTranslatingDrawerLayout.TranslationBehavior.FULL
+        translationBehaviorEnd = ContentTranslatingDrawerLayout.TranslationBehavior.FULL
+        setScrimColor(Color.TRANSPARENT)
+      }
+    }
+  }
 
   private fun onBuildStatusChanged() {
     log.debug(

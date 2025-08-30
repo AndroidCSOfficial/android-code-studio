@@ -668,7 +668,7 @@ abstract class ProjectHandlerActivity : BaseEditorActivity() {
         projectName = manager.projectDir.name
       }
 
-      supportActionBar!!.subtitle = projectName
+      // supportActionBar!!.subtitle = projectName
     } catch (th: Throwable) {
       // ignored
     }

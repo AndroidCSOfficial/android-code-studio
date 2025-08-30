@@ -14,21 +14,31 @@
  *  You should have received a copy of the GNU General Public License
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
+ 
+ /*
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
+ * ++ ndk checks
+ */
 
 package com.itsaky.androidide.handlers
 
+import android.content.Context
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.itsaky.androidide.R
 import com.itsaky.androidide.activities.editor.EditorHandlerActivity
 import com.itsaky.androidide.preferences.internal.GeneralPreferences
+import com.itsaky.androidide.projects.IProjectManager
 import com.itsaky.androidide.resources.R.string
 import com.itsaky.androidide.services.builder.GradleBuildService
 import com.itsaky.androidide.tooling.api.messages.result.BuildInfo
 import com.itsaky.androidide.tooling.events.ProgressEvent
 import com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationStartEvent
 import com.itsaky.androidide.tooling.events.task.TaskStartEvent
+import com.itsaky.androidide.utils.Environment
 import com.itsaky.androidide.utils.flashError
 import com.itsaky.androidide.utils.flashSuccess
 import org.slf4j.LoggerFactory
+import java.io.File
 import java.lang.ref.WeakReference
 
 /**
@@ -39,6 +49,7 @@ class EditorBuildEventListener : GradleBuildService.EventListener {
 
   private var enabled = true
   private var activityReference: WeakReference<EditorHandlerActivity> = WeakReference(null)
+  private var ndkCheckPerformed = false
 
   companion object {
 
@@ -53,11 +64,13 @@ class EditorBuildEventListener : GradleBuildService.EventListener {
   fun setActivity(activity: EditorHandlerActivity) {
     this.activityReference = WeakReference(activity)
     this.enabled = true
+    this.ndkCheckPerformed = false // Reset NDK check when activity is set
   }
 
   fun release() {
     activityReference.clear()
     this.enabled = false
+    this.ndkCheckPerformed = false
   }
 
   override fun prepareBuild(buildInfo: BuildInfo) {
@@ -72,6 +85,9 @@ class EditorBuildEventListener : GradleBuildService.EventListener {
     if (isFirstBuild) {
       activity.showFirstBuildNotice()
     }
+
+    // Check for NDK requirements before build starts
+    checkNdkRequirements()
 
     activity.editorViewModel.isBuildInProgress = true
     activity.content.bottomSheet.clearBuildOutput()
@@ -120,6 +136,63 @@ class EditorBuildEventListener : GradleBuildService.EventListener {
     if (line!!.contains("BUILD SUCCESSFUL") || line.contains("BUILD FAILED")) {
       activity.setStatus(line)
     }
+  }
+
+  /**
+   * Check if the project requires NDK and show dialog if NDK is not installed
+   */
+  private fun checkNdkRequirements() {
+    if (ndkCheckPerformed) {
+      return // Only check once per activity session
+    }
+    
+    ndkCheckPerformed = true
+    
+    try {
+      val projectManager = IProjectManager.getInstance()
+      val projectRoot = File(projectManager.projectDirPath)
+      
+      if (hasNativeFiles(projectRoot) && !isNdkInstalled()) {
+        showNdkNotInstalledDialog(activity)
+      }
+    } catch (e: Exception) {
+      log.warn("Failed to check NDK requirements", e)
+    }
+  }
+
+  /**
+   * Check if the project contains native files that require NDK
+   */
+  private fun hasNativeFiles(projectRoot: File): Boolean {
+    val androidMkFile = File(projectRoot, "src/main/jni/Android.mk")
+    val cmakeListsFile = File(projectRoot, "src/main/jni/CMakeLists.txt")
+    return androidMkFile.exists() || cmakeListsFile.exists()
+  }
+
+  /**
+   * Check if NDK is installed
+   */
+  private fun isNdkInstalled(): Boolean {
+    val ndkBuildFile = File(Environment.ANDROID_HOME, "ndk/27.1.12297006/ndk-build")
+    return ndkBuildFile.exists()
+  }
+
+  /**
+   * Show dialog when NDK is not installed but required
+   */
+  private fun showNdkNotInstalledDialog(context: Context, onDismiss: () -> Unit = {}) {
+    MaterialAlertDialogBuilder(context)
+      .setTitle("NDK Not Found")
+      .setMessage("A compatible NDK (version 27.1.12297006) is not installed.\n\n" +
+                 "Native code features will be disabled for this project.\n\n" +
+                 "To enable native development, please install NDK version 27.1.12297006 " +
+                 "open a terminal then run: 'idesetup -y -c -wn'.")
+      .setPositiveButton("OK") { dialog, _ ->
+        dialog.dismiss()
+        onDismiss()
+      }
+      .setCancelable(false)
+      .show()
   }
 
   private fun analyzeCurrentFile() {
