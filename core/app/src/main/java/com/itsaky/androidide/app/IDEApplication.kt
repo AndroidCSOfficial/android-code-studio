@@ -193,7 +193,7 @@ class IDEApplication : TermuxApplication() {
     }
   }
 
-  // private fun handleCrash(thread: Thread, th: Throwable) {
+  private fun handleCrash(thread: Thread, th: Throwable) {
     // writeException(th)
 
     try {
