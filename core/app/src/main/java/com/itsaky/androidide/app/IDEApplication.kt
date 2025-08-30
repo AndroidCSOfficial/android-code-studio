@@ -209,7 +209,7 @@ class IDEApplication : TermuxApplication() {
 
       exitProcess(1)
     } catch (error: Throwable) {
-      log.e("IDEApplication", "Unable to show crash handler activity", error)
+      Log.e("IDEApplication", "Unable to show crash handler activity", error)
     }
   }
 
