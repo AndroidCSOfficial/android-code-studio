@@ -214,7 +214,6 @@ open class EditorHandlerActivity : ProjectHandlerActivity(), IEditorHandler {
   open fun prepareOptionsMenu(menu: Menu) {
     val data = createToolbarActionData()
     val actions = getInstance().getActions(EDITOR_TOOLBAR)
-    
     actions.forEach { (_, action) ->
       menu.findItem(action.itemId)?.let { item ->
         action.prepare(data)
@@ -230,13 +229,15 @@ open class EditorHandlerActivity : ProjectHandlerActivity(), IEditorHandler {
 
         var showAsAction = action.getShowAsActionFlags(data)
         if (showAsAction == -1) {
-          showAsAction = if (action.icon != null && action.enabled) {
-            MenuItem.SHOW_AS_ACTION_ALWAYS
-          } else if (action.icon != null) {
+          showAsAction = if (action.icon != null) {
             MenuItem.SHOW_AS_ACTION_IF_ROOM
           } else {
             MenuItem.SHOW_AS_ACTION_NEVER
           }
+        }
+
+        if (!action.enabled) {
+          showAsAction = MenuItem.SHOW_AS_ACTION_NEVER
         }
 
         item.setShowAsAction(showAsAction)

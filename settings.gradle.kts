@@ -81,9 +81,9 @@ dependencyResolutionManagement {
 
 // = App version name
 gradle.rootProject {
-  val baseVersion = "2.7.1"
+  val baseVersion = "2.7.3"
   
-  var commitHash = "e3c1585a"
+  var commitHash = "d3a3aa0c"
   
   project.setProperty("version", "$baseVersion-$commitHash")
 }
