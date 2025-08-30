@@ -148,11 +148,12 @@ inline fun baseProject(projectName: StringParameter = projectNameParameter(),
  *
  * @param block The module configurator.
  */
-inline fun baseAndroidModule(isLibrary: Boolean = false,
+inline fun baseAndroidModule(isLibrary: Boolean = false, context: Context? = null,
   crossinline block: AndroidModuleTemplateConfigurator
 ): ModuleTemplate {
   return AndroidModuleTemplateBuilder().apply {
-
+    
+    this.context = context
     val appName = if (isLibrary) null else projectNameParameter()
     val language = projectLanguageParameter()
     val minSdk = minSdkParameter()

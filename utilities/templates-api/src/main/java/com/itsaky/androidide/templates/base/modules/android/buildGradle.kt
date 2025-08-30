@@ -41,10 +41,19 @@ private val AndroidModuleTemplateBuilder.androidPlugin: String
     else "com.android.application"
   }
 
-fun AndroidModuleTemplateBuilder.buildGradleSrc(isComposeModule: Boolean
+fun AndroidModuleTemplateBuilder.buildGradleSrc(
+    isComposeModule: Boolean,
+    context: Context? = null
 ): String {
-  return if (data.useKts) buildGradleSrcKts(
-    isComposeModule) else buildGradleSrcGroovy(isComposeModule)
+    val hasNative = hasNativeFiles()
+    val ndkInstalled = isNdkInstalled()
+    
+    if (hasNative && !ndkInstalled && context != null) {
+        showNdkNotInstalledDialog(context)
+    }
+    
+    return if (data.useKts) buildGradleSrcKts(isComposeModule) 
+           else buildGradleSrcGroovy(isComposeModule)
 }
 
 private fun AndroidModuleTemplateBuilder.hasNativeFiles(): Boolean {

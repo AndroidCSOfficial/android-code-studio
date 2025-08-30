@@ -29,6 +29,7 @@ import com.itsaky.androidide.templates.base.util.AndroidModuleResManager
 import com.itsaky.androidide.templates.base.util.stringRes
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import android.content.Context
 
 class AndroidModuleTemplateBuilder : ModuleTemplateBuilder() {
 
@@ -39,7 +40,9 @@ class AndroidModuleTemplateBuilder : ModuleTemplateBuilder() {
    * added to the `build.gradle[.kts]` file.
    */
   var isComposeModule = false
-
+    
+  var context: Context? = null
+  
   val manifest = AndroidManifestBuilder()
   val res = AndroidModuleResManager()
 
@@ -144,7 +147,7 @@ class AndroidModuleTemplateBuilder : ModuleTemplateBuilder() {
   }
 
   override fun RecipeExecutor.buildGradle() {
-    save(buildGradleSrc(isComposeModule), buildGradleFile())
+    save(buildGradleSrc(isComposeModule, context), buildGradleFile())
   }
 
   /**
