@@ -1,6 +1,7 @@
 # Properties file for F-Droid
 fdroid.properties
 autopush.sh
+clear_runs.py
 
 # Crowdin
 crowdin.properties
