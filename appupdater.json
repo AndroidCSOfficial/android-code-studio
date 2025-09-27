@@ -1,6 +1,14 @@
 {
-  "versionCode": 274,
-  "versionName": "2.7.4-r1.02",
-  "apkUrl": "https://github.com/Mohammed-Baqer-null/AndroidIDE-Rv2/releases/download/v2.7.4-r1.02/rv2ide-aarch64-release.apk",
+  "versionCode": 1000,
+  "versionName": "1.0.0+gh.r01",
+  "baseUrl": "https://github.com/Mohammed-Baqer-null/AndroidIDE-Rv2/releases/download/v{versionName}",
+  "variants": {
+    "armeabi-v7a": {
+      "apkUrl": "{baseUrl}/android-code-studio-armeabi-v7a-{versionName}.apk"
+    },
+    "arm64-v8a": {
+      "apkUrl": "{baseUrl}/android-code-studio-aarch64-{versionName}.apk"
+    }
+  },
   "changelog": "https://raw.githubusercontent.com/Mohammed-Baqer-null/AndroidIDE-Rv2/refs/heads/dev/whatsnew/README.md"
 }
