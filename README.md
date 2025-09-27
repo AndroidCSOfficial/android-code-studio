@@ -57,7 +57,8 @@
 - [x] Asset Studio (Drawable & Icon Maker)
 - [x] Plugin Creator (Create sub-modules or plugins inside your project)
 - [x] Git integration
-- [⭐] **AI Agent** – fully **project-aware AI assistant** that understands your code, modules, and project structure to help with coding, debugging, and suggestions
+- [x] **AI Agent** – fully **project-aware AI assistant** that understands your code, modules, and project structure to help with coding.
+<!-- - debugging, and suggestions-->
 
 ## Installation
 
@@ -129,5 +130,6 @@ along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
 
 Any violations to the license can be reported either by opening an issue or writing a mail to us
 directly.
+
 
 
