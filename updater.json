@@ -9,7 +9,7 @@
       "apkUrl": "{baseUrl}/android-code-studio-armeabi-v7a-{versionName}.apk"
     },
     "arm64-v8a": {
-      "versionCode": 1000,
+      "versionCode": 1001,
       "versionName": "1.0.0+gh.r01", 
       "apkUrl": "{baseUrl}/android-code-studio-aarch64-{versionName}.apk"
     }
