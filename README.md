@@ -42,11 +42,11 @@
 - [x] SDK & NDK Manager (manage Android SDKs and NDKs via terminal)
 - [x] API information for classes and their members (since, removed, deprecated)
 - [x] Log reader (real-time logs for your app)
-- [ ] Language servers
+- [x] Language servers
     - [x] Java
     - [x] XML
     - [x] Kotlin
-- [ ] UI Designer
+- [x] UI Designer
     - [x] Layout inflater
     - [x] Resolve resource references
     - [x] Auto-complete resource values when editing attributes
@@ -130,6 +130,7 @@ along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
 
 Any violations to the license can be reported either by opening an issue or writing a mail to us
 directly.
+
 
 
 
