@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+  <!-- AndroidIDE -->
+  <string name="copy" tools:override="true">Sao chép</string>
+  <string name="terminal_more">Thêm…</string>
+  <string name="text_to_search">Văn bản cần tìm</string>
+  <string name="app_name" translatable="false">AndroidIDE-Rv2</string>
+  <string name="about_option_email">Email</string>
+  <string name="about_option_website">Trang web</string>
+  <string name="about_footer_alternate" translatable="false">AndroidIDE v\u2022 %s</string>
+  <string name="about_footer">AndroidIDE %1$s cho %2$s</string>
+  <string name="about_subtitle">Một IDE đơn giản cho Android</string>
+  <string name="msg_get_package_failed">Không thể trích xuất tên gói!</string>
+  <string name="msg_need_help">Nếu bạn gặp sự cố khi dùng AndroidIDE hoặc khi build ứng dụng Android, bạn có thể tham gia nhóm Telegram để nhờ hỗ trợ.\n\nBạn cũng có thể gửi đề xuất qua email cho chúng tôi.</string>
+  <string name="title_github" translatable="false">GitHub</string>
+  <string name="need_help">Cần trợ giúp?</string>
+  <string name="ide_preferences">Tuỳ chọn IDE</string>
+  <string name="discussions_on_telegram">Thảo luận trên Telegram</string>
+  <string name="official_tg_channel">Kênh Telegram chính thức</string>
+  <string name="msg_empty_view">Không có dữ liệu</string>
+  <string name="title_terminal">Terminal</string>
+  <string name="reset">Đặt lại</string>
+  <string name="app_logs">Nhật ký ứng dụng</string>
+  <string name="ide_logs">Nhật ký IDE</string>
+  <!-- AndroidIDE-R -->
+  <string name="discussions_on_qq">Thảo luận trên QQ</string>
+  <string name="idepref_installViaShizuku_title">Cài qua Shizuku</string>
+  <string name="idepref_installViaShizuku_summary">Nếu bật, IDE sẽ cài đặt im lặng qua Shizuku. Hãy đảm bảo Shizuku đã được cài và kích hoạt.</string>
+
+  <!-- LSP, Diagnostics & Completions -->
+  <string name="get_started">Bắt đầu</string>
+  <string name="msg_cannot_perform_fix">Không thể áp dụng sửa lỗi nhanh</string>
+  <string name="msg_performing_actions">Đang thực hiện hành động mã…</string>
+  <string name="msg_api_info_since">Từ API %d</string>
+  <string name="msg_api_info_removed">Bị loại bỏ ở API %d</string>
+  <string name="msg_api_info_deprecated">Không dùng nữa từ API %d</string>
+  <string name="msg_finding_references">Đang tìm tham chiếu…</string>
+  <string name="msg_finding_definition">Đang tìm định nghĩa…</string>
+  <string name="msg_no_definition">Không tìm thấy định nghĩa</string>
+
+  <!-- Build Tools Installation -->
+  <string name="msg_no_references">Không tìm thấy tham chiếu</string>
+  <string name="view_diags">Chẩn đoán</string>
+  <string name="title_installation_failed">Cài đặt thất bại</string>
+  <string name="msg_picked_isnt_dir">Tệp đã chọn không phải là thư mục!</string>
+  <string name="please_wait">Vui lòng chờ trong giây lát …</string>
+
+  <!-- Project Builder -->
+  <string name="title_unsupported_device">Thiết bị không được hỗ trợ</string>
+  <string name="msg_unsupported_device">Bạn đang dùng biến thể %1$s của AndroidIDE trên một thiết bị chỉ hỗ trợ %2$s. Cấu hình này không được hỗ trợ. Hãy cài biến thể %2$s của AndroidIDE.</string>
+  <string name="title_clear_output">Xoá đầu ra</string>
+  <string name="build_output">Đầu ra build</string>
+  <string name="quick_run_debug">Chạy nhanh</string>
+  <string name="msg_sync_needed">Các tệp Gradle đã thay đổi. Hãy build lại dự án để đồng bộ phụ thuộc và cấu hình.</string>
+  <string name="preparing">Đang chuẩn bị</string>
+  <string name="preparing_first">Đang chuẩn bị. Lần build đầu tiên có thể mất tới 10–15 phút!</string>
+  <string name="msg_installing_gradlew">Gradle Wrapper không khả dụng!\nĐang cài mặc định. Sẽ tải Gradle v7.4 nếu cần.</string>
+  <string name="run">Chạy</string>
+  <string name="gradle" translatable="false">Gradle</string>
+
+  <!-- Project -->
+  <string name="title_first_build">Lần build đầu tiên</string>
+  <string name="msg_first_build">Đây là lần build đầu tiên sau khi bạn cài AndroidIDE. Lần build đầu thường mất thời gian vì Gradle tải tất cả phụ thuộc và plugin. Quá trình này có thể mất khoảng 10–15 phút, tùy vào kết nối mạng của bạn.\n\nVui lòng kiên nhẫn …</string>
+  <string name="create_project">Tạo dự án</string>
+  <string name="minimum_sdk">SDK tối thiểu</string>
+  <string name="new_project">Dự án mới</string>
+  <string name="package_name">Tên gói (packagename)</string>
+  <string name="project_app_name">Tên ứng dụng</string>
+  <string name="msg_create_new_project_greeting">Bắt đầu dự án tuyệt vời mới của bạn!</string>
+  <string name="title_confirm_open_project">Mở dự án gần nhất?</string>
+  <string name="msg_confirm_open_project">Bạn có muốn mở dự án đã mở lần cuối không? Dự án đó là:\n%s</string>
+  <string name="title_close_project">Đóng dự án này</string>
+  <string name="msg_opened_project_does_not_exist">Dự án đã mở lần cuối không còn tồn tại!</string>
+  <string name="msg_create_new_project">Tạo dự án mới</string>
+  <string name="msg_open_existing_project">Mở dự án có sẵn</string>
+  <string name="title_confirm_project_close">Đóng dự án</string>
+
+  <!-- Templates -->
+  <string name="msg_confirm_project_close">Bạn có chắc muốn đóng dự án này? Tất cả daemon Gradle đã khởi động sẽ bị dừng sau khi dự án được đóng.</string>
+  <string name="template_basic">Dự án cơ bản</string>
+  <string name="template_empty">Dự án trống</string>
+  <string name="template_cpp">Dự án C++</string>
+  <string name="template_navigation_drawer">Dự án Navigation Drawer</string>
+  <string name="template_compose" translatable="false">Jetpack Compose</string>
+  <string name="template_navigation_tabs">Bottom Navigation Activity</string>
+  <string name="template_tabs">Tabbed Activity</string>
+  <string name="template_no_activity">Không có Activity</string>
+  <string name="template_no_AndroidX">Không dùng AndroidX</string>
+
+  <!-- Files -->
+  <string name="save">Lưu</string>
+  <string name="menu_find">Tìm</string>
+  <string name="menu_find_file">Tìm trong tệp</string>
+  <string name="menu_find_project">Tìm trong dự án</string>
+  <string name="msg_search_modules">Tìm trong các module</string>
+  <string name="msg_no_modules">Không tìm thấy module trong dự án</string>
+  <string name="hint_find_project_filter">Lọc phần mở rộng tệp (tuỳ chọn)</string>
+  <string name="msg_find_project_filter">Phân tách bằng \'|\'</string>
+  <string name="msg_empty_search_query">Vui lòng nhập văn bản</string>
+  <string name="msg_select_search_modules">Chọn module để tìm kiếm</string>
+  <string name="msg_searching_project">Đang tìm trong dự án, vui lòng chờ…</string>
+  <string name="view_search_results">Kết quả tìm kiếm</string>
+  <string name="project_created_successfully">Tạo dự án thành công!</string>
+  <string name="project_creation_failed">Không thể tạo dự án</string>
+  <string name="msg_folder_creation_failed">Không thể tạo thư mục!</string>
+  <string name="msg_file_creation_failed">Không thể tạo tệp!</string>
+  <string name="msg_layout_file_creation_failed">Không thể tạo tệp layout!</string>
+  <string name="msg_folder_created">Tạo thư mục thành công!</string>
+  <string name="msg_file_created">Tạo tệp thành công!</string>
+  <string name="msg_folder_exists">Thư mục đã tồn tại!</string>
+  <string name="msg_file_exists">Tệp đã tồn tại!</string>
+  <string name="msg_layout_file_exists">Tệp layout đã tồn tại!</string>
+  <string name="msg_invalid_name">Tên không hợp lệ!</string>
+  <string name="text_create">Tạo</string>
+  <string name="msg_can_contain_slashes">Nếu đường dẫn chứa dấu phân tách (\'/\'), các thư mục cha cần thiết sẽ được tạo nếu chưa tồn tại.</string>
+  <string name="folder_name">Tên thư mục</string>
+  <string name="file_name">Tên tệp</string>
+  <string name="new_name">Tên mới</string>
+  <string name="new_file">Tệp mới</string>
+  <string name="create_auto_layout">Tạo tệp layout</string>
+  <string name="new_java_class">Class Java mới</string>
+  <string name="new_xml_resource">Tài nguyên XML mới</string>
+  <string name="new_folder">Thư mục mới</string>
+  <string name="title_confirm_delete">Xác nhận xoá</string>
+  <string name="msg_confirm_delete">Bạn có chắc muốn xoá:\n%s?</string>
+  <string name="copied">Đã sao chép!</string>
+  <string name="msg_rename_file">Nhập tên mới cho tệp/thư mục.</string>
+  <string name="renamed">Đổi tên thành công!</string>
+  <string name="rename_failed">Không thể đổi tên tệp!</string>
+  <string name="deleted">Xoá thành công!</string>
+  <string name="delete_failed">Không thể xoá tệp!</string>
+  <string name="copy_path">Sao chép đường dẫn</string>
+  <string name="rename_file">Đổi tên</string>
+  <string name="delete_file">Xoá</string>
+  <string name="action_closeAll">Đóng tất cả</string>
+  <string name="action_closeOthers">Đóng các mục khác</string>
+  <string name="action_closeThis">Đóng mục này</string>
+  <string name="all_saved">Đã lưu tất cả tệp!</string>
+  <string name="save_failed">Không thể lưu tệp</string>
+  <string name="msg_newfile_dest">Đích: %s/</string>
+  <string name="restype_drawable">Drawable</string>
+  <string name="restype_layout">Bố cục</string>
+  <string name="restype_menu">Menu</string>
+  <string name="restype_other">Khác</string>
+  <string name="classtype_class">Lớp</string>
+  <string name="classtype_activity">Activity</string>
+  <string name="title_interface">Interface</string>
+  <string name="classtype_enum">Enum</string>
+  <string name="msg_failed_list_files">Không thể liệt kê tệp dự án!</string>
+
+  <!-- Code Editor -->
+  <string name="open_with">Mở bằng...</string>
+
+  <string name="undo">Hoàn tác</string>
+  <string name="redo">Quay lại trước đó</string>
+
+  <!-- Preferences -->
+  <string name="title_change_text_size">Cỡ chữ trình soạn thảo</string>
+  <string name="idepref_about_title">Giới thiệu AndroidIDE</string>
+  <string name="idepref_build_clearCache_title">Xoá bộ nhớ đệm Gradle</string>
+  <string name="idepref_build_clearCache_summary">Xoá thư mục bộ nhớ đệm của Gradle. Việc này sẽ xoá mọi phụ thuộc đã tải. Các tệp cần thiết sẽ được tải lại ở lần build tiếp theo.</string>
+  <string name="idepref_build_customgradlecommands_title">Lệnh Gradle bổ sung</string>
+  <string name="idepref_build_customgradlecommands_summary">Chọn các lệnh sẽ được thêm khi thực thi mỗi tác vụ</string>
+  <string name="idepref_editor_fontsize_title">Cỡ chữ</string>
+  <string name="idepref_editor_fontsize_summary">Cỡ chữ của trình soạn thảo</string>
+  <string name="idepref_editor_paintingflags_title">Hiển thị ký tự không in</string>
+  <string name="idepref_editor_paintingflags_summary">Chọn các loại ký tự không in mà trình soạn thảo sẽ hiển thị</string>
+  <string name="idepref_editor_word_wrap_title">Ngắt dòng tự động</string>
+  <string name="idepref_editor_word_wrap_summary">Dùng ngắt dòng của trình soạn thảo</string>
+  <string name="idepref_editor_use_magnifier_title">Bật kính lúp</string>
+  <string name="idepref_editor_use_magnifier_summary">Phóng to văn bản tại vị trí con trỏ khi chọn văn bản trong trình soạn thảo</string>
+  <string name="idepref_editor_title">Trình soạn thảo</string>
+  <string name="idepref_build_title">Biên dịch &amp; Chạy</string>
+  <string name="title_open_projects">Mở dự án gần nhất</string>
+  <string name="msg_open_projects">Nếu bật, IDE sẽ nhớ dự án đã mở lần cuối và mở lại khi khởi động.</string>
+  <string name="title_confirm_project_open">Xác nhận mở dự án</string>
+  <string name="msg_confirm_project_open">Hỏi trước khi mở dự án đã mở lần cuối.</string>
+  <string name="title_default_shell">Dùng shell hệ thống trong terminal</string>
+  <string name="msg_default_shell">Nếu bật, \'/system/bin/sh\' sẽ được dùng trong terminal.</string>
+  <string name="title_general">Chung</string>
+  <string name="title_tab_size">Kích thước tab</string>
+  <string name="msg_tab_size">Chỉ định số khoảng trắng cho TAB</string>
+  <string name="msg_preferences">Tuỳ chọn</string>
+  <string name="pref_changelog">Nhật ký thay đổi</string>
+  <string name="msg_editor_font_size">Vui lòng chọn cỡ chữ mặc định của trình soạn thảo:</string>
+  <string name="msg_clear_cache">Thao tác này sẽ xoá thư mục bộ nhớ đệm do Gradle tạo. Sau khi xoá, lần build tiếp theo có thể lâu hơn vì Gradle phải tải lại các tệp cần thiết.\n\nBạn có chắc muốn xoá bộ nhớ đệm?</string>
+
+  <!-- Error Messages used while Logging -->
+
+  <!-- Layout preview and designer -->
+  <string name="title_preview_layout">Xem trước bố cục</string>
+  <string name="title_viewaction_delete">Xoá</string>
+  <string name="msg_yesno_def_title">Vui lòng xác nhận</string>
+  <string name="msg_yesno_def_message">Bạn có chắc không?</string>
+  <string name="msg_empty_ui_layout">Chưa có view nào được thêm. Nhấn để thêm.</string>
+  <string name="msg_generate_xml_failed">Không thể tạo mã XML</string>
+  <string name="title_generating_xml">Đang tạo mã XML</string>
+  <string name="msg_swipe_up">Vuốt lên hoặc nhấn để xem đầu ra build, nhật ký và nhiều hơn.</string>
+  <string name="msg_ide_crashed">AndroidIDE đã gặp sự cố</string>
+  <string name="msg_report_crash">Vui lòng mở issue trên GitHub với stacktrace sau:</string>
+  <string name="msg_crash_report_hint">Nhấn nút bên dưới để sao chép log và mở trang issues.</string>
+  <string name="msg_copy_report_action">Sao chép và báo lỗi</string>
+  <string name="title_translations">Dịch thuật</string>
+  <string name="action_expand_selection">Mở rộng vùng chọn</string>
+  <string name="idepref_java_matchLower_title">Khớp gợi ý ở chữ thường</string>
+  <string name="title_common">Chung</string>
+  <string name="idepref_editor_category_common" translatable="false">@string/title_common</string>
+  <string name="idepref_editor_category_java" translatable="false">Java</string>
+  <string name="title_files_unsaved">Tệp chưa lưu</string>
+  <string name="msg_files_unsaved">Một số tệp chưa được lưu. Bạn có muốn lưu trước khi đóng không? Các tệp chưa lưu:\n%s</string>
+  <string name="idepref_editor_autoSave_title">Lưu trước khi đóng tệp</string>
+  <string name="idepref_editor_autoSave_summary">Lưu tệp trước khi đóng. TÍNH NĂNG THỬ NGHIỆM. Bạn vẫn nên tự lưu tệp của mình.</string>
+  <string name="idepref_java_matchLower_summary">Nếu bật, khi gõ chữ thường hoặc hoa vẫn sẽ gợi ý tên lớp cũng như các phần tử trong phạm vi.</string>
+  <string name="idepref_editor_ligatures_title">Ligature phông chữ</string>
+  <string name="idepref_editor_ligatures_summary">Bật/tắt ligature của phông chữ</string>
+
+  <string name="idepref_editor_autosave_title">✨Tự động lưu</string>
+  <string name="idepref_editor_autosave_summary">Tự động lưu mọi chỉnh sửa mỗi 2 giây để tránh mất dữ liệu khi ứng dụng bị đóng đột ngột.</string>
+
+  <string name="yes">Có</string>
+  <string name="no">Không</string>
+  <string name="msg_viewaction_add_attr">Thêm thuộc tính</string>
+  <string name="msg_file_tree">Cây tệp</string>
+  <string name="hint_attr_value">Giá trị thuộc tính</string>
+  <string name="title_format_code">Định dạng mã</string>
+  <string name="idepref_java_useGoogleStyle_title">Dùng định dạng Google Java Style</string>
+  <string name="idepref_java_useGoogleStyle_summary">Dùng cấu hình Google Java Style để định dạng mã nguồn Java.</string>
+  <string name="idepref_visiblePassword_title">Cờ mật khẩu hiển thị</string>
+  <string name="idepref_visiblePassword_summary">Dùng cho kiểu nhập mật khẩu hiển thị trong trình soạn thảo. Đảm bảo bàn phím không đề xuất gợi ý.</string>
+  <string name="previous">Trước</string>
+  <string name="title_gradle_service_notification_ticker">Đã khởi động dịch vụ build Gradle</string>
+  <string name="title_gradle_service_notification">Dịch vụ build Gradle</string>
+  <string name="title_cancel_build">Huỷ build</string>
+  <string name="msg_initializing_project">Đang khởi tạo dự án</string>
+  <string name="msg_project_initialized">Đã khởi tạo dự án</string>
+  <string name="msg_project_initialization_failed">Khởi tạo dự án thất bại</string>
+  <string name="msg_project_not_initialized">Dự án chưa được khởi tạo</string>
+  <string name="msg_replacement">Thay thế</string>
+  <string name="title_sync_project">Đồng bộ dự án</string>
+  <string name="wizard_save_location">Vị trí lưu</string>
+  <string name="wizard_language">Ngôn ngữ dự án</string>
+  <string name="next">Tiếp</string>
+  <string name="exit">Thoát</string>
+  <string name="idepref_title_customGradleInstallation">Cài đặt Gradle tuỳ chỉnh</string>
+  <string name="idepref_msg_customGradleInstallation">Chỉ định cài đặt Gradle tuỳ chỉnh dùng cho build. Thiết lập này GHI ĐÈ phiên bản trong gradle-wrapper.properties.</string>
+  <string name="msg_gradle_installation_path">Đường dẫn cài Gradle</string>
+  <string name="msg_gradle_installation_input_help">Để trống để dùng Gradle Wrapper.</string>
+
+  <string name="build_status_idle">Không có build nào đang chạy</string>
+  <string name="build_status_in_progress">Đang build…</string>
+  <string name="build_status_failed">Build thất bại. Xem đầu ra build để biết chi tiết.</string>
+  <string name="build_status_sucess">Build thành công</string>
+  <string name="msg_output_text_extraction_failed">Không thể lấy văn bản từ trình soạn thảo</string>
+  <string name="err_invalid_data_by_intent">Intent trả về dữ liệu không hợp lệ</string>
+  <string name="msg_select_from_primary_storage">Chọn một thư mục từ bộ nhớ chính</string>
+  <string name="err_authority_not_allowed">Authority \'%s\' không được phép</string>
+  <string name="idepref_useIcu_title">Dùng thư viện ICU</string>
+  <string name="idepref_useIcu_summary">Dùng thư viện ICU để xác định ranh giới từ khi nhấn đúp và nhấn giữ để chọn từ.</string>
+
+  <!--The text sorrounded with '@@' is spanned as clickable.-->
+  <!--There must be exactly two '@@' sorrounding the text that should be clickable.-->
+  <string name="msg_drawer_for_files">Mở ngăn kéo bên trái để xem @@tệp@@.</string>
+  <string name="msg_swipe_for_output">Vuốt lên để xem @@đầu ra build@@.</string>
+  <string name="idepref_editor_useSoftTabs_title">Dùng tab mềm</string>
+  <string name="idepref_editor_useSoftTabs_summary">Chọn dùng khoảng trắng thay cho ký tự tab (\\t).</string>
+  <string name="btn_donate">Ủng hộ</string>
+  <string name="btn_docs">Tài liệu</string>
+  <string name="btn_close">Đóng</string>
+  <string name="msg_ignore_case">Bỏ qua hoa/thường</string>
+  <string name="msg_use_regex">Dùng regex</string>
+  <string name="idepref_buildnrun_summary">Cấu hình build Gradle.</string>
+  <string name="configure">Cấu hình</string>
+  <string name="about">Giới thiệu</string>
+  <string name="idepref_github_summary">AndroidIDE là mã nguồn mở!</string>
+  <string name="idepref_channel_summary">Theo dõi để nhận cập nhật mới nhất.</string>
+  <string name="idepref_group_summary">Thảo luận tính năng, lỗi và cải tiến tại đây.</string>
+  <string name="idepref_changelog_summary">Có gì mới trong phiên bản này?</string>
+  <string name="idepref_about_summary">Thông tin thêm về AndroidIDE.</string>
+  <string name="idepref_general_summary">Cấu hình chung cho IDE.</string>
+  <string name="idepref_editor_summary">Cấu hình trình soạn thảo.</string>
+  <string name="xml" translatable="false">XML</string>
+  <string name="idepref_xml_trimFinalNewLine_title">Cắt dòng trống cuối</string>
+  <string name="idepref_xml_insertFinalNewLine_title">Thêm dòng trống cuối</string>
+  <string name="idepref_xml_trimFinalNewLine_summary">Xoá dòng trống dư ở cuối tệp.</string>
+  <string name="idepref_xml_insertFinalNewLine_summary">Thêm một dòng trống ở cuối tệp.</string>
+  <string name="idepref_xml_splitAttributes_title">Tách thuộc tính</string>
+  <string name="idepref_xml_splitAttributes_summary">Đưa mỗi thuộc tính xuống dòng mới</string>
+  <string name="idepref_xml_joinCDataLines_title">Ghép dòng CDATA</string>
+  <string name="idepref_xml_joinCDataLines_summary">Chuẩn hoá nội dung bên trong CDATA.</string>
+  <string name="idepref_xml_joinComment_title">Ghép dòng chú thích</string>
+  <string name="idepref_xml_joinComment_summary">Chuẩn hoá nội dung bên trong chú thích.</string>
+  <string name="idepref_xml_joinContent_title">Ghép dòng nội dung</string>
+  <string name="idepref_xml_joinContent_summary">Chuẩn hoá nội dung bên trong phần tử.</string>
+  <string name="idepref_xml_spaceBeforeEmptyClose_title">Khoảng trắng trước thẻ tự đóng</string>
+  <string name="idepref_xml_spaceBeforeEmptyClose_summary">Chèn khoảng trắng trước dấu đóng của thẻ tự đóng.</string>
+  <string name="idepref_xml_preserveEmptyContent_title">Giữ nội dung rỗng</string>
+  <string name="idepref_xml_preserveEmptyContent_summary">Giữ nguyên nội dung rỗng bên trong phần tử (khoảng trắng, xuống dòng, tab, v.v.).</string>
+  <string name="idepref_xml_preserveAttrLineBreaks_title">Giữ xuống dòng giữa thuộc tính</string>
+  <string name="idepref_xml_preserveAttrLineBreaks_summary">Giữ xuống dòng giữa các thuộc tính.</string>
+  <string name="idepref_xml_closingBrackNewLine_title">Dấu &gt; trên dòng mới</string>
+  <string name="idepref_xml_closingBrackNewLine_summary">Đặt dấu đóng thẻ trên một dòng mới.</string>
+  <string name="idepref_xml_trimTrailingWs_title">Cắt khoảng trắng cuối dòng</string>
+  <string name="idepref_xml_trimTrailingWs_summary">Xoá khoảng trắng dư ở cuối dòng.</string>
+  <string name="idepref_maxLineWidth_title">Độ rộng dòng tối đa</string>
+  <string name="idepref_maxLineWidth_summary">Số ký tự tối đa trên một dòng.</string>
+  <string name="idepref_splitAttrIndentSize_title">Thụt dòng thuộc tính tách</string>
+  <string name="idepref_splitAttrIndentSize_summary">Số khoảng trắng để thụt dòng cho thuộc tính tách dòng.</string>
+  <string name="idepref_preservedNewLines_title">Số dòng trống được giữ</string>
+  <string name="idepref_preservedNewLines_summary">Số lần xuống dòng liên tiếp tối đa được giữ lại.</string>
+  <string name="idepref_emptyElements_title">Hành vi phần tử rỗng</string>
+  <string name="idepref_emptyElements_summary">Chọn cách định dạng phần tử rỗng.</string>
+  <string name="xml_formatting_options">Tuỳ chọn định dạng XML</string>
+  <string name="xml_formatting_options_summary">Cấu hình bộ định dạng XML</string>
+  <string name="idepref_customFont_title">Dùng phông chữ tuỳ chỉnh</string>
+  <string name="idepref_customFont_summary">Nếu bật, tệp tại \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" sẽ được dùng làm phông chữ của trình soạn thảo.</string>
+  <string name="msg_installing_apk">Đang cài APK...</string>
+  <string name="msg_action_open_application">Bạn có muốn mở ứng dụng không?</string>
+
+  <string name="title_gradle_service_notification_channel">Dịch vụ build Gradle của AndroidIDE</string>
+  <string name="msg_hex_color_code">Mã màu hex</string>
+  <string name="msg_color_picker_pick">Chọn</string>
+  <string name="msg_chmod_exec">Đang đặt quyền thực thi…</string>
+  <string name="msg_linking">Đang liên kết %1$s tới %2$s</string>
+  <string name="msg_extracting_hooks">Đang giải nén thư viện hook…</string>
+  <string name="msg_empty_package">Tên gói trống</string>
+  <string name="msg_package_is_not_valid">Tên gói không hợp lệ</string>
+  <string name="msg_package_is_to_long">Tên gói quá dài</string>
+  <string name="msg_package_not_valid_char_1">Ký tự \'_\' không thể là ký tự đầu trong một phần của tên gói</string>
+  <string name="msg_package_not_use_digit_first">Chữ số không thể là ký tự đầu trong một phần của tên gói</string>
+  <string name="msg_package_not_valid_char_2">Ký tự \"%1$s\" không được phép trong tên gói ứng dụng Android</string>
+  <string name="msg_package_mus_have_dot">Tên gói phải có ít nhất một dấu \'.\' phân tách</string>
+
+  <string name="action_import_classes">Import class(es)</string>
+  <string name="action_generate_setters_getters">Tạo setter/getter</string>
+  <string name="action_add_throws">Thêm \'throws\'</string>
+  <string name="action_comment_line">Ghi chú dòng</string>
+  <string name="action_create_missing_method">Tạo phương thức còn thiếu</string>
+  <string name="action_convert_to_block">Chuyển thành khối</string>
+  <string name="action_generate_constructor">Tạo constructor</string>
+  <string name="action_implement_abstract_methods">Triển khai phương thức trừu tượng</string>
+  <string name="action_remove_class">Xoá lớp</string>
+  <string name="action_remove_method">Xoá phương thức</string>
+  <string name="action_remove_unused_throws">Xoá throws không dùng</string>
+  <string name="action_suppress_unchecked_warning">Ẩn cảnh báo \'unchecked\'</string>
+  <string name="action_uncomment_line">Bỏ ghi chú dòng</string>
+  <string name="action_convert_to_statement">Chuyển thành câu lệnh</string>
+  <string name="msg_select_fields">Chọn trường</string>
+  <string name="msg_no_fields_selected">Chưa chọn trường nào</string>
+  <string name="msg_no_fields_found">Không tìm thấy trường nào</string>
+  <string name="action_override_superclass_methods">Ghi đè phương thức lớp cha</string>
+  <string name="msg_no_methods_selected">Chưa chọn phương thức nào</string>
+  <string name="msg_cannot_override_methods">Không thể ghi đè phương thức</string>
+  <string name="msg_cannot_generate_setters_getters">Không thể tạo setter và getter</string>
+  <string name="msg_select_methods">Chọn phương thức để ghi đè</string>
+  <string name="msg_no_overridable_methods">Không tìm thấy phương thức có thể ghi đè</string>
+  <string name="action_goto_definition">Đi tới định nghĩa</string>
+  <string name="action_find_references">Tìm tham chiếu</string>
+  <string name="action_generate_toString">Tạo toString()</string>
+  <string name="action_remove_unused_imports">Xoá import không dùng</string>
+  <string name="action_organize_imports">Sắp xếp import</string>
+  <string name="msg_cannot_generate_toString">Không thể tạo triển khai toString()</string>
+  <string name="msg_toString_overridden">Đã ghi đè toString()</string>
+  <string name="action_generate_missing_constructor">Tạo constructor còn thiếu</string>
+  <string name="msg_cannot_generate_constructor">Không thể tạo constructor</string>
+  <string name="msg_constructor_available">Đã có constructor với cùng kiểu tham số</string>
+
+  <string name="replace">Thay</string>
+  <string name="replaceAll">Thay tất cả</string>
+  <string name="title_run_tasks">Chạy tác vụ</string>
+  <string name="hint_search_tasks">Tìm tác vụ…</string>
+  <string name="msg_err_select_tasks">Vui lòng chọn tác vụ để chạy</string>
+  <string name="title_confirmation">Xác nhận</string>
+  <string name="msg_tasks_to_run">Các tác vụ sau sẽ được chạy theo thứ tự. Nhấn nút \'Chạy\' lần nữa để xác nhận.\n\n%1$s</string>
+  <string name="msg_loading_tasks">Đang tải tác vụ...</string>
+
+  <string name="ui_category_widgets" translatable="false">Widgets</string>
+  <string name="ui_category_layouts" translatable="false">Layouts</string>
+
+  <string name="widget_view" translatable="false">View</string>
+  <string name="widget_textview" translatable="false">TextView</string>
+  <string name="widget_button" translatable="false">Button</string>
+  <string name="widget_checkbox" translatable="false">CheckBox</string>
+  <string name="widget_checked_textview" translatable="false">CheckedTextView</string>
+  <string name="widget_edittext" translatable="false">EditText</string>
+  <string name="widget_image_button" translatable="false">ImageButton</string>
+  <string name="widget_image_view" translatable="false">ImageView</string>
+  <string name="widget_progressbar" translatable="false">ProgressBar</string>
+  <string name="widget_radio_button" translatable="false">RadioButton</string>
+  <string name="widget_radio_group" translatable="false">RadioGroup</string>
+  <string name="widget_seekbar" translatable="false">SeekBar</string>
+  <string name="widget_spinner" translatable="false">Spinner</string>
+  <string name="widget_auto_complete_textview" translatable="false">AutoCompleteTextView</string>
+  <string name="widget_multi_auto_complete_textview" translatable="false">MultiAutoCompleteTextView</string>
+  <string name="widget_listview" translatable="false">ListView</string>
+  <string name="widget_surfaceview" translatable="false">SurfaceView</string>
+  <string name="widget_switch" translatable="false">Switch</string>
+  <string name="widget_textureview" translatable="false">TextureView</string>
+  <string name="widget_togglebutton" translatable="false">ToggleButton</string>
+  <string name="widget_webview" translatable="false">WebView</string>
+  <string name="widget_frame_layout" translatable="false">FrameLayout</string>
+  <string name="widget_grid_layout" translatable="false">GridLayout</string>
+  <string name="widget_linear_layout_horz" translatable="false">LinearLayout (H)</string>
+  <string name="widget_linear_layout_vert" translatable="false">LinearLayout (V)</string>
+  <string name="widget_relative_layout" translatable="false">RelativeLayout</string>
+  <string name="widget_scrollview" translatable="false">ScrollView</string>
+  <string name="widget_horizontal_scrollview" translatable="false">HorizontalScrollView</string>
+  <string name="widget_text_clock" translatable="false">TextClock</string>
+  <string name="widget_digital_clock" translatable="false">DigitalClock</string>
+  <string name="widget_calendar_view" translatable="false">CalendarView</string>
+  <string name="widget_space" translatable="false">Space</string>
+  <string name="widget_number_picker" translatable="false">NumberPicker</string>
+  <string name="widget_chronometer" translatable="false">Chronometer</string>
+  <string name="widget_rating_bar" translatable="false">RatingBar</string>
+  <string name="widget_quick_contact_badge" translatable="false">QuickContactBadge</string>
+  <string name="widget_videoview" translatable="false">VideoView</string>
+  <string name="widget_analog_clock" translatable="false">AnalogClock</string>
+  <string name="widget_grid_view" translatable="false">GridView</string>
+  <string name="widget_viewanimator" translatable="false">ViewAnimator</string>
+  <string name="widget_viewswitcher" translatable="false">ViewSwitcher</string>
+  <string name="widget_textswitcher" translatable="false">TextSwitcher</string>
+  <string name="widget_imageswitcher" translatable="false">ImageSwitcher</string>
+  <string name="widget_viewflipper" translatable="false">ViewFlipper</string>
+
+  <!-- GIT -->
+  <string name="git_clone">Clone</string>
+  <string name="git_clone_repo">Clone kho git</string>
+  <string name="git_clone_repo_url">URL kho</string>
+  <string name="git_clone_in_progress">Đang clone kho</string>
+  <string name="git_clone_success">Clone Git thành công</string>
+  <string name="git_clone_failed">Không thể clone kho git</string>
+  <string name="msg_select_attr">Chọn một thuộc tính từ danh sách dưới</string>
+  <string name="action_show_hierarchy">Hiển thị phân cấp bố cục</string>
+  <string name="idepref_editor_colorScheme">Phối màu</string>
+  <string name="idepref_editor_colorScheme_summary">Chọn phối màu dùng trong trình soạn thảo</string>
+  <string name="idepref_general_uiMode">Chế độ giao diện</string>
+  <string name="idepref_general_uiMode_summary">Chọn chế độ giao diện cho IDE</string>
+  <string name="uiMode_light">Sáng</string>
+  <string name="uiMode_dark">Tối</string>
+  <string name="uiMode_system">Theo hệ thống</string>
+  <string name="idepref_general_themeSelector_title">Chủ đề</string>
+  <string name="idepref_general_themeSelector_summary">Chọn chủ đề cho AndroidIDE (yêu cầu khởi động lại).</string>
+  <string name="idepref_general_projectConfig">Cấu hình dự án</string>
+  <string name="msg_app_launch_failed">Khởi chạy thất bại. Hãy cài ứng dụng trước.</string>
+  <string name="idepref_java_diagnosticEnabled_title">Bật chẩn đoán</string>
+  <string name="idepref_java_diagnosticsEnabled_summary">(THỬ NGHIỆM) Phân tích lỗi trong các tệp mã nguồn Java.</string>
+  <string name="title_reload_color_schemes">Tải lại phối màu</string>
+  <string name="msg_dir_picker_failed">Không thể mở trình chọn thư mục: %1$s</string>
+  <string name="msg_tooling_server_unavailable">Máy chủ Tooling API không khả dụng. Kiểm tra đầu ra build và nhật ký IDE để biết lỗi.</string>
+  <string name="idepref_deleteEmptyLines_title">Xoá dòng trống khi Backspace</string>
+  <string name="idepref_deleteEmptyLines_summary">Trình soạn thảo sẽ xoá dòng trống chỉ với một lần nhấn Backspace.</string>
+  <string name="idepref_deleteTabs_title">Xoá tab khi Backspace</string>
+  <string name="idepref_deleteTabs_summary">Khi bật, trình soạn thảo sẽ xoá số khoảng trắng tương ứng độ rộng tab khi nhấn Backspace.</string>
+
+  <string name="btn_sync">Đồng bộ</string>
+  <string name="btn_ignore_changes">Bỏ qua các thay đổi này</string>
+  <string name="title_fix_imports">Sửa import</string>
+  <string name="msg_no_unresolved_classes">Không có tên lớp chưa được giải quyết</string>
+  <string name="title_class_chooser">%1$s nào?</string>
+
+  <string name="permlab_bind_logger_service">liên kết tới dịch vụ log</string>
+  <string name="permdesc_bind_logger_service">Cho phép ứng dụng này liên kết tới dịch vụ ghi log của AndroidIDE. Quyền này cần để AndroidIDE đọc log của ứng dụng này.</string>
+  <string name="wizard_module_name">Tên module</string>
+  <string name="wizard_module_type">Loại module</string>
+  <string name="msg_invalid_module_name">Tên module Gradle không hợp lệ</string>
+  <string name="msg_value_empty">Giá trị trống</string>
+  <string name="msg_file_not_exist">Tệp không tồn tại</string>
+  <string name="msg_path_must_be_file">Phải là đường dẫn tới một tệp</string>
+  <string name="msg_classname_with_keywords">Tên lớp chứa từ khoá</string>
+  <string name="msg_path_must_be_dir">Phải là đường dẫn tới một thư mục</string>
+  <string name="msg_invalid_layout_name">Tên tệp layout không hợp lệ</string>
+  <string name="msg_invalid_project_details">Thông tin dự án không hợp lệ</string>
+  <string name="msg_use_kts">Dùng Kotlin Script (.kts) cho các tệp build Gradle</string>
+  <string name="title_privacy">Quyền riêng tư</string>
+  <string name="title_androidide_statistics">Thống kê AndroidIDE</string>
+  <string name="msg_androidide_statistics">Hãy giúp cải thiện AndroidIDE bằng cách cung cấp thống kê ẩn danh. Chúng tôi thu thập thông tin cơ bản về thiết bị chỉ để thống kê người dùng. Bạn có thể xem dữ liệu chính xác được chia sẻ trong phần tuỳ chọn. Dữ liệu của bạn an toàn và không chia sẻ cho bên thứ ba. Bạn có thể tắt bất cứ lúc nào trong tuỳ chọn.</string>
+  <string name="summary_anonymous_usage_stats">Thống kê sử dụng ẩn danh</string>
+  <string name="idepref_stats_optIn_title">Thu thập thống kê</string>
+  <string name="idepref_stats_optIn_summary">Cho phép thu thập số liệu cài đặt và thống kê thiết bị (hoàn toàn ẩn danh).</string>
+  <string name="title_unique_id">ID duy nhất</string>
+  <string name="title_device">Thiết bị</string>
+  <string name="title_app_version">Phiên bản ứng dụng</string>
+  <string name="title_country">Quốc gia</string>
+  <string name="title_cpu_arch">Kiến trúc CPU</string>
+  <string name="title_preview_data">Xem trước dữ liệu</string>
+  <string name="title_android_version">Phiên bản Android</string>
+  <string name="btn_opt_in">Đồng ý tham gia</string>
+  <string name="title_developer_options">Tuỳ chọn nhà phát triển</string>
+  <string name="idepref_devOptions_summary">Tuỳ chọn thử nghiệm/gỡ lỗi cho AndroidIDE</string>
+  <string name="idepref_group_debugging">Gỡ lỗi</string>
+  <string name="idepref_devOptions_dumpLogs_title">Xuất log</string>
+  <string name="idepref_devOptions_dumpLogs_summary">Xuất nhật ký AndroidIDE vào $HOME/.androidide/logs</string>
+  <string name="msg_emptyview_applogs">Chạy biến thể debug của ứng dụng để xem log tại đây.</string>
+  <string name="msg_logsender_disabled">LogSender đang tắt. Bạn có thể bật trong tuỳ chọn.</string>
+  <string name="msg_emptyview_idelogs">Nhật ký từ IDE sẽ hiển thị tại đây.</string>
+  <string name="msg_emptyview_diagnostics">Mở một tệp để xem kết quả chẩn đoán</string>
+  <string name="msg_emptyview_buildoutput">Hãy build ứng dụng hoặc chạy một tác vụ để xem đầu ra build tại đây.</string>
+  <string name="msg_codeaction_failed">Không thể thực hiện hành động mã</string>
+  <string name="idepref_devOptions_enableLogsender_title">Bật LogSender</string>
+  <string name="idepref_devOptions_enableLogsender_summary">Khi tắt, nhật ký từ ứng dụng sẽ không hiển thị trong AndroidIDE</string>
+  <string name="title_build_variants">Biến thể build</string>
+  <string name="title_apply">Áp dụng</string>
+  <string name="title_discard">Huỷ bỏ</string>
+  <string name="msg_build_variants_fetch_failed">Không thể lấy biến thể build</string>
+  <string name="title_choose_application">Chọn ứng dụng</string>
+  <string name="err_selected_variant_not_found">Không tìm thấy biến thể build đã chọn</string>
+  <string name="title_disconnect_log_senders">Ngắt kết nối log sender</string>
+  <string name="title_begin_long_select">Bắt đầu chọn dài</string>
+  <string name="idepref_editor_stickScroll_title">Cuộn dính</string>
+  <string name="idepref_editor_stickyScroll_summary">Hiển thị phạm vi hiện tại ở trên cùng khi cuộn trong trình soạn thảo.</string>
+  <string name="idepref_launchAppAfterInstall_title">Mở ứng dụng sau khi cài</string>
+  <string name="idepref_launchAppAfterInstall_summary">Nếu bật, IDE sẽ mở ứng dụng ngay sau khi cài đặt (không hỏi xác nhận).</string>
+  <string name="title_run_options">Tuỳ chọn chạy</string>
+  <string name="err_cannot_determine_package">Không thể chạy ứng dụng. Không xác định được tên gói.</string>
+  <string name="msg_launch_failure_no_app_module">Không thể chạy ứng dụng. Không tìm thấy module ứng dụng trong dự án.</string>
+  <string name="title_launch_app">Khởi chạy ứng dụng</string>
+  <string name="title_experiment_flavor">Thử nghiệm</string>
+  <string name="msg_experimental_flavor">Bạn đang dùng biến thể %1$s của AndroidIDE trên thiết bị %2$s. Cấu hình này có thể hoạt động nhưng sẽ giảm hiệu năng và có thể gây rủi ro bảo mật. Hãy tránh dùng khi có thể.</string>
+  <string name="idepref_editor_pinLineNumbers_title">Ghim số dòng</string>
+  <string name="idepref_editor_pinLineNumbers_summary">Ghim cột số dòng khi cuộn ngang trong trình soạn thảo.</string>
+  <string name="theme_blue_wave">Sóng Xanh</string>
+  <string name="theme_sunny_glow">Nắng Ấm</string>
+  <string name="theme_material_you">Material You</string>
+  <string name="idepref_general_localeSelector_title">Ngôn ngữ</string>
+  <string name="idepref_general_localeSelector_summary">Chọn ngôn ngữ cho AndroidIDE.</string>
+  <string name="locale_system_default">Mặc định hệ thống</string>
+  <string name="msg_project_dir_inaccessible">Không thể truy cập thư mục dự án</string>
+  <string name="msg_file_is_not_dir">Tệp đã chọn không phải là thư mục</string>
+  <string name="msg_project_dir_doesnt_exist">Thư mục dự án không tồn tại</string>
+  <string name="msg_files_being_saved">Đang có một tác vụ lưu tệp!</string>
+  <string name="title_install_tools">Cài đặt SDK</string>
+  <string name="subtitle_install_tools">Cài công cụ phát triển</string>
+  <string name="msg_install_tools">Cần cài công cụ phát triển để IDE hoạt động. Nhấn nút hoàn tất sẽ mở terminal để cài công cụ. Để cài đặt, làm theo hướng dẫn <![CDATA[ <a href="https://docs.androidide.com/tutorials/get-started.html">tại đây</a>.<br/><br/>Hoặc đọc <a href="https://docs.androidide.com/">tài liệu</a>]]>.</string>
+  <string name="greeting_title">Chào mừng</string>
+  <string name="greeting_subtitle">Học, xây dựng, phát hành. Tất cả trên Android của bạn.</string>
+  <string name="title_grant">Cấp quyền</string>
+  <string name="permission_title_storage">Bộ nhớ</string>
+  <string name="permission_desc_storage">Cần để truy cập tệp dự án.</string>
+  <string name="permission_desc_install_packages">Cho phép cài APK được build bằng AndroidIDE.</string>
+  <string name="permission_title_install_packages">Cài đặt gói</string>
+  <string name="onboarding_title_permissions">Quyền</string>
+  <string name="onboarding_subtitle_permissions">AndroidIDE cần các quyền sau</string>
+  <string name="msg_grant_permissions">Vui lòng cấp quyền để tiếp tục.</string>
+  <string name="msg_no_internet">Có vẻ bạn đang ngoại tuyến. Hãy kiểm tra kết nối Internet.</string>
+  <string name="msg_connected_to_cellular">Lưu ý! Bạn đang dùng dữ liệu di động.</string>
+  <string name="msg_connected_to_metered_connection">Lưu ý! Bạn đang dùng mạng tính phí theo lưu lượng.</string>
+  <string name="msg_disable_background_data_restriction">Tắt hạn chế dữ liệu nền để tránh lỗi cài đặt.</string>
+  <string name="msg_cannot_create_terminal_session">Không thể tạo phiên terminal</string>
+  <string name="action_auto_install">Cài đặt tự động</string>
+  <string name="action_manual_install">Cài đặt thủ công</string>
+  <string name="hint_android_sdk_version">Phiên bản Android SDK</string>
+  <string name="hin_jdk_version">Phiên bản JDK</string>
+  <string name="action_install_git">Cài đặt Git</string>
+  <string name="action_install_openssh">Cài đặt OpenSSH</string>
+  <string name="action_install_ndk">Cài đặt AndroidNDK</string>
+  <string name="msg_terminal_new_sessions_disabled">Không thể tạo phiên. Phiên mới đang bị vô hiệu hoá!</string>
+  <string name="title_install_location_error">Lỗi vị trí cài đặt</string>
+  <string name="title_unsupported_user">Người dùng không được hỗ trợ</string>
+  <string name="title_socials">Mạng xã hội</string>
+  <string name="title_contributors">Người đóng góp</string>
+  <string name="summary_contributors">Những người đóng góp hàng đầu từ cộng đồng.</string>
+  <string name="title_github_contributors">Người đóng góp trên GitHub</string>
+  <string name="title_crowdin_translators">Dịch giả trên Crowdin</string>
+  <string name="title_misc">Khác</string>
+  <string name="title_contribute">Đóng góp</string>
+  <string name="summary_contribute">Không chỉ là một IDE, đó còn là một cộng đồng. Hãy đóng góp mã, ý tưởng và nhiệt huyết cho AndroidIDE.</string>
+  <string name="msg_app_unavailable_for_intent">Không có ứng dụng nào có thể xử lý intent.</string>
+  <string name="title_open_source_licenses">Giấy phép nguồn mở</string>
+  <string name="summary_open_source_licenses">Xem giấy phép nguồn mở.</string>
+  <string name="idepref_jdkVersion_title">Phiên bản JDK</string>
+  <string name="idepref_jdkVersion_summary">Đang chọn: %1$s (cần khởi động lại nếu thay đổi)</string>
+</resources>
