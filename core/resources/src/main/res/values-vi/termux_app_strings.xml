@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  This file is part of AndroidIDE.
+  ~
+  ~  AndroidIDE is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  AndroidIDE is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools"
+  tools:ignore="UnusedResources">
+
+  <!-- Termux Bootstrap Packages Installation -->
+  <string name="bootstrap_installer_body">Đang cài đặt gói bootstrap…</string>
+  <string name="bootstrap_error_title">Không thể cài đặt bootstrap</string>
+  <string name="bootstrap_error_body">AndroidIDE không thể cài đặt các gói bootstrap.</string>
+  <string name="bootstrap_error_abort">Huỷ</string>
+  <string name="bootstrap_error_try_again">Thử lại</string>
+  <string name="bootstrap_error_not_primary_user_message">AndroidIDE chỉ có thể chạy với người dùng chính (primary user).\nCác binary bootstrap được biên dịch cho AndroidIDE có đường dẫn $PREFIX cố định và không thể cài ở đường dẫn nào khác ngoài:\n%1$s.</string>
+  <string name="bootstrap_error_installed_on_portable_sd">AndroidIDE không thể được cài trên thẻ nhớ di động/ngoài/tháo rời của thiết bị bạn.\nCác binary bootstrap được biên dịch cho AndroidIDE có đường dẫn $PREFIX cố định và không thể cài ở đường dẫn nào khác ngoài:\n%1$s.</string>
+
+  <!-- Terminal Sidebar and Shortcuts -->
+  <string name="action_new_session">Phiên mới</string>
+  <string name="action_new_session_failsafe">Chế độ an toàn</string>
+  <string name="title_max_terminals_reached">Đã đạt số phiên tối đa</string>
+  <string name="msg_max_terminals_reached">Hãy đóng các phiên hiện có trước khi tạo phiên mới.</string>
+
+  <string name="title_rename_session">Đặt tên phiên</string>
+  <string name="action_rename_session_confirm">Đặt</string>
+  <string name="title_create_named_session">Phiên có tên mới</string>
+  <string name="action_create_named_session_confirm">Tạo</string>
+
+  <string name="action_toggle_soft_keyboard">Bàn phím</string>
+
+  <string name="msg_enabling_terminal_toolbar">Đang bật thanh công cụ Terminal</string>
+  <string name="msg_disabling_terminal_toolbar">Đang tắt thanh công cụ Terminal</string>
+
+  <!-- Terminal Popup -->
+  <string name="action_select_url">Chọn URL</string>
+  <string name="title_select_url_dialog">Nhấn URL để sao chép hoặc nhấn giữ để mở</string>
+  <string name="title_select_url_none_found">Không tìm thấy URL trong terminal.</string>
+  <string name="msg_select_url_copied_to_clipboard">Đã sao chép URL vào bộ nhớ tạm</string>
+
+  <string name="action_share_transcript">Chia sẻ bản ghi</string>
+  <string name="title_share_transcript">Bản ghi Terminal</string>
+  <string name="title_share_transcript_with">Gửi bản ghi tới:</string>
+
+  <string name="action_share_selected_text">Chia sẻ đoạn đã chọn</string>
+  <string name="title_share_selected_text">Văn bản Terminal</string>
+  <string name="title_share_selected_text_with">Gửi văn bản đã chọn tới:</string>
+
+  <string name="action_autofill_password">Tự điền mật khẩu</string>
+
+  <string name="action_reset_terminal">Đặt lại</string>
+  <string name="msg_terminal_reset">Đã đặt lại Terminal</string>
+
+  <string name="action_kill_process">Dừng tiến trình (%d)</string>
+  <string name="title_confirm_kill_process">Thật sự dừng phiên này?</string>
+
+  <string name="action_toggle_keep_screen_on">Giữ màn hình luôn bật</string>
+  <string name="action_open_help">Trợ giúp</string>
+  <string name="action_open_settings">Cài đặt</string>
+
+  <string name="action_report_issue">Báo lỗi</string>
+  <string name="msg_generating_report">Đang tạo báo cáo</string>
+  <string name="msg_add_termux_debug_info">Thêm thông tin gỡ lỗi của Termux vào báo cáo?</string>
+
+  <!-- Termux Notifications -->
+  <string name="notification_action_exit" translatable="false">@string/exit</string>
+  <string name="notification_action_wake_lock">Bật wakelock</string>
+  <string name="notification_action_wake_unlock">Giải phóng wakelock</string>
+
+  <!-- TermuxService -->
+  <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">AndroidIDE cần quyền \"Hiển thị trên các ứng dụng khác\" để khởi tạo phiên terminal từ nền trên Android &gt;= 10. Cấp quyền tại Cài đặt -&gt; Ứng dụng -&gt; AndroidIDE -&gt; Nâng cao</string>
+  <string name="error_termux_service_invalid_execution_command_runner" translatable="false">Invalid execution command runner to TermuxService: `%1$s`</string>
+  <string name="error_termux_service_unsupported_execution_command_runner" translatable="false">Unsupported execution command runner to TermuxService: `%1$s`</string>
+  <string name="error_termux_service_unsupported_execution_command_shell_create_mode" translatable="false">Unsupported execution command shell create mode to TermuxService: `%1$s`</string>
+  <string name="error_termux_service_execution_command_shell_name_unset" translatable="false">Shell name not set but `%1$s` shell create mode passed</string>
+
+  <!-- Termux File Receiver -->
+  <string name="title_file_received">Lưu tệp vào ~/downloads/</string>
+  <string name="action_file_received_edit">Chỉnh sửa</string>
+  <string name="action_file_received_open_directory">Mở thư mục</string>
+
+  <!-- Miscellaneous -->
+  <string name="error_termux_service_start_failed_general">Không thể khởi động TermuxService. Kiểm tra logcat để xem thông báo ngoại lệ.</string>
+  <string name="error_termux_service_start_failed_bg">Không thể khởi động TermuxService khi ứng dụng ở nền do hạn chế của Android.</string>
+
+  <!-- Termux App Preferences -->
+  <string name="termux_preferences_title" translatable="false">Termux</string>
+  <string name="termux_preferences_summary">Tuỳ chọn cho terminal Termux.</string>
+
+  <!-- Debugging Preferences -->
+  <string name="termux_debugging_preferences_title">Gỡ lỗi</string>
+  <string name="termux_debugging_preferences_summary">Tuỳ chọn cho gỡ lỗi</string>
+
+  <!-- Logging Category -->
+  <string name="termux_logging_header">Ghi log</string>
+
+  <!-- Log Level -->
+  <string name="termux_log_level_title">Mức log</string>
+
+  <!-- Terminal View Key Logging -->
+  <string name="termux_terminal_view_key_logging_enabled_title">Ghi log phím trong Terminal View</string>
+  <string name="termux_terminal_view_key_logging_enabled_off">Log sẽ không có mục cho phím của Terminal View. (Mặc định)</string>
+  <string name="termux_terminal_view_key_logging_enabled_on">Logcat sẽ có các mục ghi cho phím của Terminal View. Những log này rất chi tiết; nên tắt trong điều kiện bình thường vì có thể gây vấn đề hiệu năng.</string>
+
+  <!-- Crash Report Notifications -->
+  <string name="termux_crash_report_notifications_enabled_title">Thông báo báo cáo sự cố</string>
+  <string name="termux_crash_report_notifications_enabled_off">Tắt thông báo cho báo cáo sự cố.</string>
+  <string name="termux_crash_report_notifications_enabled_on">Hiển thị thông báo cho báo cáo sự cố. (Mặc định)</string>
+
+  <!-- Terminal IO Preferences -->
+  <string name="termux_terminal_io_preferences_title">I/O của Terminal</string>
+  <string name="termux_terminal_io_preferences_summary">Tuỳ chọn cho I/O của terminal</string>
+
+  <!-- Keyboard Category -->
+  <string name="termux_keyboard_header">Bàn phím</string>
+
+  <!-- Soft Keyboard -->
+  <string name="termux_soft_keyboard_enabled_title">Bật bàn phím mềm</string>
+  <string name="termux_soft_keyboard_enabled_off">Bàn phím mềm sẽ bị tắt.</string>
+  <string name="termux_soft_keyboard_enabled_on">Bàn phím mềm sẽ được bật. (Mặc định)</string>
+
+  <!-- Soft Keyboard Only If No Hardware-->
+  <string name="termux_soft_keyboard_enabled_only_if_no_hardware_title">Chỉ bật bàn phím mềm khi không có bàn phím cứng</string>
+  <string name="termux_soft_keyboard_enabled_only_if_no_hardware_off">Bàn phím mềm sẽ được bật ngay cả khi có bàn phím phần cứng. (Mặc định)</string>
+  <string name="termux_soft_keyboard_enabled_only_if_no_hardware_on">Bàn phím mềm chỉ được bật khi không có bàn phím phần cứng.</string>
+
+  <!-- Terminal View Preferences -->
+  <string name="termux_terminal_view_preferences_title">Terminal View</string>
+  <string name="termux_terminal_view_preferences_summary">Tuỳ chọn cho Terminal View</string>
+
+  <!-- View Category -->
+  <string name="termux_terminal_view_view_header">Hiển thị</string>
+
+  <!-- Terminal View Margin Adjustment -->
+  <string name="termux_terminal_view_terminal_margin_adjustment_title">Điều chỉnh lề Terminal</string>
+  <string name="termux_terminal_view_terminal_margin_adjustment_off">Tắt điều chỉnh lề cho Terminal.</string>
+  <string name="termux_terminal_view_terminal_margin_adjustment_on">Bật điều chỉnh lề cho Terminal. Nên bật để thử khắc phục lỗi bàn phím mềm che một phần phím bổ sung/Terminal View. Nếu gây nhấp nháy màn hình trên thiết bị của bạn, hãy tắt. (Mặc định)</string>
+
+</resources>
