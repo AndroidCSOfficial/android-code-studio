@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  This file is part of AndroidIDE.
+  ~
+  ~  AndroidIDE is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  AndroidIDE is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+  <string name="msg_directory_absolute_path">Đường dẫn tuyệt đối thư mục %1$s: \"%2$s\"</string>
+
+  <!-- PackageUtils -->
+  <string name="error_app_not_installed_or_disabled_warning">Ứng dụng %1$s (%2$s) chưa được cài đặt hoặc đã bị vô hiệu hoá.</string>
+  <string name="error_get_package_context_failed_title">Không thể lấy ngữ cảnh gói</string>
+  <string name="error_get_package_context_failed_message">Không thể lấy ngữ cảnh gói cho \"%1$s\". Có thể do ứng dụng chưa được cài đặt hoặc chữ ký APK khác với ứng dụng hiện tại.</string>
+  <string name="error_get_package_context_failed_help_url_message">Xem %1$s để biết chi tiết.</string>
+  <string name="error_get_component_state_failed">Không thể lấy trạng thái thành phần %1$s/%2$s</string>
+  <string name="error_enable_component_failed">Không thể bật thành phần %1$s/%2$s</string>
+  <string name="error_disable_component_failed">Không thể tắt thành phần %1$s/%2$s</string>
+
+  <!-- PermissionUtils -->
+  <string name="error_failed_to_request_permissions">Yêu cầu quyền thất bại với mã yêu cầu %1$d: %2$s</string>
+  <string name="error_attempted_to_check_for_permissions_not_requested" translatable="false">Attempted to check for permissions that have not been requested in app manifest: %1$s</string>
+  <string name="error_attempted_to_ask_for_permissions_not_requested">Đã cố gắng xin các quyền không được khai báo trong manifest của ứng dụng: %1$s</string>
+  <string name="error_has_not_requested_legacy_external_storage">Gói \"%1$s\" đặt targetSdkVersion %2$d và đang chạy trên Android SDK %3$d nhưng chưa đặt requestLegacyExternalStorage thành true trong manifest của ứng dụng</string>
+  <string name="msg_requires_dump_and_package_usage_stats_permissions">Cần quyền `DUMP` và `PACKAGE_USAGE_STATS`</string>
+  <string name="error_display_over_other_apps_permission_not_granted">%1$s cần
+        "Hiển thị trên các ứng dụng khác" để khởi chạy activity và service từ nền trên Android &gt;= 10.
+        Hãy cấp tại Cài đặt Android -&gt; Ứng dụng -&gt; %1$s -&gt; Nâng cao -&gt; Vẽ lên trên các ứng dụng khác.
+        Tên quyền có thể khác trên một số thiết bị; ví dụ trên Xiaomi, nó có tên
+        "Hiển thị cửa sổ pop-up khi chạy nền", hãy xem https://dontkillmyapp.com
+        để biết vấn đề cụ thể theo thiết bị.</string>
+
+  <!-- TermuxPluginUtils -->
+  <string name="error_allow_external_apps_ungranted">%1$s yêu cầu thuộc tính `allow-external-apps` được đặt thành `true` trong tệp `%2$s`.</string>
+
+  <!-- ReportActivity -->
+  <string name="title_report_text">Nội dung báo cáo</string>
+  <string name="msg_report_truncated">**Báo cáo đã bị cắt bớt**\n\nBáo cáo quá lớn để xem tại đây. Hãy dùng tuỳ chọn `Lưu vào tệp` từ menu (ba chấm ở góc phải trên) và mở bằng trình soạn thảo văn bản khác.\n\n##\n\n</string>
+
+  <!-- ShareUtils -->
+  <string name="title_share_with">Chia sẻ qua</string>
+  <string name="title_open_url_with">Mở URL bằng</string>
+  <string name="msg_storage_permission_not_granted">Quyền lưu trữ chưa được cấp.</string>
+  <string name="msg_file_saved_successfully">Tệp %1$s đã được lưu thành công tại \"%2$s\"</string>
+
+  <!-- Shell -->
+  <string name="error_sending_sigkill_to_process" translatable="false">Sending SIGKILL to process on user request or because android is killing the execution service</string>
+  <string name="error_executable_unset" translatable="false">Executable not set \"%1$s\" for shell command</string>
+  <string name="error_execution_cancelled" translatable="false">Execution has been cancelled since execution service is being killed</string>
+  <string name="error_failed_to_execute_termux_session_command" translatable="false">Failed to execute \"%1$s\" termux session command</string>
+  <string name="error_failed_to_execute_app_shell_command" translatable="false">Failed to execute \"%1$s\" app shell command</string>
+  <string name="error_exception_received_while_executing_app_shell_command" translatable="false">Exception received while to executing \"%1$s\" app shell command.\nException: %2$s</string>
+
+  <!-- TermuxUtils -->
+  <string name="msg_report_issue">
+        Nếu bạn muốn báo cáo vấn đề này, hãy sao chép nội dung của nó từ menu tuỳ chọn (ba chấm ở góc phải trên) và tạo
+        một issue tại một trong các liên kết sau.
+        \n\nNếu bạn gửi báo cáo sự cố của ứng dụng Termux, vui lòng cung cấp chi tiết bạn đang làm gì
+        khi xảy ra sự cố và (nếu có thể) cách tái hiện.
+        \n\nNếu bạn tạo issue trên GitHub, hãy đăng vào kho tương ứng với loại báo cáo.
+        Các issue hoặc email dùng **ảnh chụp màn hình (một phần)** thay vì văn bản đã sao chép hoặc tệp báo cáo
+        **rất có thể sẽ bị đóng/xoá tự động**. Bạn có thể xoá bất kỳ thông tin thiết bị nào
+        mà bạn cho là riêng tư, không muốn chia sẻ hoặc không liên quan tới vấn đề.
+        \n\nChúng tôi không hỗ trợ các công cụ/kịch bản liên quan tới hacking. Mọi câu hỏi về chúng qua email,
+        trên GitHub hoặc các diễn đàn cộng đồng Termux chính thức **rất có thể sẽ bị đóng/xoá tự động** và thậm chí
+        có thể dẫn tới lệnh cấm **tạm thời hoặc vĩnh viễn**. Xem %1$s/wiki/Hacking để biết chi tiết.</string>
+
+  <string name="msg_termux_app_required_by_app">Ứng dụng %1$s cần AndroidIDE để chạy các lệnh termux.</string>
+  <string name="error_termux_app_package_context_not_accessible">Không thể truy cập ứng dụng AndroidIDE (package context).</string>
+  <string name="error_termux_prefix_dir_path_not_accessible">Thư mục $PREFIX của ứng dụng AndroidIDE không thể được ứng dụng %1$s truy cập.
+        Có thể do bạn chưa cài đặt hoặc thiết lập ứng dụng AndroidIDE, hoặc
+    ứng dụng AndroidIDE và %1$s có chữ ký APK khác nhau do bạn cài từ các nguồn khác nhau.
+        Cũng có thể do thư mục $PREFIX của AndroidIDE \"/data/data/com.itsaky.androidide/files/usr\" không tồn tại hoặc không có quyền đọc,
+        ghi và thực thi.</string>
+
+  <!-- Miscellaneous -->
+  <string name="action_yes" translatable="false">@string/yes</string>
+  <string name="action_no" translatable="false">@string/no</string>
+  <string name="action_copy" translatable="false">@string/copy</string>
+  <string name="action_share">Chia sẻ</string>
+  <string name="action_cancel" translatable="false">@android:string/cancel</string>
+  <string name="action_save_to_file">Lưu vào tệp</string>
+
+  <string name="msg_storage_permission_granted_on_request">Quyền lưu trữ đã được người dùng cấp theo yêu cầu</string>
+  <string name="msg_storage_permission_not_granted_on_request">Quyền lưu trữ không được người dùng cấp theo yêu cầu</string>
+
+  <!-- Log Level -->
+  <string name="log_level_title">Mức log</string>
+  <string name="log_level_off">Tắt</string>
+  <string name="log_level_normal">Bình thường</string>
+  <string name="log_level_debug">Gỡ lỗi</string>
+  <string name="log_level_verbose">Chi tiết</string>
+  <string name="log_level_unknown">*Không xác định*</string>
+  <string name="log_level_value">Mức log Logcat được đặt thành \"%1$s\"</string>
+
+</resources>
