@@ -1,37 +1,34 @@
-/*******************************************************************************
- *    sora-editor - the awesome code editor for Android
- *    https://github.com/Rosemoe/sora-editor
- *    Copyright (C) 2020-2023  Rosemoe
+/**
+ * ****************************************************************************
+ * sora-editor - the awesome code editor for Android https://github.com/Rosemoe/sora-editor
+ * Copyright (C) 2020-2023 Rosemoe
  *
- *     This library is free software; you can redistribute it and/or
- *     modify it under the terms of the GNU Lesser General Public
- *     License as published by the Free Software Foundation; either
- *     version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- *     This library is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *     Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- *     You should have received a copy of the GNU Lesser General Public
- *     License along with this library; if not, write to the Free Software
- *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- *     USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  *
- *     Please contact Rosemoe by email 2073412493@qq.com if you need
- *     additional information or have any questions
- ******************************************************************************/
-
+ * Please contact Rosemoe by email 2073412493@qq.com if you need additional information or have any
+ * questions
+ * ****************************************************************************
+ */
 package io.github.rosemoe.sora.editor.ts
 
-import com.itsaky.androidide.treesitter.TSNode
-import com.itsaky.androidide.treesitter.TSQueryCapture
-import com.itsaky.androidide.treesitter.TSQueryCursor
-import com.itsaky.androidide.treesitter.TSTree
-import com.itsaky.androidide.treesitter.api.TreeSitterNode
-import com.itsaky.androidide.treesitter.api.TreeSitterQueryCapture
-import com.itsaky.androidide.treesitter.api.safeExecQueryCursor
-import com.itsaky.androidide.treesitter.string.UTF16String
+import com.tom.rv2ide.treesitter.TSNode
+import com.tom.rv2ide.treesitter.TSQueryCapture
+import com.tom.rv2ide.treesitter.TSQueryCursor
+import com.tom.rv2ide.treesitter.TSTree
+import com.tom.rv2ide.treesitter.api.TreeSitterNode
+import com.tom.rv2ide.treesitter.api.TreeSitterQueryCapture
+import com.tom.rv2ide.treesitter.api.safeExecQueryCursor
+import com.tom.rv2ide.treesitter.string.UTF16String
 import java.util.Stack
 
 private typealias TSNodeIndices = Pair<Int, Int>
@@ -41,13 +38,13 @@ private fun TSNode.indices(): TSNodeIndices {
 }
 
 /**
- * Class for storing tree-sitter variables. This class tracks the positions and scopes
- * of variables and find definitions.
+ * Class for storing tree-sitter variables. This class tracks the positions and scopes of variables
+ * and find definitions.
  *
- * @author Rosemoe
  * @param tree The parsed tree
  * @param text The current text for tree
  * @param spec Language specification, which should the same as highlighter's
+ * @author Rosemoe
  */
 class TsScopedVariables(tree: TSTree, text: UTF16String, val spec: TsLanguageSpec) {
 
@@ -56,25 +53,24 @@ class TsScopedVariables(tree: TSTree, text: UTF16String, val spec: TsLanguageSpe
   init {
     val rootNode = tree.rootNode
     var needsWalk = true
-    rootScope = if (rootNode.canAccess()) {
-      Scope(0, rootNode.endByte / 2)
-    } else {
-      needsWalk = false
-      Scope(0, 0)
-    }
+    rootScope =
+        if (rootNode.canAccess()) {
+          Scope(0, rootNode.endByte / 2)
+        } else {
+          needsWalk = false
+          Scope(0, 0)
+        }
 
     if (needsWalk && spec.localsDefinitionIndices.isNotEmpty()) {
       TSQueryCursor.create().use { cursor ->
-
         val captures = mutableListOf<TSQueryCapture>()
         cursor.safeExecQueryCursor(
-          query = spec.tsQuery,
-          tree = tree,
-          recycleNodeAfterUse = true,
-          onClosedOrEdited = { captures.clear() },
-          debugName = "TsScopedVariables.init()"
+            query = spec.tsQuery,
+            tree = tree,
+            recycleNodeAfterUse = true,
+            onClosedOrEdited = { captures.clear() },
+            debugName = "TsScopedVariables.init()",
         ) { match ->
-
           if (spec.queryPredicator.doPredicate(spec.predicates, text, match)) {
             captures.addAll(match.captures)
           }
@@ -106,18 +102,27 @@ class TsScopedVariables(tree: TSTree, text: UTF16String, val spec: TsLanguageSpe
           } else if (pattern in spec.localsDefinitionIndices) {
             val scope = scopeStack.peek()
             val name = text.substringChars(startIndex, endIndex)
-            val scopedVar = ScopedVariable(
-              name,
-              if (scope.forMembers) scope.startIndex else startIndex,
-              scope.endIndex
-            )
+            val scopedVar =
+                ScopedVariable(
+                    name,
+                    if (scope.forMembers) scope.startIndex else startIndex,
+                    scope.endIndex,
+                )
             scope.variables.add(scopedVar)
             lastAddedVariableNodeIndices = capture.node.indices()
-          } else if (pattern !in spec.localsDefinitionValueIndices && pattern !in spec.localsReferenceIndices && lastAddedVariableNodeIndices != null) {
+          } else if (
+              pattern !in spec.localsDefinitionValueIndices &&
+                  pattern !in spec.localsReferenceIndices &&
+                  lastAddedVariableNodeIndices != null
+          ) {
             val topVariables = scopeStack.peek().variables
             if (topVariables.isNotEmpty()) {
               val topVariable = topVariables.last()
-              if (lastAddedVariableNodeIndices.first / 2 == startIndex && lastAddedVariableNodeIndices.second / 2 == endIndex && topVariable.matchedHighlightPattern == -1) {
+              if (
+                  lastAddedVariableNodeIndices.first / 2 == startIndex &&
+                      lastAddedVariableNodeIndices.second / 2 == endIndex &&
+                      topVariable.matchedHighlightPattern == -1
+              ) {
                 topVariable.matchedHighlightPattern = pattern
               }
             }
@@ -136,18 +141,18 @@ class TsScopedVariables(tree: TSTree, text: UTF16String, val spec: TsLanguageSpe
   }
 
   data class Scope(
-    val startIndex: Int,
-    val endIndex: Int,
-    val forMembers: Boolean = false,
-    val variables: MutableList<ScopedVariable> = mutableListOf(),
-    val childScopes: MutableList<Scope> = mutableListOf()
+      val startIndex: Int,
+      val endIndex: Int,
+      val forMembers: Boolean = false,
+      val variables: MutableList<ScopedVariable> = mutableListOf(),
+      val childScopes: MutableList<Scope> = mutableListOf(),
   )
 
   data class ScopedVariable(
-    var name: String,
-    var scopeStartIndex: Int,
-    var scopeEndIndex: Int,
-    var matchedHighlightPattern: Int = -1
+      var name: String,
+      var scopeStartIndex: Int,
+      var scopeEndIndex: Int,
+      var matchedHighlightPattern: Int = -1,
   )
 
   fun findDefinition(startIndex: Int, endIndex: Int, name: String): ScopedVariable? {
@@ -158,15 +163,20 @@ class TsScopedVariables(tree: TSTree, text: UTF16String, val spec: TsLanguageSpe
         if (variable.scopeStartIndex > startIndex) {
           break
         }
-        if (variable.scopeStartIndex <= startIndex && variable.scopeEndIndex >= endIndex && variable.name == name) {
+        if (
+            variable.scopeStartIndex <= startIndex &&
+                variable.scopeEndIndex >= endIndex &&
+                variable.name == name
+        ) {
           definition = variable
           // Do not break here: name can be shadowed in some languages
         }
       }
       currentScope =
-        currentScope.childScopes.firstOrNull { scope -> scope.startIndex <= startIndex && scope.endIndex >= endIndex }
+          currentScope.childScopes.firstOrNull { scope ->
+            scope.startIndex <= startIndex && scope.endIndex >= endIndex
+          }
     }
     return definition
   }
-
 }

@@ -27,8 +27,7 @@ import org.gradle.tooling.model.GradleProject
  * @author Akash Yadav
  */
 class GradleProjectModelBuilder(initializationParams: InitializeProjectParams) :
-  AbstractModelBuilder<GradleProject, IGradleProject>(
-    initializationParams) {
+    AbstractModelBuilder<GradleProject, IGradleProject>(initializationParams) {
 
   @Throws(ModelBuilderException::class)
   override fun build(param: GradleProject): IGradleProject {

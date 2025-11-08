@@ -281,7 +281,7 @@
   <string name="xml_formatting_options">Opsi pemformatan XML</string>
   <string name="xml_formatting_options_summary">Konfigurasikan pemformatan XML</string>
   <string name="idepref_customFont_title">Gunakan custom font</string>
-  <string name="idepref_customFont_summary">Jika diaktifkan, file di \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" akan digunakan sebagai font Editor.</string>
+  <string name="idepref_customFont_summary">Jika diaktifkan, file di \"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" akan digunakan sebagai font Editor.</string>
   <string name="msg_installing_apk">Menginstal APK...</string>
   <string name="msg_action_open_application">Apakah Anda ingin membuka aplikasi?</string>
   <string name="title_gradle_service_notification_channel">Layanan Build Gradle AndroidIDE</string>

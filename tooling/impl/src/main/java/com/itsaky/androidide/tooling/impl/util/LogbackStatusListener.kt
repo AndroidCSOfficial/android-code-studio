@@ -23,9 +23,7 @@ import ch.qos.logback.core.util.StatusPrinter
 import com.itsaky.androidide.tooling.api.messages.LogMessageParams
 import com.itsaky.androidide.tooling.impl.Main
 
-/**
- * @author Akash Yadav
- */
+/** @author Akash Yadav */
 class LogbackStatusListener : StatusListener {
 
   companion object {
@@ -47,11 +45,7 @@ class LogbackStatusListener : StatusListener {
     StatusPrinter.buildStr(sb, "", status)
 
     client?.logMessage(
-      LogMessageParams(
-        levelChar(status.level),
-        status.origin.javaClass.simpleName,
-        sb.toString()
-      )
+        LogMessageParams(levelChar(status.level), status.origin.javaClass.simpleName, sb.toString())
     )
   }
 }

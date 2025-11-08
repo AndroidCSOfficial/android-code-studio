@@ -23,9 +23,8 @@ package com.itsaky.androidide.tooling.api.models
  * @property otherArtifacts Artifacts of this variant other than the [mainArtifact].
  * @author Akash Yadav
  */
-
 open class AndroidVariantMetadata(
-  name: String,
-  mainArtifact: AndroidArtifactMetadata,
-  val otherArtifacts: Map<String, AndroidArtifactMetadata>
+    name: String,
+    mainArtifact: AndroidArtifactMetadata,
+    val otherArtifacts: Map<String, AndroidArtifactMetadata>,
 ) : BasicAndroidVariantMetadata(name, mainArtifact)

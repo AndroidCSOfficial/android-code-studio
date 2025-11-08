@@ -282,7 +282,7 @@
   <string name="xml_formatting_options">Настройки форматирования XML</string>
   <string name="xml_formatting_options_summary">Настройте форматтер XML</string>
   <string name="idepref_customFont_title">Использовать сторонний шрифт</string>
-  <string name="idepref_customFont_summary">Если активно, файл \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" будет использован в качестве шрифта редактора.</string>
+  <string name="idepref_customFont_summary">Если активно, файл \"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" будет использован в качестве шрифта редактора.</string>
   <string name="msg_installing_apk">Установка APK...</string>
   <string name="msg_action_open_application">Хотите открыть установленное приложение?</string>
   <string name="title_gradle_service_notification_channel">Служба сборки AndroidIDE Gradle</string>

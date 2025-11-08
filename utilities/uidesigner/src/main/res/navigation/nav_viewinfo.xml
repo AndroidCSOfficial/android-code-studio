@@ -23,7 +23,7 @@
 
   <fragment
     android:id="@+id/viewInfoFragment"
-    android:name="com.itsaky.androidide.uidesigner.fragments.ViewInfoFragment"
+    android:name="com.tom.rv2ide.uidesigner.fragments.ViewInfoFragment"
     android:label="ViewInfoFragment"
     tools:layout="@layout/layout_view_info">
     <action
@@ -36,7 +36,7 @@
   </fragment>
   <fragment
     android:id="@+id/addAttrFragment"
-    android:name="com.itsaky.androidide.uidesigner.fragments.AddAttrFragment"
+    android:name="com.tom.rv2ide.uidesigner.fragments.AddAttrFragment"
     android:label="AddAttrFragment"
     tools:layout="@layout/layout_add_attr">
     <action
@@ -45,11 +45,11 @@
   </fragment>
   <fragment
     android:id="@+id/attrValueEditorFragment"
-    android:name="com.itsaky.androidide.uidesigner.fragments.AttrValueEditorFragment"
+    android:name="com.tom.rv2ide.uidesigner.fragments.AttrValueEditorFragment"
     android:label="AttrValueEditorFragment"
     tools:layout="@layout/layout_attr_value_editor">
     <argument
       android:name="attribute"
-      app:argType="com.itsaky.androidide.uidesigner.models.UiAttribute" />
+      app:argType="com.tom.rv2ide.uidesigner.models.UiAttribute" />
   </fragment>
 </navigation>

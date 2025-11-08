@@ -281,7 +281,7 @@
   <string name="xml_formatting_options">XML opțiune de formatares</string>
   <string name="xml_formatting_options_summary">Configurarea formatterului XML</string>
   <string name="idepref_customFont_title">Folosește fontul particularizat</string>
-  <string name="idepref_customFont_summary">Dacă este activat, fișierul din \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" va fi folosit ca font în Editor.</string>
+  <string name="idepref_customFont_summary">Dacă este activat, fișierul din \"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" va fi folosit ca font în Editor.</string>
   <string name="msg_installing_apk">Instalez APK…</string>
   <string name="msg_action_open_application">Doriți să deschideți aplicația?</string>
   <string name="title_gradle_service_notification_channel">AndroidIDE Gradle build service</string>

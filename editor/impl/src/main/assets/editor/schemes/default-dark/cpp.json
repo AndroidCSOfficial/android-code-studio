@@ -1,0 +1,100 @@
+{
+  "types": [
+    "cpp", "cc", "cxx", "c++", "h", "hh", "hxx", "hpp", "h++", "ino", "pde"
+  ],
+  "local.scopes": [
+    "scope"
+  ],
+  "local.scopes.members": [
+    "scope.members"
+  ],
+  "local.definitions": [
+    "definition.namespace",
+    "definition.include",
+    "definition.function",
+    "definition.method",
+    "definition.parameter",
+    "definition.field",
+    "definition.class",
+    "definition.struct",
+    "definition.enum",
+    "definition.union",
+    "definition.macro"
+  ],
+  "local.references": [
+    "reference"
+  ],
+  "styles": {
+    "preproc": {
+      "fg": "@cpp.preproc",
+      "italic": true,
+      "bold": true
+    },
+    "comment": {
+      "fg": "@comment",
+      "italic": true
+    },
+    "keyword": {
+      "fg": "@keyword",
+      "bold": true
+    },
+    "label": {
+      "fg": "@keyword",
+      "bold": true
+    },
+    "type.qualifier": {
+      "fg": "@keyword",
+      "bold": true
+    },
+    "string": {
+      "fg": "@string",
+      "completion": false,
+      "maybeHexColor": true
+    },
+    "string.regex": {
+      "fg": "@string",
+      "completion": false
+    },
+    "string.escape": {
+      "fg": "@cpp.string.esc",
+      "completion": false
+    },
+    "variable.builtin": {
+      "fg": "@keyword",
+      "bold": true
+    },
+    "function.builtin": {
+      "fg": "@func.call",
+      "italic": true
+    },
+    "type.builtin": {
+      "fg": "@keyword",
+      "bold": true
+    },
+    "constant": {
+      "fg": "@constant",
+      "bold": true
+    },
+    "number": "@number",
+    "identifier": "@onSurface",
+    "parameter": "@variable",
+    "constant.builtin": "@keyword",
+    "type": "@type",
+    "attribute": "@attribute",
+    "function.declaration": "@func.decl",
+    "function.invocation": "@func.call",
+    "operator": "@operator",
+    "punctuation.special": "@cpp.punctuation.special",
+    "constructor": "@cpp.constructor",
+    "property.class": "@cpp.property",
+    "property.top_level": "@cpp.property",
+    "property.local": "@onSurface",
+    "bracket": "@onSurface",
+    "macro": {
+      "fg": "@cpp.macro",
+      "bold": true
+    },
+    "namespace": "@cpp.namespace",
+    "template": "@cpp.template"
+  }
+}

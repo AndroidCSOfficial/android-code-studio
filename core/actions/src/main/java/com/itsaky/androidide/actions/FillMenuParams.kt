@@ -26,11 +26,12 @@ import com.itsaky.androidide.actions.internal.DefaultActionsRegistry
  * @author Akash Yadav
  */
 data class FillMenuParams(
-  val data: ActionData,
-  val location: ActionItem.Location,
-  val menu: Menu,
-  val onMenuItemClick: OnActionClickListener = OnActionClickListener { registry, action, _, actionData ->
-    (registry as DefaultActionsRegistry).executeAction(action, actionData)
-    true
-  }
+    val data: ActionData,
+    val location: ActionItem.Location,
+    val menu: Menu,
+    val onMenuItemClick: OnActionClickListener =
+        OnActionClickListener { registry, action, _, actionData ->
+          (registry as DefaultActionsRegistry).executeAction(action, actionData)
+          true
+        },
 )

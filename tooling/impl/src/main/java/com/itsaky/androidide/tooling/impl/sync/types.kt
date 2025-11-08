@@ -31,8 +31,8 @@ import org.gradle.tooling.model.idea.IdeaProject
  * @property cancellationToken The cancellation token.
  */
 data class RootProjectModelBuilderParams(
-  val projectConnection: ProjectConnection,
-  val cancellationToken: CancellationToken?
+    val projectConnection: ProjectConnection,
+    val cancellationToken: CancellationToken?,
 )
 
 /**
@@ -44,24 +44,27 @@ data class RootProjectModelBuilderParams(
  * @property syncIssueReporter [ISyncIssueReporter] to report project synchronization issues.
  */
 data class AndroidProjectModelBuilderParams(
-  val controller: BuildController,
-  val module: IdeaModule,
-  val versions: Versions,
-  val syncIssueReporter: ISyncIssueReporter
+    val controller: BuildController,
+    val module: IdeaModule,
+    val versions: Versions,
+    val syncIssueReporter: ISyncIssueReporter,
 )
 
 class ModuleProjectModelBuilderParams(
-  val controller: BuildController,
-  project: IdeaProject,
-  module: IdeaModule,
-  modulePaths: Map<String, String>,
-  val syncIssueReporter: ISyncIssueReporter
-) : JavaProjectModelBuilderParams(
-  project, module, modulePaths)
+    val controller: BuildController,
+    project: IdeaProject,
+    module: IdeaModule,
+    modulePaths: Map<String, String>,
+    val syncIssueReporter: ISyncIssueReporter,
+) : JavaProjectModelBuilderParams(project, module, modulePaths)
 
-open class JavaProjectModelBuilderParams(val project: IdeaProject, val module: IdeaModule,
-  val modulePaths: Map<String, String>) {
+open class JavaProjectModelBuilderParams(
+    val project: IdeaProject,
+    val module: IdeaModule,
+    val modulePaths: Map<String, String>,
+) {
 
-  constructor(base: ModuleProjectModelBuilderParams) : this(base.project, base.module,
-    base.modulePaths)
+  constructor(
+      base: ModuleProjectModelBuilderParams
+  ) : this(base.project, base.module, base.modulePaths)
 }

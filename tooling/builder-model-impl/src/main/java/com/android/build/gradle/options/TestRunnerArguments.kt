@@ -21,42 +21,23 @@ package com.android.build.gradle.options
  *
  * Details: https://developer.android.com/studio/test/command-line#AMOptionsSyntax
  */
-enum class TestRunnerArguments(
-    private val key: String
-) {
-    @Suppress("unused")
-    PACKAGE("package"),
+enum class TestRunnerArguments(private val key: String) {
+  @Suppress("unused") PACKAGE("package"),
+  @Suppress("unused") CLASS("class"),
+  @Suppress("unused") FUNC("func"),
+  @Suppress("unused") SIZE("size"),
+  @Suppress("unused") PERF("perf"),
+  @Suppress("unused") DEBUG("debug"),
+  @Suppress("unused") LOG("log"),
+  @Suppress("unused") EMMA("emma"),
+  @Suppress("unused") COVERAGE_FILE("coverageFile"),
+  ;
 
-    @Suppress("unused")
-    CLASS("class"),
+  fun getFullKey(): String = "$TEST_RUNNER_ARGS_PREFIX$key"
 
-    @Suppress("unused")
-    FUNC("func"),
+  fun getShortKey(): String = key
 
-    @Suppress("unused")
-    SIZE("size"),
-
-    @Suppress("unused")
-    PERF("perf"),
-
-    @Suppress("unused")
-    DEBUG("debug"),
-
-    @Suppress("unused")
-    LOG("log"),
-
-    @Suppress("unused")
-    EMMA("emma"),
-
-    @Suppress("unused")
-    COVERAGE_FILE("coverageFile"),
-    ;
-
-    fun getFullKey() : String = "$TEST_RUNNER_ARGS_PREFIX$key"
-
-    fun getShortKey() : String = key
-
-    companion object {
-        const val TEST_RUNNER_ARGS_PREFIX = "android.testInstrumentationRunnerArguments."
-    }
+  companion object {
+    const val TEST_RUNNER_ARGS_PREFIX = "android.testInstrumentationRunnerArguments."
+  }
 }

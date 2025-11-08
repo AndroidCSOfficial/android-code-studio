@@ -31,7 +31,7 @@ import org.gradle.tooling.model.idea.IdeaProject
  * @author Akash Yadav
  */
 class JavaProjectModelBuilder(initializationParams: InitializeProjectParams) :
-  AbstractModelBuilder<JavaProjectModelBuilderParams, IJavaProject>(initializationParams) {
+    AbstractModelBuilder<JavaProjectModelBuilderParams, IJavaProject>(initializationParams) {
 
   override fun build(param: JavaProjectModelBuilderParams): IJavaProject {
     val compilerSettings = createCompilerSettings(param.project, param.module)
@@ -39,9 +39,11 @@ class JavaProjectModelBuilder(initializationParams: InitializeProjectParams) :
   }
 
   private fun createCompilerSettings(
-    ideaProject: IdeaProject, module: IdeaModule): IJavaCompilerSettings {
-    val javaLanguageSettings = module.javaLanguageSettings
-      ?: return createCompilerSettings(ideaProject)
+      ideaProject: IdeaProject,
+      module: IdeaModule,
+  ): IJavaCompilerSettings {
+    val javaLanguageSettings =
+        module.javaLanguageSettings ?: return createCompilerSettings(ideaProject)
     val languageLevel = javaLanguageSettings.languageLevel
     val targetBytecodeVersion = javaLanguageSettings.targetBytecodeVersion
     if (languageLevel == null || targetBytecodeVersion == null) {

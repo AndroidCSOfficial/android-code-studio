@@ -32,6 +32,6 @@ annotation class IncludeInDesigner(val group: Group) {
     WIDGETS,
 
     /** Includes the Android platform layouts. */
-    LAYOUTS
+    LAYOUTS,
   }
 }

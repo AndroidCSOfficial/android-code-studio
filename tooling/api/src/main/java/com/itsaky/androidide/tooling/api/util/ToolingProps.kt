@@ -38,7 +38,7 @@ object ToolingProps {
         return AndroidPluginVersion.LATEST_TESTED
       }
       return System.getProperty(TESTING_LATEST_AGP_VERSION)?.let { AndroidPluginVersion.parse(it) }
-        ?: AndroidPluginVersion.LATEST_TESTED
+          ?: AndroidPluginVersion.LATEST_TESTED
     }
 
   fun propName(cat: String, name: String) = "ide.tooling.$cat.$name"

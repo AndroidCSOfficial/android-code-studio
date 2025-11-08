@@ -20,34 +20,34 @@ package com.android.build.gradle.options
 import java.util.Locale
 
 fun parseBoolean(propertyName: String, value: Any, propertyKind: String = "project"): Boolean {
-    return when (value) {
-        is Boolean -> value
-        is CharSequence ->
-            when (value.toString().lowercase(Locale.US)) {
-                "true" -> true
-                "false" -> false
-                else -> parseBooleanFailure(propertyName, value, propertyKind)
-            }
-        is Number ->
-            when (value.toInt()) {
-                0 -> false
-                1 -> true
-                else -> parseBooleanFailure(propertyName, value, propertyKind)
-            }
-        else -> parseBooleanFailure(propertyName, value, propertyKind)
-    }
+  return when (value) {
+    is Boolean -> value
+    is CharSequence ->
+        when (value.toString().lowercase(Locale.US)) {
+          "true" -> true
+          "false" -> false
+          else -> parseBooleanFailure(propertyName, value, propertyKind)
+        }
+    is Number ->
+        when (value.toInt()) {
+          0 -> false
+          1 -> true
+          else -> parseBooleanFailure(propertyName, value, propertyKind)
+        }
+    else -> parseBooleanFailure(propertyName, value, propertyKind)
+  }
 }
 
 private fun parseBooleanFailure(propertyName: String, value: Any, propertyKind: String): Nothing {
-    throw IllegalArgumentException(
-        "Cannot parse "
-                + propertyKind
-                + " property "
-                + propertyName
-                + "='"
-                + value
-                + "' of type '"
-                + value.javaClass
-                + "' as boolean. Expected 'true' or 'false'."
-    )
+  throw IllegalArgumentException(
+      "Cannot parse " +
+          propertyKind +
+          " property " +
+          propertyName +
+          "='" +
+          value +
+          "' of type '" +
+          value.javaClass +
+          "' as boolean. Expected 'true' or 'false'."
+  )
 }

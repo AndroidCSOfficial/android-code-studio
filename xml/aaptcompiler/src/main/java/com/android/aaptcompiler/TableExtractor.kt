@@ -7,7 +7,7 @@ import com.android.aaptcompiler.AaptResourceType.STYLE
 import com.android.aaptcompiler.StringPool.Context
 import com.android.aaptcompiler.StringPool.Context.Priority.NORMAL
 import com.android.aaptcompiler.android.stringToInt
-import com.itsaky.androidide.layoutlib.resources.ResourceVisibility
+import com.tom.rv2ide.layoutlib.resources.ResourceVisibility
 import java.io.InputStream
 import jaxp.xml.XMLConstants
 import jaxp.xml.namespace.QName

@@ -65,6 +65,7 @@
     "@java.json",
     "@json.json",
     "@kotlin.json",
+    "@cpp.json",
     "@xml.json",
     "@log.json"
   ]

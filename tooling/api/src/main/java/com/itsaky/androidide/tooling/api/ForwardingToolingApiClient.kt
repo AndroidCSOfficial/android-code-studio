@@ -61,6 +61,6 @@ class ForwardingToolingApiClient(var client: IToolingApiClient?) : IToolingApiCl
 
   override fun checkGradleWrapperAvailability(): CompletableFuture<GradleWrapperCheckResult> {
     return client?.checkGradleWrapperAvailability()
-      ?: CompletableFuture.completedFuture(GradleWrapperCheckResult(false))
+        ?: CompletableFuture.completedFuture(GradleWrapperCheckResult(false))
   }
 }

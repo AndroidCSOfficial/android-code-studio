@@ -1,0 +1,17 @@
+{
+  "types": ["json"],
+  "styles": {
+    "string.special.key": "@json.key",
+    "string" : {
+      "fg": "@string",
+      "maybeHexColor": true
+    },
+    "number" : "@number",
+    "constant.builtin": "@keyword",
+    "escape": "@json.escape",
+    "comment" : {
+      "fg": "@comment",
+      "italic": true
+    }
+  }
+}

@@ -16,7 +16,7 @@
  */
 
 
-import com.itsaky.androidide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
@@ -28,6 +28,9 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.documentfile:documentfile:1.0.1")
+   
     api(libs.common.editor)
     api(libs.common.lang3)
     api(libs.common.utilcode)

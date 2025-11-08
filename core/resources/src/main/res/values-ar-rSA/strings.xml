@@ -281,7 +281,7 @@
   <string name="xml_formatting_options">خيارات تنسيق XML</string>
   <string name="xml_formatting_options_summary">تهيئة تنسيق XML</string>
   <string name="idepref_customFont_title">استخدام خط مخصص</string>
-  <string name="idepref_customFont_summary">في حالة التمكين، سيتم استخدام الملف الموجود على \"/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" كخط محرر.</string>
+  <string name="idepref_customFont_summary">في حالة التمكين، سيتم استخدام الملف الموجود على \"/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" كخط محرر.</string>
   <string name="msg_installing_apk">تثبيت APK...</string>
   <string name="msg_action_open_application">هل تريد فتح التطبيق؟</string>
   <string name="title_gradle_service_notification_channel">خدمة بناء AndroidIDE</string>

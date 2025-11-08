@@ -23,8 +23,10 @@ plugins {
   id("org.jetbrains.kotlin.jvm")
 }
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+tasks.withType(KotlinCompile::class.java) {
+  compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+  }
 }
 
 dependencies {

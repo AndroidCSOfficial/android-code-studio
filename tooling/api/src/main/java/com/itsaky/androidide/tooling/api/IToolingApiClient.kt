@@ -22,10 +22,10 @@ import com.itsaky.androidide.tooling.api.messages.result.BuildInfo
 import com.itsaky.androidide.tooling.api.messages.result.BuildResult
 import com.itsaky.androidide.tooling.api.messages.result.GradleWrapperCheckResult
 import com.itsaky.androidide.tooling.events.ProgressEvent
+import java.util.concurrent.*
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.*
 
 /**
  * A client consumes services provided by [IToolingApiServer].
@@ -56,7 +56,7 @@ interface IToolingApiClient {
    * Called when a build is successful.
    *
    * @param result The result containing the tasks that were run. Maybe an empty list if no tasks
-   * were specified or if the build was not related to any tasks.
+   *   were specified or if the build was not related to any tasks.
    */
   @JsonNotification fun onBuildSuccessful(result: BuildResult)
 
@@ -64,7 +64,7 @@ interface IToolingApiClient {
    * Called when a build fails.
    *
    * @param result The result containing the tasks that were run. Maybe an empty list if no tasks
-   * were specified or if the build was not related to any tasks.
+   *   were specified or if the build was not related to any tasks.
    */
   @JsonNotification fun onBuildFailed(result: BuildResult)
 
@@ -86,7 +86,7 @@ interface IToolingApiClient {
    * Tells the client to check if the Gradle wrapper files are available.
    *
    * @return A [CompletableFuture] which completes when the client is done checking the wrapper
-   * availability. The future provides a result which tells if the wrapper is available or not.
+   *   availability. The future provides a result which tells if the wrapper is available or not.
    */
   @JsonRequest fun checkGradleWrapperAvailability(): CompletableFuture<GradleWrapperCheckResult>
 }

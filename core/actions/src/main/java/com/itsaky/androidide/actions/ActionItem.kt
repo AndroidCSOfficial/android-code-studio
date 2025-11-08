@@ -34,39 +34,25 @@ import com.itsaky.androidide.utils.resolveAttr
  */
 interface ActionItem {
 
-  /**
-   * A unique ID for this action.
-   */
+  /** A unique ID for this action. */
   val id: String
 
-  /**
-   * The label for this action.
-   */
+  /** The label for this action. */
   var label: String
 
-  /**
-   * Whether the action should be visible to the user or not.
-   */
+  /** Whether the action should be visible to the user or not. */
   var visible: Boolean
 
-  /**
-   * Whether the action should be enabled.
-   */
+  /** Whether the action should be enabled. */
   var enabled: Boolean
 
-  /**
-   * Icon for this action.
-   */
+  /** Icon for this action. */
   var icon: Drawable?
 
-  /**
-   * Whether the [execAction] method of this action must be executed on UI thread.
-   */
+  /** Whether the [execAction] method of this action must be executed on UI thread. */
   var requiresUIThread: Boolean
 
-  /**
-   * The location of this [ActionItem].
-   */
+  /** The location of this [ActionItem]. */
   var location: Location
 
   /**
@@ -77,9 +63,7 @@ interface ActionItem {
   val order: Int
     get() = Menu.NONE
 
-  /**
-   * The item ID that will be set to the menu item.
-   */
+  /** The item ID that will be set to the menu item. */
   val itemId: Int
     get() = id.hashCode()
 
@@ -133,7 +117,8 @@ interface ActionItem {
   /**
    * Creates the color filter for this action's icon drawable.
    *
-   * The default implementation returns a [PorterDuffColorFilter] instance with color [R.attr.colorOnSurface].
+   * The default implementation returns a [PorterDuffColorFilter] instance with color
+   * [R.attr.colorOnSurface].
    */
   fun createColorFilter(data: ActionData): ColorFilter? {
     return data.getContext()?.let {
@@ -148,12 +133,14 @@ interface ActionItem {
     EDITOR_TOOLBAR("ide.editor.toolbar"),
 
     /**
-     * Location marker for action items shown in editor activity's sidebar (navigation rail in the drawer).
+     * Location marker for action items shown in editor activity's sidebar (navigation rail in the
+     * drawer).
      */
     EDITOR_SIDEBAR("ide.editor.sidebar"),
 
     /**
-     * Location marker for action items shown in the default category of editor activity's sidebar (navigation rail in the drawer).
+     * Location marker for action items shown in the default category of editor activity's sidebar
+     * (navigation rail in the drawer).
      */
     EDITOR_SIDEBAR_DEFAULT_ITEMS("ide.editor.sidebar.defaultItems"),
 

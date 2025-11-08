@@ -34,7 +34,7 @@ import com.android.aaptcompiler.blameSource
 import com.android.aaptcompiler.buffer.BigBuffer
 import com.android.utils.ILogger
 import com.google.protobuf.ByteString
-import com.itsaky.androidide.layoutlib.resources.ResourceVisibility
+import com.tom.rv2ide.layoutlib.resources.ResourceVisibility
 
 internal fun serializePoolToPb(pool: StringPool, logger: ILogger?): Resources.StringPool {
   val buffer = BigBuffer(1024)

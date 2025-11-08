@@ -70,12 +70,12 @@ object AndroidModulePropertyCopier {
   }
 
   fun copy(version: ApiVersion?): DefaultApiVersion? =
-    if (version == null) null
-    else
-      DefaultApiVersion().apply {
-        apiLevel = version.apiLevel
-        codename = version.codename
-      }
+      if (version == null) null
+      else
+          DefaultApiVersion().apply {
+            apiLevel = version.apiLevel
+            codename = version.codename
+          }
 
   fun copy(javaCompileOptions: JavaCompileOptions): DefaultJavaCompileOptions {
     return DefaultJavaCompileOptions().apply {
@@ -87,7 +87,7 @@ object AndroidModulePropertyCopier {
   }
 
   fun copy(
-    @Suppress("UNUSED_PARAMETER") flags: AndroidGradlePluginProjectFlags
+      @Suppress("UNUSED_PARAMETER") flags: AndroidGradlePluginProjectFlags
   ): DefaultAndroidGradlePluginProjectFlags {
     val flagMap: MutableMap<BooleanFlag, Boolean?> = mutableMapOf()
     //        log.debug("Flags:", flags)
@@ -148,7 +148,7 @@ object AndroidModulePropertyCopier {
 
   @JvmName("copyCustomSourceDirectories")
   private fun copy(
-    directories: Collection<CustomSourceDirectory>?
+      directories: Collection<CustomSourceDirectory>?
   ): Collection<DefaultCustomSourceDirectory>? {
     return directories?.map { copy(it) }
   }
@@ -181,62 +181,62 @@ object AndroidModulePropertyCopier {
   private fun copy(info: ProjectInfo?): DefaultProjectInfo? {
     return if (info == null) null
     else
-      DefaultProjectInfo(
-        info.attributes,
-        info.buildType,
-        info.capabilities,
-        info.isTestFixtures,
-        info.productFlavors,
-        info.buildId,
-        info.projectPath
-      )
+        DefaultProjectInfo(
+            info.attributes,
+            info.buildType,
+            info.capabilities,
+            info.isTestFixtures,
+            info.productFlavors,
+            info.buildId,
+            info.projectPath,
+        )
   }
 
   private fun copy(info: LibraryInfo?): DefaultLibraryInfo? {
     return if (info == null) null
     else
-      DefaultLibraryInfo(
-        info.attributes,
-        info.buildType,
-        info.capabilities,
-        info.isTestFixtures,
-        info.productFlavors,
-        info.group,
-        info.name,
-        info.version
-      )
+        DefaultLibraryInfo(
+            info.attributes,
+            info.buildType,
+            info.capabilities,
+            info.isTestFixtures,
+            info.productFlavors,
+            info.group,
+            info.name,
+            info.version,
+        )
   }
 
   private fun copy(data: AndroidLibraryData?): DefaultAndroidLibraryData? {
     return if (data == null) null
     else
-      DefaultAndroidLibraryData(
-        data.aidlFolder,
-        data.assetsFolder,
-        data.compileJarFiles,
-        data.externalAnnotations,
-        data.jniFolder,
-        data.manifest,
-        data.proguardRules,
-        data.publicResources,
-        data.renderscriptFolder,
-        data.resFolder,
-        data.resStaticLibrary,
-        data.runtimeJarFiles,
-        data.symbolFile
-      )
+        DefaultAndroidLibraryData(
+            data.aidlFolder,
+            data.assetsFolder,
+            data.compileJarFiles,
+            data.externalAnnotations,
+            data.jniFolder,
+            data.manifest,
+            data.proguardRules,
+            data.publicResources,
+            data.renderscriptFolder,
+            data.resFolder,
+            data.resStaticLibrary,
+            data.runtimeJarFiles,
+            data.symbolFile,
+        )
   }
 
   fun copy(artifact: ArtifactDependencies?): DefaultArtifactDependencies? =
-    DefaultArtifactDependencies().apply {
-      if (artifact == null) {
-        return null
-      }
+      DefaultArtifactDependencies().apply {
+        if (artifact == null) {
+          return null
+        }
 
-      this.compileDependencies = copy(artifact.compileDependencies)
-      this.runtimeDependencies = copy(artifact.runtimeDependencies ?: emptyList())
-      this.unresolvedDependencies = copy(artifact.unresolvedDependencies)
-    }
+        this.compileDependencies = copy(artifact.compileDependencies)
+        this.runtimeDependencies = copy(artifact.runtimeDependencies ?: emptyList())
+        this.unresolvedDependencies = copy(artifact.unresolvedDependencies)
+      }
 
   private fun copy(dependencies: List<UnresolvedDependency>): List<DefaultUnresolvedDependency> {
     return dependencies.map { copy(it) }
@@ -255,14 +255,14 @@ object AndroidModulePropertyCopier {
   }
 
   fun copy(graph: GraphItem): DefaultGraphItem =
-    DefaultGraphItem().apply {
-      this.key = graph.key
-      this.dependencies = copy(graph.dependencies)
-      this.requestedCoordinates = graph.requestedCoordinates
-    }
+      DefaultGraphItem().apply {
+        this.key = graph.key
+        this.dependencies = copy(graph.dependencies)
+        this.requestedCoordinates = graph.requestedCoordinates
+      }
 
   fun copy(issues: ProjectSyncIssues): DefaultProjectSyncIssues =
-    DefaultProjectSyncIssues(copy(issues.syncIssues))
+      DefaultProjectSyncIssues(copy(issues.syncIssues))
 
   @JvmName("copySyncIssue")
   fun copy(syncIssues: Collection<SyncIssue>): Collection<DefaultSyncIssue> {
@@ -270,6 +270,11 @@ object AndroidModulePropertyCopier {
   }
 
   fun copy(issue: SyncIssue) =
-    DefaultSyncIssue(issue.data, issue.message,
-      issue.multiLineMessage?.toTypedArray()?.let { listOf(*it) }, issue.severity, issue.type)
+      DefaultSyncIssue(
+          issue.data,
+          issue.message,
+          issue.multiLineMessage?.toTypedArray()?.let { listOf(*it) },
+          issue.severity,
+          issue.type,
+      )
 }

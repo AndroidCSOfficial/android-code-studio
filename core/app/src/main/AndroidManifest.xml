@@ -7,11 +7,11 @@
   <permission
     android:description="@string/permdesc_bind_logger_service"
     android:label="@string/permlab_bind_logger_service"
-    android:name="com.itsaky.androidide.permission.BIND_LOG_SERVICE"
+    android:name="com.tom.rv2ide.permission.BIND_LOG_SERVICE"
     android:protectionLevel="normal"
     tools:ignore="ManifestOrder" />
 
-  <uses-permission android:name="com.itsaky.androidide.permission.BIND_LOG_SERVICE" />
+  <uses-permission android:name="com.tom.rv2ide.permission.BIND_LOG_SERVICE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -32,6 +32,7 @@
     android:extractNativeLibs="true"
     android:hardwareAccelerated="true"
     android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:largeHeap="true"
     android:name=".app.IDEApplication"
@@ -46,7 +47,7 @@
       android:name=".activities.CrashHandlerActivity"
       android:windowSoftInputMode="stateAlwaysHidden">
       <intent-filter>
-        <action android:name="com.itsaky.androidide.REPORT_CRASH" />
+        <action android:name="com.tom.rv2ide.REPORT_CRASH" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>
@@ -70,16 +71,33 @@
     <activity
       android:configChanges="orientation|screenSize"
       android:launchMode="singleTop"
-      android:name=".activities.editor.EditorActivityKt"/>
+      android:name=".activities.editor.EditorActivityKt" />
     <activity android:name=".activities.PreferencesActivity" />
     <activity android:name=".activities.AboutActivity" />
     <activity android:name=".activities.ContributorsActivity" />
+    <activity android:name=".activities.IDEConfigurations" />
+
     <activity
       android:name=".activities.TerminalActivity"
       android:windowSoftInputMode="adjustResize" />
 
+    <activity
+      android:name=".activities.AssetStudioActivity"
+      android:exported="false"
+      android:theme="@style/Theme.AndroidIDE" />
+
+    <activity
+      android:name=".activities.MaterialIconsWebActivity"
+      android:exported="false"
+      android:theme="@style/Theme.AndroidIDE" />
+
+    <activity
+      android:name=".activities.FolderPickerActivity"
+      android:exported="false"
+      android:theme="@style/Theme.AndroidIDE" />
+
     <provider
-      android:authorities="com.itsaky.androidide.documents"
+      android:authorities="com.tom.rv2ide.documents"
       android:exported="true"
       android:grantUriPermissions="true"
       android:name=".provider.IDEDocumentsProvider"
@@ -100,13 +118,13 @@
     </provider>
 
     <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="${applicationId}.fileprovider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
     </provider>
 
     <receiver
@@ -115,7 +133,7 @@
       android:name=".services.InstallationResultReceiver"
       tools:ignore="ExportedReceiver">
       <intent-filter>
-        <action android:name="com.itsaky.androidide.installer.INSTALL_PACKAGE" />
+        <action android:name="com.tom.rv2ide.installer.INSTALL_PACKAGE" />
       </intent-filter>
     </receiver>
 
@@ -126,9 +144,9 @@
     <service
       android:exported="true"
       android:name=".services.log.LogReceiverService"
-      android:permission="com.itsaky.androidide.permission.BIND_LOG_SERVICE">
+      android:permission="com.tom.rv2ide.permission.BIND_LOG_SERVICE">
       <intent-filter>
-        <action android:name="com.itsaky.androidide.LOG_SERVICE_ACTION" />
+        <action android:name="com.tom.rv2ide.LOG_SERVICE_ACTION" />
       </intent-filter>
     </service>
     <service
@@ -139,5 +157,8 @@
         android:name="autoStoreLocales"
         android:value="true" />
     </service>
+    <meta-data
+      android:name="android.app.themed_icon"
+      android:value="true" />
   </application>
 </manifest>

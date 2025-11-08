@@ -26,20 +26,20 @@ import java.io.Serializable
  * @author Akash Yadav
  */
 data class AndroidArtifactMetadata(
-  val name: String,
-  val applicationId: String?,
-  val resGenTaskName: String?,
-  val assembleTaskOutputListingFile: File?,
-  val generatedResourceFolders: Collection<File>,
-  val generatedSourceFolders: Collection<File>,
-  val maxSdkVersion: Int?,
-  val minSdkVersion: Int,
-  val signingConfigName: String?,
-  val sourceGenTaskName: String,
-  val assembleTaskName: String,
-  val classJars: List<File>,
-  val compileTaskName: String,
-  val targetSdkVersionOverride: Int
+    val name: String,
+    val applicationId: String?,
+    val resGenTaskName: String?,
+    val assembleTaskOutputListingFile: File?,
+    val generatedResourceFolders: Collection<File>,
+    val generatedSourceFolders: Collection<File>,
+    val maxSdkVersion: Int?,
+    val minSdkVersion: Int,
+    val signingConfigName: String?,
+    val sourceGenTaskName: String,
+    val assembleTaskName: String,
+    val classJars: List<File>,
+    val compileTaskName: String,
+    val targetSdkVersionOverride: Int,
 ) : Serializable {
   private val gsonType: String = javaClass.name
   private val serialVersionUID = 1L

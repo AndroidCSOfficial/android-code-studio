@@ -1,0 +1,306 @@
+{
+  "lcomm": {
+    "desc": "Create a line comment",
+    "body": [
+      "// $0"
+    ]
+  },
+  "bcomm": {
+    "desc": "Create a block comment",
+    "body": [
+      "/*",
+      " * $0",
+      " */"
+    ]
+  },
+  "todo": {
+    "desc": "Create a TODO comment",
+    "body": [
+      "// TODO: $0"
+    ]
+  },
+  "fixme": {
+    "desc": "Create a FIXME comment",
+    "body": [
+      "// FIXME: $0"
+    ]
+  },
+  "kdoc": {
+    "desc": "Create a KDoc comment",
+    "body": [
+      "/**",
+      " * $0",
+      " */"
+    ]
+  },
+  "if": {
+    "desc": "Create an if statement",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "ifelse": {
+    "desc": "Create an if-else statement",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// if body}",
+      "} else {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "when": {
+    "desc": "Create a when expression",
+    "body": [
+      "when (${1:value}) {",
+      "\t${2:case} -> {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ]
+  },
+  "for": {
+    "desc": "Create a for loop",
+    "body": [
+      "for (${1:item} in ${2:collection}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "while": {
+    "desc": "Create a while loop",
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "try": {
+    "desc": "Create a try-catch block",
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:e}: ${2:Exception}) {",
+      "\t${3:// handle exception}",
+      "}"
+    ]
+  },
+  "trycatch": {
+    "desc": "Create a try-catch-finally block",
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:e}: ${2:Exception}) {",
+      "\t${3:// handle exception}",
+      "} finally {",
+      "\t${4:// cleanup}",
+      "}"
+    ]
+  },
+  "class": {
+    "desc": "Create a class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "data": {
+    "desc": "Create a data class",
+    "body": [
+      "data class ${1:ClassName}(",
+      "\t${2:param}: ${3:Type}",
+      ") {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "interface": {
+    "desc": "Create an interface",
+    "body": [
+      "interface ${1:InterfaceName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "enum": {
+    "desc": "Create an enum class",
+    "body": [
+      "enum class ${1:EnumName} {",
+      "\t${2:VALUE1},",
+      "\t${3:VALUE2}",
+      "\t$0",
+      "}"
+    ]
+  },
+  "object": {
+    "desc": "Create an object",
+    "body": [
+      "object ${1:ObjectName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "companion": {
+    "desc": "Create a companion object",
+    "body": [
+      "companion object {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "fun": {
+    "desc": "Create a function",
+    "body": [
+      "fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "val": {
+    "desc": "Create a val property",
+    "body": [
+      "val ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "var": {
+    "desc": "Create a var property",
+    "body": [
+      "var ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "lateinit": {
+    "desc": "Create a lateinit var",
+    "body": [
+      "lateinit var ${1:propertyName}: ${2:Type}"
+    ]
+  },
+  "lazy": {
+    "desc": "Create a lazy property",
+    "body": [
+      "val ${1:propertyName} by lazy {",
+      "\t${2:initialization}",
+      "}"
+    ]
+  },
+  "lambda": {
+    "desc": "Create a lambda expression",
+    "body": [
+      "{ ${1:param} -> ${2:body} }"
+    ]
+  },
+  "let": {
+    "desc": "Create a let block",
+    "body": [
+      "${1:value}.let { ${2:it} ->",
+      "\t$0",
+      "}"
+    ]
+  },
+  "apply": {
+    "desc": "Create an apply block",
+    "body": [
+      "${1:value}.apply {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "run": {
+    "desc": "Create a run block",
+    "body": [
+      "${1:value}.run {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "with": {
+    "desc": "Create a with block",
+    "body": [
+      "with(${1:value}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "also": {
+    "desc": "Create an also block",
+    "body": [
+      "${1:value}.also { ${2:it} ->",
+      "\t$0",
+      "}"
+    ]
+  },
+  "takeIf": {
+    "desc": "Create a takeIf block",
+    "body": [
+      "${1:value}.takeIf { ${2:condition} }"
+    ]
+  },
+  "takeUnless": {
+    "desc": "Create a takeUnless block",
+    "body": [
+      "${1:value}.takeUnless { ${2:condition} }"
+    ]
+  },
+  "listOf": {
+    "desc": "Create a list",
+    "body": [
+      "listOf(${1:items})"
+    ]
+  },
+  "mutableListOf": {
+    "desc": "Create a mutable list",
+    "body": [
+      "mutableListOf(${1:items})"
+    ]
+  },
+  "setOf": {
+    "desc": "Create a set",
+    "body": [
+      "setOf(${1:items})"
+    ]
+  },
+  "mapOf": {
+    "desc": "Create a map",
+    "body": [
+      "mapOf(${1:key} to ${2:value})"
+    ]
+  },
+  "arrayOf": {
+    "desc": "Create an array",
+    "body": [
+      "arrayOf(${1:items})"
+    ]
+  },
+  "println": {
+    "desc": "Create a println statement",
+    "body": [
+      "println(${1:message})"
+    ]
+  },
+  "logd": {
+    "desc": "Create a Log.d statement",
+    "body": [
+      "Log.d(\"${1:tag}\", \"${2:message}\")"
+    ]
+  },
+  "logi": {
+    "desc": "Create a Log.i statement",
+    "body": [
+      "Log.i(\"${1:tag}\", \"${2:message}\")"
+    ]
+  },
+  "logw": {
+    "desc": "Create a Log.w statement",
+    "body": [
+      "Log.w(\"${1:tag}\", \"${2:message}\")"
+    ]
+  },
+  "loge": {
+    "desc": "Create a Log.e statement",
+    "body": [
+      "Log.e(\"${1:tag}\", \"${2:message}\")"
+    ]
+  }
+}

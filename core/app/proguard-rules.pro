@@ -14,10 +14,10 @@
 -keep class com.android.** { *; }
 
 # Tooling API classes
--keep class com.itsaky.androidide.tooling.** { *; }
+-keep class com.tom.rv2ide.tooling.** { *; }
 
 # Builder model implementations
--keep class com.itsaky.androidide.builder.model.** { *; }
+-keep class com.tom.rv2ide.builder.model.** { *; }
 
 # Eclipse
 -keep class org.eclipse.** { *; }
@@ -48,28 +48,28 @@
     io.github.rosemoe.sora.widget.component.EditorCompletionAdapter adapter;
     int currentSelection;
 }
--keep class com.itsaky.androidide.projects.util.StringSearch {
+-keep class com.tom.rv2ide.projects.util.StringSearch {
     packageName(java.nio.file.Path);
 }
 -keep class * implements org.antlr.v4.runtime.Lexer {
     <init>(...);
 }
--keep class * extends com.itsaky.androidide.lsp.java.providers.completion.IJavaCompletionProvider {
+-keep class * extends com.tom.rv2ide.lsp.java.providers.completion.IJavaCompletionProvider {
     <init>(...);
 }
--keep class com.itsaky.androidide.editor.api.IEditor { *; }
--keep class * extends com.itsaky.androidide.inflater.IViewAdapter { *; }
--keep class * extends com.itsaky.androidide.inflater.drawable.IDrawableParser {
+-keep class com.tom.rv2ide.editor.api.IEditor { *; }
+-keep class * extends com.tom.rv2ide.inflater.IViewAdapter { *; }
+-keep class * extends com.tom.rv2ide.inflater.drawable.IDrawableParser {
     <init>(...);
     android.graphics.drawable.Drawable parse();
     android.graphics.drawable.Drawable parseDrawable();
 }
--keep class com.itsaky.androidide.utils.DialogUtils {  public <methods>; }
+-keep class com.tom.rv2ide.utils.DialogUtils {  public <methods>; }
 
 # APK Metadata
--keep class com.itsaky.androidide.models.ApkMetadata { *; }
--keep class com.itsaky.androidide.models.ArtifactType { *; }
--keep class com.itsaky.androidide.models.MetadataElement { *; }
+-keep class com.tom.rv2ide.models.ApkMetadata { *; }
+-keep class com.tom.rv2ide.models.ArtifactType { *; }
+-keep class com.tom.rv2ide.models.MetadataElement { *; }
 
 # Parcelable
 -keepclassmembers class * implements android.os.Parcelable {
@@ -78,7 +78,7 @@
 
 # Used in preferences
 -keep enum org.eclipse.lemminx.dom.builder.EmptyElements { *; }
--keep enum com.itsaky.androidide.xml.permissions.Permission { *; }
+-keep enum com.tom.rv2ide.xml.permissions.Permission { *; }
 
 # Lots of native methods in tree-sitter
 # There are some fields as well that are accessed from native field
@@ -86,7 +86,7 @@
     native <methods>;
 }
 
--keep class com.itsaky.androidide.treesitter.** { *; }
+-keep class com.tom.rv2ide.treesitter.** { *; }
 
 # Retrofit 2
 -dontwarn retrofit2.**
@@ -102,7 +102,7 @@
 -dontwarn okhttp3.**
 
 # Stat uploader
--keep class com.itsaky.androidide.stats.** { *; }
+-keep class com.tom.rv2ide.stats.** { *; }
 
 # Gson
 -keep class * extends com.google.gson.TypeAdapter
@@ -119,12 +119,12 @@
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
 ## Themes
--keep enum com.itsaky.androidide.ui.themes.IDETheme {
+-keep enum com.tom.rv2ide.ui.themes.IDETheme {
   *;
 }
 
 ## Contributor models - deserialized with GSON
--keep class * implements com.itsaky.androidide.contributors.Contributor {
+-keep class * implements com.tom.rv2ide.contributors.Contributor {
   *;
 }
 

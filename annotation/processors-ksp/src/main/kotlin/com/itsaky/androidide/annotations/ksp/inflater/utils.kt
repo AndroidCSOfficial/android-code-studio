@@ -38,5 +38,5 @@ const val METHOD_SET_MODULE = "setModuleNamespace"
 
 val viewAdapter = ClassName.get(ADAPTER_BASE_CLASS_PCK, ADAPTER_BASE_CLASS_NAME)
 val viewAdapterInterface: ClassName =
-  ClassName.get("com.itsaky.androidide.inflater", "IViewAdapterIndex")
+    ClassName.get("com.itsaky.androidide.inflater", "IViewAdapterIndex")
 val viewClass = ClassName.get(ANDROID_VIEW_PCK, ANDROID_VIEW_CLASS)

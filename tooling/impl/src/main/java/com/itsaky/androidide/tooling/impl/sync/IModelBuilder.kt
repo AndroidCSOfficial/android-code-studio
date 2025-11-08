@@ -30,9 +30,8 @@ interface IModelBuilder<P, R> {
    *
    * @param param Parameter for building the model.
    * @return The built model. Implementations should throw [ModelBuilderException] instead of
-   * returning `null`.
+   *   returning `null`.
    * @throws ModelBuilderException If the model could not be built.
    */
-  @Throws(ModelBuilderException::class)
-  fun build(param: P): R
+  @Throws(ModelBuilderException::class) fun build(param: P): R
 }

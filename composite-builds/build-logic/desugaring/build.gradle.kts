@@ -30,8 +30,8 @@ dependencies {
 gradlePlugin {
   plugins {
     create("desugaring") {
-      id = "com.itsaky.androidide.desugaring"
-      implementationClass = "com.itsaky.androidide.desugaring.DesugarGradlePlugin"
+      id = "com.tom.rv2ide.desugaring"
+      implementationClass = "com.tom.rv2ide.desugaring.DesugarGradlePlugin"
       displayName = "AndroidIDE Method Desugaring Plugin"
       description = "Gradle plugin for method desugaring in Android projects."
     }

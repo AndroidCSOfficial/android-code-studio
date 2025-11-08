@@ -54,113 +54,113 @@ import javax.lang.model.element.Modifier.STATIC
 class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
 
   private val indexClassBuilder =
-    TypeSpec.classBuilder(INDEX_CLASS_NAME)
-      .addModifiers(PUBLIC, FINAL)
-      .addSuperinterface(viewAdapterInterface)
+      TypeSpec.classBuilder(INDEX_CLASS_NAME)
+          .addModifiers(PUBLIC, FINAL)
+          .addSuperinterface(viewAdapterInterface)
   private val indexAddStatements = CodeBlock.builder()
 
   fun init() {
     val adapterType =
-      ParameterizedTypeName.get(
-        ClassName.get(ADAPTER_BASE_CLASS_PCK, ADAPTER_BASE_CLASS_NAME),
-        WildcardTypeName.subtypeOf(viewClass)
-      )
+        ParameterizedTypeName.get(
+            ClassName.get(ADAPTER_BASE_CLASS_PCK, ADAPTER_BASE_CLASS_NAME),
+            WildcardTypeName.subtypeOf(viewClass),
+        )
     val mapOfStringToViewAdapter =
-      ParameterizedTypeName.get(
-        ClassName.get(Map::class.java),
-        ClassName.get(String::class.java),
-        adapterType
-      )
+        ParameterizedTypeName.get(
+            ClassName.get(Map::class.java),
+            ClassName.get(String::class.java),
+            adapterType,
+        )
     indexClassBuilder.addField(
-      FieldSpec.builder(mapOfStringToViewAdapter, INDEX_MAP_FIELD, PRIVATE, STATIC, FINAL).build()
+        FieldSpec.builder(mapOfStringToViewAdapter, INDEX_MAP_FIELD, PRIVATE, STATIC, FINAL).build()
     )
 
     indexAddStatements.addStatement(
-      "final var adapters = new \$T()",
-      ParameterizedTypeName.get(
-        ClassName.get(HashMap::class.java),
-        ClassName.get(String::class.java),
-        adapterType
-      )
+        "final var adapters = new \$T()",
+        ParameterizedTypeName.get(
+            ClassName.get(HashMap::class.java),
+            ClassName.get(String::class.java),
+            adapterType,
+        ),
     )
 
     //    addPrivateConstructor(indexClassBuilder)
 
     val indexImpl = ClassName.get(INDEX_PACKAGE_NAME, INDEX_CLASS_NAME)
     indexClassBuilder.addField(
-      FieldSpec.builder(indexImpl, "INSTANCE", PUBLIC, STATIC, FINAL)
-        .initializer("new \$T()", indexImpl)
-        .build()
+        FieldSpec.builder(indexImpl, "INSTANCE", PUBLIC, STATIC, FINAL)
+            .initializer("new \$T()", indexImpl)
+            .build()
     )
 
     indexClassBuilder.addMethod(
-      MethodSpec.methodBuilder("getAdapter")
-        .addAnnotation(Override::class.java)
-        .addAnnotation(ClassName.get("androidx.annotation", "Nullable"))
-        .addModifiers(PUBLIC)
-        .addParameter(String::class.java, "view", FINAL)
-        .returns(adapterType)
-        .addStatement("var adapter = \$L.get(\$L)", INDEX_MAP_FIELD, "view")
-        .beginControlFlow("if (adapter == null)")
-        .addStatement("adapter = \$L.get(\$S)", INDEX_MAP_FIELD, VIEW_CLASS)
-        .endControlFlow()
-        .addStatement("return adapter")
-        .build()
+        MethodSpec.methodBuilder("getAdapter")
+            .addAnnotation(Override::class.java)
+            .addAnnotation(ClassName.get("androidx.annotation", "Nullable"))
+            .addModifiers(PUBLIC)
+            .addParameter(String::class.java, "view", FINAL)
+            .returns(adapterType)
+            .addStatement("var adapter = \$L.get(\$L)", INDEX_MAP_FIELD, "view")
+            .beginControlFlow("if (adapter == null)")
+            .addStatement("adapter = \$L.get(\$S)", INDEX_MAP_FIELD, VIEW_CLASS)
+            .endControlFlow()
+            .addStatement("return adapter")
+            .build()
     )
 
     indexClassBuilder.addMethod(
-      MethodSpec.methodBuilder("getViewAdapter")
-        .addAnnotation(Override::class.java)
-        .addAnnotation(ClassName.get("androidx.annotation", "Nullable"))
-        .addModifiers(PUBLIC)
-        .addParameter(String::class.java, "view", FINAL)
-        .returns(adapterType)
-        .addStatement("return \$L.get(\$L)", INDEX_MAP_FIELD, "view")
-        .build()
+        MethodSpec.methodBuilder("getViewAdapter")
+            .addAnnotation(Override::class.java)
+            .addAnnotation(ClassName.get("androidx.annotation", "Nullable"))
+            .addModifiers(PUBLIC)
+            .addParameter(String::class.java, "view", FINAL)
+            .returns(adapterType)
+            .addStatement("return \$L.get(\$L)", INDEX_MAP_FIELD, "view")
+            .build()
     )
 
     val listOfViewAdapters =
-      ParameterizedTypeName.get(ClassName.get(java.util.List::class.java), adapterType)
+        ParameterizedTypeName.get(ClassName.get(java.util.List::class.java), adapterType)
     val mapOfGroupToListOfViewAdapter =
-      ParameterizedTypeName.get(
-        ClassName.get(Map::class.java),
-        ClassName.get(IncludeInDesigner.Group::class.java),
-        listOfViewAdapters
-      )
+        ParameterizedTypeName.get(
+            ClassName.get(Map::class.java),
+            ClassName.get(IncludeInDesigner.Group::class.java),
+            listOfViewAdapters,
+        )
 
     indexClassBuilder.addField(
-      FieldSpec.builder(
-          mapOfGroupToListOfViewAdapter,
-          INDEX_PROVIDER_MAP_FIELD,
-          PRIVATE,
-          STATIC,
-          FINAL
-        )
-        .build()
+        FieldSpec.builder(
+                mapOfGroupToListOfViewAdapter,
+                INDEX_PROVIDER_MAP_FIELD,
+                PRIVATE,
+                STATIC,
+                FINAL,
+            )
+            .build()
     )
 
     indexAddStatements.addStatement(
-      "final var providers = new \$T()",
-      ParameterizedTypeName.get(
-        ClassName.get(HashMap::class.java),
-        ClassName.get(IncludeInDesigner.Group::class.java),
-        listOfViewAdapters
-      )
+        "final var providers = new \$T()",
+        ParameterizedTypeName.get(
+            ClassName.get(HashMap::class.java),
+            ClassName.get(IncludeInDesigner.Group::class.java),
+            listOfViewAdapters,
+        ),
     )
 
     val nonNull = ClassName.get("androidx.annotation", "NonNull")
     val groupParam =
-      ParameterSpec.builder(IncludeInDesigner.Group::class.java, "group", FINAL).build()
+        ParameterSpec.builder(IncludeInDesigner.Group::class.java, "group", FINAL).build()
 
     indexClassBuilder.addMethod(
-      MethodSpec.methodBuilder("getWidgetProviders")
-        .addAnnotation(Override::class.java)
-        .addAnnotation(nonNull)
-        .addModifiers(PUBLIC)
-        .returns(listOfViewAdapters)
-        .addParameter(groupParam)
-        .addStatement("return \$L.get(group)", INDEX_PROVIDER_MAP_FIELD)
-        .build()
+        MethodSpec.methodBuilder("getWidgetProviders")
+            .addAnnotation(Override::class.java)
+            .addAnnotation(nonNull)
+            .addModifiers(PUBLIC)
+            .returns(listOfViewAdapters)
+            .addParameter(groupParam)
+            .addStatement("return \$L.get(group)", INDEX_PROVIDER_MAP_FIELD)
+            .build()
     )
   }
 
@@ -169,38 +169,38 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
     val block = CodeBlock.builder()
 
     val viewAdapter =
-      sym.getKSAnnotationsByType(ViewAdapter::class).iterator().run {
-        val result = next()
-        if (hasNext()) {
-          logger.error("${ViewAdapter::class.simpleName} can only be applied once.", sym)
-          return false
-        }
-        result
-      }
-
-    val includeInDesigner =
-      if (sym.isAnnotationPresent(IncludeInDesigner::class)) {
-        sym.getAnnotationsByType(IncludeInDesigner::class).iterator().run {
+        sym.getKSAnnotationsByType(ViewAdapter::class).iterator().run {
           val result = next()
           if (hasNext()) {
-            logger.error("${IncludeInDesigner::class.simpleName} can only be applied once.", sym)
+            logger.error("${ViewAdapter::class.simpleName} can only be applied once.", sym)
             return false
           }
           result
         }
-      } else null
-    
+
+    val includeInDesigner =
+        if (sym.isAnnotationPresent(IncludeInDesigner::class)) {
+          sym.getAnnotationsByType(IncludeInDesigner::class).iterator().run {
+            val result = next()
+            if (hasNext()) {
+              logger.error("${IncludeInDesigner::class.simpleName} can only be applied once.", sym)
+              return false
+            }
+            result
+          }
+        } else null
+
     val requiresApi =
-      if (sym.isAnnotationPresent(RequiresApi::class))
-        sym.getAnnotationsByType(RequiresApi::class).iterator().next()
-      else null
+        if (sym.isAnnotationPresent(RequiresApi::class))
+            sym.getAnnotationsByType(RequiresApi::class).iterator().next()
+        else null
 
     val viewName = getViewName(viewAdapter)
     val moduleNs = getModuleNs(viewAdapter)
 
     val adapterTypeName = ClassName.get(sym.packageName.asString(), sym.simpleName.asString())
     val viewTypeName =
-      ClassName.get(viewName.substringBeforeLast('.'), viewName.substringAfterLast('.'))
+        ClassName.get(viewName.substringBeforeLast('.'), viewName.substringAfterLast('.'))
 
     requiresApi?.let { annotation ->
       val api = if (annotation.value == 1) annotation.api else annotation.value
@@ -209,8 +209,8 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
     }
 
     block.addStatement(
-      "final var adapter = new \$T()",
-      ParameterizedTypeName.get(adapterTypeName, viewTypeName)
+        "final var adapter = new \$T()",
+        ParameterizedTypeName.get(adapterTypeName, viewTypeName),
     )
 
     block.addStatement("adapter.\$L(\$S)", METHOD_SET_MODULE, moduleNs)
@@ -219,10 +219,10 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
     if (includeInDesigner != null) {
       assertOverridesCreateWidget(sym)
       block.addStatement(
-        "providers.computeIfAbsent(\$T.\$L, g -> new \$T<>()).add(adapter)",
-        ClassName.get(IncludeInDesigner.Group::class.java),
-        includeInDesigner.group,
-        ClassName.get(java.util.ArrayList::class.java)
+          "providers.computeIfAbsent(\$T.\$L, g -> new \$T<>()).add(adapter)",
+          ClassName.get(IncludeInDesigner.Group::class.java),
+          includeInDesigner.group,
+          ClassName.get(java.util.ArrayList::class.java),
       )
     }
 
@@ -241,15 +241,15 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
     val javaCollections = ClassName.get(Collections::class.java)
 
     indexAddStatements.addStatement(
-      "\$L = \$T.unmodifiableMap(adapters)",
-      INDEX_MAP_FIELD,
-      javaCollections
+        "\$L = \$T.unmodifiableMap(adapters)",
+        INDEX_MAP_FIELD,
+        javaCollections,
     )
 
     indexAddStatements.addStatement(
-      "\$L = \$T.unmodifiableMap(providers)",
-      INDEX_PROVIDER_MAP_FIELD,
-      javaCollections
+        "\$L = \$T.unmodifiableMap(providers)",
+        INDEX_PROVIDER_MAP_FIELD,
+        javaCollections,
     )
 
     indexClassBuilder.addStaticBlock(indexAddStatements.build())
@@ -262,8 +262,8 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
 
   private fun assertOverridesCreateWidget(sym: KSClassDeclaration): Boolean {
     return sym.declarations
-      .filter { it is KSFunctionDeclaration }
-      .find { ADAPTER_FUNC_CREATE_WIDGET == it.simpleName.asString() } != null
+        .filter { it is KSFunctionDeclaration }
+        .find { ADAPTER_FUNC_CREATE_WIDGET == it.simpleName.asString() } != null
   }
 
   private fun getViewName(viewAdapter: KSAnnotation): String {
@@ -271,11 +271,11 @@ class ViewAdapterIndexGenerator(private val logger: KSPLogger) {
   }
 
   private fun getViewType(viewAdapter: KSAnnotation) =
-    (getAnnotationArg(viewAdapter, "forView") as KSType)
+      (getAnnotationArg(viewAdapter, "forView") as KSType)
 
   private fun getModuleNs(viewAdapter: KSAnnotation) =
-    (getAnnotationArg(viewAdapter, "moduleNamespace") as String)
+      (getAnnotationArg(viewAdapter, "moduleNamespace") as String)
 
   private fun getAnnotationArg(viewAdapter: KSAnnotation, arg: String) =
-    viewAdapter.arguments.first { it.name!!.asString() == arg }.value
+      viewAdapter.arguments.first { it.name!!.asString() == arg }.value
 }

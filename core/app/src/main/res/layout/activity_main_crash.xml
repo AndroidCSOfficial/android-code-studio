@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  android:gravity="center_horizontal|left"
+  android:padding="16dp"
+  android:id="@+id/root_layout"
+  android:orientation="vertical"
+  android:fitsSystemWindows="true"
+  tools:context="com.tom.rv2ide.ideconfigurations.MainActivityCfg">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:titleTextAppearance="@style/TextAppearance.AndroidIDE.TitleLarge.Bold"
+      app:subtitleTextAppearance="@style/TextAppearance.Material3.BodySmall"
+      app:title="IDE Configurations"
+      app:subtitle="IDE build system configurations"
+      app:subtitleCentered="true"
+      app:titleCentered="true" />
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal|left"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/ndk_layout"/>
+
+    <include
+        layout="@layout/cmake_layout"/>
+
+  </LinearLayout>
+</LinearLayout>

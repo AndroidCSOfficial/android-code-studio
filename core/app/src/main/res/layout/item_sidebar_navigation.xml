@@ -1,0 +1,17 @@
+<com.google.android.material.button.MaterialButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_button"
+    android:layout_width="72dp"
+    android:layout_height="72dp"
+    android:minWidth="40dp"
+    android:minHeight="40dp"
+    android:insetTop="0dp"
+    android:insetBottom="0dp"
+    android:insetLeft="0dp"
+    android:insetRight="0dp"
+    android:padding="4dp"
+    android:gravity="center"
+    app:iconPadding="0dp"
+    app:iconGravity="textTop"
+    />

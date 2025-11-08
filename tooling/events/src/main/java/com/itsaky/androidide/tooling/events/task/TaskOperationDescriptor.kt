@@ -22,11 +22,11 @@ import com.itsaky.androidide.tooling.model.PluginIdentifier
 
 /** @author Akash Yadav */
 class TaskOperationDescriptor(
-  val dependencies: Set<OperationDescriptor>,
-  val originPlugin: PluginIdentifier,
-  val taskPath: String,
-  override val name: String,
-  override val displayName: String
+    val dependencies: Set<OperationDescriptor>,
+    val originPlugin: PluginIdentifier,
+    val taskPath: String,
+    override val name: String,
+    override val displayName: String,
 ) : OperationDescriptor() {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

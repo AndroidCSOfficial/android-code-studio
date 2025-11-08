@@ -286,7 +286,7 @@
   <string name="xml_formatting_options">XML 格式化选项</string>
   <string name="xml_formatting_options_summary">配置 XML 格式化程序</string>
   <string name="idepref_customFont_title">使用自定义字体</string>
-  <string name="idepref_customFont_summary">如果启用，文件“/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf”将用作编辑器字体。</string>
+  <string name="idepref_customFont_summary">如果启用，文件“/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf”将用作编辑器字体。</string>
   <string name="msg_installing_apk">正在安装 APK …</string>
   <string name="msg_action_open_application">您想打开该应用吗？</string>
   <string name="title_gradle_service_notification_channel">AndroidIDE Gradle 构建服务</string>

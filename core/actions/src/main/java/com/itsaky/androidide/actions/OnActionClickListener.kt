@@ -34,5 +34,10 @@ fun interface OnActionClickListener {
    * @param data The action data associated with the action.
    * @return Whether the click event was consumed.
    */
-  fun onClick(registry: ActionsRegistry, action: ActionItem, item: MenuItem, data: ActionData): Boolean
+  fun onClick(
+      registry: ActionsRegistry,
+      action: ActionItem,
+      item: MenuItem,
+      data: ActionData,
+  ): Boolean
 }

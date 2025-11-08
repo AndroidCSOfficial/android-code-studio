@@ -21,11 +21,11 @@ import java.io.Serializable
 
 /** @author Akash Yadav */
 data class DefaultSyncIssue(
-  override val data: String?,
-  override val message: String,
-  override val multiLineMessage: List<String?>?,
-  override val severity: Int,
-  override val type: Int
+    override val data: String?,
+    override val message: String,
+    override val multiLineMessage: List<String?>?,
+    override val severity: Int,
+    override val type: Int,
 ) : IDESyncIssue, Serializable {
 
   private val serialVersionUID = 1L

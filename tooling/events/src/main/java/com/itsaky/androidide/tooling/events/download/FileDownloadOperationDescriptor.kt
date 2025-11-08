@@ -22,9 +22,9 @@ import java.net.URI
 
 /** @author Akash Yadav */
 class FileDownloadOperationDescriptor(
-  val uri: URI,
-  override val name: String,
-  override val displayName: String
+    val uri: URI,
+    override val name: String,
+    override val displayName: String,
 ) : OperationDescriptor() {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

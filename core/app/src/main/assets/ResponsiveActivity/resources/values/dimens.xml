@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="item_transform_image_length">48dp</dimen>
+    <dimen name="reflow_text_block_max_percent">1</dimen>
+    <dimen name="reflow_text_block_horizontal_gap">8dp</dimen>
+    <dimen name="reflow_text_title_size">22sp</dimen>
+    <dimen name="reflow_text_description_size">13sp</dimen>
+</resources>

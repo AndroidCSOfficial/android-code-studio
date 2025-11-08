@@ -19,21 +19,21 @@ package com.itsaky.androidide.tooling.api
 
 import com.itsaky.androidide.tooling.api.models.params.StringParameter
 import com.itsaky.androidide.tooling.api.models.result.SelectProjectResult
+import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonDelegate
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
-import java.util.concurrent.CompletableFuture
 
 /**
  * Transmiting the whole project models over the communication streams results in a bad performance.
  * If the project is huge, the IDE may even run out of allocated memory.
  *
- * In the previous tooling API implementation, we used to fetch project models from Gradle, copy their
- * data to our own models, then send it to the client. This resulted in a bad performance and
+ * In the previous tooling API implementation, we used to fetch project models from Gradle, copy
+ * their data to our own models, then send it to the client. This resulted in a bad performance and
  * increased memory usage. To overcome this, we keep a reference to the project models we get from
  * from the Android Gradle Plugin and compute only the requested information from those models.
  *
- * With LSP4J's JsonRpc implementation, it is not possible to create a delegate method in a
- * service which can accept parameters. What this means is that if a method is annotated with
+ * With LSP4J's JsonRpc implementation, it is not possible to create a delegate method in a service
+ * which can accept parameters. What this means is that if a method is annotated with
  * [JsonDelegate][org.eclipse.lsp4j.jsonrpc.services.JsonDelegate], it cannot accept any parameters.
  *
  * As we cannot send the whole project model to the client for the reasons mentioned above, we use
@@ -41,41 +41,29 @@ import java.util.concurrent.CompletableFuture
  * information about. After this, when the delegate methods are called, it fetches the information
  * about the selected project.
  *
- * TODO(itsaky): Find a better approach to this issue.
- *
  * @author Akash Yadav
+ *
+ * TODO(itsaky): Find a better approach to this issue.
  */
 interface IProjectQueries {
 
   /**
    * Select the project to work with. This overwrites the existing selection.
    *
-   * @param param A [StringParameter] with the project's path as the value. If the value is an empty string, the root project will be selected.
+   * @param param A [StringParameter] with the project's path as the value. If the value is an empty
+   *   string, the root project will be selected.
    */
-  @JsonRequest
-  fun selectProject(param: StringParameter): CompletableFuture<SelectProjectResult>
+  @JsonRequest fun selectProject(param: StringParameter): CompletableFuture<SelectProjectResult>
 
-  /**
-   * Get the type of selected project.
-   */
-  @JsonRequest
-  fun getType(): CompletableFuture<ProjectType>
+  /** Get the type of selected project. */
+  @JsonRequest fun getType(): CompletableFuture<ProjectType>
 
-  /**
-   * Get the selected project as Gradle project.
-   */
-  @JsonDelegate
-  fun asGradleProject(): IGradleProject
+  /** Get the selected project as Gradle project. */
+  @JsonDelegate fun asGradleProject(): IGradleProject
 
-  /**
-   * Get the selected project as Android project.
-   */
-  @JsonDelegate
-  fun asAndroidProject(): IAndroidProject
+  /** Get the selected project as Android project. */
+  @JsonDelegate fun asAndroidProject(): IAndroidProject
 
-  /**
-   * Get the selected project as Java project.
-   */
-  @JsonDelegate
-  fun asJavaProject(): IJavaProject
+  /** Get the selected project as Java project. */
+  @JsonDelegate fun asJavaProject(): IJavaProject
 }

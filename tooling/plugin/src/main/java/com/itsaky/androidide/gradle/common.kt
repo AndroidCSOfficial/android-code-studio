@@ -23,10 +23,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
-/**
- * @author Akash Yadav
- */
-
+/** @author Akash Yadav */
 const val APP_PLUGIN = "com.android.application"
 const val LIBRARY_PLUGIN = "com.android.library"
 
@@ -34,8 +31,8 @@ const val LIB_GROUP_LOGGING = "logging"
 const val LIB_GROUP_TOOLING = "tooling"
 
 internal val Project.isTestEnv: Boolean
-  get() = hasProperty(_PROPERTY_IS_TEST_ENV) && property(
-    _PROPERTY_IS_TEST_ENV).toString().toBoolean()
+  get() =
+      hasProperty(_PROPERTY_IS_TEST_ENV) && property(_PROPERTY_IS_TEST_ENV).toString().toBoolean()
 
 internal fun depVersion(testEnv: Boolean): String {
   return if (testEnv && !System.getenv("CI").toBoolean()) {
@@ -49,6 +46,6 @@ fun Project.ideDependency(group: String, artifact: String): Dependency {
   return dependencies.ideDependency(group, artifact, isTestEnv)
 }
 
-fun DependencyHandler.  ideDependency(group: String, artifact: String, testEnv: Boolean): Dependency {
+fun DependencyHandler.ideDependency(group: String, artifact: String, testEnv: Boolean): Dependency {
   return create("${BuildInfo.MVN_GROUP_ID}.${group}:${artifact}:${depVersion(testEnv)}")
 }

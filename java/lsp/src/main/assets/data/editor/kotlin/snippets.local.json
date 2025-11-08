@@ -1,0 +1,128 @@
+{
+  "if": {
+    "desc": "Create an if statement",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "ifelse": {
+    "desc": "Create an if-else statement",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// if body}",
+      "} else {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "when": {
+    "desc": "Create a when expression",
+    "body": [
+      "when (${1:value}) {",
+      "\t${2:case} -> {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ]
+  },
+  "for": {
+    "desc": "Create a for loop",
+    "body": [
+      "for (${1:item} in ${2:collection}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "while": {
+    "desc": "Create a while loop",
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "try": {
+    "desc": "Create a try-catch block",
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:e}: ${2:Exception}) {",
+      "\t${3:// handle exception}",
+      "}"
+    ]
+  },
+  "val": {
+    "desc": "Create a val property",
+    "body": [
+      "val ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "var": {
+    "desc": "Create a var property",
+    "body": [
+      "var ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "fun": {
+    "desc": "Create a function",
+    "body": [
+      "fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "lambda": {
+    "desc": "Create a lambda expression",
+    "body": [
+      "{ ${1:param} -> ${2:body} }"
+    ]
+  },
+  "let": {
+    "desc": "Create a let block",
+    "body": [
+      "${1:value}.let { ${2:it} ->",
+      "\t$0",
+      "}"
+    ]
+  },
+  "apply": {
+    "desc": "Create an apply block",
+    "body": [
+      "${1:value}.apply {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "run": {
+    "desc": "Create a run block",
+    "body": [
+      "${1:value}.run {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "with": {
+    "desc": "Create a with block",
+    "body": [
+      "with(${1:value}) {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "also": {
+    "desc": "Create an also block",
+    "body": [
+      "${1:value}.also { ${2:it} ->",
+      "\t$0",
+      "}"
+    ]
+  },
+  "println": {
+    "desc": "Create a println statement",
+    "body": [
+      "println(${1:message})"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+// Custom Gradle script for Android classpath resolution
+// This script provides the Android classpath without requiring Gradle dependency resolution
+
+task androidClassPath {
+    doLast {
+        // Get Android SDK path from environment or system property
+        def androidSdkPath = System.getProperty("android.sdk.path") ?: System.getenv("ANDROID_SDK_ROOT") ?: System.getenv("ANDROID_HOME")
+        
+        if (androidSdkPath) {
+            def androidJar = new File(androidSdkPath, "platforms/android-35/android.jar")
+            if (androidJar.exists()) {
+                println androidJar.absolutePath
+            }
+        }
+        
+        // Add any additional classpath entries from system property
+        def additionalClasspath = System.getProperty("android.additional.classpath")
+        if (additionalClasspath) {
+            additionalClasspath.split(File.pathSeparator).each { path ->
+                if (path.trim()) {
+                    println path.trim()
+                }
+            }
+        }
+    }
+}
+
+// Make this task the default for kotlinLSPProjectDeps
+task kotlinLSPProjectDeps {
+    dependsOn androidClassPath
+}

@@ -44,7 +44,7 @@ import com.android.aaptcompiler.parseResourceName
 import com.android.aaptcompiler.resourceIdFromParts
 import com.android.aaptcompiler.resourceTypeFromTag
 import com.android.utils.ILogger
-import com.itsaky.androidide.layoutlib.resources.ResourceVisibility
+import com.tom.rv2ide.layoutlib.resources.ResourceVisibility
 
 fun deserializeConfigFromPb(
   config: ConfigurationOuterClass.Configuration, logger: ILogger?

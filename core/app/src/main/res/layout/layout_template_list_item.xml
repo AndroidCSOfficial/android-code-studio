@@ -7,8 +7,8 @@
   android:layout_height="wrap_content"
   android:layout_margin="8dp"
   android:background="?attr/selectableItemBackground"
+  app:cardBackgroundColor="?attr/colorSurfaceContainerLow"
   android:clickable="true"
-  android:descendantFocusability="blocksDescendants"
   android:elevation="2dp"
   android:focusable="true"
   app:strokeWidth="0dp">

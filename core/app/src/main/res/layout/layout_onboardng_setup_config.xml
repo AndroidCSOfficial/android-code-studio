@@ -74,7 +74,7 @@
     android:checked="true"
     android:text="@string/action_install_git"
     app:layout_constraintStart_toStartOf="@id/auto_install_switch"
-    app:layout_constraintTop_toBottomOf="@id/jdk_version_layout" />
+    app:layout_constraintTop_toBottomOf="@id/ndk_version_layout" />
 
   <com.google.android.material.checkbox.MaterialCheckBox
     android:id="@+id/install_openssh"
@@ -84,15 +84,6 @@
     android:text="@string/action_install_openssh"
     app:layout_constraintStart_toStartOf="@id/auto_install_switch"
     app:layout_constraintTop_toBottomOf="@id/install_git" />
-
-  <com.google.android.material.checkbox.MaterialCheckBox
-    android:id="@+id/install_ndk"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:checked="true"
-    android:text="@string/action_install_ndk"
-    app:layout_constraintStart_toStartOf="@id/auto_install_switch"
-    app:layout_constraintTop_toBottomOf="@id/install_openssh" />
 
   <com.google.android.material.materialswitch.MaterialSwitch
     android:id="@+id/auto_install_switch"
@@ -113,6 +104,10 @@
     android:layout_marginTop="8dp"
     android:hint="@string/hin_jdk_version"
     android:labelFor="@id/jdk_version"
+    app:boxCornerRadiusTopStart="20dp"
+    app:boxCornerRadiusTopEnd="20dp"
+    app:boxCornerRadiusBottomStart="20dp"
+    app:boxCornerRadiusBottomEnd="20dp"
     app:layout_constraintEnd_toEndOf="@id/auto_install_switch"
     app:layout_constraintStart_toStartOf="@id/auto_install_switch"
     app:layout_constraintTop_toBottomOf="@id/sdk_version_layout">
@@ -133,6 +128,10 @@
     android:layout_marginTop="16dp"
     android:hint="@string/hint_android_sdk_version"
     android:labelFor="@id/sdk_version"
+    app:boxCornerRadiusTopStart="20dp"
+    app:boxCornerRadiusTopEnd="20dp"
+    app:boxCornerRadiusBottomStart="20dp"
+    app:boxCornerRadiusBottomEnd="20dp"
     app:layout_constraintEnd_toEndOf="@id/auto_install_switch"
     app:layout_constraintStart_toStartOf="@id/auto_install_switch"
     app:layout_constraintTop_toBottomOf="@id/auto_install_switch">
@@ -142,7 +141,49 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:inputType="none" />
+  </com.google.android.material.textfield.TextInputLayout>
+    
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/ndk_version_layout"
+    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    app:boxCornerRadiusTopStart="20dp"
+    app:boxCornerRadiusTopEnd="20dp"
+    app:boxCornerRadiusBottomStart="20dp"
+    app:boxCornerRadiusBottomEnd="20dp"
+    android:hint="@string/hint_android_ndk_version"
+    android:labelFor="@id/ndk_version"
+    app:layout_constraintEnd_toEndOf="@id/auto_install_switch"
+    app:layout_constraintStart_toStartOf="@id/auto_install_switch"
+    app:layout_constraintTop_toBottomOf="@id/jdk_version_layout">
+
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+      android:id="@+id/ndk_version"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:inputType="none" />
 
   </com.google.android.material.textfield.TextInputLayout>
+  <!-- <com.google.android.material.textfield.TextInputLayout -->
+    <!-- android:id="@+id/ndk_version_layout" -->
+    <!-- style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_marginTop="16dp" -->
+    <!-- android:hint="@string/hint_android_sdk_version" -->
+    <!-- android:labelFor="@id/ndk_version" -->
+    <!-- app:layout_constraintEnd_toEndOf="@id/auto_install_switch" -->
+    <!-- app:layout_constraintStart_toStartOf="@id/auto_install_switch" -->
+    <!-- app:layout_constraintTop_toBottomOf="@id/auto_install_switch"> -->
+<!--  -->
+    <!-- <com.google.android.material.textfield.MaterialAutoCompleteTextView -->
+      <!-- android:id="@+id/ndk_version" -->
+      <!-- android:layout_width="match_parent" -->
+      <!-- android:layout_height="match_parent" -->
+      <!-- android:inputType="none" /> -->
+<!--  -->
+  <!-- </com.google.android.material.textfield.TextInputLayout> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,9 +19,9 @@ package com.itsaky.androidide.tooling.api
 
 import com.itsaky.androidide.tooling.api.models.JavaContentRoot
 import com.itsaky.androidide.tooling.api.models.JavaModuleDependency
+import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.CompletableFuture
 
 /**
  * Model for a Java library project.
@@ -31,15 +31,9 @@ import java.util.concurrent.CompletableFuture
 @JsonSegment("java")
 interface IJavaProject : IModuleProject {
 
-  /**
-   * Get the content roots for this Java project.
-   */
-  @JsonRequest
-  fun getContentRoots(): CompletableFuture<List<JavaContentRoot>>
+  /** Get the content roots for this Java project. */
+  @JsonRequest fun getContentRoots(): CompletableFuture<List<JavaContentRoot>>
 
-  /**
-   * Get the dependencies of this Java project.
-   */
-  @JsonRequest
-  fun getDependencies() : CompletableFuture<List<JavaModuleDependency>>
+  /** Get the dependencies of this Java project. */
+  @JsonRequest fun getDependencies(): CompletableFuture<List<JavaModuleDependency>>
 }

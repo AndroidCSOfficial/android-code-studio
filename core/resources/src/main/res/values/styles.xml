@@ -115,4 +115,22 @@
     <item name="android:windowExitAnimation">@anim/popup_out</item>
   </style>
 
+  <!-- Dropdown TextInputLayout Style -->
+  <style name="AppTheme.TextInputLayout.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+    <item name="boxBackgroundMode">outline</item>
+    <item name="boxStrokeWidth">1sp</item>
+    <item name="boxStrokeWidthFocused">1dp</item>
+    <item name="boxCornerRadiusTopStart">20dp</item>
+    <item name="boxCornerRadiusTopEnd">20dp</item>
+    <item name="boxCornerRadiusBottomStart">20dp</item>
+    <item name="boxCornerRadiusBottomEnd">20dp</item>
+  </style>
+
+<style name="AppTheme.TextInputLayout.Dropdown.Filled">
+    <item name="boxBackgroundMode">filled</item>
+    <item name="boxStrokeWidth">0sp</item>
+    <item name="boxBackgroundColor">?attr/colorSurfaceContainerHigh</item>
+
+</style>
+
 </resources>

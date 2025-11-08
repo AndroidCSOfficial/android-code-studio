@@ -40,6 +40,7 @@ import org.gradle.tooling.events.work.WorkItemStartEvent
 
 /**
  * A [ProgressListener] which forwards all of its event to [IToolingApiClient].
+ *
  * @author Akash Yadav
  */
 class ForwardingProgressListener : ProgressListener {
@@ -55,43 +56,45 @@ class ForwardingProgressListener : ProgressListener {
     }
 
     val ideEvent: com.itsaky.androidide.tooling.events.ProgressEvent =
-      when (event) {
-        is ProjectConfigurationProgressEvent ->
-          when (event) {
-            is ProjectConfigurationStartEvent -> EventTransformer.projectConfigurationStart(event)
-            is ProjectConfigurationFinishEvent -> EventTransformer.projectConfigurationFinish(event)
-            else -> EventTransformer.projectConfigurationProgress(event)
-          }
+        when (event) {
+          is ProjectConfigurationProgressEvent ->
+              when (event) {
+                is ProjectConfigurationStartEvent ->
+                    EventTransformer.projectConfigurationStart(event)
+                is ProjectConfigurationFinishEvent ->
+                    EventTransformer.projectConfigurationFinish(event)
+                else -> EventTransformer.projectConfigurationProgress(event)
+              }
 
-        is TaskProgressEvent ->
-          when (event) {
-            is TaskStartEvent -> EventTransformer.taskStart(event)
-            is TaskFinishEvent -> EventTransformer.taskFinish(event)
-            else -> EventTransformer.taskProgress(event)
-          }
+          is TaskProgressEvent ->
+              when (event) {
+                is TaskStartEvent -> EventTransformer.taskStart(event)
+                is TaskFinishEvent -> EventTransformer.taskFinish(event)
+                else -> EventTransformer.taskProgress(event)
+              }
 
-        is TransformProgressEvent ->
-          when (event) {
-            is TransformStartEvent -> EventTransformer.transformStart(event)
-            is TransformFinishEvent -> EventTransformer.transformFinish(event)
-            else -> EventTransformer.transformProgress(event)
-          }
+          is TransformProgressEvent ->
+              when (event) {
+                is TransformStartEvent -> EventTransformer.transformStart(event)
+                is TransformFinishEvent -> EventTransformer.transformFinish(event)
+                else -> EventTransformer.transformProgress(event)
+              }
 
-        is WorkItemProgressEvent ->
-          when (event) {
-            is WorkItemStartEvent -> EventTransformer.workStart(event)
-            is WorkItemFinishEvent -> EventTransformer.workFinish(event)
-            else -> EventTransformer.workProgress(event)
-          }
+          is WorkItemProgressEvent ->
+              when (event) {
+                is WorkItemStartEvent -> EventTransformer.workStart(event)
+                is WorkItemFinishEvent -> EventTransformer.workFinish(event)
+                else -> EventTransformer.workProgress(event)
+              }
 
-        is StatusEvent -> EventTransformer.statusEvent(event)
-        else ->
-          when (event) {
-            is StartEvent -> EventTransformer.start(event)
-            is FinishEvent -> EventTransformer.finish(event)
-            else -> EventTransformer.progress(event)
-          }
-      }
+          is StatusEvent -> EventTransformer.statusEvent(event)
+          else ->
+              when (event) {
+                is StartEvent -> EventTransformer.start(event)
+                is FinishEvent -> EventTransformer.finish(event)
+                else -> EventTransformer.progress(event)
+              }
+        }
 
     Main.client.onProgressEvent(ideEvent)
   }

@@ -281,7 +281,7 @@
   <string name="xml_formatting_options">Opciones de formato XML</string>
   <string name="xml_formatting_options_summary">Configura el formato XML</string>
   <string name="idepref_customFont_title">Añadir fuente personalizada</string>
-  <string name="idepref_customFont_summary">Si está habilitado, el archivo en\"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" se utilizará como fuente del editor.</string>
+  <string name="idepref_customFont_summary">Si está habilitado, el archivo en\"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" se utilizará como fuente del editor.</string>
   <string name="msg_installing_apk">Instalando APK...</string>
   <string name="msg_action_open_application">¿Quieres abrir la aplicación?</string>
   <string name="title_gradle_service_notification_channel">Servicio de compilación de Gradle de AndroidIDE</string>

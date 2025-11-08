@@ -1,0 +1,90 @@
+{
+  "class": {
+    "desc": "Create a class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "data": {
+    "desc": "Create a data class",
+    "body": [
+      "data class ${1:ClassName}(",
+      "\t${2:param}: ${3:Type}",
+      ") {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "interface": {
+    "desc": "Create an interface",
+    "body": [
+      "interface ${1:InterfaceName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "enum": {
+    "desc": "Create an enum class",
+    "body": [
+      "enum class ${1:EnumName} {",
+      "\t${2:VALUE1},",
+      "\t${3:VALUE2}",
+      "\t$0",
+      "}"
+    ]
+  },
+  "object": {
+    "desc": "Create an object",
+    "body": [
+      "object ${1:ObjectName} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "fun": {
+    "desc": "Create a top-level function",
+    "body": [
+      "fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "val": {
+    "desc": "Create a top-level val property",
+    "body": [
+      "val ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "var": {
+    "desc": "Create a top-level var property",
+    "body": [
+      "var ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "const": {
+    "desc": "Create a const val",
+    "body": [
+      "const val ${1:CONSTANT_NAME} = ${2:value}"
+    ]
+  },
+  "typealias": {
+    "desc": "Create a type alias",
+    "body": [
+      "typealias ${1:AliasName} = ${2:OriginalType}"
+    ]
+  },
+  "import": {
+    "desc": "Create an import statement",
+    "body": [
+      "import ${1:package.name.ClassName}"
+    ]
+  },
+  "package": {
+    "desc": "Create a package declaration",
+    "body": [
+      "package ${1:com.example.package}"
+    ]
+  }
+}

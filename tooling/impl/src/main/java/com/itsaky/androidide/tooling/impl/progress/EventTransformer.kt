@@ -67,356 +67,363 @@ class EventTransformer {
 
     // ------------------------ COMMON -------------------------
     private fun operationDescriptor(
-      descriptor: OperationDescriptor?
+        descriptor: OperationDescriptor?
     ): com.itsaky.androidide.tooling.events.OperationDescriptor? =
-      when (descriptor) {
-        null -> null
-        is ProjectConfigurationOperationDescriptor -> projectConfigurationDescriptor(descriptor)
-        is FileDownloadOperationDescriptor -> fileDownloadDescriptor(descriptor)
-        is TaskOperationDescriptor -> taskDescriptor(descriptor)
-        is TransformOperationDescriptor -> transformDescriptor(descriptor)
-        is WorkItemOperationDescriptor -> workDescriptor(descriptor)
-        else ->
-          DefaultOperationDescriptor(name = descriptor.name, displayName = descriptor.displayName)
-      }
+        when (descriptor) {
+          null -> null
+          is ProjectConfigurationOperationDescriptor -> projectConfigurationDescriptor(descriptor)
+          is FileDownloadOperationDescriptor -> fileDownloadDescriptor(descriptor)
+          is TaskOperationDescriptor -> taskDescriptor(descriptor)
+          is TransformOperationDescriptor -> transformDescriptor(descriptor)
+          is WorkItemOperationDescriptor -> workDescriptor(descriptor)
+          else ->
+              DefaultOperationDescriptor(
+                  name = descriptor.name,
+                  displayName = descriptor.displayName,
+              )
+        }
 
     // ----------------- PROJECT CONFIGURATION --------------------
     @JvmStatic
     fun projectConfigurationStart(
-      event: ProjectConfigurationStartEvent
+        event: ProjectConfigurationStartEvent
     ): com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationProgressEvent =
-      com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationStartEvent(
-        displayName = event.displayName,
-        eventTime = event.eventTime,
-        descriptor = projectConfigurationDescriptor(event.descriptor)
-      )
+        com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationStartEvent(
+            displayName = event.displayName,
+            eventTime = event.eventTime,
+            descriptor = projectConfigurationDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun projectConfigurationProgress(
-      event: ProjectConfigurationProgressEvent
+        event: ProjectConfigurationProgressEvent
     ): com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationProgressEvent =
-      com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationProgressEvent(
-        displayName = event.displayName,
-        eventTime = event.eventTime,
-        descriptor = projectConfigurationDescriptor(event.descriptor)
-      )
+        com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationProgressEvent(
+            displayName = event.displayName,
+            eventTime = event.eventTime,
+            descriptor = projectConfigurationDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun projectConfigurationFinish(
-      event: ProjectConfigurationFinishEvent
+        event: ProjectConfigurationFinishEvent
     ): com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationProgressEvent =
-      com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationFinishEvent(
-        displayName = event.displayName,
-        eventTime = event.eventTime,
-        descriptor = projectConfigurationDescriptor(event.descriptor),
-        result = projectConfigurationResult(event.result)
-      )
+        com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationFinishEvent(
+            displayName = event.displayName,
+            eventTime = event.eventTime,
+            descriptor = projectConfigurationDescriptor(event.descriptor),
+            result = projectConfigurationResult(event.result),
+        )
 
     private fun projectConfigurationResult(
-      result: ProjectConfigurationOperationResult
+        result: ProjectConfigurationOperationResult
     ): com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationResult =
-      com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationResult(
-        pluginApplicationResults =
-          result.pluginApplicationResults.map {
-            PluginApplicationResult(
-              plugin = PluginIdentifier(it.plugin?.displayName ?: "Unknown plugin"),
-              it.totalConfigurationTime.toMillis()
-            )
-          },
-        startTime = result.startTime,
-        endTime = result.endTime,
-        success = result is ProjectConfigurationSuccessResult
-      )
+        com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationResult(
+            pluginApplicationResults =
+                result.pluginApplicationResults.map {
+                  PluginApplicationResult(
+                      plugin = PluginIdentifier(it.plugin?.displayName ?: "Unknown plugin"),
+                      it.totalConfigurationTime.toMillis(),
+                  )
+                },
+            startTime = result.startTime,
+            endTime = result.endTime,
+            success = result is ProjectConfigurationSuccessResult,
+        )
 
     private fun projectConfigurationDescriptor(
-      descriptor: ProjectConfigurationOperationDescriptor
+        descriptor: ProjectConfigurationOperationDescriptor
     ): com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationDescriptor =
-      com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationDescriptor(
-        project = projectIdentifier(descriptor.project),
-        name = descriptor.name,
-        displayName = descriptor.displayName
-      )
+        com.itsaky.androidide.tooling.events.configuration.ProjectConfigurationOperationDescriptor(
+            project = projectIdentifier(descriptor.project),
+            name = descriptor.name,
+            displayName = descriptor.displayName,
+        )
 
     private fun projectIdentifier(
-      project: ProjectIdentifier
+        project: ProjectIdentifier
     ): com.itsaky.androidide.tooling.model.ProjectIdentifier =
-      com.itsaky.androidide.tooling.model.ProjectIdentifier(
-        projectPath = project.projectPath,
-        buildIdentifier =
-          com.itsaky.androidide.tooling.model.BuildIdentifier(project.buildIdentifier.rootDir)
-      )
+        com.itsaky.androidide.tooling.model.ProjectIdentifier(
+            projectPath = project.projectPath,
+            buildIdentifier =
+                com.itsaky.androidide.tooling.model.BuildIdentifier(project.buildIdentifier.rootDir),
+        )
 
     // ---------------------- FILE DOWNLOAD ---------------------------------
     @JvmStatic
     fun fileDownloadStart(
-      event: org.gradle.tooling.events.download.FileDownloadStartEvent
+        event: org.gradle.tooling.events.download.FileDownloadStartEvent
     ): FileDownloadStartEvent =
-      FileDownloadStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = fileDownloadDescriptor(event.descriptor)
-      )
+        FileDownloadStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = fileDownloadDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun fileDownloadProgress(
-      event: org.gradle.tooling.events.download.FileDownloadProgressEvent
+        event: org.gradle.tooling.events.download.FileDownloadProgressEvent
     ): FileDownloadProgressEvent =
-      FileDownloadProgressEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = fileDownloadDescriptor(event.descriptor)
-      )
+        FileDownloadProgressEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = fileDownloadDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun fileDownloadFinish(
-      event: org.gradle.tooling.events.download.FileDownloadFinishEvent
+        event: org.gradle.tooling.events.download.FileDownloadFinishEvent
     ): FileDownloadFinishEvent =
-      FileDownloadFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = fileDownloadDescriptor(event.descriptor),
-        result = fileDownloadResult(event.result)
-      )
+        FileDownloadFinishEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = fileDownloadDescriptor(event.descriptor),
+            result = fileDownloadResult(event.result),
+        )
 
     private fun fileDownloadResult(
-      result: FileDownloadResult
+        result: FileDownloadResult
     ): com.itsaky.androidide.tooling.events.download.FileDownloadResult =
-      com.itsaky.androidide.tooling.events.download.FileDownloadResult(
-        bytesDownloaded = result.bytesDownloaded,
-        startTime = result.startTime,
-        endTime = result.endTime
-      )
+        com.itsaky.androidide.tooling.events.download.FileDownloadResult(
+            bytesDownloaded = result.bytesDownloaded,
+            startTime = result.startTime,
+            endTime = result.endTime,
+        )
 
     private fun fileDownloadDescriptor(
-      descriptor: FileDownloadOperationDescriptor
+        descriptor: FileDownloadOperationDescriptor
     ): com.itsaky.androidide.tooling.events.download.FileDownloadOperationDescriptor =
-      com.itsaky.androidide.tooling.events.download.FileDownloadOperationDescriptor(
-        descriptor.uri,
-        descriptor.name,
-        descriptor.displayName
-      )
+        com.itsaky.androidide.tooling.events.download.FileDownloadOperationDescriptor(
+            descriptor.uri,
+            descriptor.name,
+            descriptor.displayName,
+        )
 
     // -------------------- TASK -------------------------------
     @JvmStatic
     fun taskStart(event: org.gradle.tooling.events.task.TaskStartEvent): TaskStartEvent =
-      TaskStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = taskDescriptor(event.descriptor)
-      )
+        TaskStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = taskDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun taskProgress(event: org.gradle.tooling.events.task.TaskProgressEvent): TaskProgressEvent =
-      TaskProgressEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = taskDescriptor(event.descriptor)
-      )
+        TaskProgressEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = taskDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun taskFinish(event: org.gradle.tooling.events.task.TaskFinishEvent): TaskFinishEvent =
-      TaskFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = taskDescriptor(event.descriptor),
-        result = taskResult(event.result)
-      )
+        TaskFinishEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = taskDescriptor(event.descriptor),
+            result = taskResult(event.result),
+        )
 
     private fun taskResult(
-      result: TaskOperationResult
+        result: TaskOperationResult
     ): com.itsaky.androidide.tooling.events.task.TaskOperationResult {
 
       // The order of conditions must not change here.
 
       if (result is TaskSuccessResult) {
         return com.itsaky.androidide.tooling.events.task.TaskSuccessResult(
-          result.isUpToDate,
-          result.isFromCache,
-          result.startTime,
-          result.endTime,
-          result.isIncremental,
-          result.executionReasons
+            result.isUpToDate,
+            result.isFromCache,
+            result.startTime,
+            result.endTime,
+            result.isIncremental,
+            result.executionReasons,
         )
       }
 
       if (result is TaskFailureResult) {
         return com.itsaky.androidide.tooling.events.task.TaskFailureResult(
-          result.startTime,
-          result.endTime
+            result.startTime,
+            result.endTime,
         )
       }
 
       if (result is TaskExecutionResult) {
         return com.itsaky.androidide.tooling.events.task.TaskExecutionResult(
-          result.startTime,
-          result.endTime,
-          result.isIncremental,
-          result.executionReasons
+            result.startTime,
+            result.endTime,
+            result.isIncremental,
+            result.executionReasons,
         )
       }
 
       if (result is TaskSkippedResult) {
         return com.itsaky.androidide.tooling.events.task.TaskSkippedResult(
-          result.skipMessage,
-          result.startTime,
-          result.endTime
+            result.skipMessage,
+            result.startTime,
+            result.endTime,
         )
       }
 
       return com.itsaky.androidide.tooling.events.task.TaskOperationResult(
-        startTime = result.startTime,
-        endTime = result.endTime
+          startTime = result.startTime,
+          endTime = result.endTime,
       )
     }
 
     private fun taskDescriptor(
-      descriptor: TaskOperationDescriptor
+        descriptor: TaskOperationDescriptor
     ): com.itsaky.androidide.tooling.events.task.TaskOperationDescriptor =
-      com.itsaky.androidide.tooling.events.task.TaskOperationDescriptor(
-        dependencies =
-          descriptor.dependencies.filterNotNull().mapNotNull { operationDescriptor(it) }.toSet(),
-        originPlugin = PluginIdentifier(descriptor.originPlugin?.displayName ?: "Unknown plugin"),
-        taskPath = descriptor.taskPath,
-        name = descriptor.name,
-        displayName = descriptor.displayName
-      )
+        com.itsaky.androidide.tooling.events.task.TaskOperationDescriptor(
+            dependencies =
+                descriptor.dependencies
+                    .filterNotNull()
+                    .mapNotNull { operationDescriptor(it) }
+                    .toSet(),
+            originPlugin =
+                PluginIdentifier(descriptor.originPlugin?.displayName ?: "Unknown plugin"),
+            taskPath = descriptor.taskPath,
+            name = descriptor.name,
+            displayName = descriptor.displayName,
+        )
 
     // ----------------------- TRANSFORM -------------------------
     @JvmStatic
     fun transformStart(
-      event: org.gradle.tooling.events.transform.TransformStartEvent
+        event: org.gradle.tooling.events.transform.TransformStartEvent
     ): TransformStartEvent =
-      TransformStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = transformDescriptor(event.descriptor)
-      )
+        TransformStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = transformDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun transformProgress(
-      event: org.gradle.tooling.events.transform.TransformProgressEvent
+        event: org.gradle.tooling.events.transform.TransformProgressEvent
     ): TransformStartEvent =
-      TransformStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = transformDescriptor(event.descriptor)
-      )
+        TransformStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = transformDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun transformFinish(
-      event: org.gradle.tooling.events.transform.TransformFinishEvent
+        event: org.gradle.tooling.events.transform.TransformFinishEvent
     ): TransformFinishEvent =
-      TransformFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        operationDescriptor = transformDescriptor(event.descriptor),
-        result = transformResult(event.result)
-      )
+        TransformFinishEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            operationDescriptor = transformDescriptor(event.descriptor),
+            result = transformResult(event.result),
+        )
 
     private fun transformResult(
-      result: org.gradle.tooling.events.transform.TransformOperationResult
+        result: org.gradle.tooling.events.transform.TransformOperationResult
     ): TransformOperationResult =
-      TransformOperationResult(
-        success = result is TransformSuccessResult,
-        startTime = result.startTime,
-        endTime = result.endTime
-      )
+        TransformOperationResult(
+            success = result is TransformSuccessResult,
+            startTime = result.startTime,
+            endTime = result.endTime,
+        )
 
     private fun transformDescriptor(
-      descriptor: TransformOperationDescriptor
+        descriptor: TransformOperationDescriptor
     ): com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor =
-      com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor(
-        name = descriptor.name,
-        displayName = descriptor.displayName,
-        subject = SubjectDescriptor(descriptor.subject.displayName),
-        transformer =
-          com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor
-            .TransformerDescriptor(descriptor.transformer.displayName),
-        dependencies = descriptor.dependencies.mapNotNull { operationDescriptor(it) }.toSet()
-      )
+        com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor(
+            name = descriptor.name,
+            displayName = descriptor.displayName,
+            subject = SubjectDescriptor(descriptor.subject.displayName),
+            transformer =
+                com.itsaky.androidide.tooling.events.transform.TransformOperationDescriptor
+                    .TransformerDescriptor(descriptor.transformer.displayName),
+            dependencies = descriptor.dependencies.mapNotNull { operationDescriptor(it) }.toSet(),
+        )
 
     // ----------------------- WORK ITEM -------------------------
     @JvmStatic
     fun workStart(event: org.gradle.tooling.events.work.WorkItemStartEvent): WorkItemStartEvent =
-      WorkItemStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = workDescriptor(event.descriptor)
-      )
+        WorkItemStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = workDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun workProgress(
-      event: org.gradle.tooling.events.work.WorkItemProgressEvent
+        event: org.gradle.tooling.events.work.WorkItemProgressEvent
     ): WorkItemProgressEvent =
-      WorkItemProgressEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = workDescriptor(event.descriptor)
-      )
+        WorkItemProgressEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = workDescriptor(event.descriptor),
+        )
 
     @JvmStatic
     fun workFinish(event: org.gradle.tooling.events.work.WorkItemFinishEvent): WorkItemFinishEvent =
-      WorkItemFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        operationDescriptor = workDescriptor(event.descriptor),
-        result = workResult(event.result)
-      )
+        WorkItemFinishEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            operationDescriptor = workDescriptor(event.descriptor),
+            result = workResult(event.result),
+        )
 
     private fun workResult(
-      result: org.gradle.tooling.events.work.WorkItemOperationResult
+        result: org.gradle.tooling.events.work.WorkItemOperationResult
     ): WorkItemOperationResult =
-      WorkItemOperationResult(
-        success = result is WorkItemSuccessResult,
-        startTime = result.startTime,
-        endTime = result.endTime
-      )
+        WorkItemOperationResult(
+            success = result is WorkItemSuccessResult,
+            startTime = result.startTime,
+            endTime = result.endTime,
+        )
 
     private fun workDescriptor(
-      descriptor: WorkItemOperationDescriptor
+        descriptor: WorkItemOperationDescriptor
     ): com.itsaky.androidide.tooling.events.work.WorkItemOperationDescriptor =
-      com.itsaky.androidide.tooling.events.work.WorkItemOperationDescriptor(
-        name = descriptor.name,
-        displayName = descriptor.displayName,
-        className = descriptor.className
-      )
+        com.itsaky.androidide.tooling.events.work.WorkItemOperationDescriptor(
+            name = descriptor.name,
+            displayName = descriptor.displayName,
+            className = descriptor.className,
+        )
 
     // ---------------------------- STATUS ---------------------------------
     fun statusEvent(event: org.gradle.tooling.events.StatusEvent): StatusEvent =
-      StatusEvent(
-        total = event.total,
-        progress = event.progress,
-        unit = event.unit,
-        displayName = event.displayName,
-        eventTime = event.eventTime,
-        descriptor = operationDescriptor(event.descriptor)!!
-      )
+        StatusEvent(
+            total = event.total,
+            progress = event.progress,
+            unit = event.unit,
+            displayName = event.displayName,
+            eventTime = event.eventTime,
+            descriptor = operationDescriptor(event.descriptor)!!,
+        )
 
     // ----------------------- DEFAULT ----------------------------------
     fun progress(event: ProgressEvent): com.itsaky.androidide.tooling.events.ProgressEvent =
-      DefaultProgressEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = operationDescriptor(event.descriptor)!!
-      )
+        DefaultProgressEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = operationDescriptor(event.descriptor)!!,
+        )
 
     fun start(
-      event: org.gradle.tooling.events.StartEvent
+        event: org.gradle.tooling.events.StartEvent
     ): com.itsaky.androidide.tooling.events.ProgressEvent =
-      DefaultStartEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = operationDescriptor(event.descriptor)!!
-      )
+        DefaultStartEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = operationDescriptor(event.descriptor)!!,
+        )
 
     fun finish(
-      event: org.gradle.tooling.events.FinishEvent
+        event: org.gradle.tooling.events.FinishEvent
     ): com.itsaky.androidide.tooling.events.ProgressEvent =
-      DefaultFinishEvent(
-        eventTime = event.eventTime,
-        displayName = event.displayName,
-        descriptor = operationDescriptor(event.descriptor)!!,
-        result = DefaultOperationResult(event.result.startTime, event.result.endTime)
-      )
+        DefaultFinishEvent(
+            eventTime = event.eventTime,
+            displayName = event.displayName,
+            descriptor = operationDescriptor(event.descriptor)!!,
+            result = DefaultOperationResult(event.result.startTime, event.result.endTime),
+        )
   }
 }

@@ -26,8 +26,6 @@ import java.io.File
  */
 interface IModuleMetadata {
 
-  /**
-   * The JAR file for this module project.
-   */
+  /** The JAR file for this module project. */
   val classesJar: File?
 }

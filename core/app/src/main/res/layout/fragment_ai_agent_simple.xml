@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:visibility="gone">
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_mode"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:icon="@drawable/ic_settings"
+                app:backgroundTint="@android:color/transparent" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        
+
+        <!-- AI Agent Notice in ScrollView with Edge Effects -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:maxHeight="120dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdgeLength="24dp"
+            android:elevation="2dp"
+            android:background="@android:color/transparent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ai_agent_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ai_agent_note"
+                android:padding="12dp"
+                android:alpha="0.7"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                android:textColor="?attr/colorOnSurface" />
+
+        </androidx.core.widget.NestedScrollView>
+        <!-- Agent Dropdown (top, outside scroll) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/agent_dropdown_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:startIconDrawable="@drawable/ic_agent_switch"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusBottomEnd="20dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/agent_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Input Area (top, outside scroll) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:strokeColor="?attr/colorOnBackground"
+            app:strokeWidth="1dp"
+            app:cardCornerRadius="24dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_prompt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Ask AI anything..."
+                    app:boxBackgroundMode="none"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_send"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_prompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:textSize="16sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send"
+                    app:fabSize="mini"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Chat Messages Area -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_messages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+    <!-- Loading Indicator -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

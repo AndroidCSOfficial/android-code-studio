@@ -76,12 +76,11 @@
 
 ## Limitations
 
-- For working with projects in AndroidIDE, your project must use Android Gradle Plugin v7.2.0 or
+- For working with projects in AndroidCodeStudio, your project must use Android Gradle Plugin v7.2.0 or
   newer. Projects with older AGP must be migrated to newer versions.
 - SDK Manager is already included in Android SDK and is accessible in Android Code Studio via its Terminal.
   But, you cannot use it to install some tools (like NDK) because those tools are not built for
   Android.
-- No official NDK support because we haven't built the NDK for Android.
 
 The app is still being developed actively. It's in beta stage and may not be stable. if you have any
 issues using the app, please let us know.
@@ -114,18 +113,18 @@ Thanks to all the developers who have contributed to this project.
 ## License
 
 ```
-AndroidIDE-Rv2 ( Versions ≤ v2.7.4-r1.02 ) is free software: you can redistribute it and/or modify
+AndroidCodeStudio is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-AndroidIDE-Rv2 is distributed in the hope that it will be useful,
+AndroidCodeStudio is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+along with AndroidCodeStudio.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
 Any violations to the license can be reported either by opening an issue or writing a mail to us

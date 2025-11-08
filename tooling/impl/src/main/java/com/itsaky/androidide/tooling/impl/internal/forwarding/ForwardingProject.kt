@@ -32,12 +32,10 @@ import com.itsaky.androidide.tooling.api.models.params.StringParameter
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
-/**
- * @author Akash Yadav
- */
+/** @author Akash Yadav */
 @Suppress("NewApi")
-internal class ForwardingProject(var project: IGradleProject? = null) : IGradleProject,
-  IAndroidProject, IJavaProject {
+internal class ForwardingProject(var project: IGradleProject? = null) :
+    IGradleProject, IAndroidProject, IJavaProject {
 
   private val androidProject: IAndroidProject?
     get() = this.project as? IAndroidProject?
@@ -45,65 +43,63 @@ internal class ForwardingProject(var project: IGradleProject? = null) : IGradleP
   private val javaProject: IJavaProject?
     get() = this.project as? IJavaProject?
 
-
   override fun getContentRoots(): CompletableFuture<List<JavaContentRoot>> {
-    return this.javaProject?.getContentRoots() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.javaProject?.getContentRoots()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getDependencies(): CompletableFuture<List<JavaModuleDependency>> {
-    return this.javaProject?.getDependencies() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.javaProject?.getDependencies()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getConfiguredVariant(): CompletableFuture<String> {
-    return this.androidProject?.getConfiguredVariant() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException()
-    )
+    return this.androidProject?.getConfiguredVariant()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getVariants(): CompletableFuture<List<BasicAndroidVariantMetadata>> {
-    return this.androidProject?.getVariants() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getVariants()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getVariant(param: StringParameter): CompletableFuture<AndroidVariantMetadata?> {
-    return this.androidProject?.getVariant(param) ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getVariant(param)
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getBootClasspaths(): CompletableFuture<Collection<File>> {
-    return this.androidProject?.getBootClasspaths() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getBootClasspaths()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getLibraryMap(): CompletableFuture<Map<String, DefaultLibrary>> {
-    return this.androidProject?.getLibraryMap() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getLibraryMap()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getMainSourceSet(): CompletableFuture<DefaultSourceSetContainer?> {
-    return this.androidProject?.getMainSourceSet() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getMainSourceSet()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getLintCheckJars(): CompletableFuture<List<File>> {
-    return this.androidProject?.getLintCheckJars() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.androidProject?.getLintCheckJars()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getClasspaths(): CompletableFuture<List<File>> {
-    return this.javaProject?.getClasspaths() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.javaProject?.getClasspaths()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getMetadata(): CompletableFuture<ProjectMetadata> {
-    return this.project?.getMetadata() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.project?.getMetadata()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 
   override fun getTasks(): CompletableFuture<List<GradleTask>> {
-    return this.project?.getTasks() ?: CompletableFuture.failedFuture(
-      UnsupportedOperationException())
+    return this.project?.getTasks()
+        ?: CompletableFuture.failedFuture(UnsupportedOperationException())
   }
 }

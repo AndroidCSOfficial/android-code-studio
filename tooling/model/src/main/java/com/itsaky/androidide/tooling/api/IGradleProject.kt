@@ -19,9 +19,9 @@ package com.itsaky.androidide.tooling.api
 
 import com.itsaky.androidide.tooling.api.models.GradleTask
 import com.itsaky.androidide.tooling.api.models.ProjectMetadata
+import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.CompletableFuture
 
 /**
  * A model for representing a project which is not an Android or Java project.
@@ -36,12 +36,8 @@ interface IGradleProject {
    *
    * @see [ProjectMetadata].
    */
-  @JsonRequest
-  fun getMetadata(): CompletableFuture<ProjectMetadata>
+  @JsonRequest fun getMetadata(): CompletableFuture<ProjectMetadata>
 
-  /**
-   * Get this project's tasks.
-   */
-  @JsonRequest
-  fun getTasks(): CompletableFuture<List<GradleTask>>
+  /** Get this project's tasks. */
+  @JsonRequest fun getTasks(): CompletableFuture<List<GradleTask>>
 }

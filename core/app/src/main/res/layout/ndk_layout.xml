@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tom.customizablecardview.CustomizableCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ndkCardHolder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:setCardStroke="0sp"
+    app:setCardTitle="Android development kit"
+    app:isCheckableCard="false"
+    app:isClickableCard="true"
+    app:setCardSummary="@string/cfg_installed_ndk_version"
+    app:setCardIconHeight="30dp"
+    app:setCardIconWidth="30dp"
+    app:setSummaryTextSize="12dp"
+    app:setTitleTextSize="18dp"
+    app:noIconBackground="true"
+    app:noIcon="true"
+    app:setCardElevation="0dp"
+    app:setCardIcon="@drawable/ic_cfg">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ndks_dropdown_layout"
+        style="@style/AppTheme.TextInputLayout.Dropdown.Filled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/ndks_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:clickable="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reinstall_btn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            app:icon="@drawable/download"
+            style="@style/Widget.Material3.Button.TonalButton"
+            app:backgroundTint="?attr/colorSurfaceContainerHigh"
+            android:text="Download" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_btn"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:padding="4dp"
+            android:gravity="center"
+            app:iconPadding="0dp"
+            app:iconGravity="textTop"
+            app:icon="@drawable/ic_delete"
+            />
+
+    </LinearLayout>
+
+</com.tom.customizablecardview.CustomizableCardView>

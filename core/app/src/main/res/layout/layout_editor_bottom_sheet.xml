@@ -43,7 +43,7 @@
       layout="@layout/layout_editor_build_status"
       android:id="@+id/build_status"/>
 
-    <com.itsaky.androidide.ui.SymbolInputView
+    <com.tom.rv2ide.ui.SymbolInputView
       android:id="@+id/symbol_input"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>

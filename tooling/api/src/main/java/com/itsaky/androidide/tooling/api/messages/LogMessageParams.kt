@@ -27,9 +27,7 @@ import com.itsaky.androidide.utils.ILogger
  */
 data class LogMessageParams(val level: Char, val tag: String, val message: String)
 
-/**
- * Creates a new [LogLine] instance from this [LogMessageParams].
- */
+/** Creates a new [LogLine] instance from this [LogMessageParams]. */
 fun LogMessageParams.toLogLine(): LogLine {
   return LogLine.obtain(ILogger.Level.forChar(level), tag, message)
 }

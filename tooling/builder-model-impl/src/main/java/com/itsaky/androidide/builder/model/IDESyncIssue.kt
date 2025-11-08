@@ -17,7 +17,6 @@
 
 package com.itsaky.androidide.builder.model
 
-import com.android.build.gradle.options.StringOption
 import com.android.build.gradle.options.StringOption.AAPT2_FROM_MAVEN_OVERRIDE
 import com.android.builder.model.v2.ide.SyncIssue
 
@@ -30,8 +29,8 @@ interface IDESyncIssue : SyncIssue {
   companion object {
 
     /**
-     * Indicates that the Android Gradle Plugin that is being used by the project
-     * is too new for AndroidIDE. Data is `projectAgpVersion:maxAgpVersion`.
+     * Indicates that the Android Gradle Plugin that is being used by the project is too new for
+     * AndroidIDE. Data is `projectAgpVersion:maxAgpVersion`.
      */
     const val TYPE_AGP_VERSION_TOO_NEW = -1
 
@@ -46,7 +45,7 @@ interface IDESyncIssue : SyncIssue {
  *
  * @return Whether the issue can be ignored.
  */
-fun SyncIssue.shouldBeIgnored() : Boolean {
+fun SyncIssue.shouldBeIgnored(): Boolean {
   if (this.type != SyncIssue.TYPE_UNSUPPORTED_PROJECT_OPTION_USE) {
     return false
   }

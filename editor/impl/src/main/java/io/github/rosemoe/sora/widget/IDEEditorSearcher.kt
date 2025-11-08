@@ -17,7 +17,7 @@
 
 package io.github.rosemoe.sora.widget
 
-import com.itsaky.androidide.editor.ui.IDEEditor
+import com.tom.rv2ide.editor.ui.IDEEditor
 
 /**
  * Search text in editor. As the constructor of [EditorSearcher] is package private, we cannot

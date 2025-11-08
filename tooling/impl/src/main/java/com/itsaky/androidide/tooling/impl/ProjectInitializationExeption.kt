@@ -23,4 +23,4 @@ package com.itsaky.androidide.tooling.impl
  * @author Akash Yadav
  */
 class ProjectInitializationExeption(reason: String = "", cause: Throwable? = null) :
-  RuntimeException("Failed to initialize project: $reason", cause)
+    RuntimeException("Failed to initialize project: $reason", cause)

@@ -1,0 +1,72 @@
+{
+  "definitions": {
+    "primary": "#6f5a4a",
+    "primaryLight": "#8027190c",
+    "primaryInverse": "#dcc2ae",
+    "onPrimary": "#ffffff",
+    "onPrimaryContainer": "#27190c",
+    "surface": "#fffbff",
+    "surfaceInverse": "#33302e",
+    "surfaceVariant": "#e8e1dd",
+    "onSurface": "#1e1b19",
+    "onSurfaceVariant": "#4a4644",
+    "outline": "#7a7572",
+    "text.selected": "#ff5252",
+
+    "type": "#1976d2",
+    "keyword": "#d32f2f",
+    "operator": "#1976d2",
+    "attribute": "#827717",
+    "variable": "#ba68c8",
+    "field" : "#ff6f00",
+    "constant": "#ff6f00",
+    "number": "#558b2f",
+    "string": "#558b2f",
+    "comment": "#9e9e9e",
+    "func.decl": "#2196f3",
+    "func.call": "#2196f3",
+
+    "java.package": "#e66400",
+
+    "kt.preproc":  "#9e9e9e",
+    "kt.property":  "#ff6f00",
+    "kt.punctuation.special": "#d32f2f",
+    "kt.constructor": "#2196f3",
+    "kt.string.esc": "#2196f3",
+
+    "xml.tag": "#e64a19",
+    "xml.ref": "#2196f3",
+    "ns_prefix": "#9c27b0",
+
+    "json.key": "#1976d2",
+    "json.escape": "#2196f3",
+
+    "log.err.text": "#f44336",
+    "log.err.pr.fg" : "#000000",
+    "log.err.pr.bg" : "#f44336",
+
+    "log.warn.text": "#ffab00",
+    "log.warn.pr.fg" : "#000000",
+    "log.warn.pr.bg" : "#FFEB3B",
+
+    "log.info.text": "#4CAF50",
+    "log.info.pr.fg" : "#ffffff",
+    "log.info.pr.bg" : "#1f65c0",
+
+    "log.debug.text": "#212121",
+    "log.debug.pr.fg" : "#ffffff",
+    "log.debug.pr.bg" : "#9e9d24",
+
+    "log.verbose.text": "#0288d1",
+    "log.verbose.pr.fg" : "#000000",
+    "log.verbose.pr.bg" : "#ffffff"
+  },
+  "editor": "@editor.json",
+  "languages": [
+    "@java.json",
+    "@json.json",
+    "@kotlin.json",
+    "@xml.json",
+    "@log.json"
+  ]
+}

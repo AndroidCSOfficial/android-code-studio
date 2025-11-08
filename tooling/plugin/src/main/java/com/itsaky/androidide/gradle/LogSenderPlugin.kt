@@ -24,10 +24,8 @@ import com.android.build.api.variant.impl.ApplicationVariantImpl
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
-import org.gradle.api.artifacts.ExternalDependency
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.logging.Logging
-import java.util.concurrent.TimeUnit
 
 /**
  * Plugin to manage LogSender in Android applications.
@@ -49,19 +47,17 @@ class LogSenderPlugin : Plugin<Project> {
     }
 
     target.run {
-
       check(plugins.hasPlugin(APP_PLUGIN)) {
         "${javaClass.simpleName} can only be applied to Android application projects."
       }
 
-      (extensions.getByName(
-        "androidComponents") as ApplicationAndroidComponentsExtension).apply {
-
+      (extensions.getByName("androidComponents") as ApplicationAndroidComponentsExtension).apply {
         val debuggableBuilds = hashSetOf<String>()
 
         beforeVariants { variantBuilder ->
           logger.info(
-            "Variant :'${variantBuilder.name}' isDebuggable: ${variantBuilder.debuggable}")
+              "Variant :'${variantBuilder.name}' isDebuggable: ${variantBuilder.debuggable}"
+          )
           if (variantBuilder.debuggable) {
             debuggableBuilds.add(variantBuilder.name)
           }
@@ -69,8 +65,8 @@ class LogSenderPlugin : Plugin<Project> {
 
         onVariants { variant ->
           logger.info(
-            "Found ${debuggableBuilds.size} debuggable builds in project '${project.path}'" +
-                ": $debuggableBuilds"
+              "Found ${debuggableBuilds.size} debuggable builds in project '${project.path}'" +
+                  ": $debuggableBuilds"
           )
 
           if (debuggableBuilds.isEmpty()) {
@@ -79,12 +75,12 @@ class LogSenderPlugin : Plugin<Project> {
 
           if (variant.name in debuggableBuilds) {
             variant.withRuntimeConfiguration {
-
-              val logsenderDependency = project.dependencies.ideDependency(
-                LIB_GROUP_LOGGING,
-                LOGSENDER_DEPENDENCY_ARTIFACT,
-                project.isTestEnv
-              )
+              val logsenderDependency =
+                  project.dependencies.ideDependency(
+                      LIB_GROUP_LOGGING,
+                      LOGSENDER_DEPENDENCY_ARTIFACT,
+                      project.isTestEnv,
+                  )
 
               if (logsenderDependency is ExternalModuleDependency) {
                 // a new snapshot is published for each build
@@ -95,8 +91,8 @@ class LogSenderPlugin : Plugin<Project> {
               }
 
               logger.lifecycle(
-                "Adding LogSender dependency (version '${logsenderDependency.version}')" +
-                    " to variant '${variant.name}' of project '${project.path}'"
+                  "Adding LogSender dependency (version '${logsenderDependency.version}')" +
+                      " to variant '${variant.name}' of project '${project.path}'"
               )
 
               logger.debug("Adding logsender dependency: $logsenderDependency")
@@ -108,9 +104,7 @@ class LogSenderPlugin : Plugin<Project> {
     }
   }
 
-  private fun ApplicationVariant.withRuntimeConfiguration(
-    action: Configuration.() -> Unit
-  ) {
+  private fun ApplicationVariant.withRuntimeConfiguration(action: Configuration.() -> Unit) {
     if (this is ApplicationVariantImpl) {
       variantDependencies.runtimeClasspath.action()
     } else if (this is AnalyticsEnabledApplicationVariant) {

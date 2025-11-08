@@ -22,17 +22,14 @@ import java.io.Serializable
 /**
  * Initialization params for Android project/modules.
  *
- * @property variantSelections The map of module paths to the name of the variants which should
- *            be fetched/initialized.
+ * @property variantSelections The map of module paths to the name of the variants which should be
+ *   fetched/initialized.
  */
 data class AndroidInitializationParams(val variantSelections: Map<String, String>) : Serializable {
 
   companion object {
 
-    /**
-     * Default initialization params. This initializes the Android modules with default values.
-     */
-    @JvmStatic
-    val DEFAULT = AndroidInitializationParams(emptyMap())
+    /** Default initialization params. This initializes the Android modules with default values. */
+    @JvmStatic val DEFAULT = AndroidInitializationParams(emptyMap())
   }
 }

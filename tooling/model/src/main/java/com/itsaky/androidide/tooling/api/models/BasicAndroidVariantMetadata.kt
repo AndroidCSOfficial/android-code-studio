@@ -26,7 +26,10 @@ import java.io.Serializable
  * @property mainArtifact Metadata about the main artifact of this variant.
  * @author Akash Yadav
  */
-open class BasicAndroidVariantMetadata(val name: String, val mainArtifact: AndroidArtifactMetadata) : Serializable {
+open class BasicAndroidVariantMetadata(
+    val name: String,
+    val mainArtifact: AndroidArtifactMetadata,
+) : Serializable {
   protected val gsonType: String = javaClass.name
   private val serialVersionUID = 1L
 }

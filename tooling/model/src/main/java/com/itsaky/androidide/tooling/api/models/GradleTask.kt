@@ -28,11 +28,11 @@ package com.itsaky.androidide.tooling.api.models
  * @author Akash Yadav
  */
 open class GradleTask(
-  val name: String,
-  val description: String?,
-  val group: String?,
-  val path: String,
-  displayName: String?,
-  isPublic: Boolean?,
-  val projectPath: String?
+    val name: String,
+    val description: String?,
+    val group: String?,
+    val path: String,
+    displayName: String?,
+    isPublic: Boolean?,
+    val projectPath: String?,
 ) : Launchable(displayName, isPublic ?: false)

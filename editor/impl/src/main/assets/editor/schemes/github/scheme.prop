@@ -1,0 +1,11 @@
+# Name of the color scheme
+scheme.name=GitHub scheme
+
+# The version code of the color scheme
+scheme.version=13
+
+# Whether the scheme is dark or light
+scheme.isDark=false
+
+# The JSON color scheme definition file
+scheme.file=default.json

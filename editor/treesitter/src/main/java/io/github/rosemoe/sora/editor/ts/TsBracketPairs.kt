@@ -1,50 +1,50 @@
-/*******************************************************************************
- *    sora-editor - the awesome code editor for Android
- *    https://github.com/Rosemoe/sora-editor
- *    Copyright (C) 2020-2023  Rosemoe
+/**
+ * ****************************************************************************
+ * sora-editor - the awesome code editor for Android https://github.com/Rosemoe/sora-editor
+ * Copyright (C) 2020-2023 Rosemoe
  *
- *     This library is free software; you can redistribute it and/or
- *     modify it under the terms of the GNU Lesser General Public
- *     License as published by the Free Software Foundation; either
- *     version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- *     This library is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *     Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- *     You should have received a copy of the GNU Lesser General Public
- *     License along with this library; if not, write to the Free Software
- *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- *     USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  *
- *     Please contact Rosemoe by email 2073412493@qq.com if you need
- *     additional information or have any questions
- ******************************************************************************/
-
+ * Please contact Rosemoe by email 2073412493@qq.com if you need additional information or have any
+ * questions
+ * ****************************************************************************
+ */
 package io.github.rosemoe.sora.editor.ts
 
-import com.itsaky.androidide.treesitter.TSQueryCursor
-import com.itsaky.androidide.treesitter.TSTree
-import com.itsaky.androidide.treesitter.api.TreeSitterQueryCapture
-import com.itsaky.androidide.treesitter.api.safeExecQueryCursor
+import com.tom.rv2ide.treesitter.TSQueryCursor
+import com.tom.rv2ide.treesitter.TSTree
+import com.tom.rv2ide.treesitter.api.TreeSitterQueryCapture
+import com.tom.rv2ide.treesitter.api.safeExecQueryCursor
 import io.github.rosemoe.sora.lang.brackets.BracketsProvider
 import io.github.rosemoe.sora.lang.brackets.PairedBracket
 import io.github.rosemoe.sora.text.Content
 import kotlin.math.max
 
 class TsBracketPairs(private val tree: TSTree, private val languageSpec: TsLanguageSpec) :
-  BracketsProvider {
+    BracketsProvider {
 
   companion object {
 
     val OPEN_NAME = "editor.brackets.open"
     val CLOSE_NAME = "editor.brackets.close"
-
   }
 
   override fun getPairedBracketAt(text: Content, index: Int): PairedBracket? {
-    if (!languageSpec.bracketsQuery.canAccess() || languageSpec.bracketsQuery.patternCount <= 0 || !tree.canAccess()) {
+    if (
+        !languageSpec.bracketsQuery.canAccess() ||
+            languageSpec.bracketsQuery.patternCount <= 0 ||
+            !tree.canAccess()
+    ) {
       return null
     }
 
@@ -53,9 +53,13 @@ class TsBracketPairs(private val tree: TSTree, private val languageSpec: TsLangu
 
       var matched = false
 
-      return@use cursor.safeExecQueryCursor(query = languageSpec.bracketsQuery, tree = tree,
-        recycleNodeAfterUse = true, whileTrue = { !matched },
-        debugName = "TsBracketPairs.getPairedBracketAt()") { match ->
+      return@use cursor.safeExecQueryCursor(
+          query = languageSpec.bracketsQuery,
+          tree = tree,
+          recycleNodeAfterUse = true,
+          whileTrue = { !matched },
+          debugName = "TsBracketPairs.getPairedBracketAt()",
+      ) { match ->
         if (!languageSpec.bracketsPredicator.doPredicate(languageSpec.predicates, text, match)) {
           return@safeExecQueryCursor null
         }
@@ -89,13 +93,16 @@ class TsBracketPairs(private val tree: TSTree, private val languageSpec: TsLangu
         val endEndByte = positions[3]
 
         if (matched && positions.find { it == -1 } == null) {
-          return@safeExecQueryCursor PairedBracket(startStartByte / 2,
-            (startEndByte - startStartByte) / 2, endStartByte / 2, (endEndByte - endStartByte) / 2)
+          return@safeExecQueryCursor PairedBracket(
+              startStartByte / 2,
+              (startEndByte - startStartByte) / 2,
+              endStartByte / 2,
+              (endEndByte - endStartByte) / 2,
+          )
         }
 
         return@safeExecQueryCursor null
       }
     }
   }
-
 }

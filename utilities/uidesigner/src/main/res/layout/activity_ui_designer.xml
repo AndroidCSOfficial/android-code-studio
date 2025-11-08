@@ -15,7 +15,7 @@
   ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<com.itsaky.androidide.ui.ContentTranslatingDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.tom.rv2ide.ui.ContentTranslatingDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
@@ -45,7 +45,7 @@
 
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/workspace"
-      android:name="com.itsaky.androidide.uidesigner.fragments.DesignerWorkspaceFragment"
+      android:name="com.tom.rv2ide.uidesigner.fragments.DesignerWorkspaceFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -61,7 +61,7 @@
 
     <androidx.fragment.app.FragmentContainerView
       android:id="@+id/widgets_fragment"
-      android:name="com.itsaky.androidide.uidesigner.fragments.WidgetsListFragment"
+      android:name="com.tom.rv2ide.uidesigner.fragments.WidgetsListFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:layout="@layout/fragment_ui_widgets" />
@@ -84,7 +84,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <com.itsaky.androidide.uidesigner.views.LayoutHierarchyView
+        <com.tom.rv2ide.uidesigner.views.LayoutHierarchyView
           android:id="@+id/hierarchy"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
@@ -96,4 +96,4 @@
 
   </com.google.android.material.navigation.NavigationView>
 
-</com.itsaky.androidide.ui.ContentTranslatingDrawerLayout>
+</com.tom.rv2ide.ui.ContentTranslatingDrawerLayout>

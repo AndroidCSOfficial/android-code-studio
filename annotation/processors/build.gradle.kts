@@ -17,7 +17,7 @@
 
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.itsaky.androidide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   kotlin("jvm")
@@ -46,5 +46,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+  compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+  }
 }

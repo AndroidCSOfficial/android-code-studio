@@ -16,7 +16,6 @@
  */
 package com.itsaky.androidide.actions
 
-import android.view.Menu
 import com.itsaky.androidide.actions.internal.DefaultActionsRegistry
 import com.itsaky.androidide.utils.ServiceLoader
 import com.itsaky.androidide.utils.VMUtils
@@ -31,9 +30,10 @@ abstract class ActionsRegistry {
     @JvmStatic
     fun getInstance(): ActionsRegistry {
       if (instance == null) {
-        instance = if (VMUtils.isJvm()) {
-          DefaultActionsRegistry()
-        } else ServiceLoader.load(ActionsRegistry::class.java).findFirstOrThrow()
+        instance =
+            if (VMUtils.isJvm()) {
+              DefaultActionsRegistry()
+            } else ServiceLoader.load(ActionsRegistry::class.java).findFirstOrThrow()
       }
 
       return instance as ActionsRegistry
@@ -113,6 +113,7 @@ abstract class ActionsRegistry {
 
     /**
      * The given action was executed.
+     *
      * @param action The action that was executed.
      * @param result The result of the action execution.
      */

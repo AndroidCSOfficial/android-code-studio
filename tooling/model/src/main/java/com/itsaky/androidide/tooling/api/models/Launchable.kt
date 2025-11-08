@@ -20,7 +20,8 @@ package com.itsaky.androidide.tooling.api.models
 import java.io.Serializable
 
 /**
- * Model containing information about anything which can be launched by the users (e.g. Gradle tasks).
+ * Model containing information about anything which can be launched by the users (e.g. Gradle
+ * tasks).
  *
  * @property displayName The display name of the launchable.
  * @property isPublic Whether the launchable is publicly accessible.

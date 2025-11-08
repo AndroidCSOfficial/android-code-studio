@@ -22,9 +22,9 @@ import com.itsaky.androidide.tooling.model.ProjectIdentifier
 
 /** @author Akash Yadav */
 class ProjectConfigurationOperationDescriptor(
-  val project: ProjectIdentifier,
-  override val name: String,
-  override val displayName: String
+    val project: ProjectIdentifier,
+    override val name: String,
+    override val displayName: String,
 ) : OperationDescriptor() {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

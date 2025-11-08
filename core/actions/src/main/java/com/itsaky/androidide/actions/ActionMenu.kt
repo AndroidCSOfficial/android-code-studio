@@ -19,6 +19,7 @@ package com.itsaky.androidide.actions
 
 /**
  * An action menu is an action which can contain child actions.
+ *
  * @author Akash Yadav
  */
 interface ActionMenu : ActionItem {
@@ -50,10 +51,13 @@ interface ActionMenu : ActionItem {
   }
 
   /**
-   * Calls [ActionItem.prepare] on each child action and returns `true` if at least one of them
-   * is [visible][ActionItem.visible].
+   * Calls [ActionItem.prepare] on each child action and returns `true` if at least one of them is
+   * [visible][ActionItem.visible].
    */
-  fun isAtLeastOneChildVisible(data: ActionData) : Boolean {
-    return children.firstOrNull { it.prepare(data); it.visible } != null
+  fun isAtLeastOneChildVisible(data: ActionData): Boolean {
+    return children.firstOrNull {
+      it.prepare(data)
+      it.visible
+    } != null
   }
 }

@@ -31,7 +31,7 @@
     android:fitsSystemWindows="false"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
 
-    <com.itsaky.androidide.ui.ExtendedMenuToolbar
+    <com.tom.rv2ide.ui.ExtendedMenuToolbar
       android:id="@+id/editor_toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -41,6 +41,8 @@
       android:id="@+id/progress_indicator"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      app:wavelength="20dp"
+      app:waveAmplitude="1dp"
       android:indeterminate="true" />
 
     <com.google.android.material.tabs.TabLayout
@@ -101,11 +103,12 @@
 
   </ViewFlipper>
 
-  <com.itsaky.androidide.ui.EditorBottomSheet
+  <com.tom.rv2ide.ui.EditorBottomSheet
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="false"
+    android:clipToPadding="false"
     app:behavior_peekHeight="@dimen/editor_sheet_peek_height"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 

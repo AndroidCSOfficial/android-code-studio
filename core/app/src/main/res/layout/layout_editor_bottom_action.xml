@@ -31,6 +31,8 @@
     android:layout_height="wrap_content"
     android:indeterminate="false"
     android:max="100"
+    app:wavelength="20dp"
+    app:waveAmplitude="1dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"

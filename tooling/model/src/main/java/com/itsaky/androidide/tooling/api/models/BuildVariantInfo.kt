@@ -26,9 +26,9 @@ package com.itsaky.androidide.tooling.api.models
  * @author Akash Yadav
  */
 data class BuildVariantInfo(
-  val projectPath: String,
-  val buildVariants: List<String>,
-  val selectedVariant: String
+    val projectPath: String,
+    val buildVariants: List<String>,
+    val selectedVariant: String,
 ) {
 
   companion object {
@@ -48,9 +48,7 @@ data class BuildVariantInfo(
   }
 }
 
-/**
- * Maps the values to the selected variant names.
- */
+/** Maps the values to the selected variant names. */
 fun Map<String, BuildVariantInfo>.mapToSelectedVariants(): Map<String, String> {
   return mapValues { it.value.selectedVariant }
 }

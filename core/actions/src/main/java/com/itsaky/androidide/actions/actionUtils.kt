@@ -42,7 +42,7 @@ fun ActionData.requirePath(): Path {
 
 fun ActionData.requireEditor(): CodeEditor {
   return get(CodeEditor::class.java)
-    ?: throw IllegalArgumentException("An editor instance is required but none was provided")
+      ?: throw IllegalArgumentException("An editor instance is required but none was provided")
 }
 
 fun newDialogBuilder(data: ActionData): MaterialAlertDialogBuilder {

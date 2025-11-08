@@ -1,64 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~  This file is part of AndroidIDE.
-  ~
-  ~  AndroidIDE is free software: you can redistribute it and/or modify
-  ~  it under the terms of the GNU General Public License as published by
-  ~  the Free Software Foundation, either version 3 of the License, or
-  ~  (at your option) any later version.
-  ~
-  ~  AndroidIDE is distributed in the hope that it will be useful,
-  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~  GNU General Public License for more details.
-  ~
-  ~  You should have received a copy of the GNU General Public License
-  ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="?attr/colorSurfaceContainer">
+    <LinearLayout
+        android:id="@+id/sidebarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-  <androidx.fragment.app.FragmentContainerView
-    android:id="@+id/fragment_container"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:name="androidx.navigation.fragment.NavHostFragment"
-    app:defaultNavHost="true"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/navigation"
-    app:layout_constraintTop_toBottomOf="@id/title" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="File Tree"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="2dp"
+            android:visibility="gone"
+            />
+        
+        <!-- ScrollView for vertical scrolling -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
-  <com.google.android.material.navigationrail.NavigationRailView
-    android:id="@+id/navigation"
-    android:layout_width="56dp"
-    android:layout_height="0dp"
-    app:headerLayout="@layout/layout_editor_sidebar_header"
-    app:labelVisibilityMode="unlabeled"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:menuGravity="bottom" />
+            <!-- Fragment Container inside ScrollView -->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainer"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:defaultNavHost="false" />
 
-  <com.google.android.material.textview.MaterialTextView
-    android:id="@+id/title"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:ellipsize="end"
-    android:maxLines="1"
-    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-    app:layout_constraintBottom_toTopOf="@id/fragment_container"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/navigation"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:text="File tree" />
+        </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:elevation="2dp"
+        >
+
+        <!-- Horizontal RecyclerView for navigation items -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/navigation_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:paddingHorizontal="2dp"
+            android:clipToPadding="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,7 +16,7 @@
  */
 
 
-import com.itsaky.androidide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
@@ -45,6 +45,10 @@ dependencies {
   kapt(libs.google.auto.service)
 
   api(projects.core.indexingApi)
+
+  // Include the Kotlin language server modules
+  // implementation(projects.server.server)
+  // implementation(projects.server.shared)
 
   implementation(libs.androidide.ts)
   implementation(libs.androidide.ts.java)
@@ -76,5 +80,13 @@ dependencies {
   implementation(libs.androidx.core.ktx)
   implementation(libs.common.kotlin)
   
+  // Kotlin compiler for Kotlin LSP
+  implementation(libs.kotlin.compiler.embeddable)
+  implementation(libs.kotlin.scripting.compiler.embeddable)
+  implementation(libs.asm)
+  
+  // LSP4J dependencies for kotlin-language-server integration
+  implementation(libs.org.eclipse.lsp4j.lsp4j)
+  implementation(libs.org.eclipse.lsp4j.jsonrpc)
 
 }

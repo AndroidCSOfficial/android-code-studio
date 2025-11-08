@@ -1,0 +1,17 @@
+{
+  "id": "gradle_plugin",
+  "name": "Gradle Build Plugin",
+  "version": "1.0.0",
+  "description": "Handles Gradle build operations in separate process to prevent memory issues",
+  "mainClass": "com.tom.rv2ide.plugins.GradlePluginService",
+  "serviceClass": "com.tom.rv2ide.plugins.GradlePluginService",
+  "dependencies": [],
+  "permissions": [
+    "android.permission.INTERNET",
+    "android.permission.WRITE_EXTERNAL_STORAGE"
+  ],
+  "minHeapSize": 256000000,
+  "maxHeapSize": 1024000000,
+  "autoStart": true,
+  "priority": "HIGH"
+}

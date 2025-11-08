@@ -64,7 +64,7 @@
   <string name="error_termux_prefix_dir_path_not_accessible">Direktori $PREFIX aplikasi AndroidIDE tidak dapat diakses oleh aplikasi %1$s.
          Ini mungkin karena Anda belum menginstal atau menyiapkan aplikasi AndroidIDE atau
      Aplikasi AndroidIDE dan aplikasi %1$s keduanya memiliki tanda tangan APK yang berbeda karena Anda berhasil memasang kedua aplikasi tersebut dari sumber yang berbeda.
-         Mungkin juga karena direktori AndroidIDE $PREFIX \"/data/data/com.itsaky.androidide/files/usr\" tidak ada atau belum terbaca,
+         Mungkin juga karena direktori AndroidIDE $PREFIX \"/data/data/com.tom.rv2ide/files/usr\" tidak ada atau belum terbaca,
          menulis dan menjalankan izin.</string>
   <!-- Miscellaneous -->
   <string name="action_share">Bagikan</string>

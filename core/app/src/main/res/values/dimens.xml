@@ -18,4 +18,5 @@
 <resources>
   <dimen name="editor_mem_usage_view_height">200dp</dimen>
   <dimen name="editor_container_corners">28dp</dimen>
+  <dimen name="color_preset_size">32dp</dimen>
 </resources>

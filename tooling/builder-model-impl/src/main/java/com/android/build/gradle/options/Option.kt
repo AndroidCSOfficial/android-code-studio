@@ -41,8 +41,7 @@ interface Option<out T> {
 
     data object STABLE : Status()
 
-    class Deprecated(val deprecationTarget: DeprecationTarget) :
-      Status() {
+    class Deprecated(val deprecationTarget: DeprecationTarget) : Status() {
 
       fun getDeprecationTargetMessage(): String {
         return deprecationTarget.getDeprecationTargetMessage()
@@ -51,28 +50,27 @@ interface Option<out T> {
 
     class Removed(
 
-      /**
-       * The version when an element was removed.
-       *
-       * Usage note: Do not use this field to construct a removal message, use
-       * getRemovedVersionMessage() instead to ensure consistent message format.
-       */
-      val removedVersion: Version,
+        /**
+         * The version when an element was removed.
+         *
+         * Usage note: Do not use this field to construct a removal message, use
+         * getRemovedVersionMessage() instead to ensure consistent message format.
+         */
+        val removedVersion: Version,
 
-      /**
-       * Additional message to be shown below the pre-formatted error/warning message.
-       *
-       * Note that this additional message should be constructed such that it fits well in the
-       * overall message:
-       *
-       *     "This feature was removed in version X.Y of the Android Gradle plugin.\n
-       *     $additionalMessage"
-       *
-       * For example, avoid writing additional messages that say "This feature has been
-       * removed", as it will be duplicated.
-       */
-      private val additionalMessage: String? = null
-
+        /**
+         * Additional message to be shown below the pre-formatted error/warning message.
+         *
+         * Note that this additional message should be constructed such that it fits well in the
+         * overall message:
+         *
+         *     "This feature was removed in version X.Y of the Android Gradle plugin.\n
+         *     $additionalMessage"
+         *
+         * For example, avoid writing additional messages that say "This feature has been removed",
+         * as it will be duplicated.
+         */
+        private val additionalMessage: String? = null,
     ) : Status() {
 
       fun getRemovedVersionMessage(): String {

@@ -18,10 +18,11 @@
 package com.itsaky.androidide.tooling.api.models.result
 
 /**
- * Result sent to the client when selecting a project in [IProjectQueries][com.itsaky.androidide.tooling.api.IProjectQueries].
+ * Result sent to the client when selecting a project in
+ * [IProjectQueries][com.itsaky.androidide.tooling.api.IProjectQueries].
  *
  * @param isSuccessful Whether the project selection was successful. If the value is `false`, it is
- *      because the project with the provided path was not found.
+ *   because the project with the provided path was not found.
  * @author Akash Yadav
  */
 data class SelectProjectResult(val isSuccessful: Boolean)

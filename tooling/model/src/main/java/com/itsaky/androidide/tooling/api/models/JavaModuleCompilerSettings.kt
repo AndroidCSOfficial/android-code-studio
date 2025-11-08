@@ -25,8 +25,8 @@ import com.itsaky.androidide.builder.model.IJavaCompilerSettings
  * @author Akash Yadav
  */
 class JavaModuleCompilerSettings(
-  override val javaSourceVersion: String,
-  override val javaBytecodeVersion: String
+    override val javaSourceVersion: String,
+    override val javaBytecodeVersion: String,
 ) : IJavaCompilerSettings(), java.io.Serializable {
 
   // IMPORTANT

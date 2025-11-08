@@ -18,7 +18,7 @@
 package io.github.rosemoe.sora.editor.ts
 
 import android.os.Bundle
-import com.itsaky.androidide.treesitter.TSInputEdit
+import com.tom.rv2ide.treesitter.TSInputEdit
 import io.github.rosemoe.sora.editor.ts.spans.DefaultSpanFactory
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory
 import io.github.rosemoe.sora.lang.analysis.AnalyzeManager
@@ -27,9 +27,7 @@ import io.github.rosemoe.sora.lang.styling.Styles
 import io.github.rosemoe.sora.text.CharPosition
 import io.github.rosemoe.sora.text.ContentReference
 
-/**
- * @author Akash Yadav
- */
+/** @author Akash Yadav */
 open class TsAnalyzeManager(val languageSpec: TsLanguageSpec, var theme: TsTheme) : AnalyzeManager {
 
   var stylesReceiver: StyleReceiver? = null
@@ -44,9 +42,7 @@ open class TsAnalyzeManager(val languageSpec: TsLanguageSpec, var theme: TsTheme
 
   open fun updateTheme(theme: TsTheme) {
     this.theme = theme
-    (styles.spans as LineSpansGenerator?)?.also {
-      it.theme = theme
-    }
+    (styles.spans as LineSpansGenerator?)?.also { it.theme = theme }
   }
 
   override fun setReceiver(receiver: StyleReceiver?) {
@@ -60,47 +56,49 @@ open class TsAnalyzeManager(val languageSpec: TsLanguageSpec, var theme: TsTheme
   }
 
   override fun insert(start: CharPosition, end: CharPosition, insertedContent: CharSequence) {
-    val edit = TSInputEdit.create(
-      start.index shl 1,
-      start.index shl 1,
-      end.index shl 1,
-      start.toTSPoint(),
-      start.toTSPoint(),
-      end.toTSPoint()
-    )!!
+    val edit =
+        TSInputEdit.create(
+            start.index shl 1,
+            start.index shl 1,
+            end.index shl 1,
+            start.toTSPoint(),
+            start.toTSPoint(),
+            end.toTSPoint(),
+        )!!
     (styles.spans as LineSpansGenerator?)?.apply {
       lineCount = reference!!.lineCount
       edit(edit)
     }
-    _analyzeWorker?.onMod(Mod(TextMod(
-      start.index,
-      end.index,
-      edit,
-      insertedContent.toString(),
-      reference?.documentVersion ?: 0
-    )))
+    _analyzeWorker?.onMod(
+        Mod(
+            TextMod(
+                start.index,
+                end.index,
+                edit,
+                insertedContent.toString(),
+                reference?.documentVersion ?: 0,
+            )
+        )
+    )
   }
 
   override fun delete(start: CharPosition, end: CharPosition, deletedContent: CharSequence) {
-    val edit = TSInputEdit.create(
-      start.index shl 1,
-      end.index shl 1,
-      start.index shl 1,
-      start.toTSPoint(),
-      end.toTSPoint(),
-      start.toTSPoint()
-    )!!
+    val edit =
+        TSInputEdit.create(
+            start.index shl 1,
+            end.index shl 1,
+            start.index shl 1,
+            start.toTSPoint(),
+            end.toTSPoint(),
+            start.toTSPoint(),
+        )!!
     (styles.spans as LineSpansGenerator?)?.apply {
       lineCount = reference!!.lineCount
       edit(edit)
     }
-    _analyzeWorker?.onMod(Mod(TextMod(
-      start.index,
-      end.index,
-      edit,
-      null,
-      reference?.documentVersion ?: 0
-    )))
+    _analyzeWorker?.onMod(
+        Mod(TextMod(start.index, end.index, edit, null, reference?.documentVersion ?: 0))
+    )
   }
 
   override fun rerun() {

@@ -27,12 +27,12 @@ import com.itsaky.androidide.utils.AndroidPluginVersion.Companion.MINIMUM_SUPPOR
 import com.itsaky.androidide.utils.ILogger
 import com.itsaky.androidide.utils.LogUtils
 import com.itsaky.androidide.utils.StopWatch
+import java.util.concurrent.atomic.AtomicBoolean
 import org.gradle.api.Action
 import org.gradle.tooling.BuildController
 import org.gradle.tooling.UnknownModelException
 import org.gradle.tooling.UnsupportedVersionException
 import org.gradle.tooling.model.Model
-import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Abstract class for [IModelBuilder] implementations.
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author Akash Yadav
  */
 abstract class AbstractModelBuilder<P, R>(
-  protected val initializationParams: InitializeProjectParams
+    protected val initializationParams: InitializeProjectParams
 ) : IModelBuilder<P, R> {
 
   companion object {
@@ -49,53 +49,55 @@ abstract class AbstractModelBuilder<P, R>(
     private val newerAgpWarned = AtomicBoolean(false)
 
     /**
-     * Checks the Android Gradle Plugin version from the given [Versions] model and compares
-     * it with [AndroidPluginVersion.MINIMUM_SUPPORTED] and [AndroidPluginVersion.LATEST_TESTED].
+     * Checks the Android Gradle Plugin version from the given [Versions] model and compares it with
+     * [AndroidPluginVersion.MINIMUM_SUPPORTED] and [AndroidPluginVersion.LATEST_TESTED].
      *
-     * If the version is less than the [AndroidPluginVersion.MINIMUM_SUPPORTED],
-     * throws an [UnsupportedOperationException]. If the version is greater than the
+     * If the version is less than the [AndroidPluginVersion.MINIMUM_SUPPORTED], throws an
+     * [UnsupportedOperationException]. If the version is greater than the
      * [AndroidPluginVersion.LATEST_TESTED], warns the user.
      *
      * @param versions The [Versions] model.
-     * @param syncIssueReporter [ISyncIssueReporter] for reporting issues with the Android Gradle Plugin version.
+     * @param syncIssueReporter [ISyncIssueReporter] for reporting issues with the Android Gradle
+     *   Plugin version.
      */
     @JvmStatic
-    protected fun checkAgpVersion(
-      versions: Versions,
-      syncIssueReporter: ISyncIssueReporter
-    ) {
+    protected fun checkAgpVersion(versions: Versions, syncIssueReporter: ISyncIssueReporter) {
 
       val agpVersion = AndroidPluginVersion.parse(versions.agp)
 
       // The build should fail if the user is using an older version of AGP
       if (agpVersion < MINIMUM_SUPPORTED) {
         throw ModelBuilderException(
-          agpVersion.toString()
-              + " is not supported by AndroidIDE. "
-              + "Please update your project to use at least "
-              + MINIMUM_SUPPORTED
-              + " to build this project.")
+            agpVersion.toString() +
+                " is not supported by AndroidIDE. " +
+                "Please update your project to use at least " +
+                MINIMUM_SUPPORTED +
+                " to build this project."
+        )
       }
 
       // Warn the user if the project is using a newer AGP version
       if (!newerAgpWarned.get() && agpVersion > ToolingProps.latestTestedAgpVersion) {
-        val syncIssue = DefaultSyncIssue(
-          data = "${agpVersion.toStringSimple()}:${ToolingProps.latestTestedAgpVersion.toStringSimple()}",
-          message = "You are using Android Gradle Plugin version that has not been tested with AndroidIDE.",
-          multiLineMessage = null,
-          severity = SyncIssue.SEVERITY_WARNING,
-          type = IDESyncIssue.TYPE_AGP_VERSION_TOO_NEW
-        )
+        val syncIssue =
+            DefaultSyncIssue(
+                data =
+                    "${agpVersion.toStringSimple()}:${ToolingProps.latestTestedAgpVersion.toStringSimple()}",
+                message =
+                    "You are using Android Gradle Plugin version that has not been tested with AndroidIDE.",
+                multiLineMessage = null,
+                severity = SyncIssue.SEVERITY_WARNING,
+                type = IDESyncIssue.TYPE_AGP_VERSION_TOO_NEW,
+            )
         syncIssueReporter.report(syncIssue)
         newerAgpWarned.set(true)
       }
     }
 
     /**
-     * Get the [Versions] information about Android projects. This returns `null` if
-     * the project is not an Android project.
+     * Get the [Versions] information about Android projects. This returns `null` if the project is
+     * not an Android project.
      *
-     * @param model      The model element, usually a project.
+     * @param model The model element, usually a project.
      * @param controller The build controller that is used for finding the model.
      * @return The [Versions] model if available, `null` otherwise.
      */
@@ -117,8 +119,10 @@ abstract class AbstractModelBuilder<P, R>(
         return@withStopWatch try {
           getModel(modelType)
         } catch (err: UnknownModelException) {
-          throw ModelBuilderException("Failed to fetch model for type '${modelType.name}'." +
-              " Model not found or the project does not support this model.")
+          throw ModelBuilderException(
+              "Failed to fetch model for type '${modelType.name}'." +
+                  " Model not found or the project does not support this model."
+          )
         }
       }
     }
@@ -137,8 +141,10 @@ abstract class AbstractModelBuilder<P, R>(
         return@withStopWatch try {
           getModel(target, modelType)
         } catch (err: UnknownModelException) {
-          throw ModelBuilderException("Failed to fetch model for type '${modelType.name}'." +
-              " Model not found or the project does not support this model.")
+          throw ModelBuilderException(
+              "Failed to fetch model for type '${modelType.name}'." +
+                  " Model not found or the project does not support this model."
+          )
         }
       }
     }
@@ -157,20 +163,24 @@ abstract class AbstractModelBuilder<P, R>(
      */
     @JvmStatic
     protected fun <P, T> BuildController.getModelAndLog(
-      target: Model,
-      modelType: Class<T>,
-      parameterType: Class<P>,
-      parameterInitializer: Action<in P>
+        target: Model,
+        modelType: Class<T>,
+        parameterType: Class<P>,
+        parameterInitializer: Action<in P>,
     ): T {
       return withStopWatch(modelType) {
         return@withStopWatch try {
           getModel(target, modelType, parameterType, parameterInitializer)
         } catch (err: UnknownModelException) {
-          throw ModelBuilderException("Failed to fetch model for type '${modelType.name}'." +
-              " Model not found or the project does not support this model.")
+          throw ModelBuilderException(
+              "Failed to fetch model for type '${modelType.name}'." +
+                  " Model not found or the project does not support this model."
+          )
         } catch (err: UnsupportedVersionException) {
-          throw ModelBuilderException("Failed to fetch model for type '${modelType.name}'." +
-              " Model not supported by project or Gradle version does not support parameterized models.")
+          throw ModelBuilderException(
+              "Failed to fetch model for type '${modelType.name}'." +
+                  " Model not supported by project or Gradle version does not support parameterized models."
+          )
         }
       }
     }
@@ -178,9 +188,7 @@ abstract class AbstractModelBuilder<P, R>(
     @JvmStatic
     private fun <T> withStopWatch(modelType: Class<T>, action: () -> T): T {
       val stopwatch = StopWatch("Fetch '${modelType.simpleName}' model")
-      return action().also {
-        stopwatch.writeTo(System.err)
-      }
+      return action().also { stopwatch.writeTo(System.err) }
     }
 
     /**
@@ -195,7 +203,8 @@ abstract class AbstractModelBuilder<P, R>(
 
     /**
      * Generates the log message for the given objects. This works similar to
-     * [ generateMessage(Object...)][com.itsaky.androidide.utils.ILogger.generateMessage] in [ILogger][com.itsaky.androidide.utils.ILogger].
+     * [ generateMessage(Object...)][com.itsaky.androidide.utils.ILogger.generateMessage] in
+     * [ILogger][com.itsaky.androidide.utils.ILogger].
      *
      * @param objects The objects to print in the message.
      * @return The generated message.
@@ -204,8 +213,7 @@ abstract class AbstractModelBuilder<P, R>(
       val sb = StringBuilder()
       for (msg in objects) {
         sb.append(if (msg is Throwable) "\n" else ILogger.MSG_SEPARATOR)
-        sb.append(if (msg is Throwable) LogUtils.getFullStackTrace(
-          msg as Throwable?) else msg)
+        sb.append(if (msg is Throwable) LogUtils.getFullStackTrace(msg as Throwable?) else msg)
       }
       return sb.toString()
     }

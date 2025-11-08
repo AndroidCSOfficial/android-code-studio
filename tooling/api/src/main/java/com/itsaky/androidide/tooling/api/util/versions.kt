@@ -19,7 +19,6 @@ package com.itsaky.androidide.tooling.api.util
 
 /**
  * Compare the given semantic versions and return :
- *
  * - `-1` if [versionA] is less than [versionB]
  * - `0` if [versionA] is equal to [versionB]
  * - `1` if [versionA] is greater than [versionB].

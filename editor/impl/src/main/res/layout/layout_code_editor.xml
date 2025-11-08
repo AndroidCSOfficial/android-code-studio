@@ -33,7 +33,7 @@
     app:layout_constraintTop_toTopOf="parent"
     tools:progress="50" />
 
-  <com.itsaky.androidide.editor.ui.IDEEditor
+  <com.tom.rv2ide.editor.ui.IDEEditor
     android:id="@+id/editor"
     android:layout_width="0dp"
     android:layout_height="0dp"

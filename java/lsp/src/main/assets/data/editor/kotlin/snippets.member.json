@@ -1,0 +1,98 @@
+{
+  "fun": {
+    "desc": "Create a function",
+    "body": [
+      "fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "val": {
+    "desc": "Create a val property",
+    "body": [
+      "val ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "var": {
+    "desc": "Create a var property",
+    "body": [
+      "var ${1:propertyName}: ${2:Type} = ${3:value}"
+    ]
+  },
+  "lateinit": {
+    "desc": "Create a lateinit var",
+    "body": [
+      "lateinit var ${1:propertyName}: ${2:Type}"
+    ]
+  },
+  "lazy": {
+    "desc": "Create a lazy property",
+    "body": [
+      "val ${1:propertyName} by lazy {",
+      "\t${2:initialization}",
+      "}"
+    ]
+  },
+  "companion": {
+    "desc": "Create a companion object",
+    "body": [
+      "companion object {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "init": {
+    "desc": "Create an init block",
+    "body": [
+      "init {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "override": {
+    "desc": "Create an override function",
+    "body": [
+      "override fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "getter": {
+    "desc": "Create a getter",
+    "body": [
+      "get() = ${1:value}"
+    ]
+  },
+  "setter": {
+    "desc": "Create a setter",
+    "body": [
+      "set(value) {",
+      "\t${1:field} = value",
+      "}"
+    ]
+  },
+  "private": {
+    "desc": "Create a private function",
+    "body": [
+      "private fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "protected": {
+    "desc": "Create a protected function",
+    "body": [
+      "protected fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  },
+  "internal": {
+    "desc": "Create an internal function",
+    "body": [
+      "internal fun ${1:functionName}(${2:params}): ${3:ReturnType} {",
+      "\t$0",
+      "}"
+    ]
+  }
+}

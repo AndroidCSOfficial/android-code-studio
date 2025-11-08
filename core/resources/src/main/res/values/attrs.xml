@@ -18,11 +18,50 @@
   -->
 
 <resources>
-  <!--  Color used for success drawables-->
-  <attr format="color" name="colorSuccess" />
+    <!--  Color used for success drawables-->
+    <attr
+        format="color"
+        name="colorSuccess" />
 
-  <declare-styleable name="VectorMasterView">
-    <attr format="reference" name="vector_src" />
-    <attr format="boolean" name="use_legacy_parser" />
-  </declare-styleable>
+    <declare-styleable name="VectorMasterView">
+        <attr
+            format="reference"
+            name="vector_src" />
+        <attr
+            format="boolean"
+            name="use_legacy_parser" />
+    </declare-styleable>
+
+    <declare-styleable name="FbProgress">
+        <attr
+            name="fbp_progressIndeterminate"
+            format="boolean" />
+        <attr
+            name="fbp_barColor"
+            format="color" />
+        <attr
+            name="fbp_rimColor"
+            format="color" />
+        <attr
+            name="fbp_rimWidth"
+            format="dimension" />
+        <attr
+            name="fbp_spinSpeed"
+            format="float" />
+        <attr
+            name="fbp_barSpinCycleTime"
+            format="integer" />
+        <attr
+            name="fbp_circleRadius"
+            format="dimension" />
+        <attr
+            name="fbp_fillRadius"
+            format="boolean" />
+        <attr
+            name="fbp_barWidth"
+            format="dimension" />
+        <attr
+            name="fbp_linearProgress"
+            format="boolean" />
+    </declare-styleable>
 </resources>

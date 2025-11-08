@@ -35,11 +35,11 @@ class ToolingApiAppender : AppenderBase<ILoggingEvent>() {
     }
 
     Main.client?.logMessage(
-      LogMessageParams(
-        eventObject.level.levelStr[0],
-        eventObject.loggerName,
-        eventObject.formattedMessage
-      )
+        LogMessageParams(
+            eventObject.level.levelStr[0],
+            eventObject.loggerName,
+            eventObject.formattedMessage,
+        )
     )
   }
 }

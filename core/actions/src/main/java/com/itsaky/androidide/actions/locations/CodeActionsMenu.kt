@@ -27,7 +27,7 @@ import com.itsaky.androidide.resources.R
 
 /** @author Akash Yadav */
 object CodeActionsMenu : ActionMenu {
-  
+
   const val ID = "ide.editor.code.actions"
 
   override val children: MutableSet<ActionItem> = mutableSetOf()

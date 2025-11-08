@@ -23,6 +23,4 @@ package com.itsaky.androidide.tooling.api.models
  * @param pid The process id of the tooling server.
  * @author Akash Yadav
  */
-data class ToolingServerMetadata(
-  val pid: Int
-)
+data class ToolingServerMetadata(val pid: Int)

@@ -35,8 +35,8 @@ import com.itsaky.androidide.annotations.inflater.ViewAdapter
  * @author Akash Yadav
  */
 class ViewAdapterSymbolProcessor(
-  private val codeGenerator: CodeGenerator,
-  private val logger: KSPLogger
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger,
 ) : SymbolProcessor {
 
   private val generator = ViewAdapterIndexGenerator(logger)
@@ -62,12 +62,12 @@ class ViewAdapterSymbolProcessor(
     }
 
     val file =
-      codeGenerator.createNewFile(
-        Dependencies(true, *files.toTypedArray()),
-        INDEX_PACKAGE_NAME,
-        INDEX_CLASS_NAME,
-        "java"
-      )
+        codeGenerator.createNewFile(
+            Dependencies(true, *files.toTypedArray()),
+            INDEX_PACKAGE_NAME,
+            INDEX_CLASS_NAME,
+            "java",
+        )
 
     generator.generate(file)
 
@@ -85,8 +85,8 @@ class ViewAdapterSymbolProcessor(
 
     if (sym.parent !is KSFile) {
       logger.error(
-        "${ViewAdapter::class} must be applied to a top level class. (${sym.parent})",
-        sym
+          "${ViewAdapter::class} must be applied to a top level class. (${sym.parent})",
+          sym,
       )
       return false
     }

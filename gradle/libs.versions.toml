@@ -1,68 +1,77 @@
 [versions]
-agp = "8.5.0"
-agp-tooling = "8.5.0"
-gradle-tooling = "8.6"
+agp = "8.9.0"
+agp-tooling = "8.9.0"
+gradle-tooling = "8.9"
+# gradle-tooling = "v1.0-t2"
+
 junit-jupiter = "5.10.2"
-kotlin = "1.9.24"
-kotlin-coroutines = "1.8.1"
-tree-sitter = "4.3.1"
-editor = "0.23.7-patch1"
-glide = "4.16.0"
+kotlin = "2.1.0"
+kotlin-coroutines = "1.10.2"
+tree-sitter = "1.0.1"
+editor = "0.23.7"
+glide = "5.0.4"
 androidx-vectordrawable = "1.2.0"
 androidx-navigation = "2.7.7"
-ksp = "1.9.24-1.0.20"
-antlr4 = "4.13.1"
+ksp = "2.1.0-1.0.28"
+antlr4 = "4.13.2"
 androidx-work = "2.9.0"
 androidx-espresso = "3.5.1"
-retrofit = "2.9.0"
+retrofit = "3.0.0"
 markwon = "4.6.2"
 logback = "1.5.3"
 realm = "10.18.0"
 benchmark = "1.2.4"
 benchmark-junit4 = "1.2.4"
+okhttp = "4.12.0"
+gson = "2.10.1"
 
 [libraries]
+# Kotlin compiler embeddable for Kotlin LSP
+kotlin-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+kotlin-scripting-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable", version.ref = "kotlin" }
 
 # Dependencies in composite build
-composite-appintro = { module = "com.itsaky.androidide.build:appintro" }
-composite-desugaringCore = { module = "com.itsaky.androidide.build:desugaring-core" }
-composite-fuzzysearch = { module = "com.itsaky.androidide.build:fuzzysearch" }
-composite-googleJavaFormat = { module = "com.itsaky.androidide.build:google-java-format" }
-composite-javaCompiler = { module = "com.itsaky.androidide.build:java-compiler" }
-composite-javac = { module = "com.itsaky.androidide.build:javac" }
-composite-jdkCompiler = { module = "com.itsaky.androidide.build:jdk-compiler" }
-composite-jdkJdeps = { module = "com.itsaky.androidide.build:jdk-jdeps" }
-composite-javapoet = { module = "com.itsaky.androidide.build:javapoet" }
-composite-jaxp = { module = "com.itsaky.androidide.build:jaxp" }
-composite-jdt = { module = "com.itsaky.androidide.build:jdt" }
-composite-layoutlibApi = { module = "com.itsaky.androidide.build:layoutlib-api" }
+composite-appintro = { module = "com.tom.rv2ide.build:appintro" }
+composite-desugaringCore = { module = "com.tom.rv2ide.build:desugaring-core" }
+composite-fuzzysearch = { module = "com.tom.rv2ide.build:fuzzysearch" }
+composite-googleJavaFormat = { module = "com.tom.rv2ide.build:google-java-format" }
+composite-javaCompiler = { module = "com.tom.rv2ide.build:java-compiler" }
+composite-javac = { module = "com.tom.rv2ide.build:javac" }
+composite-jdkCompiler = { module = "com.tom.rv2ide.build:jdk-compiler" }
+composite-jdkJdeps = { module = "com.tom.rv2ide.build:jdk-jdeps" }
+composite-javapoet = { module = "com.tom.rv2ide.build:javapoet" }
+composite-jaxp = { module = "com.tom.rv2ide.build:jaxp" }
+composite-jdt = { module = "com.tom.rv2ide.build:jdt" }
+composite-layoutlibApi = { module = "com.tom.rv2ide.build:layoutlib-api" }
 
 # AndroidIDE
-androidide-ts = { module = "com.itsaky.androidide.treesitter:android-tree-sitter", version.ref = "tree-sitter" }
-androidide-ts-java = { module = "com.itsaky.androidide.treesitter:tree-sitter-java", version.ref = "tree-sitter" }
-androidide-ts-json = { module = "com.itsaky.androidide.treesitter:tree-sitter-json", version.ref = "tree-sitter" }
-androidide-ts-kotlin = { module = "com.itsaky.androidide.treesitter:tree-sitter-kotlin", version.ref = "tree-sitter" }
-androidide-ts-log = { module = "com.itsaky.androidide.treesitter:tree-sitter-log", version.ref = "tree-sitter" }
-androidide-ts-xml = { module = "com.itsaky.androidide.treesitter:tree-sitter-xml", version.ref = "tree-sitter" }
+androidide-ts = { module = "io.github.mohammed-baqer-null:android-tree-sitter", version.ref = "tree-sitter" }
+androidide-ts-java = { module = "io.github.mohammed-baqer-null:tree-sitter-java", version.ref = "tree-sitter" }
+androidide-ts-json = { module = "io.github.mohammed-baqer-null:tree-sitter-json", version.ref = "tree-sitter" }
+androidide-ts-kotlin = { module = "io.github.mohammed-baqer-null:tree-sitter-kotlin", version.ref = "tree-sitter" }
+androidide-ts-cpp = { module = "io.github.mohammed-baqer-null:tree-sitter-cpp", version.ref = "tree-sitter" }
+androidide-ts-log = { module = "io.github.mohammed-baqer-null:tree-sitter-log", version.ref = "tree-sitter" }
+androidide-ts-xml = { module = "io.github.mohammed-baqer-null:tree-sitter-xml", version.ref = "tree-sitter" }
 
 # Common
-common-editor = { module = "com.github.MiyazKaori:sora-editor", version.ref = "editor" }
+common-editor = { module = "io.github.rosemoe:editor", version.ref = "editor" }
 common-utilcode = { module = "com.blankj:utilcodex", version = "1.31.1" }
 common-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 common-glide_ap = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-common-jsoup = { module = "org.jsoup:jsoup", version = "1.17.2" }
+common-jsoup = { module = "org.jsoup:jsoup", version = "1.21.2" }
 common-antlr4 = { module = "org.antlr:antlr4", version.ref = "antlr4" }
 common-antlr4-runtime = { module = "org.antlr:antlr4-runtime", version.ref = "antlr4" }
-common-javaparser = { module = "com.github.javaparser:javaparser-symbol-solver-core", version = "3.26.1" }
-common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.14.0" }
-common-io = { module = "commons-io:commons-io", version = "2.15.1" }
+common-javaparser = { module = "com.github.javaparser:javaparser-symbol-solver-core", version = "3.27.0" }
+common-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
+common-io = { module = "commons-io:commons-io", version = "2.20.0" }
 common-kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 common-kotlin-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+common-kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 common-jkotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 common-eventbus_ap = { module = "org.greenrobot:eventbus-annotation-processor", version = "3.3.1" }
 common-javapoet = { module = "com.squareup:javapoet", version = "1.13.0" }
 common-ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
-common-jsonrpc = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc", version = "0.22.0" }
+common-jsonrpc = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc", version = "0.24.0" }
 common-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.13" }
 common-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 common-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -70,9 +79,14 @@ common-markwon-core = { module = "io.noties.markwon:core", version.ref = "markwo
 common-markwon-extStrikethrough = { module = "io.noties.markwon:ext-strikethrough", version.ref = "markwon" }
 common-markwon-linkify = { module = "io.noties.markwon:linkify", version.ref = "markwon" }
 common-markwon-recycler = { module = "io.noties.markwon:recycler", version.ref = "markwon" }
-common-hiddenApiBypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version = "4.3" }
+common-hiddenApiBypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version = "6.1" }
 common-termuxAmLib = { module = "com.termux:termux-am-library", version = "v2.0.0" }
 common-charts = { module = "com.github.AppDevNext:AndroidChart", version = "3.1.0.21" }
+common-datastore = { module = "androidx.datastore:datastore-preferences", version = "1.1.7" }
+
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 # AndroidX
 androidx-annotation = { module = "androidx.annotation:annotation", version = "1.7.1" }
@@ -105,7 +119,7 @@ androidx-work = { module = "androidx.work:work-runtime", version.ref = "androidx
 androidx-work-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 
 # Google
-google-material = { module = "com.google.android.material:material", version = "1.11.0" }
+google-material = { module = "com.google.android.material:material", version = "1.13.0" }
 google-gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 google-guava = { module = "com.google.guava:guava", version = "32.1.3-android" }
 google-auto-value-annotations = { module = "com.google.auto.value:auto-value-annotations", version = "1.10.4" }
@@ -116,6 +130,9 @@ google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version = 
 google-java-format = { module = "com.google.googlejavaformat:google-java-format", version = "1.20.0" }
 google-flexbox = { module = "com.google.android.flexbox:flexbox", version = "3.0.0" }
 
+# Bytecode utilities
+asm = { module = "org.ow2.asm:asm", version = "9.7.1" }
+
 # AAPT2
 aapt2-common = { module = "com.android.tools:common", version = "31.4.1" }
 aapt2-annotations = { module = "com.android.tools:annotations", version = "31.2.2" }
@@ -124,7 +141,7 @@ aapt2-proto = { module = "com.android.tools.build:aapt2-proto", version = "8.3.0
 
 # use logback-core from logback-android instead
 #logging-logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
-logging-logback-core = { module = "com.itsaky.androidide.build:logback-core" }
+logging-logback-core = { module = "com.tom.rv2ide.build:logback-core" }
 logging-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # XML
@@ -157,8 +174,34 @@ tests-barista = { module = "com.adevinta.android:barista", version = "4.3.0" }
 
 # Tooling
 tooling-builderModel = { module = "com.android.tools.build:builder-model", version.ref = "agp-tooling" }
-tooling-gradleApi = { module = "com.itsaky.androidide.gradle:gradle-tooling-api", version.ref = "gradle-tooling" }
+tooling-gradleApi = { module = "com.github.AndroidIDE-Rv2Official:tom-gradle-tooling-api", version.ref = "gradle-tooling" }
+
 tooling-slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.12" }
+
+# Kotlin Language Server dependencies
+org-eclipse-lsp4j-lsp4j = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j", version = "0.24.0" }
+org-eclipse-lsp4j-jsonrpc = { module = "org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc", version = "0.24.0" }
+com-jetbrains-intellij-java-decompiler = { module = "com.jetbrains.intellij.java:java-decompiler-engine", version = "232.10227.8" }
+org-jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version = "0.37.3" }
+org-jetbrains-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version = "0.37.3" }
+org-jetbrains-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version = "0.37.3" }
+com-h2database-h2 = { module = "com.h2database:h2", version = "2.2.224" }
+com-github-fwcd-ktfmt = { module = "com.facebook:ktfmt", version = "0.58" }
+com-beust-jcommander = { module = "com.beust:jcommander", version = "1.82" }
+org-xerial-sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version = "3.45.0.0" }
+hamcrest-all = { module = "org.hamcrest:hamcrest-all", version = "1.3" }
+junit-junit = { module = "junit:junit", version = "4.13.2" }
+org-openjdk-jmh-core = { module = "org.openjdk.jmh:jmh-core", version = "1.37" }
+org-openjdk-jmh-generator-annprocess = { module = "org.openjdk.jmh:jmh-generator-annprocess", version = "1.37" }
+org-jetbrains-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+org-jetbrains-kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler", version.ref = "kotlin" }
+org-jetbrains-kotlin-ktscompiler = { module = "org.jetbrains.kotlin:kotlin-scripting-compiler", version.ref = "kotlin" }
+org-jetbrains-kotlin-kts-jvm-host-unshaded = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm-host-unshaded", version.ref = "kotlin" }
+org-jetbrains-kotlin-sam-with-receiver-compiler-plugin = { module = "org.jetbrains.kotlin:sam-with-receiver-compiler-plugin", version.ref = "kotlin" }
+org-jetbrains-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+org-jetbrains-kotlin-jvm = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+org-jetbrains-kotlin-kotlin-scripting-jvm-host = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm-host", version.ref = "kotlin" }
+com-google-guava-guava = { module = "com.google.guava:guava", version = "32.1.3-jre" }
 
 # Classpaths
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -173,3 +216,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version = "0.9.4" }
 benchmark = { id = "androidx.benchmark", version.ref = "benchmark" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
+com-github-jk1-tcdeps = { id = "com.github.jk1.tcdeps", version = "1.6.2" }
+com-jaredsburrows-license = { id = "com.jaredsburrows.license", version = "0.9.8" }
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0" }

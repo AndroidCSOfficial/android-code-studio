@@ -15,38 +15,35 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*******************************************************************************
- *    sora-editor - the awesome code editor for Android
- *    https://github.com/Rosemoe/sora-editor
- *    Copyright (C) 2020-2023  Rosemoe
+/**
+ * ****************************************************************************
+ * sora-editor - the awesome code editor for Android https://github.com/Rosemoe/sora-editor
+ * Copyright (C) 2020-2023 Rosemoe
  *
- *     This library is free software; you can redistribute it and/or
- *     modify it under the terms of the GNU Lesser General Public
- *     License as published by the Free Software Foundation; either
- *     version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- *     This library is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *     Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- *     You should have received a copy of the GNU Lesser General Public
- *     License along with this library; if not, write to the Free Software
- *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
- *     USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA
  *
- *     Please contact Rosemoe by email 2073412493@qq.com if you need
- *     additional information or have any questions
- ******************************************************************************/
-
+ * Please contact Rosemoe by email 2073412493@qq.com if you need additional information or have any
+ * questions
+ * ****************************************************************************
+ */
 package io.github.rosemoe.sora.editor.ts
 
-import com.itsaky.androidide.treesitter.TSInputEdit
-import com.itsaky.androidide.treesitter.TSQueryCapture
-import com.itsaky.androidide.treesitter.TSQueryCursor
-import com.itsaky.androidide.treesitter.TSTree
-import com.itsaky.androidide.treesitter.api.TreeSitterQueryCapture
-import com.itsaky.androidide.treesitter.api.safeExecQueryCursor
+import com.tom.rv2ide.treesitter.TSInputEdit
+import com.tom.rv2ide.treesitter.TSQueryCapture
+import com.tom.rv2ide.treesitter.TSQueryCursor
+import com.tom.rv2ide.treesitter.TSTree
+import com.tom.rv2ide.treesitter.api.TreeSitterQueryCapture
+import com.tom.rv2ide.treesitter.api.safeExecQueryCursor
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory
 import io.github.rosemoe.sora.lang.styling.Span
 import io.github.rosemoe.sora.lang.styling.SpanFactory
@@ -63,10 +60,15 @@ import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
  *
  * @author Rosemoe
  */
-class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
-  private val content: Content, internal var theme: TsTheme,
-  private val languageSpec: TsLanguageSpec, var scopedVariables: TsScopedVariables,
-  private val spanFactory: TsSpanFactory) : Spans {
+class LineSpansGenerator(
+    internal var tree: TSTree,
+    internal var lineCount: Int,
+    private val content: Content,
+    internal var theme: TsTheme,
+    private val languageSpec: TsLanguageSpec,
+    var scopedVariables: TsScopedVariables,
+    private val spanFactory: TsSpanFactory,
+) : Spans {
 
   companion object {
 
@@ -111,9 +113,13 @@ class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
     TSQueryCursor.create().use { cursor ->
       cursor.setByteRange(startIndex * 2, endIndex * 2)
 
-      cursor.safeExecQueryCursor(query = languageSpec.tsQuery, tree = tree,
-        recycleNodeAfterUse = true, debugLogging = false,
-        debugName = "LineSpansGenerator.captureRegion()") { match ->
+      cursor.safeExecQueryCursor(
+          query = languageSpec.tsQuery,
+          tree = tree,
+          recycleNodeAfterUse = true,
+          debugLogging = false,
+          debugName = "LineSpansGenerator.captureRegion()",
+      ) { match ->
         if (languageSpec.queryPredicator.doPredicate(languageSpec.predicates, content, match)) {
           captures.addAll(match.captures)
         }
@@ -128,14 +134,26 @@ class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
         val start = (startByte / 2 - startIndex).coerceAtLeast(0)
         val pattern = capture.index
         // Do not add span for overlapping regions and out-of-bounds regions
-        if (start >= lastIndex && endByte / 2 >= startIndex && startByte / 2 < endIndex && (pattern !in languageSpec.localsScopeIndices && pattern !in languageSpec.localsDefinitionIndices && pattern !in languageSpec.localsDefinitionValueIndices && pattern !in languageSpec.localsMembersScopeIndices)) {
+        if (
+            start >= lastIndex &&
+                endByte / 2 >= startIndex &&
+                startByte / 2 < endIndex &&
+                (pattern !in languageSpec.localsScopeIndices &&
+                    pattern !in languageSpec.localsDefinitionIndices &&
+                    pattern !in languageSpec.localsDefinitionValueIndices &&
+                    pattern !in languageSpec.localsMembersScopeIndices)
+        ) {
           if (start != lastIndex) {
             list.addAll(createSpans(capture, lastIndex, start - 1, theme.normalTextStyle))
           }
           var style = 0L
           if (capture.index in languageSpec.localsReferenceIndices) {
-            val def = scopedVariables.findDefinition(startByte / 2, endByte / 2,
-              content.substring(startByte / 2, endByte / 2))
+            val def =
+                scopedVariables.findDefinition(
+                    startByte / 2,
+                    endByte / 2,
+                    content.substring(startByte / 2, endByte / 2),
+                )
             if (def != null && def.matchedHighlightPattern != -1) {
               style = theme.resolveStyleForPattern(def.matchedHighlightPattern)
             }
@@ -170,14 +188,19 @@ class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
     return list
   }
 
-  private fun createSpans(capture: TSQueryCapture, startColumn: Int, endColumn: Int,
-    style: Long): List<Span> {
+  private fun createSpans(
+      capture: TSQueryCapture,
+      startColumn: Int,
+      endColumn: Int,
+      style: Long,
+  ): List<Span> {
     val spans = spanFactory.createSpans(capture, startColumn, style)
     if (spans.size > 1) {
       var prevCol = spans[0].column
       if (prevCol > endColumn) {
         throw IndexOutOfBoundsException(
-          "Span's column is out of bounds! column=$prevCol, endColumn=$endColumn")
+            "Span's column is out of bounds! column=$prevCol, endColumn=$endColumn"
+        )
       }
       for (i in 1..spans.lastIndex) {
         val col = spans[i].column
@@ -186,7 +209,8 @@ class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
         }
         if (col > endColumn) {
           throw IndexOutOfBoundsException(
-            "Span's column is out of bounds! column=$col, endColumn=$endColumn")
+              "Span's column is out of bounds! column=$col, endColumn=$endColumn"
+          )
         }
         prevCol = col
       }
@@ -198,58 +222,54 @@ class LineSpansGenerator(internal var tree: TSTree, internal var lineCount: Int,
     return SpanFactory.obtain(column, TextStyle.makeStyle(EditorColorScheme.TEXT_NORMAL))
   }
 
-  override fun adjustOnInsert(start: CharPosition, end: CharPosition) {
+  override fun adjustOnInsert(start: CharPosition, end: CharPosition) {}
 
-  }
+  override fun adjustOnDelete(start: CharPosition, end: CharPosition) {}
 
-  override fun adjustOnDelete(start: CharPosition, end: CharPosition) {
+  override fun read() =
+      object : Spans.Reader {
 
-  }
+        private var spans = mutableListOf<Span>()
 
-  override fun read() = object : Spans.Reader {
-
-    private var spans = mutableListOf<Span>()
-
-    override fun moveToLine(line: Int) {
-      try {
-        if (line < 0 || line >= lineCount) {
-          spans = mutableListOf()
-          return
+        override fun moveToLine(line: Int) {
+          try {
+            if (line < 0 || line >= lineCount) {
+              spans = mutableListOf()
+              return
+            }
+            val cached = queryCache(line)
+            if (cached != null) {
+              spans = cached
+              return
+            }
+            val start = content.indexer.getCharPosition(line, 0).index
+            val end = start + content.getColumnCount(line)
+            spans = captureRegion(start, end)
+            pushCache(line, spans)
+          } catch (err: Throwable) {
+            err.printStackTrace()
+          }
         }
-        val cached = queryCache(line)
-        if (cached != null) {
-          spans = cached
-          return
+
+        override fun getSpanCount() = spans.size
+
+        override fun getSpanAt(index: Int) = spans[index]
+
+        override fun getSpansOnLine(line: Int): MutableList<Span> {
+          try {
+            val cached = queryCache(line)
+            if (cached != null) {
+              return ArrayList(cached)
+            }
+            val start = content.indexer.getCharPosition(line, 0).index
+            val end = start + content.getColumnCount(line)
+            return captureRegion(start, end)
+          } catch (err: Throwable) {
+            err.printStackTrace()
+            throw err
+          }
         }
-        val start = content.indexer.getCharPosition(line, 0).index
-        val end = start + content.getColumnCount(line)
-        spans = captureRegion(start, end)
-        pushCache(line, spans)
-      } catch (err: Throwable) {
-        err.printStackTrace()
       }
-    }
-
-    override fun getSpanCount() = spans.size
-
-    override fun getSpanAt(index: Int) = spans[index]
-
-    override fun getSpansOnLine(line: Int): MutableList<Span> {
-      try {
-        val cached = queryCache(line)
-        if (cached != null) {
-          return ArrayList(cached)
-        }
-        val start = content.indexer.getCharPosition(line, 0).index
-        val end = start + content.getColumnCount(line)
-        return captureRegion(start, end)
-      } catch (err: Throwable) {
-        err.printStackTrace()
-        throw err
-      }
-    }
-
-  }
 
   override fun supportsModify() = false
 

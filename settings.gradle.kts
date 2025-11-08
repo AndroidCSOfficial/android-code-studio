@@ -1,18 +1,18 @@
 /*
- *  This file is part of AndroidIDE.
+ *  This file is part of AndroidCodeStudio.
  *
- *  AndroidIDE is free software: you can redistribute it and/or modify
+ *  AndroidCodeStudio is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  AndroidIDE is distributed in the hope that it will be useful,
+ *  AndroidCodeStudio is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+ *   along with AndroidCodeStudio.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 @file:Suppress("UnstableApiUsage")
@@ -25,9 +25,6 @@ pluginManagement {
   }
 
   repositories {
-//    maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
-//    maven { url = uri("https://maven.aliyun.com/repository/central") }
-//    maven { url = uri("https://maven.aliyun.com/repository/google") }
     gradlePluginPortal()
     google()
     mavenCentral()
@@ -61,7 +58,7 @@ dependencyResolutionManagement {
       this.name = build
       dependencySubstitution {
         for (module in modules) {
-          substitute(module("com.itsaky.androidide.build:${module}"))
+          substitute(module("com.tom.rv2ide.build:${module}"))
             .using(project(":${module}"))
         }
       }
@@ -71,32 +68,37 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     mavenLocal()
-//    maven { url = uri("https://maven.aliyun.com/repository/central") }
-//    maven { url = uri("https://maven.aliyun.com/repository/google") }
     google()
     mavenCentral()
     maven { url = uri("https://jitpack.io") }
+    maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
   }
 }
 
-// = App version name
 gradle.rootProject {
-  val baseVersion = "2.7.3"
-  
-  var commitHash = "d3a3aa0c"
-  
-  project.setProperty("version", "$baseVersion-$commitHash")
+    val appMainVersion = System.getenv("MAIN_VERSION") ?: "1.0.0"
+    val revision = "r${System.getenv("REVISION_NUM")?.toIntOrNull() ?: "02"}"
+    val baseVersion = "$appMainVersion+gh.$revision"
+    project.setProperty("version", baseVersion)
 }
 
-rootProject.name = "AndroidIDE"
+rootProject.name = "AndroidCodeStudio"
 
-// keep this sorted alphabetically
 include(
   ":annotation:annotations",
   ":annotation:processors",
   ":annotation:processors-ksp",
+
+  ":external:acsprovider",
+  ":external:atc",
+  
+  // ":server:server",
+  // ":server:shared",
+  
   ":core:actions",
   ":core:app",
+  ":ideconfigurations",
   ":core:common",
   ":core:indexing-api",
   ":core:indexing-core",

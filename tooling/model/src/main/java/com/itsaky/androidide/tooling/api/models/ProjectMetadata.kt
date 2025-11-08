@@ -29,11 +29,11 @@ import java.io.File
  * @author Akash Yadav
  */
 open class ProjectMetadata(
-  name: String?,
-  path: String,
-  projectDir: File,
-  buildDir: File,
-  val description: String?,
-  val buildScript: File,
-  val type: ProjectType
+    name: String?,
+    path: String,
+    projectDir: File,
+    buildDir: File,
+    val description: String?,
+    val buildScript: File,
+    val type: ProjectType,
 ) : BasicProjectMetadata(name, path, projectDir, buildDir)

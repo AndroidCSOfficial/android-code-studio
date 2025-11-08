@@ -21,9 +21,9 @@ import com.itsaky.androidide.tooling.events.OperationDescriptor
 
 /** @author Akash Yadav */
 class WorkItemOperationDescriptor(
-  val className: String,
-  override val name: String,
-  override val displayName: String
+    val className: String,
+    override val name: String,
+    override val displayName: String,
 ) : OperationDescriptor() {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

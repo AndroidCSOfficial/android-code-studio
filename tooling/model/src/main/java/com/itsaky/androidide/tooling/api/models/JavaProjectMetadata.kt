@@ -28,28 +28,32 @@ import java.io.File
  * @author Akash Yadav
  */
 class JavaProjectMetadata(
-  name: String?,
-  path: String,
-  projectDir: File,
-  buildDir: File,
-  description: String?,
-  buildScript: File,
-  type: ProjectType,
-  val compilerSettings: IJavaCompilerSettings,
-  override val classesJar: File?
-) : ProjectMetadata(name, path, projectDir, buildDir, description, buildScript, type),
-  IModuleMetadata {
+    name: String?,
+    path: String,
+    projectDir: File,
+    buildDir: File,
+    description: String?,
+    buildScript: File,
+    type: ProjectType,
+    val compilerSettings: IJavaCompilerSettings,
+    override val classesJar: File?,
+) :
+    ProjectMetadata(name, path, projectDir, buildDir, description, buildScript, type),
+    IModuleMetadata {
 
-  constructor(base: ProjectMetadata, compilerSettings: IJavaCompilerSettings, classesJar: File?) :
-      this(
-        base.name,
-        base.projectPath,
-        base.projectDir,
-        base.buildDir,
-        base.description,
-        base.buildScript,
-        base.type,
-        compilerSettings,
-        classesJar
-      )
+  constructor(
+      base: ProjectMetadata,
+      compilerSettings: IJavaCompilerSettings,
+      classesJar: File?,
+  ) : this(
+      base.name,
+      base.projectPath,
+      base.projectDir,
+      base.buildDir,
+      base.description,
+      base.buildScript,
+      base.type,
+      compilerSettings,
+      classesJar,
+  )
 }

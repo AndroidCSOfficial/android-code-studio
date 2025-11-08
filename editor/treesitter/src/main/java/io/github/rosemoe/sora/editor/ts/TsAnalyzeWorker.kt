@@ -17,19 +17,21 @@
 
 package io.github.rosemoe.sora.editor.ts
 
-import com.itsaky.androidide.treesitter.TSInputEdit
-import com.itsaky.androidide.treesitter.TSQueryCursor
-import com.itsaky.androidide.treesitter.TSTree
-import com.itsaky.androidide.treesitter.api.TreeSitterInputEdit
-import com.itsaky.androidide.treesitter.api.TreeSitterQueryCapture
-import com.itsaky.androidide.treesitter.api.safeExecQueryCursor
-import com.itsaky.androidide.treesitter.string.UTF16String
+import com.tom.rv2ide.treesitter.TSInputEdit
+import com.tom.rv2ide.treesitter.TSQueryCursor
+import com.tom.rv2ide.treesitter.TSTree
+import com.tom.rv2ide.treesitter.api.TreeSitterInputEdit
+import com.tom.rv2ide.treesitter.api.TreeSitterQueryCapture
+import com.tom.rv2ide.treesitter.api.safeExecQueryCursor
+import com.tom.rv2ide.treesitter.string.UTF16String
 import io.github.rosemoe.sora.data.ObjectAllocator
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory
 import io.github.rosemoe.sora.lang.analysis.StyleReceiver
 import io.github.rosemoe.sora.lang.styling.CodeBlock
 import io.github.rosemoe.sora.lang.styling.Styles
 import io.github.rosemoe.sora.text.ContentReference
+import java.util.concurrent.CancellationException
+import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,19 +41,15 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import org.slf4j.LoggerFactory
-import java.util.concurrent.CancellationException
-import java.util.concurrent.LinkedBlockingQueue
 
-/**
- * @author Akash Yadav
- */
+/** @author Akash Yadav */
 class TsAnalyzeWorker(
-  private val analyzer: TsAnalyzeManager,
-  private val languageSpec: TsLanguageSpec,
-  private val theme: TsTheme,
-  private val styles: Styles,
-  private val reference: ContentReference,
-  private val spanFactory: TsSpanFactory
+    private val analyzer: TsAnalyzeManager,
+    private val languageSpec: TsLanguageSpec,
+    private val theme: TsTheme,
+    private val styles: Styles,
+    private val reference: ContentReference,
+    private val spanFactory: TsSpanFactory,
 ) {
 
   companion object {
@@ -113,19 +111,22 @@ class TsAnalyzeWorker(
   fun start() {
     check(!isDestroyed) { "TsAnalyeWorker has already been destroyed" }
 
-    analyzerJob = analyzerScope.launch {
-      while (!isDestroyed && isActive) {
-        processNextMessage()
-      }
-    }.also { job ->
-      job.invokeOnCompletion { error ->
-        if (error != null && error !is CancellationException) {
-          log.error("Analyzer job failed", error)
-        } else {
-          log.info("Analyzer job completed")
-        }
-      }
-    }
+    analyzerJob =
+        analyzerScope
+            .launch {
+              while (!isDestroyed && isActive) {
+                processNextMessage()
+              }
+            }
+            .also { job ->
+              job.invokeOnCompletion { error ->
+                if (error != null && error !is CancellationException) {
+                  log.error("Analyzer job failed", error)
+                } else {
+                  log.info("Analyzer job completed")
+                }
+              }
+            }
   }
 
   private fun processNextMessage() {
@@ -142,26 +143,26 @@ class TsAnalyzeWorker(
     } catch (err: Throwable) {
       val langName = languageSpec.language.name
       val msgType = message.javaClass.simpleName
-      val msgTypeSuffix = if (message is Mod) {
-        "[start=${message.data.start}, end=${message.data.end}, type=${if (message.data.changedText == null) "delete" else "insert"}]"
-      } else ""
+      val msgTypeSuffix =
+          if (message is Mod) {
+            "[start=${message.data.start}, end=${message.data.end}, type=${if (message.data.changedText == null) "delete" else "insert"}]"
+          } else ""
       val pendingMsgs = messageChannel.size
       log.error(
-        "AnalyzeWorker[lang={}, message={}{}], pendingMsgs={}] crashed",
-        langName,
-        msgType,
-        msgTypeSuffix,
-        pendingMsgs,
-        err)
+          "AnalyzeWorker[lang={}, message={}{}], pendingMsgs={}] crashed",
+          langName,
+          msgType,
+          msgTypeSuffix,
+          pendingMsgs,
+          err,
+      )
     }
   }
 
   private fun doInit(init: Init) {
     document.requestCancellationAndWaitIfParsing()
 
-    check(!isInitialized) {
-      "'Init' must be the first message to TsAnalyzeWorker"
-    }
+    check(!isInitialized) { "'Init' must be the first message to TsAnalyzeWorker" }
 
     document.doInit(init.data)
     document.reparse()
@@ -172,9 +173,7 @@ class TsAnalyzeWorker(
 
   private fun doMod(mod: Mod) {
 
-    check(isInitialized) {
-      "'Init' must be the first message to TsAnalyzeWorker"
-    }
+    check(isInitialized) { "'Init' must be the first message to TsAnalyzeWorker" }
 
     val textMod = mod.data
     val edit = textMod.edit
@@ -210,52 +209,46 @@ class TsAnalyzeWorker(
     val oldTree = (styles.spans as? LineSpansGenerator?)?.tree
     val copied = tree.copy()
 
-    styles.spans = LineSpansGenerator(
-      copied,
-      reference.lineCount,
-      reference.reference,
-      theme,
-      languageSpec,
-      scopedVariables,
-      spanFactory
-    )
+    styles.spans =
+        LineSpansGenerator(
+            copied,
+            reference.lineCount,
+            reference.reference,
+            theme,
+            languageSpec,
+            scopedVariables,
+            spanFactory,
+        )
 
     val oldBlocks = styles.blocks
     updateCodeBlocks()
     oldBlocks?.also { ObjectAllocator.recycleBlockLines(it) }
 
-    stylesReceiver?.setStyles(analyzer, styles) {
-      oldTree?.close()
-    }
+    stylesReceiver?.setStyles(analyzer, styles) { oldTree?.close() }
 
     stylesReceiver?.updateBracketProvider(analyzer, TsBracketPairs(copied, languageSpec))
   }
 
   private fun updateCodeBlocks() {
-    if (languageSpec.blocksQuery.patternCount == 0
-      || !languageSpec.blocksQuery.canAccess()
-      || tree?.canAccess() != true
+    if (
+        languageSpec.blocksQuery.patternCount == 0 ||
+            !languageSpec.blocksQuery.canAccess() ||
+            tree?.canAccess() != true
     ) {
       return
     }
 
     val blocks = mutableListOf<CodeBlock>()
     TSQueryCursor.create().use { cursor ->
-
       cursor.safeExecQueryCursor(
-        query = languageSpec.blocksQuery,
-        tree = tree,
-        recycleNodeAfterUse = true,
-        matchCondition = { !isDestroyed },
-        onClosedOrEdited = { blocks.clear() },
-        debugName = "TsAnalyzeManager.updateCodeBlocks()"
+          query = languageSpec.blocksQuery,
+          tree = tree,
+          recycleNodeAfterUse = true,
+          matchCondition = { !isDestroyed },
+          onClosedOrEdited = { blocks.clear() },
+          debugName = "TsAnalyzeManager.updateCodeBlocks()",
       ) { match ->
-        if (!languageSpec.blocksPredicator.doPredicate(
-            languageSpec.predicates,
-            text,
-            match
-          )
-        ) {
+        if (!languageSpec.blocksPredicator.doPredicate(languageSpec.predicates, text, match)) {
           return@safeExecQueryCursor
         }
 
@@ -267,17 +260,16 @@ class TsAnalyzeWorker(
           block.startLine = start.row
           block.startColumn = start.column / 2
 
-          val end = if (languageSpec.blocksQuery.getCaptureNameForId(capture.index)
-              .endsWith(".marked")
-          ) {
-            // Goto last terminal element
-            while (node.childCount > 0) {
-              node = node.getChild(node.childCount - 1)
-            }
-            node.startPoint
-          } else {
-            node.endPoint
-          }
+          val end =
+              if (languageSpec.blocksQuery.getCaptureNameForId(capture.index).endsWith(".marked")) {
+                // Goto last terminal element
+                while (node.childCount > 0) {
+                  node = node.getChild(node.childCount - 1)
+                }
+                node.startPoint
+              } else {
+                node.endPoint
+              }
           block.endLine = end.row
           block.endColumn = end.column / 2
           if (block.endLine - block.startLine > 1) {
@@ -304,15 +296,12 @@ internal data class Init(override val data: TextInit) : Message<TextInit>
 
 internal data class Mod(override val data: TextMod) : Message<TextMod>
 
-internal data class TextInit(
-  val text: String,
-  val contentVersion: Long
-)
+internal data class TextInit(val text: String, val contentVersion: Long)
 
 internal data class TextMod(
-  val start: Int,
-  val end: Int,
-  val edit: TSInputEdit,
-  val changedText: String?,
-  val contentVersion: Long
+    val start: Int,
+    val end: Int,
+    val edit: TSInputEdit,
+    val changedText: String?,
+    val contentVersion: Long,
 )

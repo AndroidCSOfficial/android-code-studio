@@ -15,7 +15,7 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.itsaky.androidide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.BuildConfig
 
 
 plugins {
@@ -45,6 +45,7 @@ dependencies {
     api(libs.androidide.ts.java)
     api(libs.androidide.ts.json)
     api(libs.androidide.ts.kotlin)
+    api(libs.androidide.ts.cpp)
     api(libs.androidide.ts.log)
     api(libs.androidide.ts.xml)
     api(libs.androidx.collection)

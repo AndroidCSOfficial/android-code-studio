@@ -22,7 +22,7 @@ import java.io.Serializable
 
 /** @author Akash Yadav */
 class DefaultAndroidGradlePluginProjectFlags(val booleanFlagMap: Map<BooleanFlag, Boolean?>) :
-  AndroidGradlePluginProjectFlags, Serializable {
+    AndroidGradlePluginProjectFlags, Serializable {
   private val serialVersionUID = 1L
 
   companion object {

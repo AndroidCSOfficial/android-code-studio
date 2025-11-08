@@ -21,11 +21,11 @@ import com.itsaky.androidide.tooling.events.OperationDescriptor
 
 /** @author Akash Yadav */
 class TransformOperationDescriptor(
-  val dependencies: Set<OperationDescriptor>,
-  val subject: SubjectDescriptor,
-  val transformer: TransformerDescriptor,
-  override val name: String,
-  override val displayName: String
+    val dependencies: Set<OperationDescriptor>,
+    val subject: SubjectDescriptor,
+    val transformer: TransformerDescriptor,
+    override val name: String,
+    override val displayName: String,
 ) : OperationDescriptor() {
   class SubjectDescriptor(val displayName: String)
 

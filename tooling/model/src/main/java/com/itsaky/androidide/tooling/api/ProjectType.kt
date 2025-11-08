@@ -40,5 +40,5 @@ enum class ProjectType {
   Java,
 
   /** An unknown project type. */
-  Unknown
+  Unknown,
 }

@@ -20,7 +20,7 @@ import com.itsaky.androidide.tooling.events.OperationDescriptor
 
 /** @author Akash Yadav */
 class DefaultOperationDescriptor(override val name: String, override val displayName: String) :
-  OperationDescriptor() {
+    OperationDescriptor() {
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

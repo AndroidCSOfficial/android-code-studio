@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.eclipse.lemminx.commons;
 
-import com.itsaky.androidide.models.Position;
+import com.tom.rv2ide.models.Position;
 
 /**
  * A line tracker maps character positions to line numbers and vice versa. Initially the line

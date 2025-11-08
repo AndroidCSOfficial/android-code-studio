@@ -17,14 +17,13 @@
 
 
 import com.android.SdkConstants
-import com.itsaky.androidide.build.config.AGP_VERSION_MINIMUM
-import com.itsaky.androidide.build.config.BuildConfig
-import com.itsaky.androidide.build.config.ProjectConfig
-import com.itsaky.androidide.build.config.VersionUtils
-import com.itsaky.androidide.build.config.downloadVersion
-import com.itsaky.androidide.build.config.replaceContents
-import com.itsaky.androidide.build.config.simpleVersionName
-import org.jetbrains.kotlin.incremental.createDirectory
+import com.tom.rv2ide.build.config.AGP_VERSION_MINIMUM
+import com.tom.rv2ide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.ProjectConfig
+import com.tom.rv2ide.build.config.VersionUtils
+import com.tom.rv2ide.build.config.downloadVersion
+import com.tom.rv2ide.build.config.replaceContents
+import com.tom.rv2ide.build.config.simpleVersionName
 
 plugins {
   //noinspection JavaPluginLanguageLevel
@@ -34,12 +33,17 @@ plugins {
 description = "Information about the AndroidIDE build"
 
 val buildInfoGenDir: Provider<Directory> = project.layout.buildDirectory.dir("generated/buildInfo")
-  .also { it.get().asFile.createDirectory() }
+  .also { 
+    val dir = it.get().asFile
+    if (!dir.exists()) {
+      dir.mkdirs()
+    }
+  }
 
 sourceSets { getByName("main").java.srcDir(buildInfoGenDir) }
 
 tasks.create("generateBuildInfo") {
-  val buildInfoPath = "com/itsaky/androidide/buildinfo/BuildInfo.java"
+  val buildInfoPath = "com/tom/rv2ide/buildinfo/BuildInfo.java"
   val buildInfo = buildInfoGenDir.get().file(buildInfoPath)
   val buildInfoIn = project.file("src/main/java/${buildInfoPath}.in")
 
@@ -50,7 +54,8 @@ tasks.create("generateBuildInfo") {
       candidates =
       arrayOf(
         "PACKAGE_NAME" to BuildConfig.packageName,
-        "MVN_GROUP_ID" to BuildConfig.packageName,
+        // "MVN_GROUP_ID" to BuildConfig.packageName,
+        "MVN_GROUP_ID" to "io.github.mohammed-baqer-null",
 
         "VERSION_NAME" to rootProject.version.toString(),
         "VERSION_NAME_SIMPLE" to rootProject.simpleVersionName,

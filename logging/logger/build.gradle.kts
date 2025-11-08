@@ -16,7 +16,7 @@
  */
 
 
-import com.itsaky.androidide.plugins.NoDesugarPlugin
+import com.tom.rv2ide.plugins.NoDesugarPlugin
 
 @Suppress("JavaPluginLanguageLevel")
 plugins {

@@ -17,10 +17,10 @@
 
 @file:Suppress("UnstableApiUsage")
 
-import com.itsaky.androidide.build.config.BuildConfig
-import com.itsaky.androidide.plugins.AndroidIDEPlugin
-import com.itsaky.androidide.plugins.conf.configureAndroidModule
-import com.itsaky.androidide.plugins.conf.configureJavaModule
+import com.tom.rv2ide.build.config.BuildConfig
+import com.tom.rv2ide.plugins.AndroidIDEPlugin
+import com.tom.rv2ide.plugins.conf.configureAndroidModule
+import com.tom.rv2ide.plugins.conf.configureJavaModule
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -31,6 +31,8 @@ plugins {
   alias(libs.plugins.kotlin.jvm) apply false
   alias(libs.plugins.protobuf) apply false
   alias(libs.plugins.benchmark) apply false
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10" apply false
+  
 }
 
 buildscript {
@@ -40,7 +42,6 @@ buildscript {
   }
 }
 
-// Root project has 'com.itsaky.androidide' as the group ID
 project.group = BuildConfig.packageName
 
 subprojects {
@@ -66,12 +67,12 @@ subprojects {
   }
   plugins.withId("java-library") { configureJavaModule() }
 
-  tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-      jvmTarget = BuildConfig.javaVersion.toString()
-      freeCompilerArgs += "-Xstring-concat=inline"
-    }
+tasks.withType<KotlinCompile>().configureEach {
+  compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget(BuildConfig.javaVersion.toString()))
+    freeCompilerArgs.addAll("-Xstring-concat=inline")
   }
+}
 }
 
 tasks.register<Delete>("clean") { delete(rootProject.layout.buildDirectory) }

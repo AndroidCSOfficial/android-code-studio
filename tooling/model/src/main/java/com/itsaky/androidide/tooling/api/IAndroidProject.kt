@@ -22,10 +22,10 @@ import com.itsaky.androidide.builder.model.DefaultSourceSetContainer
 import com.itsaky.androidide.tooling.api.models.AndroidVariantMetadata
 import com.itsaky.androidide.tooling.api.models.BasicAndroidVariantMetadata
 import com.itsaky.androidide.tooling.api.models.params.StringParameter
-import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
-import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import java.io.File
 import java.util.concurrent.CompletableFuture
+import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
+import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 
 /**
  * Model for an Android project/module.
@@ -35,59 +35,40 @@ import java.util.concurrent.CompletableFuture
 @JsonSegment("android")
 interface IAndroidProject : IModuleProject {
 
-  /**
-   * Get the variant that was configured/selected while building the model for this project.
-   */
-  @JsonRequest
-  fun getConfiguredVariant(): CompletableFuture<String>
+  /** Get the variant that was configured/selected while building the model for this project. */
+  @JsonRequest fun getConfiguredVariant(): CompletableFuture<String>
+
+  /** Get the metadata about all variants of this Android project. */
+  @JsonRequest fun getVariants(): CompletableFuture<List<BasicAndroidVariantMetadata>>
+
+  /** Get the metadata about the variant with the given name. */
+  @JsonRequest fun getVariant(param: StringParameter): CompletableFuture<AndroidVariantMetadata?>
+
+  /** Get the boot classpaths for this Android project. */
+  @JsonRequest fun getBootClasspaths(): CompletableFuture<Collection<File>>
 
   /**
-   * Get the metadata about all variants of this Android project.
-   */
-  @JsonRequest
-  fun getVariants(): CompletableFuture<List<BasicAndroidVariantMetadata>>
-
-  /**
-   * Get the metadata about the variant with the given name.
-   */
-  @JsonRequest
-  fun getVariant(param: StringParameter): CompletableFuture<AndroidVariantMetadata?>
-
-  /**
-   * Get the boot classpaths for this Android project.
-   */
-  @JsonRequest
-  fun getBootClasspaths(): CompletableFuture<Collection<File>>
-
-  /**
-   * Get the map of libraries. Each entry is a unique key representing the library, and allowing
-   * to match it with GraphItem instances.
+   * Get the map of libraries. Each entry is a unique key representing the library, and allowing to
+   * match it with GraphItem instances.
    *
    * @param variant The name of the variant for which the libraries will be fetched.
    */
-  @JsonRequest
-  fun getLibraryMap(): CompletableFuture<Map<String, DefaultLibrary>>
+  @JsonRequest fun getLibraryMap(): CompletableFuture<Map<String, DefaultLibrary>>
 
   /**
    * Get the main source set container for this project.
    *
    * @return The main source set container or `null` if it is unavailable.
    */
-  @JsonRequest
-  fun getMainSourceSet(): CompletableFuture<DefaultSourceSetContainer?>
+  @JsonRequest fun getMainSourceSet(): CompletableFuture<DefaultSourceSetContainer?>
 
-  /**
-   * Get the lint check jars for this project.
-   */
-  @JsonRequest
-  fun getLintCheckJars(): CompletableFuture<List<File>>
+  /** Get the lint check jars for this project. */
+  @JsonRequest fun getLintCheckJars(): CompletableFuture<List<File>>
 
   @Suppress("unused")
   companion object {
 
-    /**
-     * The name of the Android project build variant that is used by default.
-     */
+    /** The name of the Android project build variant that is used by default. */
     const val DEFAULT_VARIANT = "debug"
 
     const val ANDROID_NAMESPACE = "http://schemas.android.com/res/android"
@@ -107,7 +88,7 @@ interface IAndroidProject : IModuleProject {
 
     // Sent in when external native projects models requires a refresh.
     const val PROPERTY_REFRESH_EXTERNAL_NATIVE_MODEL =
-      "android.injected.refresh.external.native.model"
+        "android.injected.refresh.external.native.model"
 
     // Sent by Studio 2.2+
     // This property is sent when a run or debug is invoked.  APK built with this property

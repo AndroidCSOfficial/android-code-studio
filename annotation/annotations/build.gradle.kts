@@ -1,4 +1,4 @@
-import com.itsaky.androidide.build.config.BuildConfig
+import com.tom.rv2ide.build.config.BuildConfig
 
 /*
  *  This file is part of AndroidIDE.

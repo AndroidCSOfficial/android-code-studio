@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorSurface">
+
+    <!-- Terminal Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:elevation="2dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_new_terminal"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:icon="@drawable/ic_add"
+            app:iconSize="20dp"
+            android:contentDescription="@string/terminal_new_session" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_close_terminal"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:icon="@drawable/ic_close"
+            app:iconSize="20dp"
+            android:contentDescription="@string/terminal_close_session" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_terminal_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1/5"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <!-- Terminal Sessions Container -->
+    <FrameLayout
+        android:id="@+id/terminal_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Empty State -->
+        <LinearLayout
+            android:id="@+id/empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_terminal"
+                android:alpha="0.5"
+                android:contentDescription="@string/terminal_empty_state" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/terminal_empty_message"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:gravity="center" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_first_terminal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/terminal_create_first"
+                style="@style/Widget.Material3.Button" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

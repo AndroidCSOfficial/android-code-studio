@@ -26,41 +26,39 @@ enum class Version(
      * getDeprecationTargetMessage()/getRemovedVersionMessage() instead to ensure consistent message
      * format.
      */
-     val versionString: String?
+    val versionString: String?
 ) {
 
-    /**
-     * A version before version 4.0, used when the exact version is not known, except that it's
-     * guaranteed to be before 4.0.
-     */
-    VERSION_BEFORE_4_0(null),
+  /**
+   * A version before version 4.0, used when the exact version is not known, except that it's
+   * guaranteed to be before 4.0.
+   */
+  VERSION_BEFORE_4_0(null),
+  VERSION_3_5("3.5"),
+  VERSION_3_6("3.6"),
+  VERSION_4_0("4.0"),
+  VERSION_4_1("4.1"),
+  VERSION_4_2("4.2"),
+  VERSION_7_0("7.0"),
+  VERSION_7_2("7.2"),
+  VERSION_7_3("7.3"),
+  VERSION_8_0("8.0"),
+  VERSION_8_1("8.1"),
+  VERSION_8_2("8.2"),
+  VERSION_8_3("8.3"),
+  VERSION_9_0("9.0"),
+  ; // end of enums
 
-    VERSION_3_5("3.5"),
-    VERSION_3_6("3.6"),
-    VERSION_4_0("4.0"),
-    VERSION_4_1("4.1"),
-    VERSION_4_2("4.2"),
-    VERSION_7_0("7.0"),
-    VERSION_7_2("7.2"),
-    VERSION_7_3("7.3"),
-    VERSION_8_0("8.0"),
-    VERSION_8_1("8.1"),
-    VERSION_8_2("8.2"),
-    VERSION_8_3("8.3"),
-    VERSION_9_0("9.0"),
+  fun getDeprecationTargetMessage(): String {
+    check(this != VERSION_BEFORE_4_0)
+    return "It will be removed in version $versionString of the Android Gradle plugin."
+  }
 
-    ; // end of enums
-
-    fun getDeprecationTargetMessage(): String {
-        check(this != VERSION_BEFORE_4_0)
-        return "It will be removed in version $versionString of the Android Gradle plugin."
+  fun getRemovedVersionMessage(): String {
+    return if (this == VERSION_BEFORE_4_0) {
+      "It has been removed from the current version of the Android Gradle plugin."
+    } else {
+      "It was removed in version $versionString of the Android Gradle plugin."
     }
-
-    fun getRemovedVersionMessage(): String {
-        return if (this == VERSION_BEFORE_4_0) {
-            "It has been removed from the current version of the Android Gradle plugin."
-        } else {
-            "It was removed in version $versionString of the Android Gradle plugin."
-        }
-    }
+  }
 }

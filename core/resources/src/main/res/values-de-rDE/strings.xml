@@ -281,7 +281,7 @@
   <string name="xml_formatting_options">XML-Formatierungsoptionen</string>
   <string name="xml_formatting_options_summary">XML-Formatierer konfigurieren</string>
   <string name="idepref_customFont_title">Eigene Schriftart verwenden</string>
-  <string name="idepref_customFont_summary">Wenn aktiviert, wird die Datei unter \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" als Editor Schriftart verwendet.</string>
+  <string name="idepref_customFont_summary">Wenn aktiviert, wird die Datei unter \"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" als Editor Schriftart verwendet.</string>
   <string name="msg_installing_apk">Installiere APK...</string>
   <string name="msg_action_open_application">Möchtest du die Applikation öffnen?</string>
   <string name="title_gradle_service_notification_channel">AndroidIDE Gradle-Build-Service</string>

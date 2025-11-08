@@ -2,7 +2,6 @@
 
 > [!IMPORTANT]
 > Always open your files in your code editor before requesting changes. This ensures that if a response generates incorrect or corrupted code, you can easily undo the modifications.
->
 > I highly recommend creating a backup of your project before using the AI agent.
 
 This AI agent is designed to assist with Android application development within the Android Code Studio environment. While it aims for accuracy, please be aware that AI can occasionally generate code containing errors, suggest outdated practices, or misinterpret complex requirements. I am continuously working to improve its capabilities.

@@ -22,6 +22,6 @@ import java.io.Serializable
 
 /** @author Akash Yadav */
 data class DefaultUnresolvedDependency(override val cause: String?, override val name: String) :
-  UnresolvedDependency, Serializable {
+    UnresolvedDependency, Serializable {
   private val serialVersionUID = 1L
 }

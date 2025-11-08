@@ -23,9 +23,9 @@ import com.itsaky.androidide.tooling.api.messages.result.BuildCancellationReques
 import com.itsaky.androidide.tooling.api.messages.result.InitializeResult
 import com.itsaky.androidide.tooling.api.messages.result.TaskExecutionResult
 import com.itsaky.androidide.tooling.api.models.ToolingServerMetadata
+import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.CompletableFuture
 
 /**
  * A tooling api server provides services related to the Gradle Tooling API.
@@ -35,23 +35,17 @@ import java.util.concurrent.CompletableFuture
 @JsonSegment("server")
 interface IToolingApiServer {
 
-  /**
-   * Returns the metadata about the tooling server.
-   */
-  @JsonRequest
-  fun metadata(): CompletableFuture<ToolingServerMetadata>
+  /** Returns the metadata about the tooling server. */
+  @JsonRequest fun metadata(): CompletableFuture<ToolingServerMetadata>
 
   /** Initialize the server with the project directory. */
-  @JsonRequest
-  fun initialize(params: InitializeProjectParams): CompletableFuture<InitializeResult>
+  @JsonRequest fun initialize(params: InitializeProjectParams): CompletableFuture<InitializeResult>
 
   /** Is the server initialized? */
-  @JsonRequest
-  fun isServerInitialized(): CompletableFuture<Boolean>
+  @JsonRequest fun isServerInitialized(): CompletableFuture<Boolean>
 
   /** Get the root project. */
-  @JsonRequest
-  fun getRootProject(): CompletableFuture<IProject>
+  @JsonRequest fun getRootProject(): CompletableFuture<IProject>
 
   /** Execute the tasks specified in the message. */
   @JsonRequest
@@ -61,16 +55,14 @@ interface IToolingApiServer {
    * Cancel the current build.
    *
    * @return A [CompletableFuture] which completes when the current build cancellation process
-   * finishes (either successfully or with an error).
+   *   finishes (either successfully or with an error).
    */
-  @JsonRequest
-  fun cancelCurrentBuild(): CompletableFuture<BuildCancellationRequestResult>
+  @JsonRequest fun cancelCurrentBuild(): CompletableFuture<BuildCancellationRequestResult>
 
   /**
    * Shutdown the tooling API server. This will disconnect all the project connection instances.
    *
    * @return A [CompletableFuture] which completes when the shutdown process is finished.
    */
-  @JsonRequest
-  fun shutdown(): CompletableFuture<Void>
+  @JsonRequest fun shutdown(): CompletableFuture<Void>
 }

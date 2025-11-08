@@ -64,7 +64,7 @@
   <string name="error_termux_prefix_dir_path_not_accessible">AndroidIDE অ্যাপ $PREFIX ডিরেক্টরিটি %1$s অ্যাপ দ্বারা অ্যাক্সেসযোগ্য নয়৷
         আপনি AndroidIDE অ্যাপ ইনস্টল বা সেটআপ করেননি বলে এটি হতে পারে
     AndroidIDE অ্যাপ্লিকেশান এবং %1$s অ্যাপ্লিকেশান উভয়েরই আলাদা APK স্বাক্ষর রয়েছে কারণ আপনি বিভিন্ন উত্স থেকে উভয় অ্যাপ ইনস্টল করতে পরিচালনা করেছেন৷
-        এটাও হতে পারে কারণ AndroidIDE $PREFIX ডিরেক্টরি \"/data/data/com.itsaky.androidide/files/usr\" নেই বা পড়া নেই,
+        এটাও হতে পারে কারণ AndroidIDE $PREFIX ডিরেক্টরি \"/data/data/com.tom.rv2ide/files/usr\" নেই বা পড়া নেই,
         লিখুন এবং অনুমতি কার্যকর করুন।.</string>
   <!-- Miscellaneous -->
   <string name="action_share">শেয়ার করুন</string>

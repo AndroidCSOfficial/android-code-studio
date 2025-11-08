@@ -1,19 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools"
+  tools:ignore="MissingTranslation">
 
   <!-- AndroidIDE -->
-  <string name="copy" tools:override="true">Copy</string>
+  <string name="cfg_installed_ndk_version">Installed NDK Version: %s</string>
+  <string name="cfg_installed_cmake_version">Installed CMake Version: %s</string>
+
+  <!-- General messages -->
+  <string name="updater_no_updates_available">No updates available</string>
+  <string name="updater_check_failed">Failed to check for updates</string>
+  <string name="updater_changelog_failed">Failed to load changelog</string>
+  <string name="updater_changelog_error">Error fetching changelog</string>
+  <string name="updater_no_compatible_update">No compatible update found for your device</string>
+  <string name="updater_download_failed">Download failed</string>
+  <string name="updater_download_failed_with_error">Download failed: %s</string>
+  <string name="updater_installation_failed">Installation failed</string>
+  <string name="updater_cannot_open_browser">Cannot open browser</string>
+
+  <!-- Dialog titles and buttons -->
+  <string name="updater_update_available">Update Available</string>
+  <string name="updater_download">Download</string>
+  <string name="updater_view_in_browser">View in Browser</string>
+  <string name="updater_later">Later</string>
+  <string name="updater_cancel">Cancel</string>
+  <string name="updater_downloading_update">Downloading Update</string>
+
+  <!-- Update dialog content -->
+  <string name="updater_new_version_available">New version %s is available!</string>
+  <string name="updater_current_architecture">Device architecture: %s</string>
+  <string name="updater_target_version_code">Target version code: %d</string>
+  <string name="updater_available_variants">Available variants: %s</string>
+
+  <!-- Progress and status messages -->
+  <string name="updater_preparing_download">Preparing download…</string>
+  <string name="updater_progress_format">%d MB / %d MB</string>
+  <string name="updater_enable_install_permission">Please enable \'Install unknown apps\' and try again</string>
+
+  <!-- Log messages -->
+  <string name="updater_http_error">HTTP error: %d</string>
+  <string name="updater_fetch_error">Error fetching update info</string>
+  <string name="updater_parse_error">Error parsing update info</string>
+  <string name="updater_version_check_log">Current version: %d, Available version: %d for arch: %s</string>
+  <string name="updater_no_compatible_variant">No compatible variant found for architecture: %s</string>
+  <string name="updater_package_not_found">Package not found</string>
+  <string name="updater_supported_abis">Supported ABIs: %s</string>
+  <string name="updater_unknown_arch_fallback">No known architecture found, defaulting to armeabi-v7a</string>
+  <string name="updater_device_arch">Device architecture: %s</string>
+  <string name="updater_trying_fallbacks">No exact match found for %s, trying fallbacks</string>
+  <string name="updater_using_arm32_fallback">Using armeabi-v7a fallback for arm64-v8a</string>
+  <string name="updater_using_x86_fallback">Using x86 fallback for x86_64</string>
+  <string name="updater_using_first_variant">No exact architecture match found, using first available variant</string>
+  <string name="updater_download_error">Error downloading APK</string>
+  <string name="updater_download_apk_error">Error downloading APK</string>
+  <string name="updater_install_error">Error installing APK</string>
+  <string name="updater_browser_error">Error opening browser</string>
+
+  <!-- AI Agent Gemini -->
+  <string name="ai_agent_title">AI Agent</string>
+  <string name="ai_agent_description">Get AI-powered code generation using AI Agent</string>
+  <string name="ai_agent_prompt_hint">Describe what code you want to generate...</string>
+  <string name="ai_agent_send">Send</string>
+  <string name="ai_agent_settings">Settings</string>
+  <string name="ai_agent_instructions">Enter your request and the AI will generate code for you. Make sure to configure your Gemini API key in settings.</string>
+  <string name="ai_agent_enable">Enable AI Agent</string>
+  <string name="ai_agent_enable_summary">Enable AI-powered code generation</string>
+  <string name="ai_agent_api_key">Gemini API Key</string>
+  <string name="ai_agent_api_key_summary">Enter your Google Gemini API key to use AI features</string>
+  <string name="ai_agent_api_key_dialog_title">Enter Gemini API Key</string>
+
+  <!-- AI Agent Deepseek -->
+  <string name="ai_agent_deepseek_api_key">Deepseek API Key</string>
+  <string name="ai_agent_deepseek_api_key_summary">Enter your Deepseek API key to use AI features</string>
+  <string name="ai_agent_deepseek_api_key_dialog_title">Enter Deepseek API Key</string>
+
+  <!-- AI Agent OpenAI -->
+  <string name="ai_agent_openai_api_key">OpenAI API Key</string>
+  <string name="ai_agent_openai_api_key_summary">Enter your Deepseek API key to use AI features</string>
+  <string name="ai_agent_openai_api_key_dialog_title">Enter Deepseek API Key</string>
+
+  <!-- AI Agent anthropic -->
+  <string name="ai_agent_anthropic_api_key">Anthropic API Key</string>
+  <string name="ai_agent_anthropic_api_key_summary">Enter your Deepseek API key to use AI features</string>
+  <string name="ai_agent_anthropic_api_key_dialog_title">Enter Deepseek API Key</string>
+
+
+  <string name="no_acs_title">ACS Components Missing</string>
+  <string name="no_acs_summary">This application appears to be incomplete or unofficial, as it is missing the required ACS build system. For full functionality, please install the official Android Code Studio from a trusted source.</string>
+
+  <string name="no_internet">No internet connection</string>
+  <string name="btn_proceed_str">Proceed</string>
+
+  <string name="acs_install_title">ACS build system</string>
+  <string name="acs_ask_install_message">Are you sure you want to install %1$s?</string>
+
+  <string
+    name="copy"
+    tools:override="true">Copy</string>
   <string name="terminal_more">More…</string>
   <string name="text_to_search">Text to search</string>
-  <string name="app_name" translatable="false">AndroidIDE-Rv2</string>
+  <string
+    name="app_name"
+    translatable="false">Android Code Studio</string>
+  <string
+    name="app_name_dcm"
+    translatable="false">Rv2IDE</string>
   <string name="about_option_email">Email</string>
   <string name="about_option_website">Website</string>
-  <string name="about_footer_alternate" translatable="false">AndroidIDE v\u2022 %s</string>
-  <string name="about_footer">AndroidIDE %1$s for %2$s</string>
+  <string
+    name="about_footer_alternate"
+    translatable="false">Android Code Studio v\u2022 %s</string>
+  <string name="about_footer">Android Code Studio%1$s for %2$s</string>
   <string name="about_subtitle">Simply, an IDE for Android</string>
   <string name="msg_get_package_failed">Failed to extract package name!</string>
-  <string name="msg_need_help">If you\'re facing issues while using AndroidIDE or with building Android Apps, you can join the Telegram Group ask for help there.\n\nYou can also send suggesstions on our email.</string>
-  <string name="title_github" translatable="false">GitHub</string>
+  <string name="msg_need_help">If you\'re facing issues while using Android Code Studio or with building Android Apps, you can join the Telegram Group ask for help there.\n\nYou can also send suggesstions on our email.</string>
+  <string
+    name="title_github"
+    translatable="false">GitHub</string>
   <string name="need_help">Need Help?</string>
   <string name="ide_preferences">IDE preferences</string>
   <string name="discussions_on_telegram">Discussions on Telegram</string>
@@ -23,6 +125,10 @@
   <string name="reset">Reset</string>
   <string name="app_logs">App Logs</string>
   <string name="ide_logs">IDE Logs</string>
+  <string name="title_enable_ide_logs">Enable IDE Logs</string>
+  <string name="msg_enable_ide_logs">If checked IDE Logs will be enabled</string>
+  <string name="msg_ide_logs_disabled">Logs are disabled. \nTo re-enable them, navigate to Settings -> Developer Options and check the "IDE logs" switch</string>
+  <string name="terminal_bstab">Terminal</string>
   <!-- AndroidIDE-R -->
   <string name="discussions_on_qq">Discussions on QQ</string>
   <string name="idepref_installViaShizuku_title">Install Via Shizuku</string>
@@ -49,7 +155,7 @@
 
   <!-- Project Builder -->
   <string name="title_unsupported_device">Device Not Supported</string>
-  <string name="msg_unsupported_device">You are using %1$s variant of AndroidIDE on a %2$s-only device. This configuration is not supported. Please install the %2$s variant of AndroidIDE.</string>
+  <string name="msg_unsupported_device">You are using %1$s variant of Android Code Studio on a %2$s-only device. This configuration is not supported. Please install the %2$s variant of Android Code Studio.</string>
   <string name="title_clear_output">Clear output</string>
   <string name="build_output">Build output</string>
   <string name="quick_run_debug">Quick run</string>
@@ -58,11 +164,13 @@
   <string name="preparing_first">Preparing. First build may take up to 10–15 minutes!</string>
   <string name="msg_installing_gradlew">Gradle Wrapper is not available!\nInstalling default one. Gradle v7.4 will be downloaded if necessary.</string>
   <string name="run">Run</string>
-  <string name="gradle" translatable="false">Gradle</string>
+  <string
+    name="gradle"
+    translatable="false">Gradle</string>
 
   <!-- Project -->
   <string name="title_first_build">First Build</string>
-  <string name="msg_first_build">This is the first time build after you installed AndroidIDE. First build usually takes time as Gradle downloads all dependencies and plugins. This process may take about 10–15 minutes. But this totally depends on your network connection.\n\nPlease be patient …</string>
+  <string name="msg_first_build">This is the first time build after you installed Android Code Studio. First build usually takes time as Gradle downloads all dependencies and plugins. This process may take about 10–15 minutes. But this totally depends on your network connection.\n\nPlease be patient …</string>
   <string name="create_project">Create project</string>
   <string name="minimum_sdk">Minimum SDK</string>
   <string name="new_project">New project</string>
@@ -77,13 +185,70 @@
   <string name="msg_open_existing_project">Open existing project</string>
   <string name="title_confirm_project_close">Close project</string>
 
-  <!-- Templates -->
+  <string name="open_project">Open Project</string>
+  <string name="search_projects_hint">Search projects…</string>
+  <string name="no_projects_found">No projects found.\nCreate a new project or browse to open an existing one.</string>
+  <string name="no_projects_match_search">No projects match your search.</string>
+  <string name="browse_other_location">Browse Other Location</string>
+  <string name="recent_badge">Recent</string>
+  
+  <string name="delete_project_title">Delete Project?</string>
+  <string name="delete_project_message">Are you sure you want to delete \"%1$s\"?\n\nThis will permanently delete all files in this project. This action cannot be undone.</string>
+  <string name="delete">Delete</string>
+  <string name="project_deleted_success">Project deleted successfully</string>
+  <string name="project_delete_failed">Failed to delete project</string>
+  <string name="backup_success">Backup completed successfully</string>
+
+  <string name="rename_project">Rename Project</string>
+  <string name="new_project_name">New project name</string>
+  <string name="rename">Rename</string>
+  <string name="error">Error</string>
+  <string name="invalid_name">Invalid Name</string>
+  <string name="invalid_project_name_message">Project name must start with a letter and contain only letters, numbers, and underscores</string>
+  <string name="name_already_exists">Name Already Exists</string>
+  <string name="project_name_exists_message">A project named \'%1$s\' already exists in this location</string>
+  <string name="project_renamed_success">Project renamed successfully</string>
+  <string name="project_rename_failed">Failed to rename project</string>
+  
+  <string name="idepref_enableBuildOutput_title">Enable build output</string>
+  <string name="idepref_enableBuildOutput_summary">Show build output in the editor</string>
+
+  <string name="include_test_str">Include android tests</string>
+  <string name="use_cmake">Use CMake build system</string>
+  <string name="native_language">Native language</string>
+
+
+  <string name="ndk_version_auto">NDK: Auto</string>
+  <string name="native_error_title">NDK Required</string>
+  <string name="error_ndk_not_found_or_incompatible">No NDK installation found or it\'s incompatible. Please install NDK from IDE Settings.</string>
+  <string name="open_ide_cfg_msg">Open Settings</string>
+  
+  <!-- ATC Options Dialog -->
+  <string name="choose_template">Choose Template</string>
+  <string name="project_configuration">Project Configuration</string>
+  
+  <string name="project_name">Project name</string>
+  <string name="project_location">Project location</string>
+  <string name="browse">Browse</string>
+  <string name="language">Language</string>
+  <string name="java">Java</string>
+  <string name="use_gradle_kotlin_dsl">Use Gradle Kotlin DSL (.kts)</string>
+  <string name="cancel">Cancel</string>
+  <string name="create">Create</string>
+  <string name="default_project_name">MyApplication</string>
+  <string name="default_package_name">com.example.myapplication</string>
+  <string name="back">Back</string>
+      
+       
+         <!-- Templates -->
   <string name="msg_confirm_project_close">Are you sure you want to close this project? All started Gradle daemons will be stopped after this project is closed.</string>
   <string name="template_basic">Basic Project</string>
   <string name="template_empty">Empty project</string>
   <string name="template_cpp">C++ project</string>
   <string name="template_navigation_drawer">Navigation drawer project</string>
-  <string name="template_compose" translatable="false">Jetpack Compose</string>
+  <string
+    name="template_compose"
+    translatable="false">Jetpack Compose</string>
   <string name="template_navigation_tabs">Bottom Navigation Activity</string>
   <string name="template_tabs">Tabbed Activity</string>
   <string name="template_no_activity">No Activity</string>
@@ -121,6 +286,9 @@
   <string name="new_file">New file</string>
   <string name="create_auto_layout">Create layout file</string>
   <string name="new_java_class">New Java class</string>
+  <string name="choose_language">Choose Language</string>
+  <string name="new_kotlin_class">New Kotlin Class</string>
+
   <string name="new_xml_resource">New XML resource</string>
   <string name="new_folder">New folder</string>
   <string name="title_confirm_delete">Confirm delete</string>
@@ -158,7 +326,7 @@
 
   <!-- Preferences -->
   <string name="title_change_text_size">Editor font size</string>
-  <string name="idepref_about_title">About AndroidIDE</string>
+  <string name="idepref_about_title">About Android Code Studio</string>
   <string name="idepref_build_clearCache_title">Clear Gradle caches</string>
   <string name="idepref_build_clearCache_summary">Clear Gradle caches directory. This will delete all dependencies downloaded by Gradle. Required files will be downloaded again in next build.</string>
   <string name="idepref_build_customgradlecommands_title">Additional Gradle commands</string>
@@ -198,7 +366,7 @@
   <string name="msg_generate_xml_failed">Failed to generate XML code</string>
   <string name="title_generating_xml">Generating XML code</string>
   <string name="msg_swipe_up">Swipe up or click for build output, logs and more.</string>
-  <string name="msg_ide_crashed">AndroidIDE crashed</string>
+  <string name="msg_ide_crashed">Android Code Studio crashed</string>
   <string name="msg_report_crash">Please open an issue on github with the following stacktrace :</string>
   <string name="msg_crash_report_hint">Click on the button below to copy log and open issues page.</string>
   <string name="msg_copy_report_action">Copy and report</string>
@@ -206,8 +374,12 @@
   <string name="action_expand_selection">Expand selection</string>
   <string name="idepref_java_matchLower_title">Match completions in lower case</string>
   <string name="title_common">Common</string>
-  <string name="idepref_editor_category_common" translatable="false">@string/title_common</string>
-  <string name="idepref_editor_category_java" translatable="false">Java</string>
+  <string
+    name="idepref_editor_category_common"
+    translatable="false">@string/title_common</string>
+  <string
+    name="idepref_editor_category_java"
+    translatable="false">Java</string>
   <string name="title_files_unsaved">Unsaved files</string>
   <string name="msg_files_unsaved">Some files are not saved. Would you like to save them before closing? Unsaved files are: \n%s</string>
   <string name="idepref_editor_autoSave_title">Save before closing files</string>
@@ -216,8 +388,11 @@
   <string name="idepref_editor_ligatures_title">Font ligatures</string>
   <string name="idepref_editor_ligatures_summary">Enable/disable font ligatures</string>
 
-  <string name="idepref_editor_autosave_title">✨Auto save</string>
+  <string name="idepref_editor_autosave_title">Auto save</string>
   <string name="idepref_editor_autosave_summary">Automatically saves all edits every 2 seconds to prevent data loss in case of unexpected application termination.</string>
+
+  <string name="idepref_editor_string_ext_helper_title">String extractor</string>
+  <string name="idepref_editor_string_ext_helper_summary">Provides a contextual menu for automatic string resource extraction from source code. Streamlines localization by moving hardcoded text directly into `strings.xml`. Compatible with Kotlin, Java, and XML files.</string>
 
   <string name="yes">Yes</string>
   <string name="no">No</string>
@@ -259,13 +434,14 @@
   <string name="idepref_useIcu_title">Use ICU lib</string>
   <string name="idepref_useIcu_summary">Use ICU library to use retrive word edges for double-tap and long-press word selection.</string>
 
+
   <!--The text sorrounded with '@@' is spanned as clickable.-->
   <!--There must be exactly two '@@' sorrounding the text that should be clickable.-->
   <string name="msg_drawer_for_files">Open the left drawer for @@files@@.</string>
   <string name="msg_swipe_for_output">Swipe up for @@build output@@.</string>
   <string name="idepref_editor_useSoftTabs_title">Use soft tab</string>
   <string name="idepref_editor_useSoftTabs_summary">Choose whether to use spaces instead of tab character (\\t).</string>
-  <string name="btn_donate">Donate</string>
+  <string name="btn_idecfg">IDE Configurations</string>
   <string name="btn_docs">Documentation</string>
   <string name="btn_close">Close</string>
   <string name="msg_ignore_case">Ignore case</string>
@@ -277,10 +453,12 @@
   <string name="idepref_channel_summary">Subscribe for latest updates.</string>
   <string name="idepref_group_summary">Discuss featues, bugs and improvements here.</string>
   <string name="idepref_changelog_summary">What\'s new in this version?</string>
-  <string name="idepref_about_summary">More about AndroidIDE.</string>
+  <string name="idepref_about_summary">More about Android Code Studio.</string>
   <string name="idepref_general_summary">General IDE configuration.</string>
   <string name="idepref_editor_summary">Configure the editor.</string>
-  <string name="xml" translatable="false">XML</string>
+  <string
+    name="xml"
+    translatable="false">XML</string>
   <string name="idepref_xml_trimFinalNewLine_title">Trim final new line</string>
   <string name="idepref_xml_insertFinalNewLine_title">Insert final new line</string>
   <string name="idepref_xml_trimFinalNewLine_summary">Remove extra empty line at the end of file</string>
@@ -311,14 +489,71 @@
   <string name="idepref_preservedNewLines_summary">The maximum number of continuous line breaks that should be preserved.</string>
   <string name="idepref_emptyElements_title">Empty elements behaviour</string>
   <string name="idepref_emptyElements_summary">Choose the formatting behavior for empty elements.</string>
+
   <string name="xml_formatting_options">XML formatting options</string>
   <string name="xml_formatting_options_summary">Configure the XML formatter</string>
+
   <string name="idepref_customFont_title">Use custom font</string>
-  <string name="idepref_customFont_summary">If enabled, the file at \"/data/data/com.itsaky.androidide/files/home/.androidide/ui/font.ttf\" will be used as Editor font.</string>
+  <string name="idepref_customFont_summary">If enabled, the file at \"/data/data/com.tom.rv2ide/files/home/.androidide/ui/font.ttf\" will be used as Editor font.</string>
   <string name="msg_installing_apk">Installing APK...</string>
   <string name="msg_action_open_application">Do you want to open the application?</string>
 
-  <string name="title_gradle_service_notification_channel">AndroidIDE Gradle build service</string>
+
+  <string name="servers">Servers</string>
+  <string name="lsp_options">Language server protocol</string>
+  <string name="lsp_options_summary">Configure and setup servers</string>
+
+  <string name="lsp_options_kotlin_title">Kotlin Language Server</string>
+  <string name="lsp_options_kotlin_summary">Kotlin language server offering intelligent coding features including code completion, error highlighting, and more</string>
+  <string name="kotlin_server_required">Kotlin language server must be installed to use this feature</string>
+
+  <string name="lsp_options_c_cpp_title">C &amp; C++ Language Server</string>
+  <string name="lsp_options_c_cpp_summary">C and C++ language server providing intelligent development features such as code completion, error highlighting, and others</string>
+
+  <string name="acs_lsp_hover_title">Code Information on Hover</string>
+  <string name="acs_lsp_hover_summary">Show types, function signatures, and documentation when hovering over code</string>
+
+  <string name="acs_lsp_diagnostics_title">Code Diagnostics</string>
+  <string name="acs_lsp_diagnostics_summary">Show errors and warnings as you type</string>
+
+  <string name="acs_lsp_kotlin_code_style_title">Code Format</string>
+  <string name="acs_lsp_kotlin_code_style_summary">Preferred formatting style</string>
+
+  <string name="server_status">Server Status: %s</string>
+
+  <string name="kotlin">Kotlin</string>
+  <string name="kotlin_lsp_category_summary">Kotlin language server and features</string>
+  <string name="c_cpp">C/C++</string>
+  <string name="ccpp_lsp_category_summary">C/C++ language server and features</string>
+
+  <!-- LSP Server Management -->
+  <string name="lsp_server_uninstall">Uninstall</string>
+  <string name="lsp_server_uninstall_title">Uninstall Server</string>
+  <string name="lsp_server_uninstall_message">Are you sure you want to uninstall %s server? This action cannot be undone.</string>
+  <string name="lsp_server_uninstalling">Uninstalling %s Server</string>
+  <string name="lsp_server_please_wait">Please wait…</string>
+  <string name="lsp_server_uninstall_success">%s server uninstalled successfully!</string>
+  <string name="lsp_server_uninstall_failed">Failed to uninstall %s server</string>
+  <string name="lsp_server_not_found">%s server directory not found</string>
+  <string name="lsp_server_uninstall_error">Failed to uninstall %s:\n%s</string>
+
+  <!-- LSP Server Download -->
+  <string name="lsp_server_preparing_download">Preparing download…</string>
+  <string name="lsp_server_downloading">Downloading %s Server</string>
+  <string name="lsp_server_fetching_info">Fetching server information…</string>
+  <string name="lsp_server_no_download_link">Download link not available for %s</string>
+  <string name="lsp_server_connecting">Connecting to server…</string>
+  <string name="lsp_server_downloading_status">Downloading…</string>
+  <string name="lsp_server_progress_percentage">%d%%</string>
+  <string name="lsp_server_extracting">Extracting files…</string>
+  <string name="lsp_server_install_success">%s server installed successfully!\n%d files extracted.</string>
+  <string name="lsp_server_download_failed">Failed to download %s:\n%s</string>
+
+  <!-- LSP Server Dialog Titles -->
+  <string name="lsp_server_error_title">Download Failed</string>
+  <string name="lsp_server_success_title">Download Complete</string>
+
+  <string name="title_gradle_service_notification_channel">Android Code Studio Gradle build service</string>
   <string name="msg_hex_color_code">Hex color code</string>
   <string name="msg_color_picker_pick">Pick</string>
   <string name="msg_chmod_exec">Setting executable permissions…</string>
@@ -332,6 +567,7 @@
   <string name="msg_package_not_valid_char_2">The character "%1$s" is not allowed in Android application package names</string>
   <string name="msg_package_mus_have_dot">The package must have at least one \'.\' separator</string>
 
+  <string name="extract">Extract string to strings.xml</string>
   <string name="action_import_classes">Import class(es)</string>
   <string name="action_generate_setters_getters">Generate setters/getters</string>
   <string name="action_add_throws">Add \'throws\'</string>
@@ -375,53 +611,165 @@
   <string name="msg_tasks_to_run">The following tasks will be run, in order. Click the \'Run\' button again to confirm.\n\n%1$s</string>
   <string name="msg_loading_tasks">Loading tasks...</string>
 
-  <string name="ui_category_widgets" translatable="false">Widgets</string>
-  <string name="ui_category_layouts" translatable="false">Layouts</string>
+  <string
+    name="ui_category_widgets"
+    translatable="false">Widgets</string>
+  <string
+    name="ui_category_layouts"
+    translatable="false">Layouts</string>
+  <string
+    name="ui_category_google"
+    translatable="false">Google</string>
 
-  <string name="widget_view" translatable="false">View</string>
-  <string name="widget_textview" translatable="false">TextView</string>
-  <string name="widget_button" translatable="false">Button</string>
-  <string name="widget_checkbox" translatable="false">CheckBox</string>
-  <string name="widget_checked_textview" translatable="false">CheckedTextView</string>
-  <string name="widget_edittext" translatable="false">EditText</string>
-  <string name="widget_image_button" translatable="false">ImageButton</string>
-  <string name="widget_image_view" translatable="false">ImageView</string>
-  <string name="widget_progressbar" translatable="false">ProgressBar</string>
-  <string name="widget_radio_button" translatable="false">RadioButton</string>
-  <string name="widget_radio_group" translatable="false">RadioGroup</string>
-  <string name="widget_seekbar" translatable="false">SeekBar</string>
-  <string name="widget_spinner" translatable="false">Spinner</string>
-  <string name="widget_auto_complete_textview" translatable="false">AutoCompleteTextView</string>
-  <string name="widget_multi_auto_complete_textview" translatable="false">MultiAutoCompleteTextView</string>
-  <string name="widget_listview" translatable="false">ListView</string>
-  <string name="widget_surfaceview" translatable="false">SurfaceView</string>
-  <string name="widget_switch" translatable="false">Switch</string>
-  <string name="widget_textureview" translatable="false">TextureView</string>
-  <string name="widget_togglebutton" translatable="false">ToggleButton</string>
-  <string name="widget_webview" translatable="false">WebView</string>
-  <string name="widget_frame_layout" translatable="false">FrameLayout</string>
-  <string name="widget_grid_layout" translatable="false">GridLayout</string>
-  <string name="widget_linear_layout_horz" translatable="false">LinearLayout (H)</string>
-  <string name="widget_linear_layout_vert" translatable="false">LinearLayout (V)</string>
-  <string name="widget_relative_layout" translatable="false">RelativeLayout</string>
-  <string name="widget_scrollview" translatable="false">ScrollView</string>
-  <string name="widget_horizontal_scrollview" translatable="false">HorizontalScrollView</string>
-  <string name="widget_text_clock" translatable="false">TextClock</string>
-  <string name="widget_digital_clock" translatable="false">DigitalClock</string>
-  <string name="widget_calendar_view" translatable="false">CalendarView</string>
-  <string name="widget_space" translatable="false">Space</string>
-  <string name="widget_number_picker" translatable="false">NumberPicker</string>
-  <string name="widget_chronometer" translatable="false">Chronometer</string>
-  <string name="widget_rating_bar" translatable="false">RatingBar</string>
-  <string name="widget_quick_contact_badge" translatable="false">QuickContactBadge</string>
-  <string name="widget_videoview" translatable="false">VideoView</string>
-  <string name="widget_analog_clock" translatable="false">AnalogClock</string>
-  <string name="widget_grid_view" translatable="false">GridView</string>
-  <string name="widget_viewanimator" translatable="false">ViewAnimator</string>
-  <string name="widget_viewswitcher" translatable="false">ViewSwitcher</string>
-  <string name="widget_textswitcher" translatable="false">TextSwitcher</string>
-  <string name="widget_imageswitcher" translatable="false">ImageSwitcher</string>
-  <string name="widget_viewflipper" translatable="false">ViewFlipper</string>
+  <string name="subtitle_desc">Your Ideas, Anywhere</string>
+
+  <string
+    name="widget_view"
+    translatable="false">View</string>
+  <string
+    name="widget_textview"
+    translatable="false">TextView</string>
+  <string
+    name="widget_text_view"
+    translatable="false">Material Text View</string>
+  <string
+    name="widget_button"
+    translatable="false">Button</string>
+  <string
+    name="widget_mbutton"
+    translatable="false">🆕 Material Button</string>
+  <string
+    name="widget_mcardview"
+    translatable="false">🆕 Material Card View</string>
+  <string
+    name="widget_checkbox"
+    translatable="false">CheckBox</string>
+  <string
+    name="widget_checked_textview"
+    translatable="false">CheckedTextView</string>
+  <string
+    name="widget_edittext"
+    translatable="false">🆕 Material EditText</string>
+  <string
+    name="widget_inputlayout"
+    translatable="false">🆕 Text Field Input Layout</string>
+  <string
+    name="widget_image_button"
+    translatable="false">ImageButton</string>
+  <string
+    name="widget_image_view"
+    translatable="false">ImageView</string>
+  <string
+    name="widget_progressbar"
+    translatable="false">ProgressBar</string>
+  <string
+    name="widget_radio_button"
+    translatable="false">RadioButton</string>
+  <string
+    name="widget_radio_group"
+    translatable="false">RadioGroup</string>
+  <string
+    name="widget_seekbar"
+    translatable="false">SeekBar</string>
+  <string
+    name="widget_spinner"
+    translatable="false">Spinner</string>
+  <string
+    name="widget_auto_complete_textview"
+    translatable="false">AutoCompleteTextView</string>
+  <string
+    name="widget_multi_auto_complete_textview"
+    translatable="false">MultiAutoCompleteTextView</string>
+  <string
+    name="widget_listview"
+    translatable="false">ListView</string>
+  <string
+    name="widget_surfaceview"
+    translatable="false">SurfaceView</string>
+  <string
+    name="widget_switch"
+    translatable="false">Switch</string>
+  <string
+    name="widget_mswitch"
+    translatable="false">Material Switch</string>
+  <string
+    name="widget_textureview"
+    translatable="false">TextureView</string>
+  <string
+    name="widget_togglebutton"
+    translatable="false">ToggleButton</string>
+  <string
+    name="widget_webview"
+    translatable="false">WebView</string>
+  <string
+    name="widget_frame_layout"
+    translatable="false">FrameLayout</string>
+  <string
+    name="widget_grid_layout"
+    translatable="false">GridLayout</string>
+  <string
+    name="widget_linear_layout_horz"
+    translatable="false">LinearLayout (H)</string>
+  <string
+    name="widget_linear_layout_vert"
+    translatable="false">LinearLayout (V)</string>
+  <string
+    name="widget_relative_layout"
+    translatable="false">RelativeLayout</string>
+  <string
+    name="widget_scrollview"
+    translatable="false">ScrollView</string>
+  <string
+    name="widget_horizontal_scrollview"
+    translatable="false">HorizontalScrollView</string>
+  <string
+    name="widget_text_clock"
+    translatable="false">TextClock</string>
+  <string
+    name="widget_digital_clock"
+    translatable="false">DigitalClock</string>
+  <string
+    name="widget_calendar_view"
+    translatable="false">CalendarView</string>
+  <string
+    name="widget_space"
+    translatable="false">Space</string>
+  <string
+    name="widget_number_picker"
+    translatable="false">NumberPicker</string>
+  <string
+    name="widget_chronometer"
+    translatable="false">Chronometer</string>
+  <string
+    name="widget_rating_bar"
+    translatable="false">RatingBar</string>
+  <string
+    name="widget_quick_contact_badge"
+    translatable="false">QuickContactBadge</string>
+  <string
+    name="widget_videoview"
+    translatable="false">VideoView</string>
+  <string
+    name="widget_analog_clock"
+    translatable="false">AnalogClock</string>
+  <string
+    name="widget_grid_view"
+    translatable="false">GridView</string>
+  <string
+    name="widget_viewanimator"
+    translatable="false">ViewAnimator</string>
+  <string
+    name="widget_viewswitcher"
+    translatable="false">ViewSwitcher</string>
+  <string
+    name="widget_textswitcher"
+    translatable="false">TextSwitcher</string>
+  <string
+    name="widget_imageswitcher"
+    translatable="false">ImageSwitcher</string>
+  <string
+    name="widget_viewflipper"
+    translatable="false">ViewFlipper</string>
 
   <!-- GIT -->
   <string name="git_clone">Clone</string>
@@ -440,7 +788,7 @@
   <string name="uiMode_dark">Dark</string>
   <string name="uiMode_system">Follow system</string>
   <string name="idepref_general_themeSelector_title">Theme</string>
-  <string name="idepref_general_themeSelector_summary">Select a theme for AndroidIDE (requires restart).</string>
+  <string name="idepref_general_themeSelector_summary">Select a theme for Android Code Studio (requires restart).</string>
   <string name="idepref_general_projectConfig">Project configuration</string>
   <string name="msg_app_launch_failed">Launch failed. Install the application first.</string>
   <string name="idepref_java_diagnosticEnabled_title">Diagnostics enabled</string>
@@ -452,6 +800,10 @@
   <string name="idepref_deleteEmptyLines_summary">Whether the editor should delete empty lines on a single backspace key event.</string>
   <string name="idepref_deleteTabs_title">Delete tab on backspace</string>
   <string name="idepref_deleteTabs_summary">When enabled, the editor will delete spaces equal to the tab width when the backspace key is pressed.</string>
+  <string name="git_clone_branch">Branch (optional)</string>
+  <string name="git_clone_options">Clone Options</string>
+  <string name="git_clone_custom_options">Custom Options (e.g., --filter=blob:none)</string>
+  <string name="git_clone_invalid_url">Invalid repository URL</string>
 
   <string name="btn_sync">Sync</string>
   <string name="btn_ignore_changes">Ignore these changes</string>
@@ -459,8 +811,37 @@
   <string name="msg_no_unresolved_classes">No unresolved class names found</string>
   <string name="title_class_chooser">Which %1$s?</string>
 
+
+  <string name="ai_agent_note">
+    <![CDATA[
+<b>🚨 Important Notice</b>
+  <br>
+    <br>
+This AI agent is designed to assist you in developing Android applications directly within the Android Code Studio environment. While it strives for accuracy, please be aware that AI can sometimes generate code with errors, suggest outdated practices, or misinterpret complex requirements.<br>
+        <br>
+
+          <b>✅ To get the best results, please follow these guidelines:</b>
+          <br>
+• 📝 <b>Be Specific:</b> Clearly state your goal (e.g., "Add a button that opens a new activity").<br>
+• 🧠 <b>Provide Context:</b> Include relevant code snippets, error messages, or logcat outputs.<br>
+• 🚫 <b>Avoid Greetings:</b> Please do <u>not</u> start your message with greetings like "hi", "hello", or "hey". Instead, go straight to your request to help the AI respond faster and more accurately.<br>
+• 🛠️ <b>Important:</b> Always ensure to open your files in the code editor so that in case of a bad or corrupted response, you can easily undo the changes.<br>
+• 🔄 <b>Reset Context After Success:</b> When you\'re done with a request and it matches your needs, long press the send message button and perform a <u>hard reset of the context</u>. This helps start fresh and prevents the AI from getting stuck on previous requests.<br>
+                      <br>
+
+⚡ Always carefully review and test all generated code before building your project.<br>
+                          <br>
+
+*<b>Tip:</b> Long press the send message button to manage AI context.
+]]></string>
+
+  <string name="restart_app_title">Restart Required</string>
+  <string name="restart_app_message">The application needs to restart to apply changes. Do you want to restart now?</string>
+  <string name="restart_action">Restart</string>
+  <string name="cancel_action">Cancel</string>
+
   <string name="permlab_bind_logger_service">bind to log service</string>
-  <string name="permdesc_bind_logger_service">Allows this application to bind to AndroidIDE\'s logging service. This permission is required for AndroidIDE to read logs of this application.</string>
+  <string name="permdesc_bind_logger_service">Allows this application to bind to Android Code Studio\'s logging service. This permission is required for Android Code Studio to read logs of this application.</string>
   <string name="wizard_module_name">Module name</string>
   <string name="wizard_module_type">Module type</string>
   <string name="msg_invalid_module_name">Invalid Gradle module name</string>
@@ -472,9 +853,10 @@
   <string name="msg_invalid_layout_name">Invalid layout file name</string>
   <string name="msg_invalid_project_details">Invalid project details</string>
   <string name="msg_use_kts">Use Kotlin Script (.kts) for Gradle build files</string>
+  <string name="msg_use_ndk">Add C++ template for this project</string>
   <string name="title_privacy">Privacy</string>
-  <string name="title_androidide_statistics">AndroidIDE Statistics</string>
-  <string name="msg_androidide_statistics">Help us improve AndroidIDE by providing anonymous statistics. We collect basic information about your device for user base statistics only. The exact data that is shared can be viewed in preferences. Your data is secure and not shared with third-party services. You can opt-out anytime in preferences.</string>
+  <string name="title_androidide_statistics">ACS Statistics</string>
+  <string name="msg_androidide_statistics">Help me improve Android Code Studio by providing anonymous statistics. I collect basic information about your device for user base statistics only. The exact data that is shared can be viewed in preferences. Your data is secure and not shared with third-party services. You can opt-out anytime in preferences.</string>
   <string name="summary_anonymous_usage_stats">Anonymous usage stats</string>
   <string name="idepref_stats_optIn_title">Stats collection</string>
   <string name="idepref_stats_optIn_summary">Allow installation metrics and device statistics to be collected (fully anonymous).</string>
@@ -487,10 +869,10 @@
   <string name="title_android_version">Android version</string>
   <string name="btn_opt_in">Opt-in</string>
   <string name="title_developer_options">Developer options</string>
-  <string name="idepref_devOptions_summary">Experimental/debugging options for AndroidIDE</string>
+  <string name="idepref_devOptions_summary">Experimental/debugging options for AndroidCS</string>
   <string name="idepref_group_debugging">Debugging</string>
   <string name="idepref_devOptions_dumpLogs_title">Dump logs</string>
-  <string name="idepref_devOptions_dumpLogs_summary">Dump AndroidIDE logs to $HOME/.androidide/logs</string>
+  <string name="idepref_devOptions_dumpLogs_summary">Dump AndroidCS logs to $HOME/.androidide/logs</string>
   <string name="msg_emptyview_applogs">Run the debug variant of your application to view its logs here.</string>
   <string name="msg_logsender_disabled">LogSender is disabled. You can enable it in preferences.</string>
   <string name="msg_emptyview_idelogs">Logs from the IDE are shown here.</string>
@@ -498,7 +880,7 @@
   <string name="msg_emptyview_buildoutput">"Build the application or run a task to see its build output here. "</string>
   <string name="msg_codeaction_failed">Failed to perform code action</string>
   <string name="idepref_devOptions_enableLogsender_title">Enable LogSender</string>
-  <string name="idepref_devOptions_enableLogsender_summary">When disabled, logs from applications won\'t be shown in AndroidIDE</string>
+  <string name="idepref_devOptions_enableLogsender_summary">When disabled, logs from applications won\'t be shown in AndroidCS</string>
   <string name="title_build_variants">Build variants</string>
   <string name="title_apply">Apply</string>
   <string name="title_discard">Discard</string>
@@ -515,15 +897,18 @@
   <string name="err_cannot_determine_package">Cannot run application. Unable to determine package name.</string>
   <string name="msg_launch_failure_no_app_module">Cannot run application. No application modules found in project.</string>
   <string name="title_launch_app">Launch app</string>
+  <string name="title_ide_configurations">IDE Configurations</string>
   <string name="title_experiment_flavor">Experimental</string>
-  <string name="msg_experimental_flavor">You are using %1$s variant of AndroidIDE on a %2$s device. This configuration may work, but it\'ll result in reduced performance and possible security vulnerabilities. Please avoid using this configuration whenever possible.</string>
+  <string name="msg_experimental_flavor">You are using %1$s variant of Android Code Studio on a %2$s device. This configuration may work, but it\'ll result in reduced performance and possible security vulnerabilities. Please avoid using this configuration whenever possible.</string>
   <string name="idepref_editor_pinLineNumbers_title">Pin line numbers</string>
   <string name="idepref_editor_pinLineNumbers_summary">Whether the editor should pin line number panel when scrolled horizontally.</string>
   <string name="theme_blue_wave">Blue Wave</string>
   <string name="theme_sunny_glow">Sunny Glow</string>
+  <string name="theme_greenish">Greenish</string>
+  <string name="theme_vscode">VS Code</string>
   <string name="theme_material_you">Material You</string>
   <string name="idepref_general_localeSelector_title">Language</string>
-  <string name="idepref_general_localeSelector_summary">Select a language for AndroidIDE.</string>
+  <string name="idepref_general_localeSelector_summary">Select a language for AndroidCS.</string>
   <string name="locale_system_default">System Default</string>
   <string name="msg_project_dir_inaccessible">Project directory is not accessible</string>
   <string name="msg_file_is_not_dir">Selected file is not a directory</string>
@@ -531,43 +916,45 @@
   <string name="msg_files_being_saved">A file save operation is already in progress!</string>
   <string name="title_install_tools">SDK Installation</string>
   <string name="subtitle_install_tools">Install the development tools</string>
-  <string name="msg_install_tools">The development tools must be installed for the IDE to work. Clicking the done button will open terminal to install the tools. To install, follow the instructions <![CDATA[ <a href="https://docs.androidide.com/tutorials/get-started.html">here</a>.<br/><br/>Or read the <a href="https://docs.androidide.com/">documentation</a>]]>.</string>
-  <string name="greeting_title">Welcome</string>
-  <string name="greeting_subtitle">Learn, build, launch. All on your Android.</string>
-  <string name="title_grant">Grant</string>
-  <string name="permission_title_storage">Storage</string>
-  <string name="permission_desc_storage">Required to access project files.</string>
-  <string name="permission_desc_install_packages">Allow installing APKs built with AndroidIDE.</string>
-  <string name="permission_title_install_packages">Install packages</string>
-  <string name="onboarding_title_permissions">Permissions</string>
-  <string name="onboarding_subtitle_permissions">AndroidIDE requires the following permissions</string>
-  <string name="msg_grant_permissions">Please grant the permissions to continue.</string>
-  <string name="msg_no_internet">It seems you\'re offline. Check your internet connection.</string>
-  <string name="msg_connected_to_cellular">Heads up! You\'re using cellular data.</string>
-  <string name="msg_connected_to_metered_connection">Heads up! You\'re on a metered network.</string>
-  <string name="msg_disable_background_data_restriction">Disable background data restriction to avoid installation failures.</string>
-  <string name="msg_cannot_create_terminal_session">Unable to create terminal session</string>
-  <string name="action_auto_install">Automatic installation</string>
-  <string name="action_manual_install">Manual installation</string>
-  <string name="hint_android_sdk_version">Android SDK version</string>
-  <string name="hin_jdk_version">JDK version</string>
-  <string name="action_install_git">Install Git</string>
-  <string name="action_install_openssh">Install OpenSSH</string>
-  <string name="action_install_ndk">Install AndroidNDK</string>
-  <string name="msg_terminal_new_sessions_disabled">Cannot create session. New sessions are disabled!</string>
-  <string name="title_install_location_error">Install location error</string>
-  <string name="title_unsupported_user">Unsupported user</string>
-  <string name="title_socials">Socials</string>
-  <string name="title_contributors">Contributors</string>
-  <string name="summary_contributors">Top community contributors.</string>
-  <string name="title_github_contributors">GitHub Contributors</string>
-  <string name="title_crowdin_translators">Crowdin Translators</string>
-  <string name="title_misc">Misc</string>
-  <string name="title_contribute">Contribute</string>
-  <string name="summary_contribute">It\'s not just an IDE, it\'s a community. Contribute code, ideas, and passion to AndroidIDE.</string>
-  <string name="msg_app_unavailable_for_intent">No application available to handle intent.</string>
-  <string name="title_open_source_licenses">Open source licenses</string>
-  <string name="summary_open_source_licenses">View open source licenses.</string>
-  <string name="idepref_jdkVersion_title">JDK version</string>
-  <string name="idepref_jdkVersion_summary">Currently selected: %1$s (requires restart if changed)</string>
+  <string name="msg_install_tools">The development tools must be installed for the IDE to work. Clicking the done button will open terminal to install the tools. To install, follow the instructions <![CDATA[ <a href="https://docs.androidide.com/tutorials/get-started.html">here</a>.<br />
+  <br />Or read the <a href="https://docs.androidide.com/">documentation</a>]]>.</string>
+<string name="greeting_title">Welcome</string>
+<string name="greeting_subtitle">Learn, build, launch. All on your Android.</string>
+<string name="title_grant">Grant</string>
+<string name="permission_title_storage">Storage</string>
+<string name="permission_desc_storage">Required to access project files.</string>
+<string name="permission_desc_install_packages">Allow installing APKs built with Android Code Studio.</string>
+<string name="permission_title_install_packages">Install packages</string>
+<string name="onboarding_title_permissions">Permissions</string>
+<string name="onboarding_subtitle_permissions">AndroidCS requires the following permissions</string>
+<string name="msg_grant_permissions">Please grant the permissions to continue.</string>
+<string name="msg_no_internet">It seems you\'re offline. Check your internet connection.</string>
+<string name="msg_connected_to_cellular">Heads up! You\'re using cellular data.</string>
+<string name="msg_connected_to_metered_connection">Heads up! You\'re on a metered network.</string>
+<string name="msg_disable_background_data_restriction">Disable background data restriction to avoid installation failures.</string>
+<string name="msg_cannot_create_terminal_session">Unable to create terminal session</string>
+<string name="action_auto_install">Automatic installation</string>
+<string name="action_manual_install">Manual installation</string>
+<string name="hint_android_sdk_version">Android SDK version</string>
+<string name="hint_android_ndk_version">Android NDK version</string>
+<string name="hin_jdk_version">JDK version</string>
+<string name="action_install_git">Install Git</string>
+<string name="action_install_openssh">Install OpenSSH</string>
+<string name="action_install_ndk">Install AndroidNDK</string>
+<string name="msg_terminal_new_sessions_disabled">Cannot create session. New sessions are disabled!</string>
+<string name="title_install_location_error">Install location error</string>
+<string name="title_unsupported_user">Unsupported user</string>
+<string name="title_socials">Socials</string>
+<string name="title_contributors">Contributors</string>
+<string name="summary_contributors">Top community contributors.</string>
+<string name="title_github_contributors">GitHub Contributors</string>
+<string name="title_crowdin_translators">Crowdin Translators</string>
+<string name="title_misc">Misc</string>
+<string name="title_contribute">Contribute</string>
+<string name="summary_contribute">It\'s not just an IDE, it\'s a community. Contribute code, ideas, and passion to AndroidCS.</string>
+<string name="msg_app_unavailable_for_intent">No application available to handle intent.</string>
+<string name="title_open_source_licenses">Open source licenses</string>
+<string name="summary_open_source_licenses">View open source licenses.</string>
+<string name="idepref_jdkVersion_title">JDK version</string>
+<string name="idepref_jdkVersion_summary">Currently selected: %1$s (requires restart if changed)</string>
 </resources>

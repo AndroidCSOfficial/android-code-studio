@@ -19,9 +19,9 @@ package com.itsaky.androidide.tooling.api
 
 import com.itsaky.androidide.builder.model.DefaultProjectSyncIssues
 import com.itsaky.androidide.tooling.api.models.BasicProjectMetadata
+import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import java.util.concurrent.CompletableFuture
 
 /**
  * A service providing access to the whole Gradle project and its structure.
@@ -33,23 +33,15 @@ import java.util.concurrent.CompletableFuture
 @JsonSegment("root")
 interface IProject : IProjectQueries {
 
-  /**
-   * Get all the projects included in this root project.
-   */
-  @JsonRequest
-  fun getProjects(): CompletableFuture<List<BasicProjectMetadata>>
+  /** Get all the projects included in this root project. */
+  @JsonRequest fun getProjects(): CompletableFuture<List<BasicProjectMetadata>>
 
-  /**
-   * Get the project sync issues.
-   */
-  @JsonRequest
-  fun getProjectSyncIssues(): CompletableFuture<DefaultProjectSyncIssues>
+  /** Get the project sync issues. */
+  @JsonRequest fun getProjectSyncIssues(): CompletableFuture<DefaultProjectSyncIssues>
 
   companion object {
 
-    /**
-     * Name that can be used for project whose [BasicProjectMetadata.name] property is null.
-     */
+    /** Name that can be used for project whose [BasicProjectMetadata.name] property is null. */
     const val PROJECT_UNKNOWN = "Unknown"
   }
 }

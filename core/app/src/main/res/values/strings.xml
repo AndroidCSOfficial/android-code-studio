@@ -18,5 +18,45 @@
 <resources>
   <!--  Required by F-Droid-->
   <!-- <string name="app_name" translatable="false">AndroidIDE</string> -->
-  <string name="app_name" translatable="false">AndroidIDE-Rv2</string>
+  <string name="app_name" translatable="false">Android Code Studio</string>
+  
+  <!-- Asset Studio -->
+  <string name="asset_studio_title">Asset Studio</string>
+  <string name="asset_studio_subtitle">Drawable &amp; Icon Maker</string>
+  <string name="asset_studio_launch">Launch Studio</string>
+  <string name="asset_studio_create_drawable">Create Drawable</string>
+  <string name="asset_studio_create_icon">Create Icon</string>
+  <string name="asset_studio_import_image">Import Image</string>
+  <string name="asset_studio_recent_assets">Recent Assets</string>
+  <string name="asset_studio_quick_actions">Quick Actions</string>
+  <string name="asset_studio_default_path">res/drawable</string>
+  <string name="asset_studio_launch_description">Open the full Asset Studio interface</string>
+  
+  <!-- Sub-Module Maker -->
+  <string name="sub_module_maker_title">Sub-Module Maker</string>
+  <string name="sub_module_maker_subtitle">Create new sub-modules for your project</string>
+  <string name="sub_module_configuration">Module Configuration</string>
+  <string name="sub_module_language">Programming Language</string>
+  <string name="sub_module_kotlin">Kotlin</string>
+  <string name="sub_module_java">Java</string>
+  <string name="sub_module_name_hint">Enter module name (e.g., feature, utils)</string>
+  <string name="sub_module_name_valid">Valid module name</string>
+  <string name="sub_module_name_invalid">Invalid module name</string>
+  <string name="sub_module_create">Create Module</string>
+  <string name="sub_module_created_success">Module \'%1$s\' created successfully!</string>
+  <string name="sub_module_created_error">Failed to create module: %1$s</string>
+  <string name="sub_module_info_title">About Sub-Modules</string>
+  <string name="sub_module_info_description">Sub-modules help organize your project into smaller, manageable components. Each module can have its own dependencies and build configuration.</string>
+  
+  <!-- Terminal -->
+  <string name="title_terminal">Terminal</string>
+  <string name="terminal_bstab">Terminal</string>
+  <string name="terminal_new_session">New Terminal</string>
+  <string name="terminal_close_session">Close Terminal</string>
+  <string name="terminal_empty_state">No Terminal Sessions</string>
+  <string name="terminal_empty_message">No terminal sessions are currently open. Create a new session to get started.</string>
+  <string name="terminal_create_first">Create Terminal</string>
+
+
+
 </resources>
