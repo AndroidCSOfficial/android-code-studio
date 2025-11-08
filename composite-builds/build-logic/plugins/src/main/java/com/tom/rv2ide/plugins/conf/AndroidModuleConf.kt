@@ -133,7 +133,7 @@ fun Project.configureAndroidModule(
           reset()
           isEnable = true
           isUniversalApk = false 
-          include("arm64-v8a") 
+          include("arm64-v8a", "armeabi-v7a") 
         }
       }
 

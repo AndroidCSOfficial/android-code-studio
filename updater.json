@@ -4,7 +4,7 @@
   "baseUrl": "https://github.com/Mohammed-Baqer-null/AndroidIDE-Rv2/releases/download/v{versionName}",
   "variants": {
     "armeabi-v7a": {
-      "versionCode": 1020,
+      "versionCode": 1022,
       "versionName": "1.0.0+gh.r2",
       "apkUrl": "{baseUrl}/android-code-studio-armeabi-v7a-{versionName}.apk"
     },
