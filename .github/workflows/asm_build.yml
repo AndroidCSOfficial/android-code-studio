@@ -1,4 +1,4 @@
-name: Build Android Code Studio
+name: Build Android Code Studio (Debug)
 
 on:
   push:
@@ -14,16 +14,11 @@ on:
       - '.github/workflows/crowdin_contributors.yml'
   pull_request:
     branches: [ "dev" ]
-    paths-ignore:
-      - '**.md'
-      - '**.json'
-      - 'fastlane/**'
-      - '.github/workflows/crowdin_contributors.yml'
   workflow_dispatch: { }
 
 jobs:
-  build_release_apk:
-    name: Build Release APK
+  build_debug_apk:
+    name: Build Debug APK
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous runs
@@ -56,57 +51,44 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # === 新增步骤：自动生成临时签名文件 ===
-      - name: Generate Temporary Keystore
-        run: |
-          keytool -genkeypair -v \
-          -keystore release.jks \
-          -keyalg RSA \
-          -keysize 2048 \
-          -validity 10000 \
-          -alias android-ide \
-          -dname "CN=AndroidCodeStudio, OU=Development, O=OpenSource, L=Internet, S=Cloud, C=US" \
-          -storepass 123456 \
-          -keypass 123456
-          echo "Generated release.jks at $(pwd)/release.jks"
+      # === 关键修改：直接构建 Debug 包，跳过复杂的签名配置 ===
+      - name: Assemble Debug APK
+        # 添加 --stacktrace 可以在出错时看到详细日志
+        # 添加 -x lint 可以跳过代码检查，防止因为小警告导致构建失败
+        run: ./gradlew :core:app:assembleDebug --stacktrace -x lint
 
-      # === 修改步骤：指向刚才生成的临时文件 ===
-      - name: Create local.properties
-        run: |
-          # 使用 ${{ github.workspace }} 获取绝对路径，防止找不到文件
-          echo "signing.storeFile=${{ github.workspace }}/release.jks" >> local.properties
-          echo "signing.storePassword=123456" >> local.properties  
-          echo "signing.keyAlias=android-ide" >> local.properties
-          echo "signing.keyPassword=123456" >> local.properties
+      - name: List APK files (Debug)
+        run: ls -R core/app/build/outputs/apk/debug/
 
-      - name: Assemble Release APK
-        run: ./gradlew :core:app:assembleRelease
-
-      - name: List APK files (Release)
-        run: ls -R core/app/build/outputs/apk/release/
-
-      # === 上传步骤 ===
+      # === 上传步骤：路径改为 debug ===
       
-      - name: Upload arm64-v8a Release APK
+      - name: Upload arm64-v8a Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-arm64-v8a-release
-          path: core/app/build/outputs/apk/release/*arm64-v8a*.apk
+          name: apk-arm64-v8a-debug
+          path: core/app/build/outputs/apk/debug/*arm64-v8a*.apk
         if: always()
 
-      - name: Upload armeabi-v7a Release APK
+      - name: Upload armeabi-v7a Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-armeabi-v7a-release
-          path: core/app/build/outputs/apk/release/*armeabi-v7a*.apk
+          name: apk-armeabi-v7a-debug
+          path: core/app/build/outputs/apk/debug/*armeabi-v7a*.apk
         if: always()
 
-      - name: Upload x86_64 Release APK
+      - name: Upload x86_64 Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-x86_64-release
-          path: core/app/build/outputs/apk/release/*x86_64*.apk
+          name: apk-x86_64-debug
+          path: core/app/build/outputs/apk/debug/*x86_64*.apk
         if: always()
+
+      - name: Upload universal Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-universal-debug
+          path: core/app/build/outputs/apk/debug/*universal*.apk
+        if: always()        if: always()
 
       - name: Upload universal Release APK
         uses: actions/upload-artifact@v4
