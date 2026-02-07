@@ -47,8 +47,16 @@ open class MaterialTextViewAdapter<T : MaterialTextView> : TextViewAdapter<T>() 
 
     // Material Design 3 text attributes - handle both with and without namespace
     create("textAppearance") {
-      // For now, we'll skip textAppearance as it requires more complex parsing
-      // This can be enhanced later if needed
+      try {
+        val resId = tryResolveResourceId(context, value)
+        if (resId != 0) {
+          if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            view.setTextAppearance(resId)
+          }
+        }
+      } catch (e: Exception) {
+        // Fallback: ignore if resource not found
+      }
     }
 
     create("textColor") {
@@ -64,6 +72,59 @@ open class MaterialTextViewAdapter<T : MaterialTextView> : TextViewAdapter<T>() 
     create("textStyle") {
       val style = parseTextStyle(value)
       view.setTypeface(null, style)
+    }
+
+    create("fontFamily") {
+      try {
+        val typeface = android.graphics.Typeface.create(value, android.graphics.Typeface.NORMAL)
+        view.typeface = typeface
+      } catch (e: Exception) {
+        // Ignore if font not found
+      }
+    }
+
+    create("lineHeight") {
+      val height = parseDimensionF(context, value)
+      if (height > 0) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+          view.lineHeight = height.toInt()
+        }
+      }
+    }
+
+    create("lineSpacing") {
+      val spacing = parseDimensionF(context, value)
+      if (spacing >= 0) view.lineSpacing(spacing, 1f)
+    }
+
+    create("letterSpacing") {
+      val spacing = value.toFloatOrNull() ?: 0f
+      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        view.letterSpacing = spacing
+      }
+    }
+
+    create("enabled") {
+      val enabled = parseBoolean(value)
+      view.isEnabled = enabled
+    }
+
+    create("alpha") {
+      val alpha = value.toFloatOrNull() ?: 1f
+      view.alpha = alpha
+    }
+  }
+
+  private fun tryResolveResourceId(context: android.content.Context, resName: String): Int {
+    return try {
+      val parts = resName.split("/")
+      if (parts.size == 2 && parts[0].startsWith("@")) {
+        val type = parts[0].substring(1)
+        val name = parts[1]
+        context.resources.getIdentifier(name, type, context.packageName)
+      } else 0
+    } catch (e: Exception) {
+      0
     }
   }
 
