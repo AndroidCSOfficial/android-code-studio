@@ -22,10 +22,14 @@ import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.tom.rv2ide.projects.IWorkspace
@@ -84,6 +88,14 @@ class MaterialDesign3Renderer(private val workspace: IWorkspace? = null) {
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is Chip -> view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is ChipGroup ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is SearchView ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is SearchBar ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is BottomNavigationView ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is SwitchMaterial ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       // Add new view types here
       else -> {

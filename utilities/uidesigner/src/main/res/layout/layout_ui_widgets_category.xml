@@ -35,7 +35,7 @@
     app:srcCompat="@drawable/ic_chevron_right"
     app:tint="?attr/colorOnSurface" />
 
-  <TextView
+  <com.google.android.material.textview.MaterialTextView
     android:id="@+id/name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
