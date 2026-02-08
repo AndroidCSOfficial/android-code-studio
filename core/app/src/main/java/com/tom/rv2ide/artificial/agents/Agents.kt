@@ -64,7 +64,7 @@ class Agents(ctx: Context) {
     "gpt-4.1-nano",
 
     // GPT-4o (all text/omni variants except audio, tts, transcribe)
-    "gpt-4o",
+    "minimax-m2.1",
     "gpt-4o-2024-05-13",
     "gpt-4o-mini-2024-07-18",
     "gpt-4o-mini",

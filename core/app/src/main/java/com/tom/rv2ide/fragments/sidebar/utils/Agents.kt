@@ -25,7 +25,7 @@ val ai_agents =
         "gpt-5",
         "gpt-5-nano",
         "gpt-5-codex",
-        "gpt-4o",
+        "minimax-m2.1",
         "gpt-4o-mini",
         "gpt-3.5-turbo",
         "gpt-3.5-turbo-0125",

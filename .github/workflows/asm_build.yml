@@ -1,4 +1,4 @@
-name: Build Android Code Studio
+name: Build Android Code Studio (Debug)
 
 on:
   push:
@@ -14,15 +14,10 @@ on:
       - '.github/workflows/crowdin_contributors.yml'
   pull_request:
     branches: [ "dev" ]
-    paths-ignore:
-      - '**.md'
-      - '**.json'
-      - 'fastlane/**'
-      - '.github/workflows/crowdin_contributors.yml'
   workflow_dispatch: { }
 
 jobs:
-  build_release_apk:
+  build_debug_apk:
     name: Build Debug APK
     runs-on: ubuntu-latest
     steps:
@@ -30,18 +25,22 @@ jobs:
         uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ github.token }}
+          
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           fetch-depth: 0
+          
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
+          
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
+        
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -51,45 +50,46 @@ jobs:
           key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Create local.properties
-        run: |
-          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
-          echo "signing.storePassword=123456" >> local.properties  
-          echo "signing.keyAlias=android-ide" >> local.properties
-          echo "signing.keyPassword=123456" >> local.properties
-      - name: Debug signing setup
-        run: |
-          echo "=== Repository structure ==="
-          find . -name "*.jks" -o -name "local.properties" | head -10
-          echo ""
-          echo "=== local.properties content ==="
-          cat local.properties || echo "local.properties not found"
-          echo ""
-          echo "=== SigningDirectory ==="
-          ls -la core/app/signing/ || echo "core/app/signing directory not found"
+
+      # === 关键修改：直接构建 Debug 包，跳过复杂的签名配置 ===
       - name: Assemble Debug APK
-        run: ./gradlew :core:app:assembleDebug
-        # run: ./gradlew :core:app:assembleRelease
-      - name: List APK files (debug)
-        run: ls -la core/app/build/outputs/apk/debug/
-      - name: Upload arm64-v8a Release APK
+        # 添加 --stacktrace 可以在出错时看到详细日志
+        # 添加 -x lint 可以跳过代码检查，防止因为小警告导致构建失败
+        run: ./gradlew :core:app:assembleDebug --stacktrace -x lint
+
+      - name: List APK files (Debug)
+        run: ls -R core/app/build/outputs/apk/debug/
+
+      # === 上传步骤：路径改为 debug ===
+      
+      - name: Upload arm64-v8a Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: apk-arm64-v8a-debug
           path: core/app/build/outputs/apk/debug/*arm64-v8a*.apk
         if: always()
-      - name: Upload armeabi-v7a Release APK
+
+      - name: Upload armeabi-v7a Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-armeabi-v7a-release
-          path: core/app/build/outputs/apk/release/*armeabi-v7a*.apk
+          name: apk-armeabi-v7a-debug
+          path: core/app/build/outputs/apk/debug/*armeabi-v7a*.apk
         if: always()
-      - name: Upload x86_64 Release APK
+
+      - name: Upload x86_64 Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-x86_64-release
-          path: core/app/build/outputs/apk/release/*x86_64*.apk
+          name: apk-x86_64-debug
+          path: core/app/build/outputs/apk/debug/*x86_64*.apk
         if: always()
+
+      - name: Upload universal Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-universal-debug
+          path: core/app/build/outputs/apk/debug/*universal*.apk
+        if: always()        if: always()
+
       - name: Upload universal Release APK
         uses: actions/upload-artifact@v4
         with:

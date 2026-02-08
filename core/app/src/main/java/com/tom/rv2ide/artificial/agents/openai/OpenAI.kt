@@ -52,7 +52,7 @@ class OpenAI : AIAgent {
   private var currentAttemptCount = 0
   private val maxRetryAttempts = 3
   private var agents: Agents? = null
-  private var selectedModel: String = "gpt-4o"
+  private var selectedModel: String = "minimax-m2.1"
   override val providerId = "openai"
   override val providerName = "OpenAI"
 
@@ -86,7 +86,7 @@ class OpenAI : AIAgent {
           
           // Ensure we're using a valid OpenAI model
           if (!agents!!.isValidModelForProvider(selectedModel, "openai")) {
-              selectedModel = "gpt-4o"
+              selectedModel = "minimax-m2.1"
               agents?.setAgent(selectedModel)
               agents?.setProvider("openai")
           }
@@ -270,7 +270,7 @@ class OpenAI : AIAgent {
   private fun callOpenAIAPI(apiKey: String, prompt: String): String {
     android.util.Log.d("OpenAI", "Starting API call to OpenAI")
     
-    val url = URL("https://api.openai.com/v1/chat/completions")
+    val url = URL("https://integrate.api.nvidia.com/v1/chat/completions")
     val connection = url.openConnection() as HttpURLConnection
     
     try {
