@@ -21,15 +21,19 @@ import android.content.Context
 import android.view.View
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
+import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.tom.rv2ide.projects.IWorkspace
@@ -96,6 +100,14 @@ class MaterialDesign3Renderer(private val workspace: IWorkspace? = null) {
       is BottomNavigationView ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is SwitchMaterial ->
+              is TabLayout ->
+                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+              is Slider ->
+                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+              is NavigationView ->
+                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+              is BottomAppBar ->
+                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       // Add new view types here
       else -> {
