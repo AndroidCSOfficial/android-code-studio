@@ -79,4 +79,10 @@
         </menu>
     </item>
 
+    <item
+        android:id="@+id/action_compose_preview"
+        android:title="Compose Preview"
+        android:icon="@drawable/ic_preview_layout"
+        app:showAsAction="never" />
+
 </menu>

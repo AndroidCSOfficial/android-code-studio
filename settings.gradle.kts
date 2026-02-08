@@ -149,4 +149,5 @@ include(
   ":xml:lsp",
   ":xml:resources-api",
   ":xml:utils",
+  ":composepreview",
 )

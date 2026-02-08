@@ -81,7 +81,7 @@
 
       <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
 
         <com.tom.rv2ide.uidesigner.views.LayoutHierarchyView
@@ -91,6 +91,13 @@
           android:padding="16dp" />
 
       </HorizontalScrollView>
+
+      <!-- Container for Compose preview toolwindow (hidden by default) -->
+      <FrameLayout
+        android:id="@+id/compose_preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     </androidx.core.widget.NestedScrollView>
 

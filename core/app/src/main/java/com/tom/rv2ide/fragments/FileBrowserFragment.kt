@@ -17,6 +17,7 @@
 package com.tom.rv2ide.fragments
 
 import android.content.ClipData
+import android.content.Intent
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
@@ -282,6 +283,11 @@ class FileBrowserFragment : Fragment() {
                     // Show dialog to set custom extension
                     showCustomExtensionDialog()
                 }
+                true
+            }
+            R.id.action_compose_preview -> {
+                val intent = Intent(requireActivity(), com.tom.rv2ide.activities.ComposePreviewToolActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> false

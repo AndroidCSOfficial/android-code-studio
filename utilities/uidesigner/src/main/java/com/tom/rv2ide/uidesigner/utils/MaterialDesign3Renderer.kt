@@ -27,8 +27,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.divider.MaterialDivider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.navigationrail.NavigationRailView
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.slider.Slider
@@ -100,14 +102,18 @@ class MaterialDesign3Renderer(private val workspace: IWorkspace? = null) {
       is BottomNavigationView ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is SwitchMaterial ->
-              is TabLayout ->
-                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
-              is Slider ->
-                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
-              is NavigationView ->
-                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
-              is BottomAppBar ->
-                  view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is TabLayout ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is Slider ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is NavigationView ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is BottomAppBar ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is MaterialDivider ->
+          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
+      is NavigationRailView ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       // Add new view types here
       else -> {

@@ -93,6 +93,11 @@ android {
   buildFeatures {
     aidl = true
     dataBinding = true
+    compose = true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = "1.5.3"
   }
 
   buildTypes {
@@ -248,6 +253,15 @@ dependencies {
   implementation(libs.androidx.work.ktx)
   implementation(libs.google.material)
   implementation(libs.google.flexbox)
+
+  // Compose
+  implementation(platform("androidx.compose:compose-bom:2025.06.01"))
+  implementation("androidx.compose.ui:ui")
+  implementation("androidx.compose.ui:ui-graphics")
+  implementation("androidx.compose.ui:ui-tooling-preview")
+  implementation("androidx.activity:activity-compose:1.8.0")
+  implementation("androidx.compose.material3:material3")
+  debugImplementation("androidx.compose.ui:ui-tooling")
 
   // Kotlin
   implementation(libs.androidx.core.ktx)

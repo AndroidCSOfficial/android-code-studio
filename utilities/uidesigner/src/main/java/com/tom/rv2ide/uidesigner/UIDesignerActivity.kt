@@ -159,6 +159,8 @@ class UIDesignerActivity : BaseIDEActivity() {
     onBackPressedDispatcher.addCallback(backPressHandler)
 
     registerUiDesignerActions(this)
+    // Initialize Compose preview manager to enable toolwindow-like preview in the right drawer
+    composePreviewManager = ComposePreviewManager(this)
   }
 
   override fun onResume() {
@@ -173,8 +175,14 @@ class UIDesignerActivity : BaseIDEActivity() {
 
   override fun onDestroy() {
     super.onDestroy()
+    try {
+      composePreviewManager?.dispose()
+    } catch (e: Exception) {
+    }
     binding = null
   }
+
+  private var composePreviewManager: ComposePreviewManager? = null
 
   override fun onPrepareOptionsMenu(menu: Menu): Boolean {
     ensureToolbarMenu(menu)

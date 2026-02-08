@@ -354,6 +354,28 @@ class KotlinLanguageServer(private val context: Context) : ILanguageServer {
     KslLogs.info("Kotlin Language Server shutdown complete")
   }
 
+  /**
+   * Request document symbols for the given document URI from the language server.
+   * Callback receives the raw JSON result (may be null on error).
+   */
+  fun requestDocumentSymbols(uri: String, callback: (com.google.gson.JsonObject?) -> Unit) {
+    try {
+      val params = com.google.gson.JsonObject().apply {
+        add(
+            "textDocument",
+            com.google.gson.JsonObject().apply { addProperty("uri", uri) },
+        )
+      }
+
+      processManager.sendRequest("textDocument/documentSymbol", params) { result ->
+        callback.invoke(result)
+      }
+    } catch (e: Exception) {
+      KslLogs.error("Failed to request document symbols for {}", uri, e)
+      callback.invoke(null)
+    }
+  }
+
   private fun startOrRestartAnalyzeTimer() {
     if (VMUtils.isJvm()) return
     if (!analyzeTimer.isStarted) analyzeTimer.start() else analyzeTimer.restart()

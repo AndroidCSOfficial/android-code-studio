@@ -52,5 +52,7 @@ dependencies {
   implementation(projects.utilities.lookup)
   implementation(projects.utilities.xmlInflater)
   implementation(projects.xml.lsp)
+  testImplementation("junit:junit:4.13.2")
+  testImplementation("com.google.code.gson:gson:2.10.1")
 
 }

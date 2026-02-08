@@ -104,6 +104,11 @@
       android:theme="@style/Theme.AndroidIDE" />
 
     <activity
+      android:name=".activities.ComposePreviewToolActivity"
+      android:exported="false"
+      android:theme="@style/Theme.AndroidIDE" />
+
+    <activity
       android:name=".activities.NCrashHandlerActivity"
       android:exported="false"
       android:theme="@style/Theme.AndroidIDE" />
