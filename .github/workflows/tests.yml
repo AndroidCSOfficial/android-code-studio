@@ -1,0 +1,90 @@
+name: Unit Tests & Quality Checks
+
+on:
+  pull_request:
+    branches: [ dev, main ]
+  push:
+    branches: [ dev, main ]
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v2
+      
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      
+      - name: Cache Gradle wrapper
+        uses: gradle/gradle-build-action@v3
+        with:
+          cache-read-only: false
+      
+      - name: Run Unit Tests
+        run: ./gradlew test --no-daemon --stacktrace
+      
+      - name: Run Lint Checks
+        run: ./gradlew lint --no-daemon
+        continue-on-error: true
+      
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+      
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-reports
+          path: |
+            **/build/reports/tests/
+            **/build/reports/lint-results*.html
+      
+      - name: Upload build logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-logs
+          path: |
+            build/
+            core/app/build/
+
+  quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      
+      - name: Run Static Analysis
+        run: ./gradlew check --no-daemon
+        continue-on-error: true
+      
+      - name: Dependency Check
+        run: ./gradlew dependencyUpdates -DoutputFormatter=json || true
+        continue-on-error: true
