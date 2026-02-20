@@ -27,18 +27,18 @@ plugins {
 subprojects {
   plugins.withId("com.android.library") {
     extensions.getByType(BaseExtension::class.java).apply {
-      buildToolsVersion = "34.0.0"
-      compileSdkVersion(34)
+      buildToolsVersion = "36.0.0"
+      compileSdkVersion(36)
 
       defaultConfig {
         minSdk = 26
         //noinspection ExpiredTargetSdkVersion
-        targetSdk = 28
+        targetSdk = 36
       }
 
       compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
       }
 
       buildTypes.register("dev") {
