@@ -46,7 +46,7 @@ dependencyResolutionManagement {
 include(
   ":common",
   ":desugaring",
-  ":desugaring-core",
+
   ":plugins",
   ":properties-parser"
 )
