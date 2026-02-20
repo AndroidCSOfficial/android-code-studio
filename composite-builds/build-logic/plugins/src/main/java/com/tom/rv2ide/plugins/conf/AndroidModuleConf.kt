@@ -18,6 +18,7 @@
 package com.tom.rv2ide.plugins.conf
 
 import com.android.build.api.dsl.CommonExtension
+import org.gradle.kotlin.dsl.configure
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.FilterConfiguration
