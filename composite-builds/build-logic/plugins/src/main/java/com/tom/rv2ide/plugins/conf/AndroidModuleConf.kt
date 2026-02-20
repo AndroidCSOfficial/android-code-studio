@@ -61,7 +61,7 @@ fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModu
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  extensions.getByType(CommonExtension::class.java).run {
+    extensions.configure<CommonExtension<*, *, *, *, *, *>>("android") {
     lint { checkDependencies = true }
 
     packaging {
