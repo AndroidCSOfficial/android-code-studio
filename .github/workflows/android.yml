@@ -95,4 +95,4 @@ jobs:
         with:
           name: apk-universal-release
           path: core/app/build/outputs/apk/release/*universal*.apk
-        
+        if: always()
