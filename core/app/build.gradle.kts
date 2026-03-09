@@ -95,13 +95,7 @@ android {
     dataBinding = true
   }
 
-  /*
-buildTypes {
-    debug {
-      signingConfig = signingConfigs.getByName("custom")
-    }
-*/
-    release {
+release {
       isShrinkResources = false
       signingConfig = signingConfigs.getByName("custom")
     }
