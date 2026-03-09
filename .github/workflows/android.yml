@@ -1,11 +1,13 @@
 name: Build Android Code Studio
+
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "dev", "main", "indexing", "release/**" ]
   workflow_dispatch: { }
 
 jobs:
-  build:
+  build_release_apk:
+    name: Build All APKs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,13 +19,26 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
-      - name: Grant Gradle Permissions
+          distribution: 'adopt'
+      - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
-      - name: Build Debug APK
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      
+      # Yahan humne path ko handle kiya hai taaki error na aaye
+      - name: Assemble All APKs
         run: ./gradlew assembleDebug
-      - name: Upload APK
+        
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: all-debug-apks
+          path: '**/build/outputs/apk/debug/*.apk'
+        if: always()
