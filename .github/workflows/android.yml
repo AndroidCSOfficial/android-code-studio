@@ -9,23 +9,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
           fetch-depth: 0
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Grant Gradle Permissions
         run: chmod +x ./gradlew
-      - name: Build Debug APK
-        # Root se build command chalayein, ye saare dependencies resolve kar lega
-        run: ./gradlew :core:app:assembleDebug -x validateSigningDebug
-      - name: Upload APK
+
+      - name: Cache Gradle Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Android Code Studio (Assemble)
+        # -x validateSigningDebug signing key ki zaroorat ko khatam kar dega
+        # --parallel gradle ko tezi se modules compile karne mein madad karega
+        run: ./gradlew :core:app:assembleDebug -x validateSigningDebug --parallel
+
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: AndroidCodeStudio-Debug
           path: core/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
