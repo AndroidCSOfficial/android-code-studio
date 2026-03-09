@@ -21,20 +21,31 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build Android Code Studio
-        # Memory limit aur worker count ko control kiya hai taaki RAM crash na ho
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build with Optimized Resources
         run: |
           chmod +x ./gradlew
-          ./gradlew :core:app:assembleDebug \
-          -x validateSigningDebug \
-          --no-daemon \
-          --parallel \
-          --max-workers=2 \
-          -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
+          # Yahan 'assemble' command sabhi modules ki dependency resolve karegi
+          # --refresh-dependencies se purani corrupt files refresh ho jayengi
+          ./gradlew assemble -x validateSigningDebug --refresh-dependencies \
+          --parallel --no-daemon \
+          -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g -XX:+UseParallelGC"
+        env:
+          MAIN_VERSION: "1.0.0"
+          REVISION_NUM: "03"
 
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: AndroidCodeStudio-Build
-          path: '**/build/outputs/apk/debug/*.apk'
+          path: '**/build/outputs/apk/**/*.apk'
           if-no-files-found: error
