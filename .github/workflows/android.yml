@@ -9,27 +9,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source Code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
-      
-      - name: Setup JDK 17
+          fetch-depth: 0
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      
-      - name: Build Project
-        # Memory Optimization: Heap size kam karke crash roko
+
+      - name: Build Android Code Studio
+        # Memory limit aur worker count ko control kiya hai taaki RAM crash na ho
         run: |
           chmod +x ./gradlew
-          ./gradlew :core:app:assembleDebug -x validateSigningDebug \
-          -Dorg.gradle.jvmargs="-Xmx1024m -XX:+UseParallelGC" \
-          --no-daemon --max-workers=2
-      
-      - name: Upload Build Artifact
+          ./gradlew :core:app:assembleDebug \
+          -x validateSigningDebug \
+          --no-daemon \
+          --parallel \
+          --max-workers=2 \
+          -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
+
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: core/app/build/outputs/apk/debug/*.apk
+          name: AndroidCodeStudio-Build
+          path: '**/build/outputs/apk/debug/*.apk'
+          if-no-files-found: error
