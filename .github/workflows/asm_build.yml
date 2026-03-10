@@ -1,4 +1,4 @@
-name: AI-Managed Strict Build
+name: Android CI - Root Fix
 
 on:
   push:
@@ -9,10 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -20,26 +18,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission
+      - name: Grant Permission
         run: chmod +x gradlew
 
-      - name: Deep Clean & Precise Build
+      - name: Root Level Clean & Build
         run: |
-          echo "AI-System: Initiating Deep Clean..."
-          # 1. Purani build files ko poori tarah delete karein
+          # 1. Jad se saaf karo (Purani cache aur build files khatam)
+          rm -rf .gradle
+          rm -rf build
           ./gradlew clean
           
-          # 2. Build shuru karein (Strict mode mein)
-          # Agar koi duplicate resource hogi, ye turant rok dega
-          ./gradlew :core:app:assembleDebug --stacktrace --warning-mode all
-        
-      - name: Final Integrity Check
-        if: success()
-        run: echo "Build successful and verified."
+          # 2. Force Build (Network errors se bachne ke liye offline mode hata kar)
+          ./gradlew :core:app:assembleDebug --stacktrace --refresh-dependencies
+        env:
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
 
-      - name: Log Analysis (If Failure)
-        if: failure()
-        run: |
-          echo "AI-System: Build Failed. Analyzing logs for duplicates..."
-          # Error ko highlight karne ke liye specific command
-          grep -rn "Error: Found item" . || echo "Check the logs above for specific resource errors."
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug-apk
+          path: core/app/build/outputs/apk/debug/
