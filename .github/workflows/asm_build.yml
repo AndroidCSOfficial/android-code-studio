@@ -1,49 +1,98 @@
-name: Android CI Build
+name: Build Android Code Studio
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - "dev"
+      - "main" 
+      - "indexing"
+      - "release/**"
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
   pull_request:
-    branches: [ main ]
+    branches: [ "dev" ]
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
+  workflow_dispatch: { }
 
 jobs:
-  build:
+  build_release_apk:
+    name: Build Debug APK
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
         uses: actions/checkout@v4
-
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build Android Code Studio
+          distribution: 'adopt'
+      - name: Change Gradle wrapper permissions
+        run: chmod +x ./gradlew
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Create local.properties
         run: |
-          # 1. Server Memory saaf karne ke liye Deep Clean
-          ./gradlew clean
-          
-          # 2. Resource Conflict aur IllegalStateException se bachne ke liye sequential build
-          # --parallel=false: Tasks ek-ek karke chalenge
-          # --max-workers=1: Server load manage karne ke liye
-          # --no-daemon: Server memory leak se bachne ke liye
-          
-          ./gradlew :core:app:assembleDebug \
-            --no-daemon \
-            --parallel=false \
-            --max-workers=1 \
-            --stacktrace
-
-      - name: Upload APK Artifact
+          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
+          echo "signing.storePassword=123456" >> local.properties  
+          echo "signing.keyAlias=android-ide" >> local.properties
+          echo "signing.keyPassword=123456" >> local.properties
+      - name: Debug signing setup
+        run: |
+          echo "=== Repository structure ==="
+          find . -name "*.jks" -o -name "local.properties" | head -10
+          echo ""
+          echo "=== local.properties content ==="
+          cat local.properties || echo "local.properties not found"
+          echo ""
+          echo "=== SigningDirectory ==="
+          ls -la core/app/signing/ || echo "core/app/signing directory not found"
+      - name: Assemble Debug APK
+        run: ./gradlew :core:app:assembleDebug
+        # run: ./gradlew :core:app:assembleRelease
+      - name: List APK files (debug)
+        run: ls -la core/app/build/outputs/apk/debug/
+      - name: Upload arm64-v8a Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: android-code-studio-debug
-          # Path ensure karta hai ki sahi APK mil jaye
-          path: core/app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
+          name: apk-arm64-v8a-debug
+          path: core/app/build/outputs/apk/debug/*arm64-v8a*.apk
+        if: always()
+      - name: Upload armeabi-v7a Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-armeabi-v7a-release
+          path: core/app/build/outputs/apk/release/*armeabi-v7a*.apk
+        if: always()
+      - name: Upload x86_64 Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-x86_64-release
+          path: core/app/build/outputs/apk/release/*x86_64*.apk
+        if: always()
+      - name: Upload universal Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-universal-release
+          path: core/app/build/outputs/apk/release/*universal*.apk
+        if: always()
