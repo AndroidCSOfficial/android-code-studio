@@ -1,5 +1,18 @@
 /*
- * This file is part of AndroidIDE.
+ * This file is part of AndroidCodeStudio.
+ *
+ * AndroidCodeStudio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * AndroidCodeStudio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with AndroidCodeStudio.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 @file:Suppress("UnstableApiUsage")
@@ -29,8 +42,7 @@ buildscript {
     }
 }
 
-// ⚠️  यह पूरा ब्लॉक हटा दिया गया क्योंकि यह desugaring tasks को disable कर देता था,
-//     जिससे build fail होता था। अब desugaring सामान्य रूप से चलेगी।
+// ❌ पुराना block जो desugaring tasks को बंद करता था, अब हटा दिया गया है।
 // tasks.configureEach {
 //     if (name.contains("desugar", ignoreCase = true)) {
 //         enabled = false
@@ -60,7 +72,7 @@ android {
 
     experimentalProperties["android.experimental.enableGlobalSynthetics"] = true
 
-    // ⚠️ 'cruncherEnabled' AGP 8+ में हटा दी गई है, इसलिए इसे हटाया गया।
+    // ❌ 'cruncherEnabled' AGP 8+ में हटा दी गई है – अब इसकी जरूरत नहीं।
     // aaptOptions {
     //     cruncherEnabled = false
     // }
@@ -83,7 +95,7 @@ android {
     buildFeatures {
         aidl = true
         dataBinding = true
-        // buildConfig = true   // AGP 8+ के लिए यह लाइन जरूरी हो सकती है, लेकिन gradle.properties में पहले से सेट है
+        // buildConfig = true   // AGP 8+ के लिए यह जरूरी हो सकता है, gradle.properties में पहले से है
     }
 
     buildTypes {
@@ -223,9 +235,8 @@ dependencies {
     implementation(projects.utilities.preferences)
     implementation(projects.utilities.templatesApi)
     implementation(projects.utilities.templatesImpl)
-    // ⚠️  सुनिश्चित करें कि 'treeview' module settings.gradle.kts में include है।
-    //     अगर यह module मौजूद नहीं है तो यह line हटा दें या सही module लगाएँ।
-    implementation(projects.treeview)
+    // ✅ सही path: utilities/treeview (settings.gradle.kts में include है)
+    implementation(projects.utilities.treeview)
     implementation(projects.utilities.uidesigner)
     implementation(projects.utilities.xmlInflater)
     implementation(projects.xml.aaptcompiler)
