@@ -24,23 +24,26 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Deep Clean and Build
+      - name: Build Android Code Studio
         run: |
-          # 1. Purani cache aur build folders ko puri tarah saaf karein
+          # 1. Server Memory saaf karne ke liye Deep Clean
           ./gradlew clean
-          rm -rf build/
-          rm -rf core/app/build/
           
-          # 2. Build ko Sequential run karein (parallel=false aur workers=1)
-          # Isse AAPT2 resources ko merge karte waqt crash nahi hoga
+          # 2. Resource Conflict aur IllegalStateException se bachne ke liye sequential build
+          # --parallel=false: Tasks ek-ek karke chalenge
+          # --max-workers=1: Server load manage karne ke liye
+          # --no-daemon: Server memory leak se bachne ke liye
+          
           ./gradlew :core:app:assembleDebug \
             --no-daemon \
             --parallel=false \
             --max-workers=1 \
             --stacktrace
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-code-studio-debug
+          # Path ensure karta hai ki sahi APK mil jaye
           path: core/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
