@@ -88,6 +88,15 @@ android {
       }
   }
 
+  splits {
+      abi {
+          enable true
+          reset()
+          include 'arm64-v8a', 'armeabi-v7a', 'x86_64'   // x86_64 bhi include kiya
+          universalApk true                               // universal APK enable
+      }
+  }
+
   androidResources { generateLocaleConfig = true }
 
   buildFeatures {
@@ -129,26 +138,11 @@ android {
       val buildType = variant.buildType.name
       val filters = output.filters
       val abiFilter = filters.find { it.filterType == "ABI" }
-      val archSuffix =
-          abiFilter?.identifier
-              ?: run {
-                val variantName = variant.name.lowercase()
-                when {
-                  variantName.contains("arm64") -> "arm64-v8a"
-                  variantName.contains("armeabi") || variantName.contains("arm7") -> "armeabi-v7a"
-                  else -> {
-                    // This should not happen with our configuration
-                    throw IllegalStateException(
-                        "Could not determine ABI for variant: $variantName. Expected arm64-v8a or armeabi-v7a."
-                    )
-                  }
-                }
-              }
+      val archSuffix = abiFilter?.identifier ?: "universal"   // agar universal ho to naam universal
 
-      if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a")) {
-        throw IllegalStateException(
-            "Unsupported architecture: $archSuffix. Only arm64-v8a and armeabi-v7a are supported."
-        )
+      // Sirf warning, build fail nahi karega
+      if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a", "x86_64", "universal")) {
+        println("Warning: Unusual ABI: $archSuffix")
       }
 
       val appName = "android-code-studio"
