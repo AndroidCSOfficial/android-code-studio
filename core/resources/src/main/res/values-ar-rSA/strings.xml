@@ -521,7 +521,6 @@
   <string name="updater_download_apk_error">خطأ في تنزيل APK</string>
   <string name="updater_install_error">خطأ في تثبيت APK</string>
   <string name="updater_browser_error">خطأ في فتح المتصفح</string>
-  <string name="title_build_variants">متغيرات البناء</string>
   <string name="title_apply">تطبيق</string>
   <string name="title_discard">تجاهل</string>
   <string name="msg_build_variants_fetch_failed">فشل جلب متغيرات البناء</string>
