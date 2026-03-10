@@ -1,9 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.tom.rv2ide.build.config.BuildConfig
-import com.tom.rv2ide.desugaring.utils.JavaIOReplacements.applyJavaIOReplacements
 import com.tom.rv2ide.plugins.AndroidIDEAssetsPlugin
-import java.util.Properties
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
     id("com.tom.rv2ide.core-app")
@@ -20,20 +20,22 @@ apply { plugin(AndroidIDEAssetsPlugin::class.java) }
 
 android {
     namespace = BuildConfig.packageName
+    compileSdk = 34
 
     defaultConfig {
         applicationId = BuildConfig.packageName
-        vectorDrawables.useSupportLibrary = true
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
+        vectorDrawables.useSupportLibrary = true
     }
 
-    // FIX: Configuration error rokne ke liye
-    variantFilter {
-        if (buildType.name == "debug") {
-            setIgnore(true)
+    // Modern variant filtering for Gradle 8.x+
+    val androidComponents = extensions.getByType(ApplicationAndroidComponentsExtension::class.java)
+    androidComponents.beforeVariants { variantBuilder ->
+        if (variantBuilder.buildType == "debug") {
+            variantBuilder.enable = false
         }
     }
 
@@ -56,9 +58,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            signingConfig = signingConfigs.getByName("custom")
-        }
         release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("custom")
@@ -68,9 +67,9 @@ android {
     applicationVariants.all {
         val variant = this
         variant.outputs.all {
-            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            val archSuffix = output.getFilter(com.android.build.OutputFile.ABI) ?: "universal"
-            output.outputFileName = "android-code-studio-${archSuffix}-${variant.versionName}.apk"
+            val output = this as BaseVariantOutputImpl
+            val abi = output.getFilter("ABI") ?: "universal"
+            output.outputFileName = "android-code-studio-${abi}-${variant.versionName}.apk"
         }
     }
 
@@ -79,45 +78,41 @@ android {
         dataBinding = true
     }
 
-    lint { abortOnError = false }
+    lint {
+        abortOnError = false
+    }
 }
 
-
-
 dependencies {
-    // Basic Dependencies
+    // Kotlin & Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("org.apache.commons:commons-compress:1.21")
+    implementation("org.tukaani:xz:1.9")
     
-    // External & Composite
-    implementation(projects.external.acsprovider)
-    implementation(projects.external.atc)
-    implementation(projects.external.logwire)
-    implementation(libs.composite.appintro)
-    implementation(libs.composite.desugaringCore)
-    
-    // Core Modules
+    // Core IDE & Tooling
     implementation(projects.core.projectdata)
     implementation(projects.core.actions)
     implementation(projects.core.common)
     implementation(projects.core.projects)
+    implementation(projects.tooling.api)
+    implementation(projects.tooling.impl)
     
-    // Editor & UI
+    // External & UI
+    implementation("com.github.Dimezis:BlurView:version-3.2.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation(libs.common.editor)
     implementation(libs.common.glide)
     implementation(libs.google.material)
-    
-    // Git & Tooling
-    implementation(libs.git.jgit)
-    implementation(projects.tooling.api)
-    
-    // All other legacy deps
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.work.ktx)
-    implementation(libs.google.gson)
-    implementation(libs.google.guava)
     
-    // AI Integration
+    // AI & Git
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation(libs.git.jgit)
+
+    // Annotation Processors
+    kapt(libs.common.glide.ap)
+    kapt(libs.google.auto.service)
+    kapt(projects.annotation.processors)
 }
