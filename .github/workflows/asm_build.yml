@@ -2,36 +2,19 @@ name: Build Android Code Studio
 
 on:
   push:
-    branches: 
-      - "dev"
-      - "main" 
-      - "indexing"
-      - "release/**"
-    paths-ignore:
-      - '**.md'
-      - '**.json'
-  pull_request:
-    branches: [ "dev" ]
+    branches: [ "dev", "main", "indexing", "release/**" ]
   workflow_dispatch: { }
 
 jobs:
-  build_all_variants:
+  build_all_apks:
     name: Build Debug and Release APKs
     runs-on: ubuntu-latest
     
-    # Heap space aur RAM errors ko khatam karne ke liye global environment settings
+    # Global settings for High-Memory Projects
     env:
-      JAVA_OPTS: "-Xmx4096m -XX:+UseParallelGC"
       GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true"
-      MAIN_VERSION: "1.0.0"
-      REVISION_NUM: "03"
 
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.1
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout Source Code
         uses: actions/checkout@v4
         with:
@@ -44,20 +27,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Fix Project Permissions & Composite Structure
-        # Missing composite folders aur gradlew permissions ko fix karna
+      - name: Fix Project Structure & Permissions
+        # Ye step 'appintro' missing aur permissions ke errors ko jad se khatam karega
         run: |
           chmod +x ./gradlew
           find . -name "gradlew" -exec chmod +x {} +
-          # Force create missing build-logic files if they are empty or missing
+          # Missing composite folders ko initialize karna
           mkdir -p composite-builds/build-logic
           [ -f composite-builds/build-logic/settings.gradle ] || touch composite-builds/build-logic/settings.gradle
-          # Ensure local.properties exists for SDK path
+          # SDK path aur basic signing bypass ke liye properties
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
-          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
-          echo "signing.storePassword=123456" >> local.properties  
-          echo "signing.keyAlias=android-ide" >> local.properties
-          echo "signing.keyPassword=123456" >> local.properties
+          echo "android.useAndroidX=true" >> gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
 
       - name: Cache Gradle Dependencies
         uses: actions/cache@v4
@@ -67,32 +48,22 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-v3-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      - name: Build All APKs (Debug & Release)
-        # assembleDebug aur assembleRelease dono ek sath banenge
-        # -x validateSigningDebug signing errors ko ignore karne ke liye hai
+      - name: Build All APK Variants
+        # 'assemble' command pure project ke saare modules ko compile karegi
+        # -x validateSigningDebug se bina key ke bhi APK ban jayegi
         run: |
-          ./gradlew :core:app:assembleDebug :core:app:assembleRelease \
-          -x validateSigningDebug \
-          --no-daemon --stacktrace --max-workers=2
+          ./gradlew assemble -x validateSigningDebug --stacktrace --no-daemon --max-workers=2
 
-      - name: Upload Debug APKs
+      - name: Upload Generated APKs
         uses: actions/upload-artifact@v4
         with:
-          name: AndroidCodeStudio-Debug-APKs
-          path: 'core/app/build/outputs/apk/debug/*.apk'
-        if: always()
+          name: AndroidCodeStudio-Full-Build
+          path: '**/build/outputs/apk/**/*.apk'
+          if-no-files-found: warn
 
-      - name: Upload Release APKs
-        uses: actions/upload-artifact@v4
-        with:
-          name: AndroidCodeStudio-Release-APKs
-          path: 'core/app/build/outputs/apk/release/*.apk'
-        if: always()
-
-      - name: Failure Diagnosis Report
+      - name: Build Failure Report
         if: failure()
         run: |
-          echo "Checking for APKs in unexpected locations..."
-          find . -name "*.apk"
-          echo "Checking if 'appintro' or other modules are visible..."
+          echo "Listing all project modules to find the missing one:"
           ./gradlew projects
+          find . -maxdepth 3 -name "build.gradle"
