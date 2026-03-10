@@ -2,14 +2,14 @@ name: Build Android Code Studio
 
 on:
   push:
-    branches: [ "main", "dev", "release/**" ]
-  workflow_dispatch:
+    branches: [ "main", "dev" ]
+  workflow_dispatch: { }
 
 jobs:
-  build_all_apks:
+  build_apk:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
@@ -24,15 +24,15 @@ jobs:
       - name: Make Gradle Executable
         run: chmod +x ./gradlew
 
-      - name: Build All Release APKs
+      - name: Build APK (Release)
         run: ./gradlew :core:app:assembleRelease
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
-      - name: Upload All APKs
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: android-code-studio-apks
+          name: android-code-studio-apk
           path: core/app/build/outputs/apk/release/*.apk
+        if: always()
