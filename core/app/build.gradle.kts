@@ -71,7 +71,6 @@ android {
   }
   
   experimentalProperties["android.experimental.enableGlobalSynthetics"] = true
-  
 
   signingConfigs {
       create("custom") {
@@ -88,12 +87,13 @@ android {
       }
   }
 
+  // ✅ SAHI KOTLIN DSL SYNTAX
   splits {
       abi {
-          enable true
+          isEnable = true
           reset()
-          include 'arm64-v8a', 'armeabi-v7a', 'x86_64'   // x86_64 bhi include kiya
-          universalApk true                               // universal APK enable
+          include("arm64-v8a", "armeabi-v7a", "x86_64")
+          isUniversalApk = true
       }
   }
 
@@ -138,7 +138,7 @@ android {
       val buildType = variant.buildType.name
       val filters = output.filters
       val abiFilter = filters.find { it.filterType == "ABI" }
-      val archSuffix = abiFilter?.identifier ?: "universal"   // agar universal ho to naam universal
+      val archSuffix = abiFilter?.identifier ?: "universal"
 
       // Sirf warning, build fail nahi karega
       if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a", "x86_64", "universal")) {
@@ -174,7 +174,6 @@ desugaring {
   }
 }
 
-
 dependencies {
   // debugImplementation(libs.common.leakcanary)
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -188,7 +187,7 @@ dependencies {
   implementation(projects.external.atc) 
   implementation(libs.external.customizable.cardview)
   implementation(projects.external.logwire)
-	implementation(libs.external.seasonal.effects)
+  implementation(libs.external.seasonal.effects)
   
   // Annotation processors
   kapt(libs.common.glide.ap)
