@@ -1,4 +1,4 @@
-name: Build Android Code Studio
+name: Build AndroidStudio
 
 on:
   push:
