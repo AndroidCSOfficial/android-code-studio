@@ -9,38 +9,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Repo aur Submodules download karna
+      # Step 1: Forceful Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
-          fetch-depth: 0
+          submodules: false # Pehle hum ise 'false' karenge taki conflict na ho
 
-      # Step 2: Java Setup
+      # Step 2: Forceful Submodule Sync
+      - name: Force Init Submodules
+        run: |
+          git submodule deinit -f .
+          git submodule update --init --recursive --force
+
+      # Step 3: Setup Java
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
 
-      # Step 3: Gradle Sync aur Caches ko Refresh karna
-      # Yahan hum 'clean' command chala rahe hain jo puraana sab kuch delete kar dega
-      - name: Gradle Clean and Sync
+      # Step 4: Build process
+      - name: Build APK
         run: |
           chmod +x ./gradlew
-          ./gradlew clean
-          ./gradlew build --refresh-dependencies
-
-      # Step 4: Final APK Build (Release)
-      - name: Build APK (Release)
-        run: ./gradlew :core:app:assembleRelease
+          ./gradlew :core:app:assembleRelease
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           KEY_ALIAS: "AndroidCS"
 
-      # Step 5: APK upload karna
-      - name: Upload Artifacts
+      # Step 5: Upload Artifacts
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: android-code-studio-apk
