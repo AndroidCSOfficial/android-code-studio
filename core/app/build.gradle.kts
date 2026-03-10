@@ -73,7 +73,7 @@ android {
   experimentalProperties["android.experimental.enableGlobalSynthetics"] = true
   
 
- /* signingConfigs {
+  signingConfigs {
       create("custom") {
           val keyStorePath = "${rootProject.projectDir}/signing/signing-key.jks"
           val keyStoreFile = file(keyStorePath)
@@ -87,7 +87,7 @@ android {
           keyPassword = signing_keyPassword
       }
   }
-*/
+
   androidResources { generateLocaleConfig = true }
 
   buildFeatures {
@@ -95,7 +95,12 @@ android {
     dataBinding = true
   }
 
-release {
+  buildTypes {
+    debug {
+      signingConfig = signingConfigs.getByName("custom")
+    }
+
+    release {
       isShrinkResources = false
       signingConfig = signingConfigs.getByName("custom")
     }
