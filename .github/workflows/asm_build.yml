@@ -2,34 +2,14 @@ name: Build Release APK
 
 on:
   push:
-    branches: [ dev, main, indexing, release/** ]
-    paths-ignore:
-      - '**.md'
-      - '**.json'
-      - 'fastlane/**'
-      - '.github/workflows/crowdin_contributors.yml'
-  pull_request:
-    branches: [ dev ]
-    paths-ignore:
-      - '**.md'
-      - '**.json'
-      - 'fastlane/**'
-      - '.github/workflows/crowdin_contributors.yml'
+    branches: [ dev, main, release/** ]
   workflow_dispatch:
 
 jobs:
   build_release_apk:
-    name: Build Release APK
     runs-on: ubuntu-latest
-
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.12.1
-        with:
-          access_token: ${{ github.token }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
@@ -40,82 +20,18 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # 🔐 Secure way: create local.properties from GitHub Secrets
-      - name: Create local.properties with signing config
+      - name: Create local.properties
         run: |
-          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
           echo "signing.storePassword=${{ secrets.STORE_PASSWORD }}" >> local.properties
           echo "signing.keyAlias=${{ secrets.KEY_ALIAS }}" >> local.properties
           echo "signing.keyPassword=${{ secrets.KEY_PASSWORD }}" >> local.properties
 
-      # 📁 Option 1: If keystore file is already in repository (simpler)
-      # - name: Verify keystore file exists
-      #   run: |
-      #     if [ ! -f core/app/signing/signing-key.jks ]; then
-      #       echo "::error::Keystore file not found at core/app/signing/signing-key.jks"
-      #       exit 1
-      #     fi
-
-      # 📦 Option 2: If keystore is stored as a base64 secret (more secure)
-      # - name: Create keystore from secret
-      #   run: |
-      #     mkdir -p core/app/signing
-      #     echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > core/app/signing/signing-key.jks
-
-      # (Optional) Debug step – check if secrets are set (remove after verification)
-      # - name: Debug secret lengths (should not be zero)
-      #   run: |
-      #     echo "STORE_PASSWORD length: ${#STORE_PASSWORD}"
-      #     echo "KEY_ALIAS length: ${#KEY_ALIAS}"
-      #     echo "KEY_PASSWORD length: ${#KEY_PASSWORD}"
-      #   env:
-      #     STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-      #     KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      #     KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-
       - name: Build release APK
         run: ./gradlew :core:app:assembleRelease
 
-      - name: List generated APK files
-        run: ls -la core/app/build/outputs/apk/release/
-
-      - name: Upload universal release APK
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-universal-release
-          path: core/app/build/outputs/apk/release/*universal*.apk
-        if: always()
-
-      - name: Upload arm64-v8a release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-arm64-v8a-release
-          path: core/app/build/outputs/apk/release/*arm64-v8a*.apk
-        if: always()
-
-      - name: Upload armeabi-v7a release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-armeabi-v7a-release
-          path: core/app/build/outputs/apk/release/*armeabi-v7a*.apk
-        if: always()
-
-      - name: Upload x86_64 release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-x86_64-release
-          path: core/app/build/outputs/apk/release/*x86_64*.apk
+          name: release-apks
+          path: core/app/build/outputs/apk/release/android-code-studio-*.apk
         if: always()
