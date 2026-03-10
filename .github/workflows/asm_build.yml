@@ -1,17 +1,18 @@
-name: Build Release APK
+name: Build Android Code Studio
 
 on:
   push:
-    branches: [ dev, main, release/** ]
+    branches: [ "main", "dev", "release/**" ]
   workflow_dispatch:
 
 jobs:
-  build_release_apk:
+  build_all_apks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: 'recursive'
           fetch-depth: 0
 
       - name: Set up JDK 17
@@ -20,18 +21,18 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Create local.properties
-        run: |
-          echo "signing.storePassword=${{ secrets.STORE_PASSWORD }}" >> local.properties
-          echo "signing.keyAlias=${{ secrets.KEY_ALIAS }}" >> local.properties
-          echo "signing.keyPassword=${{ secrets.KEY_PASSWORD }}" >> local.properties
+      - name: Make Gradle Executable
+        run: chmod +x ./gradlew
 
-      - name: Build release APK
+      - name: Build All Release APKs
         run: ./gradlew :core:app:assembleRelease
+        env:
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload Artifacts
+      - name: Upload All APKs
         uses: actions/upload-artifact@v4
         with:
-          name: release-apks
-          path: core/app/build/outputs/apk/release/android-code-studio-*.apk
-        if: always()
+          name: android-code-studio-apks
+          path: core/app/build/outputs/apk/release/*.apk
