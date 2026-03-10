@@ -413,7 +413,6 @@
   <string name="idepref_devOptions_enableLogsender_title">تمكين مرسل السجلات.</string>
   <string name="idepref_devOptions_enableLogsender_summary">عند التعطيل، لن يتم عرض سجلات التطبيقات في AndroidIDE.</string>
   <string name="title_build_variants">Build variants</string>
-  <string name="title_apply">Apply</string>
   <string name="title_discard">Discard</string>
   <string name="msg_build_variants_fetch_failed">Failed to fetch build variants</string>
   <string name="title_choose_application">Choose application</string>
