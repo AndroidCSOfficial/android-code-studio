@@ -6,13 +6,12 @@ on:
   workflow_dispatch: { }
 
 jobs:
-  build_all_apks:
-    name: Build Debug and Release APKs
+  build_complete_system:
+    name: Full System Compilation
     runs-on: ubuntu-latest
     
-    # Global settings for High-Memory Projects
     env:
-      GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true"
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' -Dorg.gradle.parallel=true"
 
     steps:
       - name: Checkout Source Code
@@ -27,43 +26,62 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Fix Project Structure & Permissions
-        # Ye step 'appintro' missing aur permissions ke errors ko jad se khatam karega
+      - name: Force Sync Composite Build Structure
+        # Ye step 'appintro' aur 'build-logic' ke errors ko jad se khatam karega
         run: |
           chmod +x ./gradlew
-          find . -name "gradlew" -exec chmod +x {} +
-          # Missing composite folders ko initialize karna
+          
+          # 1. build-logic file inject karna
           mkdir -p composite-builds/build-logic
-          [ -f composite-builds/build-logic/settings.gradle ] || touch composite-builds/build-logic/settings.gradle
-          # SDK path aur basic signing bypass ke liye properties
+          cat <<EOF > composite-builds/build-logic/settings.gradle.kts
+          @file:Suppress("UnstableApiUsage")
+          enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+          dependencyResolutionManagement {
+            includeBuild("../build-deps-common") {
+              dependencySubstitution {
+                substitute(module("com.tom.rv2ide.build:desugaring-core")).using(project(":desugaring-core"))
+              }
+            }
+            repositories {
+              maven { url = uri("https://maven.aliyun.com/repository/central") }
+              maven { url = uri("https://maven.aliyun.com/repository/google") }
+              google(); mavenCentral()
+            }
+            versionCatalogs {
+              create("libs") { from(files("../../gradle/libs.versions.toml")) }
+            }
+          }
+          include(":common", ":desugaring", ":desugaring-core", ":plugins", ":properties-parser")
+          rootProject.name = "build-logic"
+          EOF
+
+          # 2. build-deps-common file inject karna
+          mkdir -p composite-builds/build-deps-common
+          cat <<EOF > composite-builds/build-deps-common/settings.gradle.kts
+          @file:Suppress("UnstableApiUsage")
+          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+          dependencyResolutionManagement {
+            repositories { google(); mavenCentral() }
+            versionCatalogs { create("libs") { from(files("../../gradle/libs.versions.toml")) } }
+          }
+          include(":desugaring-core")
+          rootProject.name = "build-deps-common"
+          EOF
+
+          # 3. local.properties fix
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+          # Force AndroidX taaki Duplicate Class error na aaye
           echo "android.useAndroidX=true" >> gradle.properties
           echo "android.enableJetifier=true" >> gradle.properties
 
-      - name: Cache Gradle Dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-v3-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-
-      - name: Build All APK Variants
-        # 'assemble' command pure project ke saare modules ko compile karegi
-        # -x validateSigningDebug se bina key ke bhi APK ban jayegi
+      - name: Build All APKs
+        # assembleDebug aur assembleRelease dono variants banayega
         run: |
           ./gradlew assemble -x validateSigningDebug --stacktrace --no-daemon --max-workers=2
 
-      - name: Upload Generated APKs
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: AndroidCodeStudio-Full-Build
+          name: AndroidCodeStudio-Full-APKs
           path: '**/build/outputs/apk/**/*.apk'
-          if-no-files-found: warn
-
-      - name: Build Failure Report
-        if: failure()
-        run: |
-          echo "Listing all project modules to find the missing one:"
-          ./gradlew projects
-          find . -maxdepth 3 -name "build.gradle"
+          if-no-files-found: error
