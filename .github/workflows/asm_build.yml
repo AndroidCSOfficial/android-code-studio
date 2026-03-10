@@ -1,4 +1,4 @@
-name: Android CI - Root Fix
+name: Android CI - Final Perfect Build
 
 on:
   push:
@@ -9,33 +9,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
 
-      - name: Grant Permission
+      - name: Grant execute permissions
         run: chmod +x gradlew
 
-      - name: Root Level Clean & Build
+      - name: Deep Clean & Build
         run: |
-          # 1. Jad se saaf karo (Purani cache aur build files khatam)
+          # 1. Purani sabhi files ko jad se saaf karo
+          ./gradlew clean
           rm -rf .gradle
           rm -rf build
-          ./gradlew clean
           
-          # 2. Force Build (Network errors se bachne ke liye offline mode hata kar)
-          ./gradlew :core:app:assembleDebug --stacktrace --refresh-dependencies
+          # 2. Build process start (Parallelism band ki hai taaki conflict na ho)
+          ./gradlew :core:app:assembleDebug --no-daemon --stacktrace
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         if: success()
         uses: actions/upload-artifact@v3
         with:
           name: app-debug-apk
-          path: core/app/build/outputs/apk/debug/
+          # Yahan .apk extension specify kar diya hai taaki file identify ho
+          path: core/app/build/outputs/apk/debug/*.apk
