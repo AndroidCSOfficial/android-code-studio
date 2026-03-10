@@ -2,14 +2,23 @@ name: Android Build Pipeline
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "indexing", "release/**" ]
   workflow_dispatch: { }
 
 jobs:
   build:
+    name: Build All APK Variants
     runs-on: ubuntu-latest
+    
+    # Heap space aur RAM errors ko root se khatam karne ke liye environment settings
+    env:
+      JAVA_OPTS: "-Xmx4096m -XX:+UseParallelGC"
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true"
+      MAIN_VERSION: "1.0.0"
+      REVISION_NUM: "03"
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Source Code
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
@@ -21,28 +30,34 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Fix Project Structure
-        # Agar build-logic mein settings file nahi hai, toh ek khali file bana do 
-        # taaki Gradle crash na ho.
+      - name: Fix Project Permissions and Structure
         run: |
-          mkdir -p composite-builds/build-logic
-          touch composite-builds/build-logic/settings.gradle
           chmod +x ./gradlew
+          # Saare sub-modules ke gradlew ko permission dena
+          find . -name "gradlew" -exec chmod +x {} +
+          # Missing settings files ka placeholder banana taaki composite build fail na ho
+          mkdir -p composite-builds/build-logic
+          [ -f composite-builds/build-logic/settings.gradle ] || touch composite-builds/build-logic/settings.gradle
+          [ -f composite-builds/build-logic/build.gradle ] || touch composite-builds/build-logic/build.gradle
 
-      - name: Build Android Code Studio
-        # Hum -P (Properties) ka use karenge taaki dependencies refresh ho jayein
-        run: |
-          ./gradlew :core:app:assembleDebug \
-          -x validateSigningDebug \
-          --no-daemon \
-          --stacktrace \
-          -Dorg.gradle.jvmargs="-Xmx4g -XX:+UseParallelGC"
-        env:
-          MAIN_VERSION: "1.0.0"
-          REVISION_NUM: "03"
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-      - name: Upload APKs
+      - name: Full Project Compile (Assemble)
+        # 'assemble' command pure project ke saare modules (core, termux, etc) ko build karegi
+        # -x validateSigningDebug se bina signing key ke APK ban jayegi
+        run: ./gradlew assemble -x validateSigningDebug --no-daemon --stacktrace
+
+      - name: Upload All Generated APKs
         uses: actions/upload-artifact@v4
         with:
-          name: AndroidCodeStudio-Build
+          name: AndroidCodeStudio-Full-APKs
           path: '**/build/outputs/apk/**/*.apk'
+          if-no-files-found: error
