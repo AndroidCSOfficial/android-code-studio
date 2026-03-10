@@ -6,15 +6,16 @@ on:
   workflow_dispatch: { }
 
 jobs:
-  build_complete_system:
-    name: Full System Compilation
+  build_ide_system:
+    name: Full Build System
     runs-on: ubuntu-latest
     
+    # 4GB RAM ka limit taaki Heap Space error na aaye
     env:
       GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m' -Dorg.gradle.parallel=true"
 
     steps:
-      - name: Checkout Source Code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: 'recursive'
@@ -26,62 +27,28 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Force Sync Composite Build Structure
-        # Ye step 'appintro' aur 'build-logic' ke errors ko jad se khatam karega
+      - name: Initialize Environment
         run: |
           chmod +x ./gradlew
-          
-          # 1. build-logic file inject karna
-          mkdir -p composite-builds/build-logic
-          cat <<EOF > composite-builds/build-logic/settings.gradle.kts
-          @file:Suppress("UnstableApiUsage")
-          enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-          dependencyResolutionManagement {
-            includeBuild("../build-deps-common") {
-              dependencySubstitution {
-                substitute(module("com.tom.rv2ide.build:desugaring-core")).using(project(":desugaring-core"))
-              }
-            }
-            repositories {
-              maven { url = uri("https://maven.aliyun.com/repository/central") }
-              maven { url = uri("https://maven.aliyun.com/repository/google") }
-              google(); mavenCentral()
-            }
-            versionCatalogs {
-              create("libs") { from(files("../../gradle/libs.versions.toml")) }
-            }
-          }
-          include(":common", ":desugaring", ":desugaring-core", ":plugins", ":properties-parser")
-          rootProject.name = "build-logic"
-          EOF
-
-          # 2. build-deps-common file inject karna
-          mkdir -p composite-builds/build-deps-common
-          cat <<EOF > composite-builds/build-deps-common/settings.gradle.kts
-          @file:Suppress("UnstableApiUsage")
-          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
-          dependencyResolutionManagement {
-            repositories { google(); mavenCentral() }
-            versionCatalogs { create("libs") { from(files("../../gradle/libs.versions.toml")) } }
-          }
-          include(":desugaring-core")
-          rootProject.name = "build-deps-common"
-          EOF
-
-          # 3. local.properties fix
+          # Ensure local.properties for SDK path
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
-          # Force AndroidX taaki Duplicate Class error na aaye
+          # Jetifier is crucial for older libraries in AndroidIDE
           echo "android.useAndroidX=true" >> gradle.properties
           echo "android.enableJetifier=true" >> gradle.properties
 
-      - name: Build All APKs
-        # assembleDebug aur assembleRelease dono variants banayega
+      - name: Build All Variants
+        # 'assemble' command pure tree structure ko traverse karegi
+        # -x validateSigningDebug signing key errors ko avoid karega
         run: |
-          ./gradlew assemble -x validateSigningDebug --stacktrace --no-daemon --max-workers=2
+          ./gradlew assemble \
+          --stacktrace \
+          --no-daemon \
+          -x validateSigningDebug \
+          -Pandroid.injected.signing.store.file=signing/signing-key.jks
 
-      - name: Upload Artifacts
+      - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
-          name: AndroidCodeStudio-Full-APKs
+          name: AndroidCodeStudio-Build-Artifacts
           path: '**/build/outputs/apk/**/*.apk'
           if-no-files-found: error
