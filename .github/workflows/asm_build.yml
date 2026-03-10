@@ -9,26 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Forceful Checkout
+      # Step 1: Default checkout ko band karke, manual git sync karenge
       - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          submodules: false # Pehle hum ise 'false' karenge taki conflict na ho
-
-      # Step 2: Forceful Submodule Sync
-      - name: Force Init Submodules
         run: |
-          git submodule deinit -f .
+          git init
+          git remote add origin https://github.com/${{ github.repository }}
+          git fetch origin ${{ github.ref }}
+          git reset --hard FETCH_HEAD
           git submodule update --init --recursive --force
 
-      # Step 3: Setup Java
+      # Step 2: Java Setup
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
 
-      # Step 4: Build process
+      # Step 3: Gradle Build
       - name: Build APK
         run: |
           chmod +x ./gradlew
@@ -38,7 +35,7 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           KEY_ALIAS: "AndroidCS"
 
-      # Step 5: Upload Artifacts
+      # Step 4: Upload
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
