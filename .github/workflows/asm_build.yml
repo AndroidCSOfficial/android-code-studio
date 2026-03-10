@@ -1,42 +1,46 @@
-name: Build Android Code Studio
+name: Android CI Build
 
 on:
   push:
-    branches: [ "dev", "main", "indexing", "release/**" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "dev" ]
-  workflow_dispatch: { }
+    branches: [ main ]
 
 jobs:
   build:
-    name: Build Android APK
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
-          fetch-depth: 0
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
 
-      - name: Grant Execute Permission
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Clean and Assemble Debug APK
+      - name: Deep Clean and Build
         run: |
-          # Pehle saari purani cache aur build folders saaf karo
+          # 1. Purani cache aur build folders ko puri tarah saaf karein
           ./gradlew clean
-          # Assemble Debug (Default signing ke sath)
-          ./gradlew :core:app:assembleDebug --no-daemon --stacktrace
+          rm -rf build/
+          rm -rf core/app/build/
+          
+          # 2. Build ko Sequential run karein (parallel=false aur workers=1)
+          # Isse AAPT2 resources ko merge karte waqt crash nahi hoga
+          ./gradlew :core:app:assembleDebug \
+            --no-daemon \
+            --parallel=false \
+            --max-workers=1 \
+            --stacktrace
 
-      - name: Upload Debug APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
+          name: android-code-studio-debug
           path: core/app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
