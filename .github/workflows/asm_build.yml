@@ -68,7 +68,7 @@ jobs:
           echo "=== SigningDirectory ==="
           ls -la core/app/signing/ || echo "core/app/signing directory not found"
       - name: Assemble Debug APK
-        run: ./gradlew :core:app:assembleDebug
+        run: ./gradlew :core:app:assembleDebug --stacktrace
         # run: ./gradlew :core:app:assembleRelease
       - name: List APK files (debug)
         run: ls -la core/app/build/outputs/apk/debug/
