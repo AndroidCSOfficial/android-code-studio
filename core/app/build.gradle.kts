@@ -1,8 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.tom.rv2ide.build.config.BuildConfig
+import com.tom.rv2ide.desugaring.utils.JavaIOReplacements.applyJavaIOReplacements
 import com.tom.rv2ide.plugins.AndroidIDEAssetsPlugin
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
@@ -16,7 +16,14 @@ plugins {
     id("com.tom.rv2ide.desugaring")
 }
 
-apply { plugin(AndroidIDEAssetsPlugin::class.java) }
+apply<AndroidIDEAssetsPlugin>()
+
+buildscript {
+    dependencies {
+        classpath(libs.logging.logback.core)
+        classpath(libs.composite.desugaringCore)
+    }
+}
 
 android {
     namespace = BuildConfig.packageName
@@ -31,14 +38,7 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-    // Modern variant filtering for Gradle 8.x+
-    val androidComponents = extensions.getByType(ApplicationAndroidComponentsExtension::class.java)
-    androidComponents.beforeVariants { variantBuilder ->
-        if (variantBuilder.buildType == "debug") {
-            variantBuilder.enable = false
-        }
-    }
-
+    // ABI Splits for optimized APK distribution
     splits {
         abi {
             isEnable = true
@@ -57,6 +57,11 @@ android {
         }
     }
 
+    buildFeatures {
+        aidl = true
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -72,47 +77,47 @@ android {
             output.outputFileName = "android-code-studio-${abi}-${variant.versionName}.apk"
         }
     }
+}
 
-    buildFeatures {
-        aidl = true
-        dataBinding = true
+kapt {
+    arguments {
+        arg("eventBusIndex", "${BuildConfig.packageName}.events.AppEventsIndex")
     }
+}
 
-    lint {
-        abortOnError = false
+desugaring {
+    replacements {
+        includePackage("org.eclipse.jgit")
+        applyJavaIOReplacements()
     }
 }
 
 dependencies {
-    // Kotlin & Serialization
+    // Core External
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("org.apache.commons:commons-compress:1.21")
     implementation("org.tukaani:xz:1.9")
-    
-    // Core IDE & Tooling
+    implementation("org.apache.commons:commons-compress:1.21")
+    implementation("com.github.Dimezis:BlurView:version-3.2.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation("com.github.MiyazKaori:SilentInstaller:1.0.0-alpha")
+
+    // Project modules (as per your structure)
+    implementation(projects.external.acsprovider)
+    implementation(projects.external.atc)
     implementation(projects.core.projectdata)
     implementation(projects.core.actions)
     implementation(projects.core.common)
-    implementation(projects.core.projects)
-    implementation(projects.tooling.api)
-    implementation(projects.tooling.impl)
-    
-    // External & UI
-    implementation("com.github.Dimezis:BlurView:version-3.2.0")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
-    implementation(libs.common.editor)
-    implementation(libs.common.glide)
-    implementation(libs.google.material)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.work.ktx)
-    
-    // AI & Git
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
-    implementation(libs.git.jgit)
+    implementation(projects.core.indexingApi)
+    implementation(projects.editor.impl)
+    implementation(projects.java.javacServices)
+    implementation(projects.termux.application)
+    // ... (Keep your other project dependencies here)
 
-    // Annotation Processors
+    // Annotation processors
     kapt(libs.common.glide.ap)
     kapt(libs.google.auto.service)
     kapt(projects.annotation.processors)
+    
+    compileOnly(projects.tooling.impl)
 }
