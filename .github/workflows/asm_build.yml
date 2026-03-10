@@ -2,11 +2,7 @@ name: Build Release APK
 
 on:
   push:
-    branches:
-      - dev
-      - main
-      - indexing
-      - release/**
+    branches: [ dev, main, indexing, release/** ]
     paths-ignore:
       - '**.md'
       - '**.json'
@@ -57,24 +53,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Create local.properties with signing config (secure)
+      # 🔐 Secure way: create local.properties from GitHub Secrets
+      - name: Create local.properties with signing config
         run: |
           echo "signing.storeFile=signing/signing-key.jks" >> local.properties
           echo "signing.storePassword=${{ secrets.STORE_PASSWORD }}" >> local.properties
           echo "signing.keyAlias=${{ secrets.KEY_ALIAS }}" >> local.properties
           echo "signing.keyPassword=${{ secrets.KEY_PASSWORD }}" >> local.properties
-        env:
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      # Verify the signing directory exists (optional, can be removed)
-      - name: Verify signing key presence
-        run: |
-          if [ ! -f core/app/signing/signing-key.jks ]; then
-            echo "::error::Keystore file not found at core/app/signing/signing-key.jks"
-            exit 1
-          fi
+      # 📁 Option 1: If keystore file is already in repository (simpler)
+      # - name: Verify keystore file exists
+      #   run: |
+      #     if [ ! -f core/app/signing/signing-key.jks ]; then
+      #       echo "::error::Keystore file not found at core/app/signing/signing-key.jks"
+      #       exit 1
+      #     fi
+
+      # 📦 Option 2: If keystore is stored as a base64 secret (more secure)
+      # - name: Create keystore from secret
+      #   run: |
+      #     mkdir -p core/app/signing
+      #     echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > core/app/signing/signing-key.jks
+
+      # (Optional) Debug step – check if secrets are set (remove after verification)
+      # - name: Debug secret lengths (should not be zero)
+      #   run: |
+      #     echo "STORE_PASSWORD length: ${#STORE_PASSWORD}"
+      #     echo "KEY_ALIAS length: ${#KEY_ALIAS}"
+      #     echo "KEY_PASSWORD length: ${#KEY_PASSWORD}"
+      #   env:
+      #     STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      #     KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      #     KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Build release APK
         run: ./gradlew :core:app:assembleRelease
