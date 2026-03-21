@@ -30,6 +30,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/modelDropdownLayout"
             android:layout_width="match_parent"
@@ -47,6 +48,23 @@
                 android:textAppearance="?attr/textAppearanceBodyLarge" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.materialbutton.MaterialButton
+            android:id="@+id/chatgptLoginButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/ai_agent_chatgpt_login_button" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chatgptLoginSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/ai_agent_chatgpt_login_summary_not_signed_in"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant" />
 
         <LinearLayout
             android:layout_width="match_parent"

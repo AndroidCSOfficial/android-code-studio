@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.materialbutton.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
@@ -18,10 +19,13 @@ import com.tom.rv2ide.artificial.agents.AIAgentManager
 import com.tom.rv2ide.artificial.agents.Agents
 import com.tom.rv2ide.artificial.dialogs.ProviderSwitchDialog
 import com.tom.rv2ide.managers.CodeCompletionManager
+import com.tom.rv2ide.preferences.internal.prefManager
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.tom.rv2ide.artificial.dialogs.LocalLLMConfigDialog
+import com.tom.rv2ide.artificial.login.CodexLoginManager
 
 class AIPreferencesFragment(
     private val aiAgent: AIAgentManager,
@@ -35,11 +39,12 @@ class AIPreferencesFragment(
     private lateinit var codeCompletionToggle: MaterialSwitch
     private lateinit var currentProviderText: MaterialTextView
     private lateinit var currentModelText: MaterialTextView
-    
+    private lateinit var chatgptLoginButton: MaterialButton
+    private lateinit var chatgptLoginSummary: MaterialTextView
     private val providerSwitchDialog by lazy { ProviderSwitchDialog(requireContext()) }
-    
     private var completionStateMonitorJob: Job? = null
     private var isCompletionEnabled = true
+    private var isChatGPTLoginInProgress = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,15 +53,16 @@ class AIPreferencesFragment(
     ): View? {
         return inflater.inflate(R.layout.fragment_ai_preferences, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
         initializeViews(view)
         setupProviderDropdown()
         setupModelDropdown()
+        setupChatGPTLogin()
         setupToggles()
         updateCurrentStatus()
+        updateChatGPTLoginSummary()
         startCompletionStateMonitoring()
     }
 
@@ -66,6 +72,7 @@ class AIPreferencesFragment(
         updateProviderDropdownSelection()
         updateModelDropdown()
         syncCodeCompletionToggle()
+        updateChatGPTLoginSummary()
     }
     
     override fun onPause() {
@@ -79,6 +86,8 @@ class AIPreferencesFragment(
         autoSwitchToggle = view.findViewById(R.id.autoSwitchToggle)
         codeCompletionToggle = view.findViewById(R.id.codeCompletionToggle)
         currentProviderText = view.findViewById(R.id.currentProviderText)
+        chatgptLoginButton = view.findViewById(R.id.chatgptLoginButton)
+        chatgptLoginSummary = view.findViewById(R.id.chatgptLoginSummary)
         currentModelText = view.findViewById(R.id.currentModelText)
     }
 
@@ -182,6 +191,65 @@ class AIPreferencesFragment(
             modelDropdown.setText(models[0], false)
         }
     }
+
+
+    private fun setupChatGPTLogin() {
+        setChatGPTLoginInProgress(false)
+        chatgptLoginButton.setOnClickListener {
+            if (isChatGPTLoginInProgress) return@setOnClickListener
+            lifecycleScope.launch {
+                setChatGPTLoginInProgress(true)
+                try {
+                    val apiKey = CodexLoginManager().loginWithChatGPT(requireContext())
+                    prefManager.putString(OPENAI_API_KEY_PREF_KEY, apiKey)
+                    updateChatGPTLoginSummary()
+                    if (agents.getProvider() == "openai") {
+                        aiAgent.reinitializeWithSelectedModel()
+                        updateCurrentStatus()
+                    }
+                    showSnackbar(getString(R.string.ai_agent_chatgpt_login_success))
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    val message = e.message?.takeUnless(String::isBlank)
+                        ?: getString(R.string.ai_agent_chatgpt_login_failure_generic)
+                    showSnackbar(getString(R.string.ai_agent_chatgpt_login_failure, message))
+                } finally {
+                    setChatGPTLoginInProgress(false)
+                }
+            }
+        }
+    }
+
+    private fun setChatGPTLoginInProgress(inProgress: Boolean) {
+        isChatGPTLoginInProgress = inProgress
+        chatgptLoginButton.isEnabled = !inProgress
+        chatgptLoginButton.text = getString(
+            if (inProgress) R.string.ai_agent_chatgpt_login_button_in_progress
+            else R.string.ai_agent_chatgpt_login_button
+        )
+        if (inProgress) {
+            chatgptLoginSummary.text = getString(R.string.ai_agent_chatgpt_login_summary_signing_in)
+        } else {
+            updateChatGPTLoginSummary()
+        }
+    }
+
+    private fun updateChatGPTLoginSummary() {
+        val apiKey = prefManager.getString(OPENAI_API_KEY_PREF_KEY, "")
+        chatgptLoginSummary.text = if (apiKey.isBlank()) {
+            getString(R.string.ai_agent_chatgpt_login_summary_not_signed_in)
+        } else {
+            val maskedKey = maskApiKey(apiKey)
+            getString(R.string.ai_agent_chatgpt_login_summary_signed_in, maskedKey)
+        }
+    }
+
+    private fun maskApiKey(apiKey: String): String {
+        if (apiKey.length <= 8) return apiKey
+        return "${apiKey.take(4)}…${apiKey.takeLast(4)}"
+    }
+
 
     private fun setupToggles() {
         autoSwitchToggle.isChecked = providerSwitchDialog.isAutoSwitchEnabled()

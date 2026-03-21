@@ -66,6 +66,14 @@
   <string name="ai_agent_enable_summary">Enable AI-powered code generation</string>
   <string name="ai_agent_api_key">Gemini API Key</string>
   <string name="ai_agent_api_key_summary">Enter your Google Gemini API key to use AI features</string>
+  <string name="ai_agent_chatgpt_login_button">Sign in with ChatGPT</string>
+  <string name="ai_agent_chatgpt_login_button_in_progress">Signing in with ChatGPT…</string>
+  <string name="ai_agent_chatgpt_login_summary_not_signed_in">Not signed in with ChatGPT</string>
+  <string name="ai_agent_chatgpt_login_summary_signed_in">Signed in with ChatGPT (%1$s)</string>
+  <string name="ai_agent_chatgpt_login_summary_signing_in">Waiting for ChatGPT login...</string>
+  <string name="ai_agent_chatgpt_login_success">ChatGPT login completed</string>
+  <string name="ai_agent_chatgpt_login_failure">ChatGPT login failed: %1$s</string>
+  <string name="ai_agent_chatgpt_login_failure_generic">Unknown error</string>
   <string name="ai_agent_api_key_dialog_title">Enter Gemini API Key</string>
 
   <!-- AI Agent Deepseek -->
