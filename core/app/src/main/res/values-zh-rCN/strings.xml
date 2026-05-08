@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="asset_studio_title">资源工作室</string>
+  <string name="asset_studio_subtitle">Drawable 与图标制作工具</string>
+  <string name="asset_studio_launch">启动工作室</string>
+  <string name="asset_studio_create_drawable">创建 Drawable</string>
+  <string name="asset_studio_create_icon">创建图标</string>
+  <string name="asset_studio_import_image">导入图片</string>
+  <string name="asset_studio_recent_assets">最近资源</string>
+  <string name="asset_studio_quick_actions">快捷操作</string>
+  <string name="asset_studio_default_path">res/drawable</string>
+  <string name="asset_studio_launch_description">打开完整的资源工作室界面</string>
+
+  <string name="sub_module_maker_title">子模块创建器</string>
+  <string name="sub_module_maker_subtitle">为您的项目创建新的子模块</string>
+  <string name="sub_module_configuration">模块配置</string>
+  <string name="sub_module_language">编程语言</string>
+  <string name="sub_module_kotlin">Kotlin</string>
+  <string name="sub_module_java">Java</string>
+  <string name="sub_module_name_hint">输入模块名称（如：feature、utils）</string>
+  <string name="sub_module_name_valid">模块名称有效</string>
+  <string name="sub_module_name_invalid">模块名称无效</string>
+  <string name="sub_module_create">创建模块</string>
+  <string name="sub_module_created_success">模块 \'%1$s\' 创建成功！</string>
+  <string name="sub_module_created_error">创建模块失败：%1$s</string>
+  <string name="sub_module_info_title">关于子模块</string>
+  <string name="sub_module_info_description">子模块帮助您将项目组织成更小、更易管理的组件。每个模块可以拥有自己的依赖项和构建配置。</string>
+
+  <string name="title_terminal">终端</string>
+  <string name="terminal_bstab">终端</string>
+  <string name="terminal_new_session">新建终端</string>
+  <string name="terminal_close_session">关闭终端</string>
+  <string name="terminal_empty_state">暂无终端会话</string>
+  <string name="terminal_empty_message">当前没有打开的终端会话，创建一个新会话以开始使用。</string>
+  <string name="terminal_create_first">创建终端</string>
+
+  <string name="edit">编辑</string>
+</resources>
