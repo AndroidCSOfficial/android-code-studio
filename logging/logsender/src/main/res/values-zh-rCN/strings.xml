@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="msg_bind_service_failed">无法绑定到 AndroidIDE</string>
+  <string name="notification_action_exit">退出</string>
+</resources>
