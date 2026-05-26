@@ -134,7 +134,7 @@ class DependencyUpdaterDialog(
         val btnUpdate = warningView.findViewById<MaterialButton>(R.id.btnUpdate)
         
         tvTitle.text = "⚠️ Warning"
-        tvMessage.text = "You are about to update:\n\n${dependency.group}:${dependency.name}\n${dependency.currentVersion} → ${dependency.latestVersion}\n\nPlease note that newer versions may contain bugs, breaking changes, or be in alpha/beta stage. Always test thoroughly after updating.\n\nDo you want to proceed?"
+        tvMessage.text = context.getString(R.string.dep_update_single_message, dependency.group, dependency.name, dependency.currentVersion, dependency.latestVersion)
         
         val warningDialog = MaterialAlertDialogBuilder(context)
             .setView(warningView)
@@ -162,7 +162,7 @@ class DependencyUpdaterDialog(
         val btnUpdate = warningView.findViewById<MaterialButton>(R.id.btnUpdate)
         
         tvTitle.text = "⚠️ Warning"
-        tvMessage.text = "You are about to update ${dependencies.size} dependencies.\n\nPlease note that newer versions may contain bugs, breaking changes, or be in alpha/beta stage. Updating all dependencies at once can introduce compatibility issues.\n\nIt's recommended to update and test dependencies individually.\n\nDo you want to proceed with updating all?"
+        tvMessage.text = context.getString(R.string.dep_update_all_message, dependencies.size)
         
         val warningDialog = MaterialAlertDialogBuilder(context)
             .setView(warningView)
@@ -190,7 +190,7 @@ class DependencyUpdaterDialog(
         val btnCancel = dialogView.findViewById<MaterialButton>(R.id.btnCancel)
         val btnUpdate = dialogView.findViewById<MaterialButton>(R.id.btnUpdate)
         
-        tvConfirmTitle.text = "Confirm Update"
+        tvConfirmTitle.text = context.getString(R.string.dep_confirm_update)
         tvConfirmMessage.text = "${dependency.group}:${dependency.name}\n${dependency.currentVersion} → ${dependency.latestVersion}\n\nProceed with update?"
         
         val confirmDialog = MaterialAlertDialogBuilder(context)
@@ -230,7 +230,7 @@ class DependencyUpdaterDialog(
             val btnCancel = successView.findViewById<MaterialButton>(R.id.btnCancel)
             val btnUpdate = successView.findViewById<MaterialButton>(R.id.btnUpdate)
             
-            tvTitle.text = "Success"
+            tvTitle.text = context.getString(R.string.dep_success)
             tvMessage.text = "${dependency.group}:${dependency.name} updated to ${dependency.latestVersion}"
             btnCancel.visibility = View.GONE
             btnUpdate.text = "OK"
@@ -258,8 +258,8 @@ class DependencyUpdaterDialog(
             val btnCancel = errorView.findViewById<MaterialButton>(R.id.btnCancel)
             val btnUpdate = errorView.findViewById<MaterialButton>(R.id.btnUpdate)
             
-            tvTitle.text = "Error"
-            tvMessage.text = "Failed to update: ${e.message}"
+            tvTitle.text = context.getString(R.string.dep_error)
+            tvMessage.text = context.getString(R.string.dep_update_failed, e.message)
             btnCancel.visibility = View.GONE
             btnUpdate.text = "OK"
             
@@ -319,8 +319,8 @@ class DependencyUpdaterDialog(
                 val btnCancel = resultView.findViewById<MaterialButton>(R.id.btnCancel)
                 val btnUpdate = resultView.findViewById<MaterialButton>(R.id.btnUpdate)
                 
-                tvTitle.text = "Update Complete"
-                tvMessage.text = "Successfully updated: $successCount\nFailed: $failCount"
+                tvTitle.text = context.getString(R.string.dep_update_complete)
+                tvMessage.text = context.getString(R.string.dep_update_result, successCount, failCount)
                 btnCancel.visibility = View.GONE
                 btnUpdate.text = "OK"
                 
@@ -346,8 +346,8 @@ class DependencyUpdaterDialog(
                 val btnCancel = errorView.findViewById<MaterialButton>(R.id.btnCancel)
                 val btnUpdate = errorView.findViewById<MaterialButton>(R.id.btnUpdate)
                 
-                tvTitle.text = "Error"
-                tvMessage.text = "Failed to update dependencies: ${e.message}"
+                tvTitle.text = context.getString(R.string.dep_error)
+                tvMessage.text = context.getString(R.string.dep_update_all_failed, e.message)
                 btnCancel.visibility = View.GONE
                 btnUpdate.text = "OK"
                 

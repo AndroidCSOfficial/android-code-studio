@@ -62,6 +62,7 @@ import com.tom.rv2ide.utils.MemoryManager
 import com.tom.rv2ide.utils.RecyclableObjectPool
 import com.tom.rv2ide.utils.VMUtils
 import com.tom.rv2ide.utils.flashError
+import com.tom.rv2ide.resources.R
 import com.tom.rv2ide.utils.MemoryProfiler
 import io.github.mohammedbaqernull.seasonal.SeasonalEffects
 import io.github.miyazkaori.silentinstaller.SilentInstaller
@@ -179,7 +180,7 @@ class IDEApplication : TermuxApplication() {
       startActivity(intent)
     } catch (th: Throwable) {
       log.error("Unable to start activity to show changelog", th)
-      flashError("Unable to start activity")
+      flashError(R.string.msg_unable_to_start_activity)
     }
   }
 

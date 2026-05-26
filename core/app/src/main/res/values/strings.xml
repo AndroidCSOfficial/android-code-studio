@@ -59,6 +59,167 @@
 
   <string name="edit">Edit</string>
 
+  <!-- NDK -->
+  <string name="ndk_remove_title">Remove NDK</string>
+  <string name="ndk_remove_message">Are you sure you want to remove NDK version %1$s?</string>
+  <string name="ndk_no_versions">No NDK versions found to remove</string>
+  <string name="ndk_removed_success">Successfully removed NDK %1$s</string>
+  <string name="ndk_removed_failed">Failed to remove NDK %1$s</string>
+  <string name="ndk_not_found_title">NDK Not Found</string>
 
+  <!-- CMake -->
+  <string name="cmake_remove_title">Remove CMake</string>
+  <string name="cmake_remove_message">Are you sure you want to remove CMake version %1$s?</string>
+  <string name="cmake_no_versions">No CMake versions found to remove</string>
+  <string name="cmake_removed_success">Successfully removed CMake %1$s</string>
+  <string name="cmake_removed_failed">Failed to remove CMake %1$s</string>
+
+  <!-- Common actions -->
+  <string name="action_remove">Remove</string>
+  <string name="action_cancel">Cancel</string>
+  <string name="action_ok">OK</string>
+  <string name="action_save">Save</string>
+  <string name="action_apply">Apply</string>
+  <string name="action_delete">Delete</string>
+  <string name="action_rename">Rename</string>
+  <string name="action_copy">Copy</string>
+  <string name="action_allow">Allow</string>
+  <string name="action_deny">Deny</string>
+  <string name="action_always_allow">Always Allow</string>
+
+  <!-- Asset Studio -->
+  <string name="asset_studio_icon_imported">Icon imported from Material Icons</string>
+  <string name="asset_studio_load_vector_failed">Failed to load vector from selection</string>
+  <string name="asset_studio_error_loading_image">Error loading image: %1$s</string>
+  <string name="asset_studio_xml_content_length">XML content length: %1$d</string>
+  <string name="asset_studio_xml_loaded">XML loaded successfully</string>
+  <string name="asset_studio_xml_read_failed">Failed to read XML content</string>
+  <string name="asset_studio_error_loading_xml">Error loading XML: %1$s</string>
+  <string name="asset_studio_xml_preview_updated">XML Preview updated</string>
+  <string name="asset_studio_image_preview_updated">Image Preview updated</string>
+  <string name="asset_studio_select_image_first">Please select an image or XML file first</string>
+  <string name="asset_studio_vector_imported">Vector imported</string>
+  <string name="asset_studio_parse_vector_failed">Failed to parse vector XML</string>
+  <string name="asset_studio_no_project">No project opened</string>
+  <string name="asset_studio_generated_icons">Generated %1$d icons in res/%2$s-*</string>
+  <string name="asset_studio_generate_error">Error generating icons: %1$s</string>
+  <string name="asset_studio_select_color">Select Color</string>
+  <string name="asset_studio_copy_to">Copy to</string>
+
+  <!-- ATC Wizard -->
+  <string name="atc_select_ndk">Select NDK Version</string>
+  <string name="atc_select_cmake">Select CMake Version</string>
+  <string name="atc_invalid_ndk">Invalid NDK: %1$s</string>
+  <string name="atc_cmake_selected">CMake %1$s selected</string>
+  <string name="atc_invalid_cmake">Invalid CMake: %1$s</string>
+  <string name="atc_select_module">Select Module</string>
+
+  <!-- AI -->
+  <string name="ai_provider_error">⚠️ Provider Error</string>
+  <string name="ai_switch_manually">Switch Manually</string>
+  <string name="ai_enable_auto_switch">Enable Auto-Switch</string>
+  <string name="ai_select_provider">Select Provider</string>
+  <string name="ai_no_providers">❌ No Providers Available</string>
+  <string name="ai_auto_switched">🔄 Auto-Switched Provider</string>
+  <string name="ai_disable_auto_switch">Disable Auto-Switch</string>
+  <string name="ai_file_write_title">AI File Write Permission</string>
+  <string name="ai_file_write_message">AI wants to write to:\n%1$s\n\nAllow this action?</string>
+  <string name="ai_permissions_title">AI Permissions</string>
+
+  <!-- API Keys -->
+  <string name="api_key_grok_title">Grok API Key</string>
+  <string name="api_key_grok_message">Enter your xAI Grok API key</string>
+  <string name="api_key_gemini_title">Gemini API Key</string>
+  <string name="api_key_gemini_message">Enter your Google Gemini API key</string>
+  <string name="api_key_deepseek_title">Deepseek API Key</string>
+  <string name="api_key_deepseek_message">Enter your Deepseek API key</string>
+  <string name="api_key_openai_title">OpenAI API Key</string>
+  <string name="api_key_openai_message">Enter your OpenAI API key</string>
+  <string name="api_key_anthropic_title">Anthropic API Key</string>
+  <string name="api_key_anthropic_message">Enter your Anthropic API key</string>
+
+  <!-- File Browser -->
+  <string name="file_custom_extension_title">Enter Custom Extension</string>
+  <string name="file_custom_extension_message">Enter file extension without the dot</string>
+  <string name="file_rename_title">Rename</string>
+  <string name="file_rename_message">Enter new name for %1$s</string>
+  <string name="file_delete_title">Delete %1$s</string>
+  <string name="file_no_match">No files match the filters</string>
+  <string name="file_name_empty">Name cannot be empty</string>
+  <string name="file_name_exists">A file with this name already exists</string>
+  <string name="file_renamed_success">Renamed successfully</string>
+  <string name="file_renamed_failed">Failed to rename</string>
+  <string name="file_path_copied">Path copied to clipboard</string>
+  <string name="file_deleted_success">Deleted successfully</string>
+  <string name="file_deleted_failed">Failed to delete</string>
+  <string name="file_cannot_access">Cannot access this folder</string>
+  <string name="file_source_not_exist">Source file doesn\'t exist</string>
+  <string name="file_dir_not_exist">Directory doesn\'t exist: %1$s</string>
+  <string name="file_dir_cannot_read">Cannot read directory: %1$s</string>
+  <string name="file_cannot_access_folder">Cannot access folder</string>
+  <string name="file_permission_denied">Permission denied to read storage</string>
+  <string name="file_permission_manage_denied">Permission denied to manage storage</string>
+  <string name="file_code_copied">Code copied to clipboard</string>
+
+  <!-- Preferences -->
+  <string name="pref_restarting">Restarting…</string>
+  <string name="pref_using_default_font">Using default font</string>
+  <string name="pref_font_selected">Font selected: %1$s</string>
+  <string name="pref_font_copy_success">Font copied successfully: %1$s</string>
+  <string name="pref_font_copy_error">Error copying font: %1$s</string>
+  <string name="pref_file_picker_error">Error opening file picker: %1$s</string>
+
+  <!-- Project Settings -->
+  <string name="project_backup_in_progress">Backup in Progress</string>
+  <string name="project_backup_message">Creating backup of %1$s</string>
+  <string name="project_backup_completed">Backup Completed</string>
+  <string name="project_backup_failed">Backup Failed</string>
+  <string name="project_backup_failed_message">Failed to backup project: %1$s</string>
+  <string name="project_backing_up">Backing up project…</string>
+
+  <!-- Build Variants -->
+  <string name="build_edit_variant">Edit %1$s</string>
+
+  <!-- Dependency Updater -->
+  <string name="dep_update_available">Update available: %1$s</string>
+  <string name="dep_up_to_date">Up to date</string>
+  <string name="dep_not_found">Not found in repositories</string>
+  <string name="dep_confirm_update">Confirm Update</string>
+  <string name="dep_update_single_message">You are about to update:\n\n%1$s:%2$s\n%3$s → %4$s\n\nPlease note that newer versions may contain bugs, breaking changes, or be in alpha/beta stage. Always test thoroughly after updating.\n\nDo you want to proceed?</string>
+  <string name="dep_update_all_message">You are about to update %1$d dependencies.\n\nPlease note that newer versions may contain bugs, breaking changes, or be in alpha/beta stage. Updating all dependencies at once can introduce compatibility issues.\n\nIt\'s recommended to update and test dependencies individually.\n\nDo you want to proceed with updating all?</string>
+  <string name="dep_success">Success</string>
+  <string name="dep_error">Error</string>
+  <string name="dep_update_failed">Failed to update: %1$s</string>
+  <string name="dep_update_complete">Update Complete</string>
+  <string name="dep_update_result">Successfully updated: %1$d\nFailed: %2$d</string>
+  <string name="dep_update_all_failed">Failed to update dependencies: %1$s</string>
+
+  <!-- File Modification -->
+  <string name="file_mod_modifying">Modifying…</string>
+  <string name="file_mod_success">Modified successfully</string>
+  <string name="file_mod_failed">Failed to modify</string>
+
+  <!-- Chat -->
+  <string name="chat_project_loaded">Project loaded successfully</string>
+  <string name="chat_project_load_failed">Failed to load project</string>
+  <string name="chat_project_load_error">Error loading project</string>
+  <string name="chat_conversation_cleared">Conversation cleared. Ready for new request.</string>
+
+  <!-- History -->
+  <string name="history_attempt">Attempt #%1$d - %2$s</string>
+
+  <!-- Templates -->
+  <string name="template_creating_bottom_nav">Creating Bottom Navigation Activity…</string>
+  <string name="template_creating_responsive">Creating Responsive Activity…</string>
+  <string name="template_creating_nav_drawer">Creating Navigation Drawer Activity…</string>
+  <string name="template_creating_no_activity">Creating no Activity…</string>
+  <string name="template_creating_native_cpp">Creating native c++…</string>
+  <string name="template_creating_compose_empty">Creating Compose Empty Activity…</string>
+  <string name="template_creating_basic">Creating Basic Activity…</string>
+  <string name="template_creating_empty">Creating Empty Activity…</string>
+
+  <!-- Project Handler -->
+  <string name="project_view_error">View Error</string>
+  <string name="project_copy_again">Copy Again</string>
 
 </resources>

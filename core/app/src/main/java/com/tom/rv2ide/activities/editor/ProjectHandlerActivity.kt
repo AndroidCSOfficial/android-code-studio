@@ -607,37 +607,37 @@ fun initializeProject(buildVariants: Map<String, String>) {
       }
   
       val builder = newMaterialDialogBuilder(this)
-      builder.setTitle("Project Setup Failed")
+      builder.setTitle(getString(R.string.project_setup_failed))
       builder.setMessage(
           "The project could not be initialized properly.\n\n$errorMessage\n\nFull error details have been copied to clipboard.\n\nYou can try:\n• Update top level build.gradle\n• Syncing the project again\n• Checking if all required files are present\n• Restarting the IDE"
       )
       builder.setIcon(R.drawable.ic_error)
       builder.setCancelable(false)
   
-      builder.setPositiveButton("Retry") { dialog, _ ->
+      builder.setPositiveButton(getString(R.string.action_retry)) { dialog, _ ->
         dialog.dismiss()
         if (!isFinishing && !isDestroyed) {
             initializeProject()
         }
       }
   
-      builder.setNegativeButton("Close Project") { dialog, _ ->
+      builder.setNegativeButton(getString(R.string.title_close_project)) { dialog, _ ->
         dialog.dismiss()
         if (!isFinishing && !isDestroyed) {
             confirmProjectClose()
         }
       }
   
-      builder.setNeutralButton("View Error") { dialog, _ ->
+      builder.setNeutralButton(getString(R.string.project_view_error)) { dialog, _ ->
         if (isFinishing || isDestroyed) {
             return@setNeutralButton
         }
         
         val errorBuilder = newMaterialDialogBuilder(this)
-        errorBuilder.setTitle("Full Error Details")
+        errorBuilder.setTitle(getString(R.string.full_error_details))
         errorBuilder.setMessage(fullErrorDetails)
-        errorBuilder.setPositiveButton("OK") { d, _ -> d.dismiss() }
-        errorBuilder.setNeutralButton("Copy Again") { d, _ ->
+        errorBuilder.setPositiveButton(getString(R.string.lsp_ok_button)) { d, _ -> d.dismiss() }
+        errorBuilder.setNeutralButton(getString(R.string.project_copy_again)) { d, _ ->
           try {
             val clipboard = getSystemService(CLIPBOARD_SERVICE) as android.content.ClipboardManager
             val clip = android.content.ClipData.newPlainText("Project Setup Error", fullErrorDetails)

@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Commit History"
+                    android:text="@string/git_commit_history"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     />
@@ -35,7 +35,7 @@
                     android:id="@+id/buttonRefresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Refresh"
+                    android:text="@string/action_refresh"
                     app:icon="@android:drawable/ic_popup_sync"
                     style="@style/Widget.Material3.Button.TextButton"/>
             </LinearLayout>
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="No commits yet"
+            android:text="@string/git_no_commits"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="?android:textColorSecondary"

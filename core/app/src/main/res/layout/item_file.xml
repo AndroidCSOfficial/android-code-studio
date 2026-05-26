@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="16dp"
-            android:text="File Name"
+            android:text="@string/file_name"
             android:textSize="16sp"
             android:textColor="?attr/colorOnSurface"
             android:fontFamily="sans-serif-medium"

@@ -17,7 +17,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="File Tree"
+            android:text="@string/msg_file_tree"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingLeft="16dp" />

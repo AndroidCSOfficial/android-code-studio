@@ -9,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Remote name (e.g., origin)"
+        android:hint="@string/hint_remote_name"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
         
         <com.google.android.material.textfield.TextInputEditText
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Remote URL"
+        android:hint="@string/hint_remote_url"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
         
         <com.google.android.material.textfield.TextInputEditText

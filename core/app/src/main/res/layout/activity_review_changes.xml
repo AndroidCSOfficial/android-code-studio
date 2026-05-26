@@ -46,7 +46,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Summary"
+                        android:text="@string/review_summary"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -78,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Files to be Modified"
+                        android:text="@string/review_files_modified"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp" />
@@ -110,7 +110,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Code Preview"
+                        android:text="@string/review_code_preview"
                         android:textAppearance="?attr/textAppearanceTitleMedium"
                         android:textStyle="bold"
                         android:layout_marginBottom="12dp" />
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     app:icon="@drawable/ic_clear"
                     style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -145,7 +145,7 @@
                     android:id="@+id/applyBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Apply Changes"
+                    android:text="@string/review_apply_changes"
                     app:icon="@drawable/ic_check"
                      />
 

@@ -18,7 +18,7 @@
             android:id="@+id/textCommitMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Initial commit"
+            android:text="@string/git_initial_commit_example"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="?android:textColorPrimary"/>
@@ -50,7 +50,7 @@
                 android:id="@+id/textCommitDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jan 01, 2024 12:00"
+                android:text="@string/git_date_example"
                 android:textSize="12sp"
                 android:textColor="?android:textColorSecondary"/>
         </LinearLayout>
@@ -59,7 +59,7 @@
             android:id="@+id/textCommitAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Author Name"
+            android:text="@string/git_author_example"
             android:textSize="14sp"
             android:textColor="?android:textColorSecondary"
             android:layout_marginTop="4dp"/>

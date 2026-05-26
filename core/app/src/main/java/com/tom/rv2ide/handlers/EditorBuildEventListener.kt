@@ -176,14 +176,14 @@ class EditorBuildEventListener : GradleBuildService.EventListener {
   /** Show dialog when NDK is not installed but required */
   private fun showNdkNotInstalledDialog(context: Context, onDismiss: () -> Unit = {}) {
     MaterialAlertDialogBuilder(context)
-        .setTitle("NDK Not Found")
+        .setTitle(context.getString(R.string.ndk_not_found_title))
         .setMessage(
             "A compatible NDK (version 28.2.13676358) is not installed.\n\n" +
                 "Native code features will be disabled for this project.\n\n" +
                 "To enable native development, please install NDK version 28.2.13676358 " +
                 "open a terminal then run: 'idesetup -y -c -wn'."
         )
-        .setPositiveButton("OK") { dialog, _ ->
+        .setPositiveButton(context.getString(R.string.action_ok)) { dialog, _ ->
           dialog.dismiss()
           onDismiss()
         }

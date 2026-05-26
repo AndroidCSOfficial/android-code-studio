@@ -48,7 +48,7 @@ class FileBrowserActivity : EdgeToEdgeIDEActivity() {
             if (isGranted) {
                 loadFileBrowserFragment()
             } else {
-                Toast.makeText(this, "Permission denied to read storage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.file_permission_denied), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -58,7 +58,7 @@ class FileBrowserActivity : EdgeToEdgeIDEActivity() {
                 if (Environment.isExternalStorageManager()) {
                     loadFileBrowserFragment()
                 } else {
-                    Toast.makeText(this, "Permission denied to manage storage", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.file_permission_manage_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }

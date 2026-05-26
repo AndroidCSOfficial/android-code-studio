@@ -48,12 +48,12 @@ class FileModificationAdapter : RecyclerView.Adapter<FileModificationAdapter.Vie
         
         when (item.status) {
             Status.MODIFYING -> {
-                holder.fileStatus.text = "Modifying..."
+                holder.fileStatus.text = holder.itemView.context.getString(R.string.file_mod_modifying)
                 holder.progressIndicator.visibility = View.VISIBLE
                 holder.statusIcon.visibility = View.GONE
             }
             Status.SUCCESS -> {
-                holder.fileStatus.text = "Modified successfully"
+                holder.fileStatus.text = holder.itemView.context.getString(R.string.file_mod_success)
                 holder.progressIndicator.visibility = View.GONE
                 holder.statusIcon.visibility = View.VISIBLE
                 holder.statusIcon.setImageResource(android.R.drawable.ic_menu_save)
@@ -62,7 +62,7 @@ class FileModificationAdapter : RecyclerView.Adapter<FileModificationAdapter.Vie
                 )
             }
             Status.FAILED -> {
-                holder.fileStatus.text = "Failed to modify"
+                holder.fileStatus.text = holder.itemView.context.getString(R.string.file_mod_failed)
                 holder.progressIndicator.visibility = View.GONE
                 holder.statusIcon.visibility = View.VISIBLE
                 holder.statusIcon.setImageResource(android.R.drawable.ic_delete)

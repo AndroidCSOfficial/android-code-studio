@@ -47,7 +47,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Terminal Session"
+                        android:text="@string/terminal_empty_state"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="?attr/colorOnSurface"
@@ -56,7 +56,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Create your first terminal session"
+                        android:text="@string/terminal_empty_message"
                         android:textSize="14sp"
                         android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginBottom="24dp" />
@@ -66,7 +66,7 @@
                         style="@style/Widget.Material3.Button.TonalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Initialize Terminal"
+                        android:text="@string/terminal_create_first"
                         app:icon="@android:drawable/ic_input_add"
                         app:cornerRadius="8dp" />
 

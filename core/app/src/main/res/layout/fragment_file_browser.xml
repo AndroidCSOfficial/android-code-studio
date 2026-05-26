@@ -20,7 +20,7 @@
             app:icon="@drawable/ic_arrow_back"
             app:cornerRadius="6dp"
             android:layout_marginStart="8dp"
-            android:text="Goto my project" />
+            android:text="@string/goto_my_project" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

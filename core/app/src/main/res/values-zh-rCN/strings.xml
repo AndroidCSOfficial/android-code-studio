@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="asset_studio_title">资源工作室</string>
+  <string name="asset_studio_subtitle">Drawable 与图标制作工具</string>
+  <string name="asset_studio_launch">启动工作室</string>
+  <string name="asset_studio_create_drawable">创建 Drawable</string>
+  <string name="asset_studio_create_icon">创建图标</string>
+  <string name="asset_studio_import_image">导入图片</string>
+  <string name="asset_studio_recent_assets">最近资源</string>
+  <string name="asset_studio_quick_actions">快捷操作</string>
+  <string name="asset_studio_default_path">res/drawable</string>
+  <string name="asset_studio_launch_description">打开完整的资源工作室界面</string>
+
+  <string name="sub_module_maker_title">子模块创建器</string>
+  <string name="sub_module_maker_subtitle">为您的项目创建新的子模块</string>
+  <string name="sub_module_configuration">模块配置</string>
+  <string name="sub_module_language">编程语言</string>
+  <string name="sub_module_kotlin">Kotlin</string>
+  <string name="sub_module_java">Java</string>
+  <string name="sub_module_name_hint">输入模块名称（如：feature、utils）</string>
+  <string name="sub_module_name_valid">模块名称有效</string>
+  <string name="sub_module_name_invalid">模块名称无效</string>
+  <string name="sub_module_create">创建模块</string>
+  <string name="sub_module_created_success">模块 \'%1$s\' 创建成功！</string>
+  <string name="sub_module_created_error">创建模块失败：%1$s</string>
+  <string name="sub_module_info_title">关于子模块</string>
+  <string name="sub_module_info_description">子模块帮助您将项目组织成更小、更易管理的组件。每个模块可以拥有自己的依赖项和构建配置。</string>
+
+  <string name="title_terminal">终端</string>
+  <string name="terminal_bstab">终端</string>
+  <string name="terminal_new_session">新建终端</string>
+  <string name="terminal_close_session">关闭终端</string>
+  <string name="terminal_empty_state">暂无终端会话</string>
+  <string name="terminal_empty_message">当前没有打开的终端会话，创建一个新会话以开始使用。</string>
+  <string name="terminal_create_first">创建终端</string>
+
+  <string name="edit">编辑</string>
+
+  <!-- NDK -->
+  <string name="ndk_remove_title">移除 NDK</string>
+  <string name="ndk_remove_message">确定要移除 NDK 版本 %1$s 吗？</string>
+  <string name="ndk_no_versions">没有找到可移除的 NDK 版本</string>
+  <string name="ndk_removed_success">成功移除 NDK %1$s</string>
+  <string name="ndk_removed_failed">移除 NDK %1$s 失败</string>
+  <string name="ndk_not_found_title">未找到 NDK</string>
+
+  <!-- CMake -->
+  <string name="cmake_remove_title">移除 CMake</string>
+  <string name="cmake_remove_message">确定要移除 CMake 版本 %1$s 吗？</string>
+  <string name="cmake_no_versions">没有找到可移除的 CMake 版本</string>
+  <string name="cmake_removed_success">成功移除 CMake %1$s</string>
+  <string name="cmake_removed_failed">移除 CMake %1$s 失败</string>
+
+  <!-- Common actions -->
+  <string name="action_remove">移除</string>
+  <string name="action_cancel">取消</string>
+  <string name="action_ok">确定</string>
+  <string name="action_save">保存</string>
+  <string name="action_apply">应用</string>
+  <string name="action_delete">删除</string>
+  <string name="action_rename">重命名</string>
+  <string name="action_copy">复制</string>
+  <string name="action_allow">允许</string>
+  <string name="action_deny">拒绝</string>
+  <string name="action_always_allow">始终允许</string>
+
+  <!-- Asset Studio -->
+  <string name="asset_studio_icon_imported">图标已从 Material Icons 导入</string>
+  <string name="asset_studio_load_vector_failed">无法从选择中加载矢量图</string>
+  <string name="asset_studio_error_loading_image">加载图片出错：%1$s</string>
+  <string name="asset_studio_xml_content_length">XML 内容长度：%1$d</string>
+  <string name="asset_studio_xml_loaded">XML 加载成功</string>
+  <string name="asset_studio_xml_read_failed">读取 XML 内容失败</string>
+  <string name="asset_studio_error_loading_xml">加载 XML 出错：%1$s</string>
+  <string name="asset_studio_xml_preview_updated">XML 预览已更新</string>
+  <string name="asset_studio_image_preview_updated">图片预览已更新</string>
+  <string name="asset_studio_select_image_first">请先选择图片或 XML 文件</string>
+  <string name="asset_studio_vector_imported">矢量图已导入</string>
+  <string name="asset_studio_parse_vector_failed">解析矢量 XML 失败</string>
+  <string name="asset_studio_no_project">未打开项目</string>
+  <string name="asset_studio_generated_icons">已在 res/%2$s-* 中生成 %1$d 个图标</string>
+  <string name="asset_studio_generate_error">生成图标出错：%1$s</string>
+  <string name="asset_studio_select_color">选择颜色</string>
+  <string name="asset_studio_copy_to">复制到</string>
+
+  <!-- ATC Wizard -->
+  <string name="atc_select_ndk">选择 NDK 版本</string>
+  <string name="atc_select_cmake">选择 CMake 版本</string>
+  <string name="atc_invalid_ndk">无效的 NDK：%1$s</string>
+  <string name="atc_cmake_selected">已选择 CMake %1$s</string>
+  <string name="atc_invalid_cmake">无效的 CMake：%1$s</string>
+  <string name="atc_select_module">选择模块</string>
+
+  <!-- AI -->
+  <string name="ai_provider_error">⚠️ 提供商错误</string>
+  <string name="ai_switch_manually">手动切换</string>
+  <string name="ai_enable_auto_switch">启用自动切换</string>
+  <string name="ai_select_provider">选择提供商</string>
+  <string name="ai_no_providers">❌ 无可用提供商</string>
+  <string name="ai_auto_switched">🔄 已自动切换提供商</string>
+  <string name="ai_disable_auto_switch">禁用自动切换</string>
+  <string name="ai_file_write_title">AI 文件写入权限</string>
+  <string name="ai_file_write_message">AI 请求写入文件：\n%1$s\n\n是否允许此操作？</string>
+  <string name="ai_permissions_title">AI 权限</string>
+
+  <!-- API Keys -->
+  <string name="api_key_grok_title">Grok API 密钥</string>
+  <string name="api_key_grok_message">输入您的 xAI Grok API 密钥</string>
+  <string name="api_key_gemini_title">Gemini API 密钥</string>
+  <string name="api_key_gemini_message">输入您的 Google Gemini API 密钥</string>
+  <string name="api_key_deepseek_title">Deepseek API 密钥</string>
+  <string name="api_key_deepseek_message">输入您的 Deepseek API 密钥</string>
+  <string name="api_key_openai_title">OpenAI API 密钥</string>
+  <string name="api_key_openai_message">输入您的 OpenAI API 密钥</string>
+  <string name="api_key_anthropic_title">Anthropic API 密钥</string>
+  <string name="api_key_anthropic_message">输入您的 Anthropic API 密钥</string>
+
+  <!-- File Browser -->
+  <string name="file_custom_extension_title">输入自定义扩展名</string>
+  <string name="file_custom_extension_message">输入文件扩展名（不含点号）</string>
+  <string name="file_rename_title">重命名</string>
+  <string name="file_rename_message">输入 %1$s 的新名称</string>
+  <string name="file_delete_title">删除 %1$s</string>
+  <string name="file_no_match">没有匹配的文件</string>
+  <string name="file_name_empty">名称不能为空</string>
+  <string name="file_name_exists">同名文件已存在</string>
+  <string name="file_renamed_success">重命名成功</string>
+  <string name="file_renamed_failed">重命名失败</string>
+  <string name="file_path_copied">路径已复制到剪贴板</string>
+  <string name="file_deleted_success">删除成功</string>
+  <string name="file_deleted_failed">删除失败</string>
+  <string name="file_cannot_access">无法访问此文件夹</string>
+  <string name="file_source_not_exist">源文件不存在</string>
+  <string name="file_dir_not_exist">目录不存在：%1$s</string>
+  <string name="file_dir_cannot_read">无法读取目录：%1$s</string>
+  <string name="file_cannot_access_folder">无法访问文件夹</string>
+  <string name="file_permission_denied">读取存储权限被拒绝</string>
+  <string name="file_permission_manage_denied">管理存储权限被拒绝</string>
+  <string name="file_code_copied">代码已复制到剪贴板</string>
+
+  <!-- Preferences -->
+  <string name="pref_restarting">正在重启…</string>
+  <string name="pref_using_default_font">使用默认字体</string>
+  <string name="pref_font_selected">已选择字体：%1$s</string>
+  <string name="pref_font_copy_success">字体复制成功：%1$s</string>
+  <string name="pref_font_copy_error">复制字体出错：%1$s</string>
+  <string name="pref_file_picker_error">打开文件选择器出错：%1$s</string>
+
+  <!-- Project Settings -->
+  <string name="project_backup_in_progress">正在备份</string>
+  <string name="project_backup_message">正在创建 %1$s 的备份</string>
+  <string name="project_backup_completed">备份完成</string>
+  <string name="project_backup_failed">备份失败</string>
+  <string name="project_backup_failed_message">项目备份失败：%1$s</string>
+  <string name="project_backing_up">正在备份项目…</string>
+
+  <!-- Build Variants -->
+  <string name="build_edit_variant">编辑 %1$s</string>
+
+  <!-- Dependency Updater -->
+  <string name="dep_update_available">有更新可用：%1$s</string>
+  <string name="dep_up_to_date">已是最新</string>
+  <string name="dep_not_found">在仓库中未找到</string>
+  <string name="dep_confirm_update">确认更新</string>
+  <string name="dep_update_single_message">您即将更新：\n\n%1$s:%2$s\n%3$s → %4$s\n\n请注意，较新版本可能包含错误、破坏性更改或处于 alpha/beta 阶段。更新后请务必充分测试。\n\n是否继续？</string>
+  <string name="dep_update_all_message">您即将更新 %1$d 个依赖项。\n\n请注意，较新版本可能包含错误、破坏性更改或处于 alpha/beta 阶段。一次性更新所有依赖项可能会导致兼容性问题。\n\n建议逐个更新和测试依赖项。\n\n是否继续更新全部？</string>
+  <string name="dep_success">成功</string>
+  <string name="dep_error">错误</string>
+  <string name="dep_update_failed">更新失败：%1$s</string>
+  <string name="dep_update_complete">更新完成</string>
+  <string name="dep_update_result">成功更新：%1$d\n失败：%2$d</string>
+  <string name="dep_update_all_failed">更新依赖项失败：%1$s</string>
+
+  <!-- File Modification -->
+  <string name="file_mod_modifying">正在修改…</string>
+  <string name="file_mod_success">修改成功</string>
+  <string name="file_mod_failed">修改失败</string>
+
+  <!-- Chat -->
+  <string name="chat_project_loaded">项目加载成功</string>
+  <string name="chat_project_load_failed">项目加载失败</string>
+  <string name="chat_project_load_error">加载项目出错</string>
+  <string name="chat_conversation_cleared">对话已清除。可以发送新请求。</string>
+
+  <!-- History -->
+  <string name="history_attempt">第 %1$d 次尝试 - %2$s</string>
+
+  <!-- Templates -->
+  <string name="template_creating_bottom_nav">正在创建底部导航 Activity…</string>
+  <string name="template_creating_responsive">正在创建响应式 Activity…</string>
+  <string name="template_creating_nav_drawer">正在创建导航抽屉 Activity…</string>
+  <string name="template_creating_no_activity">正在创建无 Activity 项目…</string>
+  <string name="template_creating_native_cpp">正在创建原生 C++ 项目…</string>
+  <string name="template_creating_compose_empty">正在创建 Compose 空 Activity…</string>
+  <string name="template_creating_basic">正在创建基本 Activity…</string>
+  <string name="template_creating_empty">正在创建空 Activity…</string>
+
+  <!-- Project Handler -->
+  <string name="project_view_error">查看错误</string>
+  <string name="project_copy_again">重新复制</string>
+
+</resources>

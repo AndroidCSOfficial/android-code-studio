@@ -137,9 +137,9 @@ class BuildVariantsAdapter(
     dialogBinding.compileSdk.setText(variantInfo.compileSdk?.toString() ?: "")
 
     MaterialAlertDialogBuilder(context)
-        .setTitle("Edit ${variantInfo.projectPath}")
+        .setTitle(context.getString(R.string.build_edit_variant, variantInfo.projectPath))
         .setView(dialogBinding.root)
-        .setPositiveButton("Save") { _, _ ->
+        .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
           val updatedInfo = variantInfo.copy(
               versionName = dialogBinding.versionName.text?.toString()?.takeIf { it.isNotEmpty() },
               versionCode = dialogBinding.versionCode.text?.toString()?.toIntOrNull(),
@@ -153,7 +153,7 @@ class BuildVariantsAdapter(
           
           viewModel.updateModuleConfig(variantInfo.projectPath, updatedInfo)
         }
-        .setNegativeButton("Cancel", null)
+        .setNegativeButton(context.getString(R.string.action_cancel), null)
         .show()
   }
 }

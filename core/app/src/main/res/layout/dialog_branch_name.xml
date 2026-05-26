@@ -9,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Branch name"
+        android:hint="@string/git_branch_name_hint"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
         
         <com.google.android.material.textfield.TextInputEditText

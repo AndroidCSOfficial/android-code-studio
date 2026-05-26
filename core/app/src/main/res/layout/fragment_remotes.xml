@@ -32,7 +32,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Remote Operations"
+                        android:text="@string/git_remote_operations"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
                     
@@ -40,7 +40,7 @@
                         android:id="@+id/buttonRefresh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Refresh"
+                        android:text="@string/action_refresh"
                         app:icon="@drawable/ic_sync"
                         style="@style/Widget.Material3.Button.TextButton"/>
                 </LinearLayout>
@@ -54,7 +54,7 @@
                             android:id="@+id/buttonPush"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Push"
+                            android:text="@string/git_push_action"
                             android:textSize="14sp"
                             android:layout_margin="4dp"
                             app:icon="@drawable/ic_publish"
@@ -66,7 +66,7 @@
                             android:id="@+id/buttonPull"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pull"
+                            android:text="@string/git_pull_action"
                             android:textSize="14sp"
                             android:layout_margin="4dp"
                             app:icon="@drawable/ic_downpull"
@@ -78,7 +78,7 @@
                             android:id="@+id/buttonFetch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fetch"
+                            android:text="@string/git_fetch_action"
                             android:layout_margin="4dp"
                             android:textSize="14sp"
                             app:icon="@drawable/ic_sync"
@@ -93,7 +93,7 @@
             android:id="@+id/emptyStateText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No remotes configured\nAdd a remote to push/pull changes"
+            android:text="@string/git_no_remotes_configured"
             android:textSize="16sp"
             android:textColor="?android:textColorSecondary"
             android:gravity="center"
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="Add Remote"
+        android:text="@string/git_add_remote"
         app:elevation="0dp"
         app:icon="@drawable/ic_add"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

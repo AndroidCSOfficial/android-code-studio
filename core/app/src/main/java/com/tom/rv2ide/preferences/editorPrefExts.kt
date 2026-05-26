@@ -419,11 +419,11 @@ private class UseCustomFont(
       }
       null -> {
         EditorPreferences.selectedCustomFont = null
-        Toast.makeText(preference.context, "Using default font", Toast.LENGTH_SHORT).show()
+        Toast.makeText(preference.context, preference.context.getString(R.string.pref_using_default_font), Toast.LENGTH_SHORT).show()
       }
       else -> {
         EditorPreferences.selectedCustomFont = entry.data as String
-        Toast.makeText(preference.context, "Font selected: ${entry.label}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(preference.context, preference.context.getString(R.string.pref_font_selected, entry.label), Toast.LENGTH_SHORT).show()
       }
     }
   }
@@ -442,7 +442,7 @@ private class UseCustomFont(
           PICK_FONT_REQUEST
       )
     } catch (e: Exception) {
-      Toast.makeText(preference.context, "Error opening file picker: ${e.message}", Toast.LENGTH_SHORT).show()
+      Toast.makeText(preference.context, preference.context.getString(R.string.pref_file_picker_error, e.message), Toast.LENGTH_SHORT).show()
     }
   }
 }

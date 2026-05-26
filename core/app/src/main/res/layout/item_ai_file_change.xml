@@ -35,7 +35,7 @@
                 android:id="@+id/fileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MainActivity.kt"
+                android:text="@string/ai_file_example_name"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                 android:id="@+id/fileStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modified"
+                android:text="@string/ai_file_modified"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:layout_marginTop="4dp" />
 
@@ -51,7 +51,7 @@
                 android:id="@+id/filePath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/path/to/file"
+                android:text="@string/ai_file_example_path"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="2dp"

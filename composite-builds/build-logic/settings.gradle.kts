@@ -19,6 +19,19 @@
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+pluginManagement {
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+    maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
+    maven { url = uri("https://maven.aliyun.com/repository/central") }
+    maven { url = uri("https://maven.aliyun.com/repository/google") }
+    maven { url = uri("https://maven.aliyun.com/repository/public") }
+  }
+}
+
 dependencyResolutionManagement {
 
   includeBuild("../build-deps-common") {
@@ -31,7 +44,10 @@ dependencyResolutionManagement {
   repositories {
     maven { url = uri("https://maven.aliyun.com/repository/central") }
     maven { url = uri("https://maven.aliyun.com/repository/google") }
+    maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
+    maven { url = uri("https://maven.aliyun.com/repository/public") }
     
+    gradlePluginPortal()
     google()
     mavenCentral()
   }

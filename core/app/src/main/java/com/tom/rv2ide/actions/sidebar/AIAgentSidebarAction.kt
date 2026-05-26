@@ -41,7 +41,7 @@ class AIAgentSidebarAction(context: Context, override val order: Int) : Abstract
 
   init {
     label = context.getString(R.string.ai_agent_title)
-    subtitle = "v0.1-preview"
+    subtitle = context.getString(R.string.ai_agent_version)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_ai_agent)
     iconRes = R.drawable.ic_ai_agent
   }

@@ -93,7 +93,7 @@ class BranchesFragment : Fragment() {
         
         viewModel.currentBranch.observe(viewLifecycleOwner) { branch ->
             currentBranch = branch
-            binding.textCurrentBranch.text = "Current: $branch"
+            binding.textCurrentBranch.text = getString(R.string.git_current_branch, branch)
             adapter.notifyDataSetChanged()
         }
         
@@ -120,33 +120,33 @@ class BranchesFragment : Fragment() {
         val editText = dialogView.findViewById<TextInputEditText>(R.id.editTextBranchName)
         
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Create New Branch")
+            .setTitle(getString(R.string.git_create_new_branch))
             .setView(dialogView)
-            .setPositiveButton("Create") { _, _ ->
+            .setPositiveButton(getString(R.string.git_create_action)) { _, _ ->
                 val branchName = editText.text.toString().trim()
                 if (branchName.isNotBlank()) {
                     viewModel.createBranch(branchName)
                 } else {
-                    Snackbar.make(binding.root, "Branch name cannot be empty", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, getString(R.string.git_branch_name_empty), Snackbar.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
     
     private fun showDeleteConfirmation(branch: String) {
         if (branch == currentBranch) {
-            Snackbar.make(binding.root, "Cannot delete current branch", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.git_cannot_delete_current_branch), Snackbar.LENGTH_SHORT).show()
             return
         }
         
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete Branch")
-            .setMessage("Are you sure you want to delete branch '$branch'?")
-            .setPositiveButton("Delete") { _, _ ->
+            .setTitle(getString(R.string.git_delete_branch))
+            .setMessage(getString(R.string.git_delete_branch_message, branch))
+            .setPositiveButton(getString(R.string.git_delete_action)) { _, _ ->
                 viewModel.deleteBranch(branch)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
     

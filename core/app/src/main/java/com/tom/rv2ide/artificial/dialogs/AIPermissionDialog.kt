@@ -42,17 +42,17 @@ class AIPermissionDialog(private val context: Context) {
         onDeny: () -> Unit
     ) {
         MaterialAlertDialogBuilder(context)
-            .setTitle("AI File Write Permission")
-            .setMessage("AI wants to write to:\n$fileName\n\nAllow this action?")
-            .setPositiveButton("Allow") { dialog, _ ->
+            .setTitle(context.getString(R.string.ai_file_write_title))
+            .setMessage(context.getString(R.string.ai_file_write_message, fileName))
+            .setPositiveButton(context.getString(R.string.action_allow)) { dialog, _ ->
                 onConfirm()
                 dialog.dismiss()
             }
-            .setNegativeButton("Deny") { dialog, _ ->
+            .setNegativeButton(context.getString(R.string.action_deny)) { dialog, _ ->
                 onDeny()
                 dialog.dismiss()
             }
-            .setNeutralButton("Always Allow") { dialog, _ ->
+            .setNeutralButton(context.getString(R.string.action_always_allow)) { dialog, _ ->
                 permissionManager.setRequireConfirmation(false)
                 onConfirm()
                 dialog.dismiss()
@@ -77,16 +77,16 @@ class AIPermissionDialog(private val context: Context) {
         autoBackupCheckbox.isChecked = permissionManager.isAutoBackupEnabled()
 
         MaterialAlertDialogBuilder(context)
-            .setTitle("AI Permissions")
+            .setTitle(context.getString(R.string.ai_permissions_title))
             .setView(view)
-            .setPositiveButton("Save") { dialog, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { dialog, _ ->
                 permissionManager.setFileWriteEnabled(enableWriteCheckbox.isChecked)
                 permissionManager.setRequireConfirmation(requireConfirmationCheckbox.isChecked)
                 permissionManager.setAutoBackup(autoBackupCheckbox.isChecked)
                 onSettingsChanged()
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(context.getString(R.string.action_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

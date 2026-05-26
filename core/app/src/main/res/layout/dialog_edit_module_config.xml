@@ -27,7 +27,7 @@
     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="Version Name">
+    android:hint="@string/hint_version_name">
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/version_name"
@@ -43,7 +43,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:hint="Version Code">
+    android:hint="@string/hint_version_code">
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/version_code"
@@ -59,7 +59,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:hint="Min SDK">
+    android:hint="@string/hint_min_sdk">
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/min_sdk"
@@ -75,7 +75,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:hint="Target SDK">
+    android:hint="@string/hint_target_sdk">
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/target_sdk"
@@ -91,7 +91,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    android:hint="Compile SDK">
+    android:hint="@string/hint_compile_sdk">
 
     <com.google.android.material.textfield.TextInputEditText
       android:id="@+id/compile_sdk"

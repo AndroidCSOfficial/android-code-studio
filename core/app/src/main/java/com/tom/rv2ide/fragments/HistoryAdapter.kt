@@ -48,7 +48,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
             
             historyTitle.text = "$status $fileName"
             historyTime.text = dateFormat.format(Date(item.timestamp))
-            historyDetails.text = "Attempt #${item.attemptNumber} - ${if (item.success) "Success" else "Failed"}"
+            historyDetails.text = itemView.context.getString(R.string.history_attempt, item.attemptNumber, if (item.success) itemView.context.getString(R.string.dep_success) else itemView.context.getString(R.string.dep_error))
             
             // Set icon tint based on success/failure
             val colorRes = if (item.success) {
