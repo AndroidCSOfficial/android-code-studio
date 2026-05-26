@@ -209,13 +209,13 @@ class ExtractAction(private val context: Context, override val order: Int) : Bas
       val moduleNames = modules.map { it.name }.toTypedArray()
 
       MaterialAlertDialogBuilder(context)
-          .setTitle("Select Module")
+          .setTitle(context.getString(R.string.atc_select_module))
           .setItems(moduleNames) { dialog, which ->
             val selectedModule = modules[which]
             onModuleSelected(selectedModule)
             dialog.dismiss()
           }
-          .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+          .setNegativeButton(context.getString(R.string.action_cancel)) { dialog, _ -> dialog.dismiss() }
           .show()
     }
   }

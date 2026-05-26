@@ -223,14 +223,14 @@ class ChatFragment(
                 val success = aiAgent.setProjectRoot(userRootProject)
                 
                 if (success) {
-                    statusText.text = "Project loaded successfully"
+                    statusText.text = getString(R.string.chat_project_loaded)
                     showSnackbar("✦ Project loaded: ${userRootProject.substringAfterLast("/")}")
                 } else {
-                    statusText.text = "Failed to load project"
+                    statusText.text = getString(R.string.chat_project_load_failed)
                     showSnackbar("✗ Project not found or invalid path")
                 }
             } catch (e: Exception) {
-                statusText.text = "Error loading project"
+                statusText.text = getString(R.string.chat_project_load_error)
                 showSnackbar("Error: ${e.message}")
             }
         }
@@ -390,7 +390,7 @@ class ChatFragment(
                 aiAgent.clearConversation()
                 
                 promptInput.text?.clear()
-                statusText.text = "Conversation cleared. Ready for new request."
+                statusText.text = getString(R.string.chat_conversation_cleared)
                 fileModificationList.visibility = View.GONE
                 summaryCard.visibility = View.GONE
                 fileModificationAdapter.clear()

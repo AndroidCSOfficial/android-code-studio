@@ -29,7 +29,7 @@
       android:layout_height="wrap_content"
       android:contentDescription="@string/browse_other_location"
       app:icon="@drawable/ic_folder"
-      android:text="import project"
+      android:text="@string/import_project"
       app:iconGravity="textStart"
       />
 

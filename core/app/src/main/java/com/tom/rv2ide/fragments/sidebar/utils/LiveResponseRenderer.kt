@@ -33,6 +33,7 @@ import com.blankj.utilcode.util.ThreadUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
+import com.tom.rv2ide.R
 import org.slf4j.LoggerFactory
 
 /* !! DEPRECATED 
@@ -301,7 +302,7 @@ class LiveResponseRenderer(
       val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
       val clip = ClipData.newPlainText("code", codeContent.toString())
       clipboard.setPrimaryClip(clip)
-      Toast.makeText(context, "Code copied to clipboard", Toast.LENGTH_SHORT).show()
+      Toast.makeText(context, context.getString(R.string.file_code_copied), Toast.LENGTH_SHORT).show()
     }
 
     /** Apply basic syntax highlighting based on language */

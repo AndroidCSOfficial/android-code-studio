@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dynamic Color"
+            android:text="@string/dynamic_color"
             android:textAppearance="?attr/textAppearanceLabelMedium"
             android:layout_marginBottom="8dp" />
 
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Hex Color"
+            android:hint="@string/hint_hex_color_short"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alpha"
+            android:text="@string/color_alpha"
             android:textAppearance="?attr/textAppearanceLabelMedium"
             android:layout_marginTop="8dp" />
 
@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Red"
+            android:text="@string/color_red"
             android:textAppearance="?attr/textAppearanceLabelMedium"
             android:layout_marginTop="8dp" />
 
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Green"
+            android:text="@string/color_green"
             android:textAppearance="?attr/textAppearanceLabelMedium"
             android:layout_marginTop="8dp" />
 
@@ -103,7 +103,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Blue"
+            android:text="@string/color_blue"
             android:textAppearance="?attr/textAppearanceLabelMedium"
             android:layout_marginTop="8dp" />
 

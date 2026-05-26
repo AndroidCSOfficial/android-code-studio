@@ -39,7 +39,7 @@ import org.gradle.api.provider.Provider
  * For example, if the base version code of the IDE is 270 (for v2.7.0), then for arm64-v8a flavor,
  * the version code will be `100 * 270 + 1` i.e. `27001`
  */
-internal val flavorsAbis = mapOf("arm64-v8a" to 0, "armeabi-v7a" to 0)
+internal val flavorsAbis = mapOf("arm64-v8a" to 0, "armeabi-v7a" to 1)
 
 fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModuleDependency>) {
   val isAppModule = plugins.hasPlugin("com.android.application")
@@ -121,7 +121,7 @@ fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModu
         abi {
           reset()
           isEnable = true
-          isUniversalApk = false
+          isUniversalApk = true
           include("arm64-v8a", "armeabi-v7a")
         }
       }
@@ -135,20 +135,16 @@ fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModu
             project.logger.info("Processing variant: ${variant.name}, ABI: $abiIdentifier")
 
             if (abiIdentifier == null) {
-              project.logger.error("No ABI filter found for variant ${variant.name}")
-              throw IllegalStateException(
-                  "ABI filter is required but missing for variant ${variant.name}"
-              )
+              output.versionCode.set(projectVersionCode)
+            } else {
+              val verCodeIncr = flavorsAbis[abiIdentifier]
+              if (verCodeIncr == null) {
+                throw UnsupportedOperationException(
+                    "Unsupported ABI: $abiIdentifier. Only ARM architectures are supported: ${flavorsAbis.keys.joinToString()}"
+                )
+              }
+              output.versionCode.set(projectVersionCode + verCodeIncr)
             }
-
-            val verCodeIncr = flavorsAbis[abiIdentifier]
-            if (verCodeIncr == null) {
-              throw UnsupportedOperationException(
-                  "Unsupported ABI: $abiIdentifier. Only ARM architectures are supported: ${flavorsAbis.keys.joinToString()}"
-              )
-            }
-
-            output.versionCode.set(projectVersionCode + verCodeIncr)
           }
         }
       }

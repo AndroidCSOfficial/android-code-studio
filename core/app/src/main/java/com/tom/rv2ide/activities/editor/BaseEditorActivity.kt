@@ -732,9 +732,9 @@ override fun onApplySystemBarInsets(insets: Insets) {
     val setup = Setup(this)
     setup.scanProjectForLanguageServers(ProjectManagerImpl.getInstance().projectDir) { isSuccessfullyInstalled ->
       if (isSuccessfullyInstalled) {
-        flashSuccess("Installation succeeded")
+        flashSuccess(R.string.msg_installation_succeeded)
         if (!editorViewModel.isInitializing) {
-          flashInfo("Reinitializing project...")
+          flashInfo(R.string.msg_reinitializing_project)
           (this as? ProjectHandlerActivity)?.initializeProject()
         }
       }
@@ -1174,14 +1174,14 @@ override fun onApplySystemBarInsets(insets: Insets) {
 
   private fun showNdkNotInstalledDialog(context: Context, onDismiss: () -> Unit = {}) {
     MaterialAlertDialogBuilder(context)
-        .setTitle("NDK Not Found")
+        .setTitle(getString(R.string.native_error_title))
         .setMessage(
             "A compatible NDK (version 28.2.13676358) is not installed.\n\n" +
                 "Native code features will be disabled for this project.\n\n" +
                 "To enable native development, please install NDK version 28.2.13676358 " +
                 "open a terminal then run: 'idesetup -y -c -wn'."
         )
-        .setPositiveButton("OK") { dialog, _ ->
+        .setPositiveButton(getString(R.string.lsp_ok_button)) { dialog, _ ->
           dialog.dismiss()
           onDismiss()
         }

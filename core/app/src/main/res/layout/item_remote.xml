@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="origin"
+                android:text="@string/git_remote_origin"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="?android:textColorPrimary"/>
@@ -34,7 +34,7 @@
                 android:id="@+id/buttonRemove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remove"
+                android:text="@string/git_remove_action"
                 android:textSize="12sp"
                 style="@style/Widget.Material3.Button.OutlinedButton"/>
         </LinearLayout>
@@ -43,7 +43,7 @@
             android:id="@+id/textRemoteUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="https://github.com/user/repo.git"
+            android:hint="@string/git_remote_url_hint"
             android:textSize="14sp"
             android:textColor="?android:textColorSecondary"
             android:layout_marginTop="8dp"

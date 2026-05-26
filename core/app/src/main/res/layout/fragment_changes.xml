@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:text="Stage All"
+                    android:text="@string/git_stage_all"
                     app:icon="@drawable/ic_add"
                     style="@style/Widget.Material3.Button.TonalButton"/>
                 
@@ -43,14 +43,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    android:text="Refresh"
+                    android:text="@string/action_refresh"
                     app:icon="@drawable/ic_sync"
                     style="@style/Widget.Material3.Button.OutlinedButton"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fabCommit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Commit"
+                    android:text="@string/git_commit_action"
                     android:elevation="0dp"
                     android:visibility="gone"
                     app:icon="@drawable/ic_save"/>
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="No changes detected"
+            android:text="@string/git_no_changes"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="?android:textColorSecondary"

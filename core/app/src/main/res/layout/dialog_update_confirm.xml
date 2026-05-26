@@ -14,7 +14,7 @@
             android:id="@+id/tvConfirmTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update Dependency"
+            android:text="@string/update_dependency"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
             android:layout_marginBottom="16dp" />
 
@@ -36,7 +36,7 @@
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -44,7 +44,7 @@
                 style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update" />
+                android:text="@string/lsp_update_button" />
 
         </LinearLayout>
 

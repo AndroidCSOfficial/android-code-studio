@@ -277,7 +277,7 @@ class FileBrowserDialogFragment : DialogFragment() {
         val destinationFile = File(destinationDir, sourceFile.name)
 
         if (!sourceFile.exists()) {
-            Toast.makeText(requireContext(), "Source file doesn't exist", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.file_source_not_exist), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -359,7 +359,7 @@ class FileBrowserDialogFragment : DialogFragment() {
         val destinationFile = File(destinationDir, sourceFile.name)
 
         if (!sourceFile.exists()) {
-            Toast.makeText(requireContext(), "Source file doesn't exist", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.file_source_not_exist), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -482,19 +482,19 @@ class FileBrowserDialogFragment : DialogFragment() {
         val file = File(path)
 
         if (!file.exists()) {
-            Toast.makeText(requireContext(), "Directory doesn't exist: ${file.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.file_dir_not_exist, file.name), Toast.LENGTH_SHORT).show()
             return
         }
 
         if (!file.canRead()) {
-            Toast.makeText(requireContext(), "Cannot read directory: ${file.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.file_dir_cannot_read, file.name), Toast.LENGTH_SHORT).show()
             return
         }
 
         val filesAndFolders = file.listFiles()
 
         if (filesAndFolders == null) {
-            Toast.makeText(requireContext(), "Cannot access folder", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.file_cannot_access_folder), Toast.LENGTH_SHORT).show()
             return
         }
 

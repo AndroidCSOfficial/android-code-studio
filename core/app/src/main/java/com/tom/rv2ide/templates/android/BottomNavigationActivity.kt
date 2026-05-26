@@ -26,6 +26,7 @@ import com.tom.androidcodestudio.project.manager.SdkVersionHelper
 import com.tom.androidcodestudio.project.manager.builder.*
 import com.tom.androidcodestudio.project.manager.builder.module.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.*
+import com.tom.rv2ide.R
 import com.tom.rv2ide.templates.*
 import com.tom.rv2ide.templates.AtcInterface
 import com.tom.rv2ide.templates.android.navigation.bottom.BottomNavigationSources
@@ -74,7 +75,7 @@ class BottomNavigationActivity : Template {
 
           // Show toast on main thread
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Creating Bottom Navigation Activity...", Toast.LENGTH_SHORT)
+            Toast.makeText(context, context.getString(R.string.template_creating_bottom_nav), Toast.LENGTH_SHORT)
                 .show()
           }
 

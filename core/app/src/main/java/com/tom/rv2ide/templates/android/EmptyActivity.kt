@@ -28,6 +28,7 @@ import com.tom.androidcodestudio.project.manager.builder.module.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.GradleFileType.GROOVY
 import com.tom.androidcodestudio.project.manager.builder.toplevel.GradleFileType.KTS
+import com.tom.rv2ide.R
 import com.tom.rv2ide.templates.*
 import com.tom.rv2ide.templates.AtcInterface
 import com.tom.rv2ide.templates.preferences.Options
@@ -70,7 +71,7 @@ class EmptyActivity : Template {
 
           // Show toast on main thread
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Creating Empty Activity...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.template_creating_empty), Toast.LENGTH_SHORT).show()
           }
 
           val packageHelper =

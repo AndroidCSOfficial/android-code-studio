@@ -27,7 +27,7 @@
                     android:id="@+id/textCurrentBranch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current: main"
+                    android:text="@string/git_current_branch_default"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center_vertical"/>
@@ -36,7 +36,7 @@
                     android:id="@+id/buttonRefresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Refresh"
+                    android:text="@string/action_refresh"
                     app:icon="@android:drawable/ic_popup_sync"
                     style="@style/Widget.Material3.Button.TextButton"/>
             </LinearLayout>
@@ -57,6 +57,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="New Branch"
+        android:text="@string/git_create_new_branch"
         app:icon="@android:drawable/ic_input_add"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

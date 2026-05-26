@@ -122,14 +122,14 @@ class INdk(
 
     when {
       availableVersions.isEmpty() -> {
-        Toast.makeText(context, "No NDK versions found to remove", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.ndk_no_versions), Toast.LENGTH_SHORT).show()
       }
       availableVersions.size == 1 -> {
         removeNdkVersion(availableVersions.first())
       }
       else -> {
         showVersionSelectionDialog(
-            title = "Select NDK Version to Remove",
+            title = context.getString(R.string.select_ndk_version_remove),
             versions = availableVersions,
             onVersionSelected = { selectedVersion -> removeNdkVersion(selectedVersion) },
         )
@@ -159,7 +159,7 @@ class INdk(
             selectedVersion == "Loading versions..." ||
             selectedVersion == "No versions available"
     ) {
-      flashError("Please select ndk version from the dropdown first")
+      flashError(context.getString(R.string.msg_select_ndk_first))
       return
     }
 
@@ -177,21 +177,21 @@ class INdk(
   private fun removeNdkVersion(version: String) {
     val utils = IDEUtils()
     MaterialAlertDialogBuilder(context)
-        .setTitle("Remove NDK")
-        .setMessage("Are you sure you want to remove NDK version $version?")
-        .setPositiveButton("Remove") { dialog, _ ->
+        .setTitle(context.getString(R.string.ndk_remove_title))
+        .setMessage(context.getString(R.string.ndk_remove_message, version))
+        .setPositiveButton(context.getString(R.string.action_remove)) { dialog, _ ->
           if (utils.deleteNdk(context, version)) {
             if (version == getVersion()) {
               prefManager.putBoolean("ndk_installed", false)
             }
-            Toast.makeText(context, "Successfully removed NDK $version", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.ndk_removed_success, version), Toast.LENGTH_SHORT).show()
             updateStatus()
           } else {
-            Toast.makeText(context, "Failed to remove NDK $version", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.ndk_removed_failed, version), Toast.LENGTH_SHORT).show()
           }
           dialog.dismiss()
         }
-        .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+        .setNegativeButton(context.getString(R.string.action_cancel)) { dialog, _ -> dialog.dismiss() }
         .create()
         .show()
   }
@@ -208,7 +208,7 @@ class INdk(
           onVersionSelected(selectedVersion)
           dialog.dismiss()
         }
-        .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+        .setNegativeButton(context.getString(R.string.action_cancel)) { dialog, _ -> dialog.dismiss() }
         .create()
         .show()
   }
@@ -222,7 +222,7 @@ class INdk(
         onNegativeClick = {
           val cpuArch = getCpuArchitecture()
           if (!listOf("armeabi-v7a", "arm64-v8a", "x86_64").contains(cpuArch)) {
-            flashError("Unsupported architecture: $cpuArch")
+            flashError(context.getString(R.string.msg_unsupported_arch, cpuArch))
             return@showErrorDialog
           }
 
@@ -251,13 +251,13 @@ class INdk(
                 infoFlashbar.dismiss()
 
                 if (!filenameResult.success) {
-                  flashError("Failed to get package filename: ${filenameResult.errorOutput}")
+                  flashError(context.getString(R.string.msg_failed_get_filename, filenameResult.errorOutput))
                   return@launch
                 }
 
                 val filename = filenameResult.output.trim()
                 if (filename.isEmpty()) {
-                  flashError("Empty filename received from manifest")
+                  flashError(context.getString(R.string.msg_empty_filename))
                   return@launch
                 }
 
@@ -276,7 +276,7 @@ class INdk(
                         downloadFlashbar.dismiss()
 
                         if (downloadResult.output.contains("successfully", ignoreCase = true)) {
-                          val successFlash = flashSuccess("Successfully downloaded")
+                          val successFlash = flashSuccess(context.getString(R.string.msg_successfully_downloaded))
 
                           lifecycleScope.launch(Dispatchers.IO) {
                             delay(1000)
@@ -298,7 +298,7 @@ class INdk(
                                     withContext(Dispatchers.Main) {
                                       extractFlashbar.dismiss()
                                       prefManager.putBoolean("ndk_installed", true)
-                                      flashSuccess("Installation completed successfully!")
+                                      flashSuccess(context.getString(R.string.lsp_installed_summary))
                                       renameDir(NDK_DIR.absolutePath, "$version")
                                       updateNdkBuild(version)
                                       updateStatus()
@@ -306,7 +306,7 @@ class INdk(
                                   } catch (e: Exception) {
                                     withContext(Dispatchers.Main) {
                                       extractFlashbar.dismiss()
-                                      flashError("Installation failed: ${e.message}")
+                                      flashError(context.getString(R.string.msg_installation_failed_with_error, e.message))
                                       e.printStackTrace()
                                     }
                                   }
@@ -317,7 +317,7 @@ class INdk(
                         } else {
                           showErrorDialog(
                               ctx = context,
-                              title = "Download Failed",
+                              title = context.getString(R.string.lsp_server_error_title),
                               message =
                                   "Package verification failed:\n${downloadResult.output}\n${downloadResult.errorOutput}",
                               negativeBtnTitle = "OK",
@@ -327,7 +327,7 @@ class INdk(
                     } catch (e: Exception) {
                       withContext(Dispatchers.Main) {
                         downloadFlashbar.dismiss()
-                        flashError("Download failed: ${e.message}")
+                        flashError(context.getString(R.string.msg_download_failed_with_error, e.message))
                         e.printStackTrace()
                       }
                     }
@@ -335,7 +335,7 @@ class INdk(
                 }
               } catch (e: Exception) {
                 infoFlashbar.dismiss()
-                flashError("Failed to get package info: ${e.message}")
+                flashError(context.getString(R.string.msg_failed_get_package_info, e.message))
                 e.printStackTrace()
               }
             }

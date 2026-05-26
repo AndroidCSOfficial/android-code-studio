@@ -16,7 +16,7 @@
             android:id="@+id/providerDropdownLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="AI Provider"
+            android:hint="@string/ai_provider_hint"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@drawable/ic_ai"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -34,7 +34,7 @@
             android:id="@+id/modelDropdownLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Model / Agent"
+            android:hint="@string/ai_model_hint"
             android:layout_marginBottom="24dp"
             app:startIconDrawable="@drawable/ic_code"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -65,13 +65,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auto-Switch Provider"
+                    android:text="@string/ai_auto_switch_provider"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Automatically switch provider on errors"
+                    android:text="@string/ai_auto_switch_summary"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -106,13 +106,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Code Completion"
+                    android:text="@string/ai_code_completion"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enable AI-powered code suggestions"
+                    android:text="@string/ai_code_completion_summary"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -137,7 +137,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Provider:"
+                android:text="@string/ai_provider_label"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -145,7 +145,7 @@
                 android:id="@+id/currentProviderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not set"
+                android:text="@string/not_set"
                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
         </LinearLayout>
@@ -160,7 +160,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Model:"
+                android:text="@string/ai_model_label"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -168,10 +168,10 @@
                 android:id="@+id/currentModelText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not set"
+                android:text="@string/not_set"
                 android:textAppearance="?attr/textAppearanceBodyMedium" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     </LinearLayout>
 

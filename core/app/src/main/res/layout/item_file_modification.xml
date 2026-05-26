@@ -43,7 +43,7 @@
                 android:id="@+id/fileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="file_name.kt"
+                android:text="@string/ai_file_example_name"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:id="@+id/fileStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Modifying..."
+                android:text="@string/ai_file_modifying"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 

@@ -26,6 +26,7 @@ import com.tom.androidcodestudio.project.manager.SdkVersionHelper
 import com.tom.androidcodestudio.project.manager.builder.*
 import com.tom.androidcodestudio.project.manager.builder.module.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.*
+import com.tom.rv2ide.R
 import com.tom.rv2ide.templates.*
 import com.tom.rv2ide.templates.AtcInterface
 import com.tom.rv2ide.templates.preferences.Options
@@ -68,7 +69,7 @@ class BasicActivity : Template {
 
           // Show toast on main thread
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Creating Basic Activity...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.template_creating_basic), Toast.LENGTH_SHORT).show()
           }
 
           val packageHelper =

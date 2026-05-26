@@ -53,7 +53,7 @@
             app:icon="@drawable/download"
             style="@style/Widget.Material3.Button.TonalButton"
             app:backgroundTint="?attr/colorSurfaceContainerHigh"
-            android:text="Download" />
+            android:text="@string/action_download" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/remove_btn"

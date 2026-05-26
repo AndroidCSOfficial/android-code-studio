@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="Undo"
+        android:text="@string/undo"
         android:visibility="gone"
         app:icon="@drawable/ic_undo"
         style="@style/Widget.Material3.ExtendedFloatingActionButton.Primary" />

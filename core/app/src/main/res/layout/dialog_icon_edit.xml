@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Icon"
+        android:text="@string/edit_icon"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:layout_marginBottom="16dp" />
 
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:hint="File name"
+        android:hint="@string/file_name"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -57,7 +57,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Color"
+        android:text="@string/color_label"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         android:layout_marginBottom="8dp" />
 
@@ -95,7 +95,7 @@
             android:id="@+id/colorPickerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change"
+            android:text="@string/action_change"
             style="@style/Widget.Material3.Button.TonalButton" />
 
     </LinearLayout>
@@ -110,7 +110,7 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:layout_marginEnd="8dp"
             style="@style/Widget.Material3.Button.TextButton" />
 
@@ -118,7 +118,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save &amp; Copy"
+            android:text="@string/save_and_copy"
             style="@style/Widget.Material3.Button" />
 
     </LinearLayout>

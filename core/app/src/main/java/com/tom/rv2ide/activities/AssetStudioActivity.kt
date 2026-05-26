@@ -74,9 +74,9 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
             isXmlMode = true
             updatePreview()
             if (selectedXmlDrawable != null) {
-              Toast.makeText(this, "Icon imported from Material Icons", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, getString(R.string.asset_studio_icon_imported), Toast.LENGTH_SHORT).show()
             } else {
-              Toast.makeText(this, "Failed to load vector from selection", Toast.LENGTH_SHORT)
+              Toast.makeText(this, getString(R.string.asset_studio_load_vector_failed), Toast.LENGTH_SHORT)
                   .show()
             }
           }
@@ -96,7 +96,7 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
               isXmlMode = false
               updatePreview()
             } catch (e: Exception) {
-              Toast.makeText(this, "Error loading image: ${e.message}", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, getString(R.string.asset_studio_error_loading_image, e.message), Toast.LENGTH_SHORT).show()
             }
           }
         }
@@ -112,14 +112,14 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
               val inputStream = contentResolver.openInputStream(uri)
               val xmlContent = inputStream?.bufferedReader()?.use { it.readText() }
               if (xmlContent != null) {
-                Toast.makeText(this, "XML content length: ${xmlContent.length}", Toast.LENGTH_SHORT)
+                Toast.makeText(this, getString(R.string.asset_studio_xml_content_length, xmlContent.length), Toast.LENGTH_SHORT)
                     .show()
                 selectedXmlDrawable = loadVectorDrawableFromXml(xmlContent)
                 selectedImage = null
                 isXmlMode = true
                 updatePreview()
                 if (selectedXmlDrawable != null) {
-                  Toast.makeText(this, "XML loaded successfully", Toast.LENGTH_SHORT).show()
+                  Toast.makeText(this, getString(R.string.asset_studio_xml_loaded), Toast.LENGTH_SHORT).show()
                 } else {
                   Toast.makeText(
                           this,
@@ -129,10 +129,10 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
                       .show()
                 }
               } else {
-                Toast.makeText(this, "Failed to read XML content", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.asset_studio_xml_read_failed), Toast.LENGTH_SHORT).show()
               }
             } catch (e: Exception) {
-              Toast.makeText(this, "Error loading XML: ${e.message}", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, getString(R.string.asset_studio_error_loading_xml, e.message), Toast.LENGTH_SHORT).show()
             }
           }
         }
@@ -843,15 +843,15 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
     if (isXmlMode && selectedXmlDrawable != null) {
       
       binding.previewImageView.setImageDrawable(selectedXmlDrawable)
-      Toast.makeText(this, "XML Preview updated", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, getString(R.string.asset_studio_xml_preview_updated), Toast.LENGTH_SHORT).show()
     } else {
       selectedImage?.let { bitmap ->
         val transformedBitmap = applyImageTransformations(bitmap)
         binding.previewImageView.setImageBitmap(transformedBitmap)
-        Toast.makeText(this, "Image Preview updated", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.asset_studio_image_preview_updated), Toast.LENGTH_SHORT).show()
       }
           ?: run {
-            Toast.makeText(this, "Please select an image or XML file first", Toast.LENGTH_SHORT)
+            Toast.makeText(this, getString(R.string.asset_studio_select_image_first), Toast.LENGTH_SHORT)
                 .show()
           }
     }
@@ -885,7 +885,7 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
   private fun showMaterialIconsImportDialog() {
     val options = arrayOf("Browse in app", "Paste Vector XML")
     AlertDialog.Builder(this)
-        .setTitle("Material Icons")
+        .setTitle(getString(R.string.asset_studio_material_icons))
         .setItems(options) { dialog, which ->
           when (which) {
             0 -> {
@@ -915,9 +915,9 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
               )
         }
     AlertDialog.Builder(this)
-        .setTitle("Import Vector XML")
+        .setTitle(getString(R.string.asset_studio_import_vector))
         .setView(input)
-        .setPositiveButton("Import") { d, _ ->
+        .setPositiveButton(getString(R.string.action_import)) { d, _ ->
           val xml = input.text?.toString()?.trim()
           if (!xml.isNullOrEmpty()) {
             selectedXmlDrawable = loadVectorDrawableFromXml(xml)
@@ -925,9 +925,9 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
             isXmlMode = true
             updatePreview()
             if (selectedXmlDrawable != null) {
-              Toast.makeText(this, "Vector imported", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, getString(R.string.asset_studio_vector_imported), Toast.LENGTH_SHORT).show()
             } else {
-              Toast.makeText(this, "Failed to parse vector XML", Toast.LENGTH_SHORT).show()
+              Toast.makeText(this, getString(R.string.asset_studio_parse_vector_failed), Toast.LENGTH_SHORT).show()
             }
           }
           d.dismiss()
@@ -940,9 +940,9 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
     val locations = arrayOf("drawable", "mipmap")
     var selected = 0
     AlertDialog.Builder(this)
-        .setTitle("Save to")
+        .setTitle(getString(R.string.asset_studio_save_to))
         .setSingleChoiceItems(locations, selected) { _, which -> selected = which }
-        .setPositiveButton("Generate") { dialog, _ ->
+        .setPositiveButton(getString(R.string.action_generate)) { dialog, _ ->
           val useMipmap = (selected == 1)
           generateToLocation(sourceBitmap, iconName, useMipmap)
           dialog.dismiss()
@@ -955,7 +955,7 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
     try {
       val projectDir = com.tom.rv2ide.projects.IProjectManager.getInstance().projectDirPath
       if (projectDir == null) {
-        Toast.makeText(this, "No project opened", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.asset_studio_no_project), Toast.LENGTH_SHORT).show()
         return
       }
       val resDir = java.io.File(projectDir, "app/src/main/res")
@@ -988,10 +988,10 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
         generatedCount++
       }
 
-      Toast.makeText(this, "Generated $generatedCount icons in res/$base-*", Toast.LENGTH_LONG)
+      Toast.makeText(this, getString(R.string.asset_studio_generated_icons, generatedCount, base), Toast.LENGTH_LONG)
           .show()
     } catch (e: Exception) {
-      Toast.makeText(this, "Error generating icons: ${e.message}", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, getString(R.string.asset_studio_generate_error, e.message), Toast.LENGTH_SHORT).show()
     }
   }
 
@@ -1004,7 +1004,7 @@ class AssetStudioActivity : EdgeToEdgeIDEActivity() {
           selectedImage
         }
     if (sourceBitmap == null) {
-      Toast.makeText(this, "Please select an image or XML file first", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, getString(R.string.asset_studio_select_image_first), Toast.LENGTH_SHORT).show()
       return
     }
     promptSaveLocationAndGenerate(sourceBitmap, iconName)

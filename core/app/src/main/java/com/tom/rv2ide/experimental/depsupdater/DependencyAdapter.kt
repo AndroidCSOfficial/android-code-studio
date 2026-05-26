@@ -59,7 +59,7 @@ class DependencyAdapter(
             
             when {
                 dependency.hasUpdate && dependency.latestVersion != null -> {
-                    tvUpdateInfo.text = "Update available: ${dependency.latestVersion}"
+                    tvUpdateInfo.text = context.getString(R.string.dep_update_available, dependency.latestVersion)
                     tvUpdateInfo.setTextColor(colorPrimary)
                     tvUpdateInfo.visibility = View.VISIBLE
                     card.setCardBackgroundColor(colorPrimaryContainer)
@@ -67,7 +67,7 @@ class DependencyAdapter(
                     card.setOnClickListener { onItemClick(dependency) }
                 }
                 dependency.latestVersion != null && !dependency.latestVersion.startsWith("Error") -> {
-                    tvUpdateInfo.text = "Up to date"
+                    tvUpdateInfo.text = context.getString(R.string.dep_up_to_date)
                     tvUpdateInfo.setTextColor(colorOnSurfaceVariant)
                     tvUpdateInfo.visibility = View.VISIBLE
                     card.setCardBackgroundColor(colorSurface)
@@ -83,7 +83,7 @@ class DependencyAdapter(
                     card.setOnClickListener(null)
                 }
                 else -> {
-                    tvUpdateInfo.text = "Not found in repositories"
+                    tvUpdateInfo.text = context.getString(R.string.dep_not_found)
                     tvUpdateInfo.setTextColor(colorTertiary)
                     tvUpdateInfo.visibility = View.VISIBLE
                     card.setCardBackgroundColor(colorTertiaryContainer)

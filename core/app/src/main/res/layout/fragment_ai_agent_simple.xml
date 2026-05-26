@@ -99,7 +99,7 @@
                     android:id="@+id/til_prompt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Ask AI anything..."
+                    android:hint="@string/ai_agent_prompt_hint"
                     app:boxBackgroundMode="none"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btn_send"

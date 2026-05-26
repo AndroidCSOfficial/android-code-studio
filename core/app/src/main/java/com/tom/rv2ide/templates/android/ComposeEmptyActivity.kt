@@ -26,6 +26,7 @@ import com.tom.androidcodestudio.project.manager.SdkVersionHelper
 import com.tom.androidcodestudio.project.manager.builder.*
 import com.tom.androidcodestudio.project.manager.builder.module.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.*
+import com.tom.rv2ide.R
 import com.tom.rv2ide.templates.*
 import com.tom.rv2ide.templates.AtcInterface
 import java.io.File
@@ -70,7 +71,7 @@ class ComposeEmptyActivity : Template {
 
           // Show toast on main thread
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Creating Compose Empty Activity...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.template_creating_compose_empty), Toast.LENGTH_SHORT).show()
           }
 
           val packageHelper =

@@ -39,7 +39,7 @@
                     android:id="@+id/historyTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Created MainActivity.kt"
+                    android:text="@string/git_history_example_action"
                     android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
                     android:id="@+id/historyTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 minutes ago"
+                    android:text="@string/git_history_example_time"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Modified 3 files"
+            android:text="@string/git_history_example_files"
             android:textAppearance="?attr/textAppearanceBodyMedium" />
 
     </LinearLayout>

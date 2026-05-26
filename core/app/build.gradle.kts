@@ -43,7 +43,7 @@ buildscript {
 }
 
 tasks.configureEach {
-    if (name.contains("desugar", ignoreCase = true)) {
+    if (name.contains("desugar", ignoreCase = true) && !name.contains("FileDependencies", ignoreCase = true)) {
         enabled = false
     }
 }
@@ -97,12 +97,12 @@ android {
 
   buildTypes {
     debug {
-      signingConfig = signingConfigs.getByName("custom")
     }
 
     release {
       isShrinkResources = false
-      signingConfig = signingConfigs.getByName("custom")
+      isMinifyEnabled = false
+      signingConfig = null
     }
   }
   
@@ -131,25 +131,7 @@ android {
       val abiFilter = filters.find { it.filterType == "ABI" }
       val archSuffix =
           abiFilter?.identifier
-              ?: run {
-                val variantName = variant.name.lowercase()
-                when {
-                  variantName.contains("arm64") -> "arm64-v8a"
-                  variantName.contains("armeabi") || variantName.contains("arm7") -> "armeabi-v7a"
-                  else -> {
-                    // This should not happen with our configuration
-                    throw IllegalStateException(
-                        "Could not determine ABI for variant: $variantName. Expected arm64-v8a or armeabi-v7a."
-                    )
-                  }
-                }
-              }
-
-      if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a")) {
-        throw IllegalStateException(
-            "Unsupported architecture: $archSuffix. Only arm64-v8a and armeabi-v7a are supported."
-        )
-      }
+              ?: "universal"
 
       val appName = "android-code-studio"
       val fileName =

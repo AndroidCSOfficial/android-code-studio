@@ -18,7 +18,7 @@
             android:id="@+id/promptLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="What would you like me to do?"
+            android:hint="@string/ai_agent_chat_hint"
             android:layout_marginBottom="16dp"
             app:startIconDrawable="@drawable/ic_ai"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Clear"
+                android:text="@string/action_clear"
                 app:icon="@drawable/ic_clear"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -54,7 +54,7 @@
                 android:id="@+id/executeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send"
+                android:text="@string/ai_agent_send"
                 app:icon="@drawable/ic_send" />
 
         </LinearLayout>
@@ -98,7 +98,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Status"
+                        android:text="@string/server_status_title"
                         android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -116,7 +116,7 @@
                     android:id="@+id/statusText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ready to assist you"
+                    android:text="@string/ai_ready_to_assist"
                     android:textIsSelectable="true"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
@@ -147,7 +147,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Modification Summary"
+                    android:text="@string/ai_modification_summary"
                     android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:layout_marginBottom="8dp" />
 

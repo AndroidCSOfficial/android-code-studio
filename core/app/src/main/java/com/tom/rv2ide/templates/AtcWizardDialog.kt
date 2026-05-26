@@ -391,7 +391,7 @@ class AtcWizardDialog : BottomSheetDialogFragment() {
     val currentIndex = versions.indexOf(Options.OPT_SELECTED_NDK_VERSION).coerceAtLeast(0)
 
     MaterialAlertDialogBuilder(ctx)
-        .setTitle("Select NDK Version")
+        .setTitle(context?.getString(R.string.atc_select_ndk))
         .setSingleChoiceItems(versionLabels, currentIndex) { dialog, which ->
           val selectedVersion = versions[which]
           if (Check.validateNdkVersion(selectedVersion)) {
@@ -399,10 +399,10 @@ class AtcWizardDialog : BottomSheetDialogFragment() {
             binding.ndkVersionButton.text = "NDK: $selectedVersion"
             dialog.dismiss()
           } else {
-            Toast.makeText(ctx, "Invalid NDK: $selectedVersion", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, context?.getString(R.string.atc_invalid_ndk, selectedVersion), Toast.LENGTH_SHORT).show()
           }
         }
-        .setNegativeButton("Cancel", null)
+        .setNegativeButton(context?.getString(R.string.action_cancel), null)
         .show()
   }
 
@@ -413,16 +413,16 @@ class AtcWizardDialog : BottomSheetDialogFragment() {
             .toTypedArray()
 
     MaterialAlertDialogBuilder(ctx)
-        .setTitle("Select CMake Version")
+        .setTitle(context?.getString(R.string.atc_select_cmake))
         .setSingleChoiceItems(versionLabels, 0) { dialog, which ->
           val selectedVersion = versions[which]
           Check.validateCMakeVersion(selectedVersion)?.let { path ->
             Options.OPT_CMAKE_PATH = path
-            Toast.makeText(ctx, "CMake $selectedVersion selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx, context?.getString(R.string.atc_cmake_selected, selectedVersion), Toast.LENGTH_SHORT).show()
             dialog.dismiss()
-          } ?: Toast.makeText(ctx, "Invalid CMake: $selectedVersion", Toast.LENGTH_SHORT).show()
+          } ?: Toast.makeText(ctx, context?.getString(R.string.atc_invalid_cmake, selectedVersion), Toast.LENGTH_SHORT).show()
         }
-        .setNegativeButton("Cancel") { _, _ -> binding.useCMakeSwitch.isChecked = false }
+        .setNegativeButton(context?.getString(R.string.action_cancel)) { _, _ -> binding.useCMakeSwitch.isChecked = false }
         .show()
   }
 
@@ -436,7 +436,7 @@ class AtcWizardDialog : BottomSheetDialogFragment() {
         .setTitle(title)
         .setMessage(message)
         .setPositiveButton(positiveText) { _, _ -> onPositive?.invoke() }
-        .setNegativeButton("Cancel", null)
+        .setNegativeButton(context?.getString(R.string.action_cancel), null)
         .show()
   }
 

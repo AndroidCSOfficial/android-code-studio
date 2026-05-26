@@ -108,3 +108,5 @@ scripts/
 # local.properties
 build.log
 .androidide
+BUILD_GUIDE.md
+.github/workflows/

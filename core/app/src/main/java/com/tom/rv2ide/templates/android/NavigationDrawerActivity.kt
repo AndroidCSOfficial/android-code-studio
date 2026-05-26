@@ -26,6 +26,7 @@ import com.tom.androidcodestudio.project.manager.SdkVersionHelper
 import com.tom.androidcodestudio.project.manager.builder.*
 import com.tom.androidcodestudio.project.manager.builder.module.*
 import com.tom.androidcodestudio.project.manager.builder.toplevel.*
+import com.tom.rv2ide.R
 import com.tom.rv2ide.templates.*
 import com.tom.rv2ide.templates.AtcInterface
 import com.tom.rv2ide.templates.android.navigation.drawer.Fragment
@@ -74,7 +75,7 @@ class NavigationDrawerActivity : Template {
 
           // Show toast on main thread
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Creating Navigation drawer Activity...", Toast.LENGTH_SHORT)
+            Toast.makeText(context, context.getString(R.string.template_creating_nav_drawer), Toast.LENGTH_SHORT)
                 .show()
           }
 

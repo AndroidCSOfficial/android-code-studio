@@ -9,7 +9,7 @@
         android:id="@+id/tvProgressTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Updating Dependencies"
+        android:text="@string/updating_dependencies"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
         android:textColor="?attr/colorOnSurface"
         android:layout_marginBottom="8dp" />
@@ -18,7 +18,7 @@
         android:id="@+id/tvProgressMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Please wait..."
+        android:text="@string/please_wait"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginBottom="16dp" />

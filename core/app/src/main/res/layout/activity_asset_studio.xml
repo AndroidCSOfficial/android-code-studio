@@ -76,7 +76,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Preview"
+                        android:text="@string/asset_studio_preview"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="16dp" />
@@ -119,7 +119,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Source"
+                        android:text="@string/asset_studio_source"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="16dp" />
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:text="Select Image"
+                            android:text="@string/asset_studio_select_image"
                             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                             app:icon="@drawable/ic_image"
                             app:iconGravity="textStart"
@@ -147,7 +147,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Load XML"
+                            android:text="@string/asset_studio_load_xml"
                             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                             app:icon="@drawable/ic_code"
                             app:iconGravity="textStart"
@@ -159,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Choose an image or XML vector to create app icons"
+                        android:text="@string/asset_studio_choose_source"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                         android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -184,7 +184,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Icon Settings"
+                        android:text="@string/asset_studio_icon_settings"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="20dp" />
@@ -194,7 +194,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:hint="Icon Name"
+                        android:hint="@string/asset_studio_icon_name_hint"
                         app:startIconDrawable="@drawable/ic_label"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
@@ -203,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:text="ic_my_icon" />
+                            android:hint="@string/asset_studio_icon_name_hint" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,7 +211,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shape"
+                        android:text="@string/asset_studio_shape"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="12dp" />
@@ -228,7 +228,7 @@
                             android:id="@+id/circle_shape_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Circle"
+                            android:text="@string/asset_studio_shape_circle"
                             android:checked="true"
                             style="@style/Widget.Material3.Chip.Filter" />
 
@@ -236,14 +236,14 @@
                             android:id="@+id/square_shape_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Square"
+                            android:text="@string/asset_studio_shape_square"
                             style="@style/Widget.Material3.Chip.Filter" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/rounded_square_shape_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rounded"
+                            android:text="@string/asset_studio_shape_rounded"
                             style="@style/Widget.Material3.Chip.Filter" />
 
                     </com.google.android.material.chip.ChipGroup>
@@ -252,7 +252,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Background Color"
+                        android:text="@string/asset_studio_bg_color"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="12dp" />
@@ -278,7 +278,7 @@
                             android:layout_weight="1"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="8dp"
-                            android:text="Choose Color"
+                            android:text="@string/asset_studio_choose_color"
                             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                             app:icon="@drawable/ic_palette"
                             app:iconGravity="textStart"
@@ -289,7 +289,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Custom"
+                            android:text="@string/asset_studio_custom"
                             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                             app:icon="@drawable/ic_tune"
                             app:iconGravity="textStart"
@@ -310,7 +310,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Foreground Scale"
+                        android:text="@string/asset_studio_fg_scale"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="8dp" />
@@ -352,7 +352,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rounded Corners"
+                        android:text="@string/asset_studio_rounded_corners"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
                         android:textColor="?attr/colorOnSurface"
                         android:layout_marginBottom="8dp" />
@@ -406,7 +406,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
-                    android:text="Preview"
+                    android:text="@string/asset_studio_preview"
                     android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                     app:icon="@drawable/ic_visibility"
                     app:iconGravity="textStart"
@@ -416,7 +416,7 @@
                     android:id="@+id/generate_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Generate Icons"
+                    android:text="@string/asset_studio_generate_icons"
                     android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                     app:icon="@drawable/ic_download"
                     app:iconGravity="textStart"

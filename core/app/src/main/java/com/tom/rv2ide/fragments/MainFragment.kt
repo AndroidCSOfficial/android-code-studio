@@ -81,14 +81,13 @@ class MainFragment : BaseFragment() {
   companion object {
     private val log = LoggerFactory.getLogger(MainFragment::class.java)
 
-    // Common git clone options
-    private val COMMON_GIT_OPTIONS =
+    private val COMMON_GIT_OPTION_FLAGS =
         listOf(
-            GitOption("--depth 1", "Shallow clone (faster)"),
-            GitOption("--single-branch", "Clone single branch only"),
-            GitOption("--recursive", "Clone with submodules"),
-            GitOption("--no-tags", "Don't fetch tags"),
-            GitOption("--bare", "Create bare repository"),
+            "--depth 1",
+            "--single-branch",
+            "--recursive",
+            "--no-tags",
+            "--bare",
         )
   }
 
@@ -284,7 +283,7 @@ class MainFragment : BaseFragment() {
   }
 
   private fun showProjectOptionsDialog(project: File, onActionComplete: () -> Unit) {
-    val options = arrayOf("Backup project", "Delete project", "Rename")
+    val options = arrayOf(getString(R.string.git_backup_project), getString(R.string.git_delete_project_action), getString(R.string.git_rename_action))
 
     val builder = DialogUtils.newMaterialDialogBuilder(requireContext())
     builder.setTitle(project.name)
@@ -444,11 +443,11 @@ class MainFragment : BaseFragment() {
     val binding = LayoutDialogProgressBinding.inflate(layoutInflater)
 
     binding.message.visibility = View.VISIBLE
-    binding.message.text = "Backing up project..."
+    binding.message.text = getString(R.string.git_backing_up_project)
     binding.progress.isIndeterminate = true
 
-    builder.setTitle("Backup in Progress")
-    builder.setMessage("Creating backup of ${project.name}")
+    builder.setTitle(getString(R.string.git_backup_in_progress))
+    builder.setMessage(getString(R.string.git_creating_backup_of, project.name))
     builder.setView(binding.root)
     builder.setCancelable(false)
 
@@ -483,11 +482,11 @@ class MainFragment : BaseFragment() {
           dialog.dismiss()
 
           val successBuilder = DialogUtils.newMaterialDialogBuilder(requireContext())
-          successBuilder.setTitle("Backup Completed")
+          successBuilder.setTitle(getString(R.string.git_backup_completed))
           successBuilder.setMessage(
-              "Project backed up successfully!\n\nLocation:\n${backupFile.absolutePath}"
+              getString(R.string.git_backup_success_message, backupFile.absolutePath)
           )
-          successBuilder.setPositiveButton("OK") { d, _ ->
+          successBuilder.setPositiveButton(getString(R.string.lsp_ok_button)) { d, _ ->
             d.dismiss()
             onComplete()
           }
@@ -499,9 +498,9 @@ class MainFragment : BaseFragment() {
           dialog.dismiss()
 
           val errorBuilder = DialogUtils.newMaterialDialogBuilder(requireContext())
-          errorBuilder.setTitle("Backup Failed")
-          errorBuilder.setMessage("Failed to backup project: ${e.localizedMessage}")
-          errorBuilder.setPositiveButton("OK", null)
+          errorBuilder.setTitle(getString(R.string.git_backup_failed))
+          errorBuilder.setMessage(getString(R.string.git_backup_failed_message, e.localizedMessage))
+          errorBuilder.setPositiveButton(getString(R.string.lsp_ok_button), null)
           errorBuilder.show()
         }
       }
@@ -527,11 +526,11 @@ class MainFragment : BaseFragment() {
     val binding = LayoutDialogProgressBinding.inflate(layoutInflater)
 
     binding.message.visibility = View.VISIBLE
-    binding.message.text = "Deleting project..."
+    binding.message.text = getString(R.string.git_deleting_project)
     binding.progress.isIndeterminate = true
 
-    builder.setTitle("Delete in Progress")
-    builder.setMessage("Deleting ${project.name}")
+    builder.setTitle(getString(R.string.git_delete_in_progress))
+    builder.setMessage(getString(R.string.git_deleting, project.name))
     builder.setView(binding.root)
     builder.setCancelable(false)
 
@@ -600,12 +599,20 @@ class MainFragment : BaseFragment() {
     val bottomSheet = BottomSheetDialog(requireContext())
     val sheetBinding = BottomsheetGitCloneBinding.inflate(layoutInflater)
 
-    COMMON_GIT_OPTIONS.forEach { option ->
+    val gitOptionDescriptions = mapOf(
+        "--depth 1" to getString(R.string.git_option_shallow),
+        "--single-branch" to getString(R.string.git_option_single_branch),
+        "--recursive" to getString(R.string.git_option_recursive),
+        "--no-tags" to getString(R.string.git_option_no_tags),
+        "--bare" to getString(R.string.git_option_bare),
+    )
+
+    COMMON_GIT_OPTION_FLAGS.forEach { flag ->
       val chip = Chip(requireContext())
-      chip.text = option.description
+      chip.text = gitOptionDescriptions[flag]
       chip.isCheckable = true
       chip.isCheckedIconVisible = true
-      chip.tag = option.flag
+      chip.tag = flag
       sheetBinding.chipGroup.addView(chip)
     }
 

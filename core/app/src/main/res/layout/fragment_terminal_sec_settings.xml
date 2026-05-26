@@ -27,7 +27,7 @@
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Appearance"
+          android:text="@string/terminal_appearance"
           android:textSize="18sp"
           android:textStyle="bold"
           android:layout_marginBottom="16dp" />
@@ -35,7 +35,7 @@
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Text Size"
+          android:text="@string/terminal_text_size"
           android:textSize="14sp"
           android:layout_marginBottom="8dp" />
 
@@ -77,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hide extra keys toolbar"
+            android:text="@string/terminal_hide_extra_keys"
             android:textSize="14sp" />
 
           <com.google.android.material.materialswitch.MaterialSwitch

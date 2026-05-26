@@ -53,7 +53,7 @@ class ReviewChangesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = "Review Changes"
+            title = getString(R.string.review_changes)
         }
         toolbar.setNavigationOnClickListener {
             setResult(RESULT_CANCELED)

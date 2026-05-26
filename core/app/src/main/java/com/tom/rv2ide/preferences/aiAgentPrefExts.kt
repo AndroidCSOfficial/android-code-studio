@@ -132,15 +132,15 @@ private class GrokApiKey(
     val dialog =
         com.google.android.material.dialog
             .MaterialAlertDialogBuilder(context)
-            .setTitle("Grok API Key")
-            .setMessage("Enter your xAI Grok API key")
+            .setTitle(context.getString(R.string.api_key_grok_title))
+            .setMessage(context.getString(R.string.api_key_grok_message))
             .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
               val apiKey = editText.text.toString().trim()
               prefManager.putString("ai_agent_grok_api_key", apiKey)
               preference.summary = getSummaryText()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .create()
 
     dialog.show()
@@ -186,15 +186,15 @@ private class GeminiApiKey(
     val dialog =
         com.google.android.material.dialog
             .MaterialAlertDialogBuilder(context)
-            .setTitle("Gemini API Key")
-            .setMessage("Enter your Google Gemini API key")
+            .setTitle(context.getString(R.string.api_key_gemini_title))
+            .setMessage(context.getString(R.string.api_key_gemini_message))
             .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
               val apiKey = editText.text.toString().trim()
               prefManager.putString("ai_agent_gemini_api_key", apiKey)
               preference.summary = getSummaryText()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .create()
 
     dialog.show()
@@ -240,15 +240,15 @@ private class DeepseekApiKey(
     val dialog =
         com.google.android.material.dialog
             .MaterialAlertDialogBuilder(context)
-            .setTitle("Deepseek API Key")
-            .setMessage("Enter your Deepseek API key")
+            .setTitle(context.getString(R.string.api_key_deepseek_title))
+            .setMessage(context.getString(R.string.api_key_deepseek_message))
             .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
               val apiKey = editText.text.toString().trim()
               prefManager.putString("ai_agent_deepseek_api_key", apiKey)
               preference.summary = getSummaryText()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .create()
 
     dialog.show()
@@ -294,15 +294,15 @@ private class OpenAIApiKey(
     val dialog =
         com.google.android.material.dialog
             .MaterialAlertDialogBuilder(context)
-            .setTitle("OpenAI API Key")
-            .setMessage("Enter your OpenAI API key")
+            .setTitle(context.getString(R.string.api_key_openai_title))
+            .setMessage(context.getString(R.string.api_key_openai_message))
             .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
               val apiKey = editText.text.toString().trim()
               prefManager.putString("ai_agent_openai_api_key", apiKey)
               preference.summary = getSummaryText()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .create()
 
     dialog.show()
@@ -348,15 +348,15 @@ private class AnthropicApiKey(
     val dialog =
         com.google.android.material.dialog
             .MaterialAlertDialogBuilder(context)
-            .setTitle("Anthropic API Key")
-            .setMessage("Enter your Anthropic API key")
+            .setTitle(context.getString(R.string.api_key_anthropic_title))
+            .setMessage(context.getString(R.string.api_key_anthropic_message))
             .setView(editText)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(context.getString(R.string.action_save)) { _, _ ->
               val apiKey = editText.text.toString().trim()
               prefManager.putString("ai_agent_anthropic_api_key", apiKey)
               preference.summary = getSummaryText()
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(context.getString(R.string.action_cancel), null)
             .create()
 
     dialog.show()

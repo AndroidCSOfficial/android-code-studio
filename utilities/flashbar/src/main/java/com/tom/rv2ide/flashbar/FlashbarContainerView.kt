@@ -285,14 +285,21 @@ internal class FlashbarContainerView(context: Context) : RelativeLayout(context)
 
   private fun dismissInternal(event: DismissEvent) {
     if (isBarShowing) {
-      // Flashbar is currently being shown
-      // but a dismissal has been requested
-      // take this into account and dismiss flashbar afterwards
       earlyDismissalRequested = true
       return
     }
 
-    if (isBarDismissing || !isBarShown) {
+    if (isBarDismissing) {
+      return
+    }
+
+    if (!isBarShown) {
+      removeCallbacks(dismissRunnable)
+      (parent as? ViewGroup)?.removeView(this@FlashbarContainerView)
+      isBarShowing = false
+      isBarShown = false
+      isBarDismissing = false
+      onBarDismissListener?.onDismissed(parentFlashbar, event)
       return
     }
 

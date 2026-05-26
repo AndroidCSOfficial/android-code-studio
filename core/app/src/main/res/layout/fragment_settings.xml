@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Git User Configuration"
+                    android:text="@string/git_user_config"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:textColorPrimary"/>
@@ -42,7 +42,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Name:"
+                        android:text="@string/git_name_label"
                         android:textSize="14sp"
                         android:textColor="?android:textColorSecondary"/>
                     
@@ -51,7 +51,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="User"
+                        android:text="@string/git_user_default"
                         android:textSize="14sp"
                         android:textColor="?android:textColorPrimary"
                         android:textStyle="bold"/>
@@ -67,7 +67,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Email:"
+                        android:text="@string/git_email_label"
                         android:textSize="14sp"
                         android:textColor="?android:textColorSecondary"/>
                     
@@ -76,7 +76,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="user@example.com"
+                        android:text="@string/git_email_default"
                         android:textSize="14sp"
                         android:textColor="?android:textColorPrimary"
                         android:textStyle="bold"/>
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Edit User Config"
+                    android:text="@string/git_edit_user_config"
                     style="@style/Widget.Material3.Button.TonalButton"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Credentials"
+                    android:text="@string/git_credentials_title"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:textColorPrimary"/>
@@ -129,14 +129,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Remember credentials"
+                            android:text="@string/git_remember_credentials"
                             android:textSize="16sp"
                             android:textColor="?android:textColorPrimary"/>
                         
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Save username and password for push/pull"
+                            android:text="@string/git_save_credentials_summary"
                             android:textSize="12sp"
                             android:textColor="?android:textColorSecondary"
                             android:layout_marginTop="4dp"/>
@@ -158,7 +158,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Status:"
+                        android:text="@string/git_status_label"
                         android:textSize="14sp"
                         android:textColor="?android:textColorSecondary"/>
                     
@@ -167,7 +167,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="Not saved"
+                        android:text="@string/git_credentials_not_saved"
                         android:textSize="14sp"
                         android:textColor="?android:textColorPrimary"
                         android:textStyle="bold"/>
@@ -178,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Clear Saved Credentials"
+                    android:text="@string/git_clear_credentials"
                     style="@style/Widget.Material3.Button.OutlinedButton"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

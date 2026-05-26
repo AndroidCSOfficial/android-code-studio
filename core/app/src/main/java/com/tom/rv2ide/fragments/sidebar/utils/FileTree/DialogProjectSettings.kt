@@ -90,11 +90,11 @@ class DialogProjectSettings(private val context: Context) {
         val binding = LayoutDialogProgressBinding.inflate(LayoutInflater.from(context))
 
         binding.message.visibility = View.VISIBLE
-        binding.message.text = "Backing up project..."
+        binding.message.text = context.getString(R.string.project_backing_up)
         binding.progress.isIndeterminate = true
 
-        builder.setTitle("Backup in Progress")
-        builder.setMessage("Creating backup of ${project.name}")
+        builder.setTitle(context.getString(R.string.project_backup_in_progress))
+        builder.setMessage(context.getString(R.string.project_backup_message, project.name))
         builder.setView(binding.root)
         builder.setCancelable(false)
 
@@ -128,11 +128,11 @@ class DialogProjectSettings(private val context: Context) {
                     progressDialog.dismiss()
 
                     val successBuilder = DialogUtils.newMaterialDialogBuilder(context)
-                    successBuilder.setTitle("Backup Completed")
+                    successBuilder.setTitle(context.getString(R.string.project_backup_completed))
                     successBuilder.setMessage(
                         "Project backed up successfully!\n\nLocation:\n${backupFile.absolutePath}"
                     )
-                    successBuilder.setPositiveButton("OK") { d, _ ->
+                    successBuilder.setPositiveButton(context.getString(R.string.action_ok)) { d, _ ->
                         d.dismiss()
                         onComplete()
                     }
@@ -143,9 +143,9 @@ class DialogProjectSettings(private val context: Context) {
                     progressDialog.dismiss()
 
                     val errorBuilder = DialogUtils.newMaterialDialogBuilder(context)
-                    errorBuilder.setTitle("Backup Failed")
-                    errorBuilder.setMessage("Failed to backup project: ${e.localizedMessage}")
-                    errorBuilder.setPositiveButton("OK", null)
+                    errorBuilder.setTitle(context.getString(R.string.project_backup_failed))
+                    errorBuilder.setMessage(context.getString(R.string.project_backup_failed_message, e.localizedMessage))
+                    errorBuilder.setPositiveButton(context.getString(R.string.action_ok), null)
                     errorBuilder.show()
                 }
             }

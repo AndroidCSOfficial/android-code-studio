@@ -127,7 +127,7 @@
                         android:id="@+id/m3IconsBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="M3 Icons"
+                        android:text="@string/asset_studio_m3_icons"
                         style="@style/Widget.Material3.Button.OutlinedButton" />
 
                 </LinearLayout>
@@ -161,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="No recent assets"
+                    android:text="@string/asset_studio_no_recent"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 

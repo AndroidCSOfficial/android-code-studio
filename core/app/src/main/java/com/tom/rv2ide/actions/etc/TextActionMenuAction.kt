@@ -26,6 +26,7 @@ import com.tom.rv2ide.actions.ActionItem
 import com.tom.rv2ide.actions.ActionMenu
 import com.tom.rv2ide.actions.EditorActivityAction
 import com.tom.rv2ide.R
+import com.tom.rv2ide.resources.R as ResR
 import com.tom.rv2ide.utils.TextTransformers
 import io.github.rosemoe.sora.widget.CodeEditor
 import org.slf4j.LoggerFactory
@@ -102,7 +103,7 @@ class ConvertToUppercaseAction(context: Context, override val order: Int) : Edit
   }
   
   init {
-    label = "Convert to uppercase"
+    label = context.getString(ResR.string.action_convert_to_uppercase)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_uppercase)
   }
   
@@ -128,7 +129,7 @@ class ConvertToLowercaseAction(context: Context, override val order: Int) : Edit
   override var requiresUIThread = true
   
   init {
-    label = "Convert to lowercase"
+    label = context.getString(ResR.string.action_convert_to_lowercase)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_lowercase)
   }
   
@@ -147,7 +148,7 @@ class DeleteLineAction(context: Context, override val order: Int) : EditorActivi
   override var requiresUIThread = true
   
   init {
-    label = "Delete line"
+    label = context.getString(ResR.string.action_delete_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_delete)
   }
   
@@ -166,7 +167,7 @@ class DuplicateLineAction(context: Context, override val order: Int) : EditorAct
   override var requiresUIThread = true
   
   init {
-    label = "Duplicate line"
+    label = context.getString(ResR.string.action_duplicate_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_duplicate)
   }
   
@@ -185,7 +186,7 @@ class CopyLineAction(private val context: Context, override val order: Int) : Ed
   override var requiresUIThread = true
   
   init {
-    label = "Copy line"
+    label = context.getString(ResR.string.action_copy_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_copy)
   }
   
@@ -195,7 +196,7 @@ class CopyLineAction(private val context: Context, override val order: Int) : Ed
       return false
     }
     TextTransformers(editor).copyLine()
-    Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, ResR.string.msg_copied_to_clipboard, Toast.LENGTH_SHORT).show()
     return true
   }
 }
@@ -205,7 +206,7 @@ class CommentLineAction(context: Context, override val order: Int) : EditorActiv
   override var requiresUIThread = true
   
   init {
-    label = "Comment line"
+    label = context.getString(ResR.string.action_comment_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_comment)
   }
   
@@ -224,7 +225,7 @@ class MoveLineUpAction(context: Context, override val order: Int) : EditorActivi
   override var requiresUIThread = true
   
   init {
-    label = "Move line up"
+    label = context.getString(ResR.string.action_move_line_up)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_move_line_up)
   }
   
@@ -243,7 +244,7 @@ class MoveLineDownAction(context: Context, override val order: Int) : EditorActi
   override var requiresUIThread = true
   
   init {
-    label = "Move line down"
+    label = context.getString(ResR.string.action_move_line_down)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_move_line_down)
   }
   
@@ -262,7 +263,7 @@ class InsertLineAboveAction(context: Context, override val order: Int) : EditorA
   override var requiresUIThread = true
   
   init {
-    label = "Insert line above"
+    label = context.getString(ResR.string.action_insert_line_above)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_insert_line_above)
   }
   
@@ -281,7 +282,7 @@ class InsertLineBelowAction(context: Context, override val order: Int) : EditorA
   override var requiresUIThread = true
   
   init {
-    label = "Insert line below"
+    label = context.getString(ResR.string.action_insert_line_below)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_insert_line_below)
   }
   
@@ -300,7 +301,7 @@ class SelectLineAction(context: Context, override val order: Int) : EditorActivi
   override var requiresUIThread = true
   
   init {
-    label = "Select line"
+    label = context.getString(ResR.string.action_select_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_select_line)
   }
   
@@ -319,7 +320,7 @@ class TrimTrailingWhitespaceAction(private val context: Context, override val or
   override var requiresUIThread = true
   
   init {
-    label = "Trim trailing whitespace"
+    label = context.getString(ResR.string.action_trim_trailing_whitespace)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_trim_trailing_whitespace)
   }
   
@@ -329,7 +330,7 @@ class TrimTrailingWhitespaceAction(private val context: Context, override val or
       return false
     }
     TextTransformers(editor).trimTrailingWhitespace()
-    Toast.makeText(context, "Trailing whitespace removed", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, ResR.string.msg_trailing_whitespace_removed, Toast.LENGTH_SHORT).show()
     return true
   }
 }
@@ -339,7 +340,7 @@ class IndentLineAction(context: Context, override val order: Int) : EditorActivi
   override var requiresUIThread = true
   
   init {
-    label = "Indent line"
+    label = context.getString(ResR.string.action_indent_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_indent_line)
   }
   
@@ -358,7 +359,7 @@ class UnindentLineAction(context: Context, override val order: Int) : EditorActi
   override var requiresUIThread = true
   
   init {
-    label = "Unindent line"
+    label = context.getString(ResR.string.action_unindent_line)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_unindent_line)
   }
   
@@ -377,7 +378,7 @@ class JoinLinesAction(context: Context, override val order: Int) : EditorActivit
   override var requiresUIThread = true
   
   init {
-    label = "Join lines"
+    label = context.getString(ResR.string.action_join_lines)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_join_lines)
   }
   
@@ -396,7 +397,7 @@ class ClearAllAction(private val context: Context, override val order: Int) : Ed
   override var requiresUIThread = true
   
   init {
-    label = "Clear all"
+    label = context.getString(ResR.string.action_clear_all)
     icon = ContextCompat.getDrawable(context, R.drawable.ic_clear_all)
   }
   
@@ -408,13 +409,13 @@ class ClearAllAction(private val context: Context, override val order: Int) : Ed
     val activity = data.requireActivity()
     
     MaterialAlertDialogBuilder(activity)
-      .setTitle("Clear All")
-      .setMessage("Are you sure you want to clear all text? This action cannot be undone.")
-      .setPositiveButton("Clear") { _, _ ->
+      .setTitle(ResR.string.title_clear_all)
+      .setMessage(ResR.string.msg_clear_all_confirm)
+      .setPositiveButton(ResR.string.btn_clear) { _, _ ->
         TextTransformers(editor).clearAll()
-        Toast.makeText(context, "Editor cleared", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, ResR.string.msg_editor_cleared, Toast.LENGTH_SHORT).show()
       }
-      .setNegativeButton("Cancel", null)
+      .setNegativeButton(android.R.string.cancel, null)
       .show()
     
     return true
