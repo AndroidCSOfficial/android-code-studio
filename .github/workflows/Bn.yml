@@ -1,0 +1,107 @@
+name: Build Android Code Studio
+
+on:
+  push:
+    branches: 
+      - "dev"
+      - "main" 
+      - "indexing"
+      - "release/**"
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
+  pull_request:
+    branches: [ "dev" ]
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - 'fastlane/**'
+      - '.github/workflows/crowdin_contributors.yml'
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Select Build Type'
+        required: true
+        default: 'Debug'
+        type: choice
+        options:
+          - Debug
+          - Release
+
+jobs:
+  build_release_apk:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ github.token }}
+          
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
+
+      - name: Determine Build Type Configuration
+        run: |
+          SELECTED_TYPE="${{ github.event.inputs.build_type }}"
+          BUILD_TYPE="${SELECTED_TYPE:-Debug}"
+          echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
+          echo "BUILD_TYPE_LOWER=$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Generating missing dirs
+        run: mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/debug/desugarDebugFileDependencies && mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/l8_art_profile/release/l8DexDesugarLibRelease
+
+      - name: Change Gradle wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Create local.properties
+        run: |
+          echo "signing.storeFile=signing/signing-key.jks" >> local.properties
+          echo "signing.storePassword=${{ secrets.SIGNING_SK_PASSWORD }}" >> local.properties
+          echo "signing.keyAlias=androidcs" >> local.properties
+          echo "signing.keyPassword=${{ secrets.SIGNING_SK_PASSWORD }}" >> local.properties
+
+      - name: Assemble APK
+        env:
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: ./gradlew assemble${{ env.BUILD_TYPE }}
+
+      - name: List all build outputs
+        run: |
+          echo "Top-level build outputs:"
+          ls -la core/app/build/outputs || true
+          echo "APK files (recursive):"
+          find core/app/build/outputs -type f -name "*.apk" -print || true
+          echo "AAB files (recursive):"
+          find core/app/build/outputs -type f -name "*.aab" -print || true
+
+      - name: Upload all APK and AAB artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build-outputs-${{ env.BUILD_TYPE_LOWER }}
+          path: |
+            core/app/build/outputs/**/*.apk
+            core/app/build/outputs/**/*.aab
+        if: always()
