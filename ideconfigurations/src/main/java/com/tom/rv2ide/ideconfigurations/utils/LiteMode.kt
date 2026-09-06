@@ -53,4 +53,32 @@ object LiteMode {
         context.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager ?: return -1
     return manager.memoryClass
   }
+
+  // ---- Stage-2: default lite (aman, tanpa hapus enum Full) ----
+  /** JDK default lite: hanya 17 agar hemat download (~200MB+). Full tetap sediakan 17+21. */
+  const val LITE_JDK_VERSION = "17"
+
+  /** SDK default lite: hanya 35.0.1 (ALL arch). Full tetap 6 versi. */
+  const val LITE_SDK_VERSION = "35.0.1"
+
+  /** NDK default lite: "0" = Skip (Kotlin/Java murni tidak butuh NDK). */
+  const val LITE_NDK_VERSION = "0"
+
+  /** Git/OpenSSH default lite: off (hanya untuk version control/SSH, bukan build). */
+  const val LITE_INSTALL_GIT = false
+  const val LITE_INSTALL_OPENSSH = false
+
+  /**
+   * True jika onboarding/setup harus pakai default lite.
+   * Aman: return false jika context null/tidak low-RAM -> perilaku Full asli.
+   */
+  @JvmStatic
+  fun shouldUseLiteDefaults(context: Context?): Boolean {
+    if (!ENABLED || context == null) return false
+    return try {
+      isLowRam(context)
+    } catch (_: Throwable) {
+      false
+    }
+  }
 }

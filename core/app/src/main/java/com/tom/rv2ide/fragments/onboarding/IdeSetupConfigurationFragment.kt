@@ -43,6 +43,7 @@ import com.tom.rv2ide.databinding.LayoutOnboardngSetupConfigBinding
 import com.tom.rv2ide.models.IdeSetupArgument
 import com.tom.rv2ide.resources.R.string
 import com.tom.rv2ide.tasks.runOnUiThread
+import com.tom.rv2ide.ideconfigurations.utils.LiteMode
 import com.tom.rv2ide.utils.ConnectionInfo
 import com.tom.rv2ide.utils.Environment
 import com.tom.rv2ide.utils.flashError
@@ -107,7 +108,16 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
       }
 
       val sdkVersions = SdkVersion.entries.map { "SDK ${it.version}" }.reversed()
-      sdkVersion.setText(sdkVersions[0])
+      // Stage-2 lite: default SDK 35.0.1 (hemat download). Full tetap tampilkan semua 6 versi.
+      // sdkVersions[0] sudah 35.0.1 karena reversed, tapi paksa eksplisit saat low-RAM agar anti-FC.
+      val defaultSdk =
+          try {
+            if (LiteMode.shouldUseLiteDefaults(requireContext())) "SDK ${LiteMode.LITE_SDK_VERSION}"
+            else sdkVersions[0]
+          } catch (_: Throwable) {
+            sdkVersions[0]
+          }
+      sdkVersion.setText(if (sdkVersions.contains(defaultSdk)) defaultSdk else sdkVersions[0])
       sdkVersion.setAdapter(
           ArrayAdapter(
               requireContext(),
@@ -117,7 +127,15 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
       )
 
       val jdkVersions = JdkVersion.entries.map { "JDK ${it.version}" }
-      jdkVersion.setText(jdkVersions[0])
+      // Stage-2 lite: default JDK 17 saja. Full tetap tampilkan 17+21.
+      val defaultJdk =
+          try {
+            if (LiteMode.shouldUseLiteDefaults(requireContext())) "JDK ${LiteMode.LITE_JDK_VERSION}"
+            else jdkVersions[0]
+          } catch (_: Throwable) {
+            jdkVersions[0]
+          }
+      jdkVersion.setText(if (jdkVersions.contains(defaultJdk)) defaultJdk else jdkVersions[0])
       jdkVersion.setAdapter(
           ArrayAdapter(
               requireContext(),
@@ -128,7 +146,17 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
 
       val ndkVersions =
           NdkVersion.entries.map { if (it.version == "0") "Skip" else "NDK ${it.version}" }
+      // Stage-2 lite: default Skip (Kotlin/Java tidak butuh NDK). ndkVersions[0] sudah Skip.
       ndkVersion.setText(ndkVersions[0])
+      // Stage-2 lite: git/openssh default off di HP low-RAM agar hemat download.
+      try {
+        if (LiteMode.shouldUseLiteDefaults(requireContext())) {
+          installGit.isChecked = LiteMode.LITE_INSTALL_GIT
+          installOpenssh.isChecked = LiteMode.LITE_INSTALL_OPENSSH
+        }
+      } catch (_: Throwable) {
+        // abaikan, biarkan default XML — anti-FC
+      }
       ndkVersion.setAdapter(
           ArrayAdapter(
               requireContext(),
@@ -146,18 +174,29 @@ class IdeSetupConfigurationFragment : OnboardingFragment(), SlidePolicy {
   fun buildIdeSetupArguments(): Array<String> {
     val args = mutableListOf<String>()
     args.setArgument(IdeSetupArgument.INSTALL_DIR, Environment.HOME.absolutePath)
-    args.setArgument(
-        IdeSetupArgument.SDK_VERSION,
-        SdkVersion.fromDisplayName(content.sdkVersion.text).version,
-    )
-    args.setArgument(
-        IdeSetupArgument.JDK_VERSION,
-        JdkVersion.fromDisplayName(content.jdkVersion.text).version,
-    )
-    args.setArgument(
-        IdeSetupArgument.NDK_VERSION,
-        NdkVersion.fromDisplayName(content.ndkVersion.text).version,
-    )
+    // Stage-2 anti-FC: fromDisplayName pakai first{} -> bisa NoSuchElementException.
+    // Fallback ke default lite (SDK 35.0.1 / JDK 17 / NDK Skip) agar tidak Force Close.
+    val sdkVer =
+        try {
+          SdkVersion.fromDisplayName(content.sdkVersion.text).version
+        } catch (_: Throwable) {
+          LiteMode.LITE_SDK_VERSION
+        }
+    val jdkVer =
+        try {
+          JdkVersion.fromDisplayName(content.jdkVersion.text).version
+        } catch (_: Throwable) {
+          LiteMode.LITE_JDK_VERSION
+        }
+    val ndkVer =
+        try {
+          NdkVersion.fromDisplayName(content.ndkVersion.text).version
+        } catch (_: Throwable) {
+          LiteMode.LITE_NDK_VERSION
+        }
+    args.setArgument(IdeSetupArgument.SDK_VERSION, sdkVer)
+    args.setArgument(IdeSetupArgument.JDK_VERSION, jdkVer)
+    args.setArgument(IdeSetupArgument.NDK_VERSION, ndkVer)
     args.setArgument(IdeSetupArgument.ASSUME_YES)
     if (content.installGit.isChecked) {
       args.setArgument(IdeSetupArgument.WITH_GIT)

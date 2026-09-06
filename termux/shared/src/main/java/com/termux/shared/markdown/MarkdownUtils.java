@@ -200,8 +200,15 @@ public class MarkdownUtils {
 
     public static Spanned getSpannedMarkdownText(Context context, String string) {
         if (context == null || string == null) return null;
-        final Markwon markwon = getSpannedMarkwonBuilder(context);
-        return markwon.toMarkdown(string);
+        // Stage-2 lite anti-FC/OOM: Markwon bisa berat di RAM 2GB. Fallback null agar
+        // pemanggil tampilkan teks polos, jangan Force Close.
+        try {
+            final Markwon markwon = getSpannedMarkwonBuilder(context);
+            if (markwon == null) return null;
+            return markwon.toMarkdown(string);
+        } catch (Throwable t) {
+            return null;
+        }
     }
 
 }
