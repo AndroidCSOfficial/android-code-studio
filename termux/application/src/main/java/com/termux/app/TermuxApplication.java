@@ -49,8 +49,14 @@ public class TermuxApplication extends BaseApplication {
                 return;
             }
 
-            // Setup termux-am-socket server
-            TermuxAmSocketServer.setupTermuxAmSocketServer(context);
+            // Setup termux-am-socket server (opsional, hanya installer via am).
+            // Stage-2 lite anti-FC: bungkus try/catch agar HP RAM 2GB / lite tanpa
+            // am-library tetap jalan (build Kotlin/Java via Gradle tidak butuh ini).
+            try {
+                TermuxAmSocketServer.setupTermuxAmSocketServer(context);
+            } catch (Throwable t) {
+                Logger.logStackTraceWithMessage(LOG_TAG, "AM socket server opsional dilewati (mode lite tetap aman)", t);
+            }
         } else {
             Logger.logErrorExtended(LOG_TAG, "Termux files directory is not accessible\n" + error);
         }

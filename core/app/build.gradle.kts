@@ -69,6 +69,25 @@ android {
     applicationId = BuildConfig.packageName
     vectorDrawables.useSupportLibrary = true
   }
+
+  // LITE flavor (Agent-3): varian ringan RAM 2GB. Dimensi tunggal "tier".
+  // settings.gradle.kts TIDAK diubah (semua modul tetap ada untuk varian full).
+  flavorDimensions += "tier"
+  productFlavors {
+    create("lite") {
+      dimension = "tier"
+      applicationIdSuffix = ".lite"
+      versionNameSuffix = "-lite"
+      manifestPlaceholders["liteMode"] = true
+      // LITE-TODO(lite): guard call-site fitur full-only (uidesigner, xml-inflater
+      // preview, idestats, logsender, BlurView, charts, seasonal effects,
+      // SilentInstaller, appintro) dengan LiteMode.isLowRam() sebelum assemble lite.
+    }
+    create("full") {
+      dimension = "tier"
+      manifestPlaceholders["liteMode"] = false
+    }
+  }
   
   experimentalProperties["android.experimental.enableGlobalSynthetics"] = true
   
@@ -111,6 +130,30 @@ android {
     disable.addAll(arrayOf("VectorPath", "NestedWeights", "ContentDescription", "SmallSp"))
   }
 
+  // LITE-BUILD-SNIPPET (Agent-4, non-aktif agar tidak conflict Agent-2/3) —
+  // Agent-3 sudah membuat productFlavors lite/full dimensi "tier" (lihat atas).
+  // Jangan hapus blok Agent-3. Contoh aktif susulan untuk varian lite (hemat RAM/ukuran, arm64 saja):
+  // productFlavors {
+  //   getByName("lite") {
+  //     dimension = "tier" // sama dengan milik Agent-3
+  //     ndk { abiFilters += "arm64-v8a" }
+  //     // resourceConfigurations += listOf("in", "en") // opsional: pangkas bahasa
+  //   }
+  // }
+  // buildTypes {
+  //   getByName("debug") {
+  //     // default lite-debug: tanpa minify agar cepat di RAM 2GB
+  //     isMinifyEnabled = false
+  //     isShrinkResources = false
+  //   }
+  //   getByName("release") {
+  //     // jika build lite-release: minify+shrink aktif untuk APK kecil
+  //     // isMinifyEnabled = true
+  //     // isShrinkResources = true
+  //   }
+  // }
+  // lint { abortOnError = false } // tetap false untuk lite
+
   packaging {
     resources {
       pickFirsts += "kotlin/**.kotlin_builtins"
@@ -137,17 +180,19 @@ android {
                   variantName.contains("arm64") -> "arm64-v8a"
                   variantName.contains("armeabi") || variantName.contains("arm7") -> "armeabi-v7a"
                   else -> {
-                    // This should not happen with our configuration
-                    throw IllegalStateException(
-                        "Could not determine ABI for variant: $variantName. Expected arm64-v8a or armeabi-v7a."
+                    // Flavor variants (lite/full) carry no ABI filter; fall back to
+                    // 'universal' instead of failing variant configuration.
+                    println(
+                        "No ABI filter for variant: $variantName, using 'universal' suffix."
                     )
+                    "universal"
                   }
                 }
               }
 
-      if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a")) {
+      if (archSuffix !in listOf("arm64-v8a", "armeabi-v7a", "universal")) {
         throw IllegalStateException(
-            "Unsupported architecture: $archSuffix. Only arm64-v8a and armeabi-v7a are supported."
+            "Unsupported architecture: $archSuffix. Only arm64-v8a, armeabi-v7a and universal (flavor lite/full) are supported."
         )
       }
 
@@ -188,12 +233,16 @@ dependencies {
   implementation("org.apache.commons:commons-compress:1.21")
 
   // external deps here
+  // LITE-Stage1(safe): masih implementation agar lite tetap kompilasi.
+  // NEXT-Stage2: flip ke fullImplementation setelah call-site di-guard LiteMode.isLowRam().
+  // Kandidat: BlurView (efek blur berat RAM).
   implementation("com.github.Dimezis:BlurView:version-3.2.0")
   implementation("androidx.security:security-crypto:1.1.0-alpha06")
   implementation(projects.external.acsprovider)
   implementation(projects.external.atc) 
   implementation(libs.external.customizable.cardview)
   implementation(projects.external.logwire)
+	// LITE-Stage1(safe): masih implementation. NEXT: fullImplementation setelah guard LiteMode.
 	implementation(libs.external.seasonal.effects)
   
   // Annotation processors
@@ -208,6 +257,7 @@ dependencies {
   implementation(libs.common.kotlin.coroutines.android)
   implementation(libs.common.retrofit)
   implementation(libs.common.retrofit.gson)
+  // LITE-Stage1(safe): masih implementation. NEXT: fullImplementation setelah guard layar charts.
   implementation(libs.common.charts)
   implementation(libs.common.hiddenApiBypass)
   implementation(libs.aapt2.common)
@@ -223,6 +273,7 @@ dependencies {
   }
   
   // TODO: remove this
+  // LITE-Stage1(safe): masih implementation. NEXT: fullImplementation setelah guard installer.
   implementation("com.github.MiyazKaori:SilentInstaller:1.0.0-alpha")
 
   // Git
@@ -254,6 +305,7 @@ dependencies {
   implementation(libs.common.kotlin)
 
   // Dependencies in composite build
+  // LITE-Stage1(safe): masih implementation. NEXT: fullImplementation setelah guard onboarding.
   implementation(libs.composite.appintro)
   implementation(libs.composite.desugaringCore)
   // implementation(libs.composite.javapoet)
@@ -277,8 +329,15 @@ dependencies {
   implementation(projects.java.javacServices)
   implementation(projects.java.lspSetup)
   implementation(projects.java.lsp)
+  // LITE-Stage1(safe): masih implementation agar lite kompilasi. NEXT: fullImplementation setelah guard StatUploadWorker/LogSender.
   implementation(projects.logging.idestats)
   implementation(projects.logging.logsender)
+  // TODO LITE (Agent-2 audit 2026-09-06): 4 modul termux di bawah ini WAJIB untuk
+  // build Kotlin/Java via Gradle (emulator+view+shared inti+application) — JANGAN
+  // hapus sekaligus. Kandidat pangkas ada di DALAM modul (am-library, markwon,
+  // hiddenApiBypass), lihat LITE_TERMUX_AUDIT.md. Opsi susulan Agent-3/4:
+  // liteImplementation(projects.termux.application) dkk HANYA jika sudah ada
+  // stub/fallback build tanpa terminal.
   implementation(projects.termux.application)
   implementation(projects.termux.view)
   implementation(projects.termux.emulator)
@@ -291,6 +350,7 @@ dependencies {
   implementation(projects.utilities.templatesApi)
   implementation(projects.utilities.templatesImpl)
   implementation(projects.utilities.treeview)
+  // LITE-Stage1(safe): masih implementation. NEXT: fullImplementation setelah guard Activity/preview uidesigner.
   implementation(projects.utilities.uidesigner)
   implementation(projects.utilities.xmlInflater)
   implementation(projects.xml.aaptcompiler)

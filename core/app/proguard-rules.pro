@@ -153,3 +153,8 @@
 -keepclassmembers class * extends java.lang.Record {
     <init>(...);
 }
+
+# LITE flavor (Agent-3): jangan strip flag LiteMode + entry point AI
+-keep class com.tom.rv2ide.ideconfigurations.utils.LiteMode { *; }
+-keep class com.google.ai.client.generativeai.** { *; }
+-dontwarn com.google.ai.client.generativeai.**

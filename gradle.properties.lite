@@ -1,0 +1,34 @@
+# gradle.properties.lite — tuning HP RAM 2GB (Agent-4 Build Acceleration)
+# CARA PAKAI: cp gradle.properties.lite gradle.properties
+# ASLI JANGAN DIOVERWRITE PERMANEN — backup dulu: cp gradle.properties gradle.properties.bak
+# Dikembalikan dengan: cp gradle.properties.bak gradle.properties
+#
+# Bedanya vs gradle.properties asli (Xmx4096M):
+# - Xmx1024M agar tidak OOM di RAM 2GB
+# - workers.max=2 agar CPU/RAM tidak jebol
+# - configuration-cache=true untuk build incremental lebih cepat
+# - nonTransitiveRClass=true untuk kompilasi lebih ringan
+
+org.gradle.jvmargs=-Xmx1024M \
+  -Dkotlin.daemon.jvm.options="-Xmx1024M" \
+  -XX:+HeapDumpOnOutOfMemoryError \
+  --add-opens java.base/java.lang=ALL-UNNAMED \
+  --add-opens java.base/java.util=ALL-UNNAMED \
+  --add-opens java.base/java.io=ALL-UNNAMED
+org.gradle.parallel=true
+org.gradle.caching=true
+org.gradle.daemon=true
+org.gradle.configuration-cache=true
+org.gradle.workers.max=2
+kotlin.incremental=true
+kotlin.parallel.tasks.in.project=true
+android.useAndroidX=true
+android.enableJetifier=false
+android.jetifier.ignorelist=common-30.2.2.jar
+android.nonTransitiveRClass=true
+systemProp.https.protocols=TLSv1,TLSv1.1,TLSv1.2
+android.r8.version=8.6.17
+# Hemat memori tambahan:
+# - Nonaktifkan konfigurasi on demand jika bermasalah, biarkan default off
+# - Kotlin daemon tetap hidup tapi kecil (lihat jvmargs di atas)
+org.gradle.configureondemand=false
