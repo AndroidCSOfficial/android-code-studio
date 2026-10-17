@@ -82,6 +82,9 @@ jobs:
           echo "signing.keyAlias=androidcs" >> local.properties
           echo "signing.keyPassword=${{ secrets.SIGNING_SK_PASSWORD }}" >> local.properties
 
+      - name: Clean kapt stubs (hindari duplicate class cache basi)
+        run: rm -rf core/app/build/tmp/kapt3 core/app/build/generated/source/kapt*
+
       - name: Assemble APK
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}

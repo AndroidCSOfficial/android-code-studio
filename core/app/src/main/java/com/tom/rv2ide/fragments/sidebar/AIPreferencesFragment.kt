@@ -89,10 +89,11 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "custom" to "Custom Endpoint (9router/dll)"
         )
         
-        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm")
+        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm", "custom")
         val providerNames = allProviderIds.map { providerMap[it] ?: it }
         
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, providerNames)
@@ -106,12 +107,21 @@ class AIPreferencesFragment(
             
             if (selectedProviderId == "localllm") {
                 showLocalLLMConfigDialog(selectedProviderName)
+            } else if (selectedProviderId == "custom") {
+                showCustomEndpointConfigDialog(selectedProviderName)
             } else {
                 handleProviderChange(selectedProviderId, selectedProviderName)
             }
         }
     }
     
+    private fun showCustomEndpointConfigDialog(providerName: String) {
+        val dialog = com.tom.rv2ide.artificial.dialogs.CustomEndpointConfigDialog { _, _, _ ->
+            handleProviderChange("custom", providerName)
+        }
+        dialog.show(parentFragmentManager, "CustomEndpointConfigDialog")
+    }
+
     private fun showLocalLLMConfigDialog(providerName: String) {
         val dialog = LocalLLMConfigDialog { baseUrl, modelName ->
             handleProviderChange("localllm", providerName)
@@ -126,7 +136,8 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "custom" to "Custom Endpoint (9router/dll)"
         )
         
         val currentProviderId = agents.getProvider()

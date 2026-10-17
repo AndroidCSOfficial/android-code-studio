@@ -51,6 +51,9 @@ private class AIAgentConfig(
   @IgnoredOnParcel private var openAIApiKeyPref: OpenAIApiKey? = null
   @IgnoredOnParcel private var anthropicApiKeyPref: AnthropicApiKey? = null
   @IgnoredOnParcel private var grokApiKeyPref: GrokApiKey? = null
+  @IgnoredOnParcel private var customApiKeyPref: CustomApiKey? = null
+  @IgnoredOnParcel private var customBaseUrlPref: CustomBaseUrl? = null
+  @IgnoredOnParcel private var customModelPref: CustomModel? = null
 
   init {
     val aiAgentEnabled = AIAgentEnabled { isEnabled -> updateApiKeyPreferencesState(isEnabled) }
@@ -60,6 +63,9 @@ private class AIAgentConfig(
     openAIApiKeyPref = OpenAIApiKey()
     anthropicApiKeyPref = AnthropicApiKey()
     grokApiKeyPref = GrokApiKey()
+    customApiKeyPref = CustomApiKey()
+    customBaseUrlPref = CustomBaseUrl()
+    customModelPref = CustomModel()
 
     addPreference(aiAgentEnabled)
     addPreference(geminiApiKeyPref!!)
@@ -67,6 +73,9 @@ private class AIAgentConfig(
     addPreference(openAIApiKeyPref!!)
     addPreference(anthropicApiKeyPref!!)
     addPreference(grokApiKeyPref!!)
+    addPreference(customApiKeyPref!!)
+    addPreference(customBaseUrlPref!!)
+    addPreference(customModelPref!!)
   }
 
   private fun updateApiKeyPreferencesState(isEnabled: Boolean) {
@@ -75,6 +84,9 @@ private class AIAgentConfig(
     openAIApiKeyPref?.setEnabled(isEnabled)
     anthropicApiKeyPref?.setEnabled(isEnabled)
     grokApiKeyPref?.setEnabled(isEnabled)
+    customApiKeyPref?.setEnabled(isEnabled)
+    customBaseUrlPref?.setEnabled(isEnabled)
+    customModelPref?.setEnabled(isEnabled)
   }
 }
 
@@ -370,5 +382,140 @@ private class AnthropicApiKey(
   private fun getSummaryText(): String {
     val apiKey = prefManager.getString("ai_agent_anthropic_api_key", "")
     return if (apiKey.isBlank()) "Click to set API key" else "API Key: ${apiKey.take(8)}..."
+  }
+}
+
+@Parcelize
+private class CustomApiKey(
+    override val key: String = "ai_agent_custom_api_key",
+    override val title: Int = R.string.ai_agent_custom_api_key,
+) : BasePreference() {
+
+  @IgnoredOnParcel private var preference: Preference? = null
+
+  override fun onCreatePreference(context: Context): Preference {
+    preference =
+        androidx.preference.Preference(context).apply {
+          key = "ai_agent_custom_api_key"
+          title = context.getString(R.string.ai_agent_custom_api_key)
+          summary = getSummaryText()
+          isEnabled = prefManager.getBoolean("ai_agent_enabled", false)
+        }
+    return preference!!
+  }
+
+  override fun onPreferenceClick(preference: Preference): Boolean {
+    val context = preference.context
+    val editText = android.widget.EditText(context)
+    editText.setText(prefManager.getString("ai_agent_custom_api_key", ""))
+    editText.hint = "sk-... (9router/OpenRouter/dll)"
+    com.google.android.material.dialog.MaterialAlertDialogBuilder(context)
+        .setTitle("Custom Endpoint API Key")
+        .setMessage("API key untuk custom endpoint")
+        .setView(editText)
+        .setPositiveButton("Save") { _, _ ->
+          prefManager.putString("ai_agent_custom_api_key", editText.text.toString().trim())
+          preference.summary = getSummaryText()
+        }
+        .setNegativeButton("Cancel", null)
+        .create().show()
+    return true
+  }
+
+  fun setEnabled(enabled: Boolean) { preference?.isEnabled = enabled }
+
+  private fun getSummaryText(): String {
+    val v = prefManager.getString("ai_agent_custom_api_key", "")
+    return if (v.isBlank()) "Click to set API key" else "API Key: ${v.take(8)}..."
+  }
+}
+
+@Parcelize
+private class CustomBaseUrl(
+    override val key: String = "ai_agent_custom_base_url",
+    override val title: Int = R.string.ai_agent_custom_base_url,
+) : BasePreference() {
+
+  @IgnoredOnParcel private var preference: Preference? = null
+
+  override fun onCreatePreference(context: Context): Preference {
+    preference =
+        androidx.preference.Preference(context).apply {
+          key = "ai_agent_custom_base_url"
+          title = context.getString(R.string.ai_agent_custom_base_url)
+          summary = getSummaryText()
+          isEnabled = prefManager.getBoolean("ai_agent_enabled", false)
+        }
+    return preference!!
+  }
+
+  override fun onPreferenceClick(preference: Preference): Boolean {
+    val context = preference.context
+    val editText = android.widget.EditText(context)
+    editText.setText(prefManager.getString("ai_agent_custom_base_url", "https://ai2.bytellm.web.id/v1"))
+    editText.hint = "https://host/v1"
+    com.google.android.material.dialog.MaterialAlertDialogBuilder(context)
+        .setTitle("Custom Endpoint Base URL")
+        .setMessage("Base URL tanpa /chat/completions")
+        .setView(editText)
+        .setPositiveButton("Save") { _, _ ->
+          prefManager.putString("ai_agent_custom_base_url", editText.text.toString().trim().trimEnd('/'))
+          preference.summary = getSummaryText()
+        }
+        .setNegativeButton("Cancel", null)
+        .create().show()
+    return true
+  }
+
+  fun setEnabled(enabled: Boolean) { preference?.isEnabled = enabled }
+
+  private fun getSummaryText(): String {
+    val v = prefManager.getString("ai_agent_custom_base_url", "")
+    return if (v.isBlank()) "Click to set Base URL" else v
+  }
+}
+
+@Parcelize
+private class CustomModel(
+    override val key: String = "ai_agent_custom_model",
+    override val title: Int = R.string.ai_agent_custom_model,
+) : BasePreference() {
+
+  @IgnoredOnParcel private var preference: Preference? = null
+
+  override fun onCreatePreference(context: Context): Preference {
+    preference =
+        androidx.preference.Preference(context).apply {
+          key = "ai_agent_custom_model"
+          title = context.getString(R.string.ai_agent_custom_model)
+          summary = getSummaryText()
+          isEnabled = prefManager.getBoolean("ai_agent_enabled", false)
+        }
+    return preference!!
+  }
+
+  override fun onPreferenceClick(preference: Preference): Boolean {
+    val context = preference.context
+    val editText = android.widget.EditText(context)
+    editText.setText(prefManager.getString("ai_agent_custom_model", "cbai/deepseek-v4.1-flash"))
+    editText.hint = "cbai/deepseek-v4.1-flash"
+    com.google.android.material.dialog.MaterialAlertDialogBuilder(context)
+        .setTitle("Custom Endpoint Model")
+        .setMessage("Nama model (bebas, sesuai provider)")
+        .setView(editText)
+        .setPositiveButton("Save") { _, _ ->
+          prefManager.putString("ai_agent_custom_model", editText.text.toString().trim())
+          preference.summary = getSummaryText()
+        }
+        .setNegativeButton("Cancel", null)
+        .create().show()
+    return true
+  }
+
+  fun setEnabled(enabled: Boolean) { preference?.isEnabled = enabled }
+
+  private fun getSummaryText(): String {
+    val v = prefManager.getString("ai_agent_custom_model", "")
+    return if (v.isBlank()) "Click to set Model" else v
   }
 }

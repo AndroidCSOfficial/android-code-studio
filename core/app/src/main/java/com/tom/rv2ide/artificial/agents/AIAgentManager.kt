@@ -24,6 +24,7 @@ import com.tom.rv2ide.artificial.agents.anthropic.Anthropic
 import com.tom.rv2ide.artificial.agents.grok.Grok
 import com.tom.rv2ide.artificial.agents.deepseek.DeepSeek
 import com.tom.rv2ide.artificial.agents.local.LocalLLM
+import com.tom.rv2ide.artificial.agents.custom.CustomEndpoint
 import com.tom.rv2ide.artificial.file.FileWriteResult
 import com.tom.rv2ide.artificial.parser.SnippetParser
 import com.tom.rv2ide.artificial.permissions.AIPermissionManager
@@ -53,6 +54,7 @@ class AIAgentManager(private val context: Context) {
         Grok.registerAgent()
         DeepSeek.registerAgent()
         LocalLLM.registerAgent()
+        CustomEndpoint.registerAgent()
         
         permissionManager.setFileWriteEnabled(true)
         permissionManager.setRequireConfirmation(false)
