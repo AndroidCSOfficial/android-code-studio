@@ -21,6 +21,18 @@ import android.content.Context
 import com.tom.rv2ide.artificial.agents.AIAgent
 import com.tom.rv2ide.artificial.agents.AIAgentRegistry
 import com.tom.rv2ide.artificial.agents.ModificationAttempt
+import com.tom.rv2ide.artificial.tools.AIToolCall
+import com.tom.rv2ide.artificial.tools.AIToolDef
+import com.tom.rv2ide.artificial.tools.AIToolResult
+import com.tom.rv2ide.artificial.tools.OpenAICompatNative
+import com.tom.rv2ide.artificial.tools.ToolAwareResponse
+import com.tom.rv2ide.artificial.tools.ToolCallProtocol
+import com.tom.rv2ide.artificial.tools.BuiltInToolExecutor
+import com.tom.rv2ide.artificial.profiles.AgentPromptProfileStore
+import com.tom.rv2ide.artificial.mcp.McpServerStore
+import com.tom.rv2ide.artificial.mcp.McpToolExecutor
+import org.json.JSONArray
+import org.json.JSONObject
 import com.tom.rv2ide.artificial.agents.Agents
 import com.tom.rv2ide.artificial.rules.WritingRules
 import com.tom.rv2ide.artificial.project.awareness.ProjectTreeResult
@@ -47,6 +59,9 @@ class DeepSeek : AIAgent {
   private val maxRetryAttempts = 3
   private var agents: Agents? = null
   private var selectedModel: String = "deepseek-chat"
+  private val nativeMessages = JSONArray()
+  private var nativeToolsActive = false
+  private var appContext: Context? = null
   override val providerId = "deepseek"
   override val providerName = "DeepSeek"
 
@@ -93,6 +108,7 @@ class DeepSeek : AIAgent {
   }
 
   override fun setContext(context: Context) {
+    appContext = context.applicationContext
     fileWriter = AIFileWriter(context)
   }
 
@@ -101,6 +117,7 @@ class DeepSeek : AIAgent {
   }
 
   override fun clearConversation() {
+    nativeToolsActive = false; while (nativeMessages.length() > 0) nativeMessages.remove(0)
     conversationHistory.clear()
     modificationHistory.clear()
     currentAttemptCount = 0
@@ -463,6 +480,44 @@ class DeepSeek : AIAgent {
     }
     
     return modifications
+  }
+
+
+  private fun composeSystemPrompt(ctx: Context, includeTextToolDefs: Boolean): String {
+    val sb = StringBuilder(writingRules.useThis())
+    val agentProfile = AgentPromptProfileStore.getActive()
+    val extra = agentProfile?.systemPrompt?.trim().orEmpty()
+    if (extra.isNotEmpty()) sb.append("\n\n=== AGENT PROFILE INSTRUCTIONS ===\n").append(extra).append("\n")
+    if (includeTextToolDefs && agentProfile?.enableTools != false) {
+      val builtIn = BuiltInToolExecutor(ctx, projectTreeResult, null, agentProfile?.allowCommandExecution == true, agentProfile?.disabledTools?.toSet() ?: emptySet())
+      val mcpDefs = if (agentProfile?.enableMcpTools != false) { try { val servers = McpServerStore.load().filter { s -> agentProfile?.enabledMcpServerIds.isNullOrEmpty() || agentProfile!!.enabledMcpServerIds.contains(s.id) }; McpToolExecutor(servers).definitions().filterNot { it.name in (agentProfile?.disabledTools?.toSet() ?: emptySet()) } } catch (_: Exception) { emptyList() } } else emptyList()
+      sb.append(ToolCallProtocol.formatDefinitions(builtIn.definitions() + mcpDefs))
+    }
+    return sb.toString()
+  }
+  private fun clearNative() { nativeToolsActive = false; while (nativeMessages.length() > 0) nativeMessages.remove(0) }
+  override fun supportsNativeTools(): Boolean = true
+  override suspend fun generateWithTools(prompt: String, context: String?, language: String, projectStructure: String?, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val ctx = appContext ?: return@withContext Result.failure(IllegalStateException("No context"))
+      val key = apiKey ?: return@withContext Result.failure(IllegalStateException("Not initialized"))
+      clearNative(); nativeToolsActive = true
+      nativeMessages.put(JSONObject().put("role","system").put("content", composeSystemPrompt(ctx,false)))
+      nativeMessages.put(JSONObject().put("role","user").put("content", prompt))
+      val res = OpenAICompatNative.call(OpenAICompatNative.CallConfig("https://api.deepseek.com/chat/completions", key, selectedModel), nativeMessages, tools)
+      nativeMessages.put(if (res.hasToolCalls()) OpenAICompatNative.assistantToolCallsMessage(res) else JSONObject().put("role","assistant").put("content",res.text))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
+  }
+  override suspend fun submitToolResults(toolResults: List<AIToolResult>, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val key = apiKey ?: return@withContext Result.failure(IllegalStateException("Not initialized"))
+      if (!nativeToolsActive) return@withContext generateWithTools(toolResults.joinToString("\n"){it.result}, null, "kotlin", null, tools)
+      toolResults.forEach { nativeMessages.put(OpenAICompatNative.toolResultMessage(it)) }
+      val res = OpenAICompatNative.call(OpenAICompatNative.CallConfig("https://api.deepseek.com/chat/completions", key, selectedModel), nativeMessages, tools)
+      nativeMessages.put(if (res.hasToolCalls()) OpenAICompatNative.assistantToolCallsMessage(res) else JSONObject().put("role","assistant").put("content",res.text))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
   }
 
   override fun isInitialized(): Boolean = apiKey != null
