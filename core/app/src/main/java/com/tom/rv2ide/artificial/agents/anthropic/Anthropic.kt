@@ -21,6 +21,15 @@ import android.content.Context
 import com.tom.rv2ide.artificial.agents.AIAgent
 import com.tom.rv2ide.artificial.agents.AIAgentRegistry
 import com.tom.rv2ide.artificial.agents.ModificationAttempt
+import com.tom.rv2ide.artificial.tools.AIToolCall
+import com.tom.rv2ide.artificial.tools.AIToolDef
+import com.tom.rv2ide.artificial.tools.AIToolResult
+import com.tom.rv2ide.artificial.tools.ToolAwareResponse
+import com.tom.rv2ide.artificial.tools.ToolCallProtocol
+import com.tom.rv2ide.artificial.tools.BuiltInToolExecutor
+import com.tom.rv2ide.artificial.profiles.AgentPromptProfileStore
+import com.tom.rv2ide.artificial.mcp.McpServerStore
+import com.tom.rv2ide.artificial.mcp.McpToolExecutor
 import com.tom.rv2ide.artificial.agents.Agents
 import com.tom.rv2ide.artificial.rules.WritingRules
 import com.tom.rv2ide.artificial.project.awareness.ProjectTreeResult
@@ -51,6 +60,9 @@ class Anthropic : AIAgent {
   private val maxRetryAttempts = 3
   private var agents: Agents? = null
   private var selectedModel: String = "claude-sonnet-4-20250514"
+  private val nativeMessages = JSONArray()
+  private var nativeToolsActive = false
+  private var appContext: Context? = null
   override val providerId = "claude"
   override val providerName = "Anthropic Claude"
 
@@ -97,6 +109,7 @@ class Anthropic : AIAgent {
   }
 
   override fun setContext(context: Context) {
+    appContext = context.applicationContext
     fileWriter = AIFileWriter(context)
   }
 
@@ -105,6 +118,7 @@ class Anthropic : AIAgent {
   }
 
   override fun clearConversation() {
+    nativeToolsActive = false; while (nativeMessages.length() > 0) nativeMessages.remove(0)
     conversationHistory.clear()
     modificationHistory.clear()
     currentAttemptCount = 0
@@ -458,6 +472,110 @@ class Anthropic : AIAgent {
     }
     
     return modifications
+  }
+
+
+  private fun composeSystemPrompt(ctx: Context, includeTextToolDefs: Boolean): String {
+    val sb = StringBuilder(writingRules.useThis())
+    val agentProfile = AgentPromptProfileStore.getActive()
+    val extra = agentProfile?.systemPrompt?.trim().orEmpty()
+    if (extra.isNotEmpty()) sb.append("\n\n=== AGENT PROFILE INSTRUCTIONS ===\n").append(extra).append("\n")
+    if (includeTextToolDefs && agentProfile?.enableTools != false) {
+      val builtIn = BuiltInToolExecutor(ctx, projectTreeResult, null, agentProfile?.allowCommandExecution == true, agentProfile?.disabledTools?.toSet() ?: emptySet())
+      val mcpDefs = if (agentProfile?.enableMcpTools != false) { try { val servers = McpServerStore.load().filter { s -> agentProfile?.enabledMcpServerIds.isNullOrEmpty() || agentProfile!!.enabledMcpServerIds.contains(s.id) }; McpToolExecutor(servers).definitions().filterNot { it.name in (agentProfile?.disabledTools?.toSet() ?: emptySet()) } } catch (_: Exception) { emptyList() } } else emptyList()
+      sb.append(ToolCallProtocol.formatDefinitions(builtIn.definitions() + mcpDefs))
+    }
+    return sb.toString()
+  }
+  private fun clearNative() { nativeToolsActive = false; while (nativeMessages.length() > 0) nativeMessages.remove(0) }
+
+  private fun anthropicToolsJson(tools: List<AIToolDef>): JSONArray {
+    val arr = JSONArray()
+    tools.forEach { t ->
+      arr.put(JSONObject().apply {
+        put("name", t.name)
+        put("description", t.description)
+        put("input_schema", try { JSONObject(t.parametersJsonSchema) } catch (_: Exception) { JSONObject().put("type","object").put("properties", JSONObject()) })
+      })
+    }
+    return arr
+  }
+
+  private fun callAnthropicNative(messages: JSONArray, system: String, tools: List<AIToolDef>?): ToolAwareResponse {
+    val key = apiKey ?: throw IllegalStateException("Anthropic service not initialized")
+    val url = URL("https://api.anthropic.com/v1/messages")
+    val connection = url.openConnection() as HttpURLConnection
+    try {
+      connection.requestMethod = "POST"
+      connection.setRequestProperty("Content-Type", "application/json")
+      connection.setRequestProperty("x-api-key", key)
+      connection.setRequestProperty("anthropic-version", "2023-06-01")
+      connection.doOutput = true
+      connection.connectTimeout = 30000
+      connection.readTimeout = 90000
+      val requestBody = JSONObject().apply {
+        put("model", selectedModel)
+        put("max_tokens", 4096)
+        put("system", system)
+        put("messages", messages)
+        if (!tools.isNullOrEmpty()) put("tools", anthropicToolsJson(tools))
+      }
+      connection.outputStream.use { it.write(requestBody.toString().toByteArray()) }
+      val responseCode = connection.responseCode
+      if (responseCode != HttpURLConnection.HTTP_OK) {
+        val errorStream = connection.errorStream?.bufferedReader()?.readText() ?: "Unknown error"
+        throw Exception("Anthropic API error ($responseCode): $errorStream")
+      }
+      val jsonResponse = JSONObject(connection.inputStream.bufferedReader().readText())
+      val content = jsonResponse.optJSONArray("content") ?: JSONArray()
+      val sb = StringBuilder()
+      val calls = mutableListOf<AIToolCall>()
+      for (i in 0 until content.length()) {
+        val block = content.optJSONObject(i) ?: continue
+        when (block.optString("type")) {
+          "text" -> sb.append(block.optString("text"))
+          "tool_use" -> {
+            val name = block.optString("name")
+            val input = block.optJSONObject("input") ?: JSONObject()
+            if (name.isNotBlank()) calls.add(AIToolCall(name, input, block.toString(), block.optString("id").ifBlank { null }))
+          }
+        }
+      }
+      val text = sb.toString()
+      if (calls.isEmpty()) ToolCallProtocol.parse(text)?.let { calls.add(it) }
+      return ToolAwareResponse(text, calls)
+    } finally { connection.disconnect() }
+  }
+
+  override fun supportsNativeTools(): Boolean = true
+  override suspend fun generateWithTools(prompt: String, context: String?, language: String, projectStructure: String?, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val ctx = appContext ?: return@withContext Result.failure(IllegalStateException("No context"))
+      clearNative(); nativeToolsActive = true
+      nativeMessages.put(JSONObject().put("role","user").put("content", prompt))
+      val res = callAnthropicNative(nativeMessages, composeSystemPrompt(ctx, false), tools)
+      // store assistant message with content blocks
+      val assistantContent = JSONArray()
+      if (res.text.isNotBlank()) assistantContent.put(JSONObject().put("type","text").put("text", res.text))
+      res.toolCalls.forEach { tc -> assistantContent.put(JSONObject().put("type","tool_use").put("id", tc.id ?: "toolu_${tc.name}_${System.nanoTime()}").put("name", tc.name).put("input", tc.arguments)) }
+      if (assistantContent.length() > 0) nativeMessages.put(JSONObject().put("role","assistant").put("content", assistantContent))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
+  }
+  override suspend fun submitToolResults(toolResults: List<AIToolResult>, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val ctx = appContext ?: return@withContext Result.failure(IllegalStateException("No context"))
+      if (!nativeToolsActive) return@withContext generateWithTools(toolResults.joinToString("\n"){it.result}, null, "kotlin", null, tools)
+      val resultBlocks = JSONArray()
+      toolResults.forEach { tr -> resultBlocks.put(JSONObject().put("type","tool_result").put("tool_use_id", tr.toolCallId ?: tr.name).put("content", tr.result)) }
+      nativeMessages.put(JSONObject().put("role","user").put("content", resultBlocks))
+      val res = callAnthropicNative(nativeMessages, composeSystemPrompt(ctx, false), tools)
+      val assistantContent = JSONArray()
+      if (res.text.isNotBlank()) assistantContent.put(JSONObject().put("type","text").put("text", res.text))
+      res.toolCalls.forEach { tc -> assistantContent.put(JSONObject().put("type","tool_use").put("id", tc.id ?: "toolu_${tc.name}_${System.nanoTime()}").put("name", tc.name).put("input", tc.arguments)) }
+      if (assistantContent.length() > 0) nativeMessages.put(JSONObject().put("role","assistant").put("content", assistantContent))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
   }
 
   override fun isInitialized(): Boolean = apiKey != null
