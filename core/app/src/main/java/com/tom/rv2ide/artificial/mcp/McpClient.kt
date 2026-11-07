@@ -1,29 +1,28 @@
 package com.tom.rv2ide.artificial.mcp
-import com.tom.rv2ide.artificial.tools.AIToolDef
 
+import com.tom.rv2ide.artificial.tools.AIToolDef
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONArray
 import org.json.JSONObject
 
 /**
- * Minimal MCP client (HTTP JSON-RPC). Intended for remote/HTTP MCP servers.
- * Supports initialize, tools/list, tools/call. Some servers use Streamable HTTP
- * semantics; this implementation uses plain JSON-RPC POST requests for broad
- * compatibility and surfaces errors to the agent.
+ * MCP client with HTTP JSON-RPC + basic Streamable HTTP compatibility.
+ * Handles session IDs (Mcp-Session-Id), SSE/JSON responses, and common header patterns.
  */
 class McpClient(private val config: McpServerConfig) {
     private val http = OkHttpClient.Builder()
         .connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(90, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
     private val nextId = AtomicInteger(1)
     @Volatile private var initialized = false
+    @Volatile private var sessionId: String? = null
+    @Volatile private var protocolVersion: String = "2025-03-26"
 
     fun listTools(): List<AIToolDef> {
         ensureInitialized()
@@ -42,9 +41,7 @@ class McpClient(private val config: McpServerConfig) {
 
     fun callTool(toolName: String, arguments: JSONObject): String {
         ensureInitialized()
-        val actual = toolName.substringAfterLast("__", toolName).let {
-            if (toolName.startsWith("mcp__")) toolName.split("__").getOrNull(2) ?: it else toolName
-        }
+        val actual = if (toolName.startsWith("mcp__")) toolName.split("__").getOrNull(2) ?: toolName.substringAfterLast("__") else toolName
         val params = JSONObject().put("name", actual).put("arguments", arguments)
         val res = rpc("tools/call", params) ?: return "Error: no response from MCP server"
         if (res.has("error")) return "MCP error: ${res.opt("error")}"
@@ -54,13 +51,18 @@ class McpClient(private val config: McpServerConfig) {
             val sb = StringBuilder()
             for (i in 0 until content.length()) {
                 val c = content.optJSONObject(i) ?: continue
-                if (c.optString("type") == "text") sb.append(c.optString("text"))
-                else sb.append(c.toString())
+                when (c.optString("type")) {
+                    "text" -> sb.append(c.optString("text"))
+                    "resource" -> sb.append(c.optJSONObject("resource")?.optString("text") ?: c.toString())
+                    else -> sb.append(c.toString())
+                }
+                if (i < content.length() - 1) sb.append("\n")
             }
             val text = sb.toString()
             if (text.isNotBlank()) return text
         }
         if (result.has("text")) return result.optString("text")
+        if (result.has("structuredContent")) return result.opt("structuredContent").toString()
         return result.toString()
     }
 
@@ -68,12 +70,12 @@ class McpClient(private val config: McpServerConfig) {
     private fun ensureInitialized() {
         if (initialized) return
         val params = JSONObject().apply {
-            put("protocolVersion", "2024-11-05")
-            put("capabilities", JSONObject())
+            put("protocolVersion", protocolVersion)
+            put("capabilities", JSONObject().apply { put("roots", JSONObject().put("listChanged", false)) })
             put("clientInfo", JSONObject().put("name", "AndroidCodeStudio").put("version", "1.0"))
         }
-        rpc("initialize", params)
-        // best-effort initialized notification (some servers require/ignore)
+        val res = rpc("initialize", params)
+        res?.optJSONObject("result")?.optString("protocolVersion")?.takeIf { it.isNotBlank() }?.let { protocolVersion = it }
         try { notify("notifications/initialized", JSONObject()) } catch (_: Exception) {}
         initialized = true
     }
@@ -87,7 +89,7 @@ class McpClient(private val config: McpServerConfig) {
 
     private fun notify(method: String, params: JSONObject) {
         val body = JSONObject().apply { put("jsonrpc", "2.0"); put("method", method); put("params", params) }
-        post(body)
+        try { post(body) } catch (_: Exception) {}
     }
 
     private fun post(body: JSONObject): JSONObject? {
@@ -95,19 +97,22 @@ class McpClient(private val config: McpServerConfig) {
         val reqBuilder = Request.Builder()
             .url(config.url.trim())
             .post(body.toString().toRequestBody("application/json".toMediaType()))
+            .addHeader("Content-Type", "application/json")
             .addHeader("Accept", "application/json, text/event-stream")
+            .addHeader("MCP-Protocol-Version", protocolVersion)
+        sessionId?.let { reqBuilder.addHeader("Mcp-Session-Id", it) }
         config.headers.forEach { (k, v) -> if (k.isNotBlank()) reqBuilder.addHeader(k, v) }
         http.newCall(reqBuilder.build()).execute().use { resp ->
+            resp.header("Mcp-Session-Id")?.takeIf { it.isNotBlank() }?.let { sessionId = it }
             val text = resp.body?.string().orEmpty()
-            if (text.isBlank()) return if (resp.isSuccessful) JSONObject() else JSONObject().put("error", "HTTP ${resp.code}")
-            // handle SSE responses (data: lines)
-            if (text.startsWith("event:") || text.startsWith("data:") || resp.header("Content-Type")?.contains("text/event-stream") == true) {
+            if (resp.code == 202 || resp.code == 204 || text.isBlank()) {
+                return if (resp.isSuccessful) JSONObject().put("result", JSONObject()) else JSONObject().put("error", "HTTP ${resp.code}")
+            }
+            val ct = resp.header("Content-Type") ?: ""
+            if (ct.contains("text/event-stream") || text.startsWith("event:") || text.startsWith("data:")) {
                 val dataLines = text.lines().filter { it.startsWith("data:") }.map { it.removePrefix("data:").trim() }.filter { it.isNotBlank() && it != "[DONE]" }
                 for (line in dataLines.asReversed()) {
-                    try {
-                        val o = JSONObject(line)
-                        if (o.has("result") || o.has("error")) return o
-                    } catch (_: Exception) {}
+                    try { val o = JSONObject(line); if (o.has("result") || o.has("error") || o.has("jsonrpc")) return o } catch (_: Exception) {}
                 }
                 return try { JSONObject(dataLines.lastOrNull() ?: "{}") } catch (_: Exception) { JSONObject().put("error", text.take(500)) }
             }
@@ -123,7 +128,8 @@ class McpToolExecutor(private val servers: List<McpServerConfig>) : com.tom.rv2i
 
     override fun definitions(): List<AIToolDef> = clients.flatMap { (cfg, client) ->
         try { client.listTools() } catch (e: Exception) {
-            listOf(AIToolDef("mcp__${cfg.name}__status", "[MCP:${cfg.name}] unavailable: ${e.message}", "{\"type\":\"object\",\"properties\":{}}"))
+            android.util.Log.w("McpToolExecutor", "Failed to list tools for ${cfg.name}", e)
+            emptyList()
         }
     }
 

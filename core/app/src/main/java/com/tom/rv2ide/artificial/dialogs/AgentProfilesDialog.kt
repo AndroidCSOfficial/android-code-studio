@@ -47,16 +47,38 @@ object AgentProfilesDialog {
     private fun selectOrEdit(context: Context, profile: AgentPromptProfile, onChanged: () -> Unit) {
         MaterialAlertDialogBuilder(context)
             .setTitle(profile.name)
-            .setItems(arrayOf("Activate", "Edit", "Duplicate", "Delete")) { d, which ->
+            .setItems(arrayOf("Activate", "Edit", "Tools/Capabilities", "Duplicate", "Delete")) { d, which ->
                 d.dismiss()
                 when (which) {
                     0 -> { AgentPromptProfileStore.setActive(profile.id); Toast.makeText(context, "Activated", Toast.LENGTH_SHORT).show(); onChanged() }
                     1 -> edit(context, profile, onChanged)
-                    2 -> { AgentPromptProfileStore.upsert(profile.copy(id = java.util.UUID.randomUUID().toString(), name = profile.name + " (copy)")); onChanged(); show(context, onChanged) }
-                    3 -> { AgentPromptProfileStore.delete(profile.id); onChanged(); show(context, onChanged) }
+                    2 -> editTools(context, profile, onChanged)
+                    3 -> { AgentPromptProfileStore.upsert(profile.copy(id = java.util.UUID.randomUUID().toString(), name = profile.name + " (copy)")); onChanged(); show(context, onChanged) }
+                    4 -> { AgentPromptProfileStore.delete(profile.id); onChanged(); show(context, onChanged) }
                 }
             }
             .setNegativeButton("Back") { _, _ -> show(context, onChanged) }
+            .show()
+    }
+
+    private fun editTools(context: Context, profile: AgentPromptProfile, onChanged: () -> Unit) {
+        val tools = SkillPresets.knownToolNames()
+        val checked = tools.map { it !in profile.disabledTools }.toBooleanArray()
+        val labels = tools.map {
+            when (it) {
+                "run_command" -> "run_command (risky, also requires opt-in)"
+                else -> it
+            }
+        }.toTypedArray()
+        MaterialAlertDialogBuilder(context)
+            .setTitle("Tools/Capabilities: ${profile.name}")
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked -> checked[which] = isChecked }
+            .setPositiveButton("Save") { _, _ ->
+                val disabled = tools.filterIndexed { i, _ -> !checked[i] }
+                AgentPromptProfileStore.upsert(profile.copy(disabledTools = disabled))
+                onChanged(); selectOrEdit(context, AgentPromptProfileStore.load().second.firstOrNull { it.id == profile.id } ?: profile, onChanged)
+            }
+            .setNegativeButton("Cancel") { _, _ -> selectOrEdit(context, profile, onChanged) }
             .show()
     }
 

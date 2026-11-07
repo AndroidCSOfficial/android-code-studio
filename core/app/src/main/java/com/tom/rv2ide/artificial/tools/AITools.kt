@@ -13,7 +13,11 @@ data class AIToolDef(
     val parametersJsonSchema: String,
 )
 
-data class AIToolCall(val name: String, val arguments: JSONObject, val raw: String)
+data class AIToolCall(val name: String, val arguments: JSONObject, val raw: String = "", val id: String? = null)
+data class AIToolResult(val name: String, val result: String, val toolCallId: String? = null)
+data class ToolAwareResponse(val text: String = "", val toolCalls: List<AIToolCall> = emptyList()) {
+    fun hasToolCalls() = toolCalls.isNotEmpty()
+}
 
 interface AIToolExecutor {
     fun definitions(): List<AIToolDef>
@@ -25,6 +29,7 @@ class BuiltInToolExecutor(
     private var projectTree: ProjectTreeResult? = null,
     private var projectRoot: File? = null,
     private val allowCommandExecution: Boolean = false,
+    private val disabledTools: Set<String> = emptySet(),
 ) : AIToolExecutor {
     private val writer = AIFileWriter(context)
 
@@ -44,10 +49,12 @@ class BuiltInToolExecutor(
         if (allowCommandExecution) {
             defs.add(AIToolDef("run_command", "Run a shell command in the project directory (opt-in, use with caution). Returns stdout/stderr and exit code.", """{"type":"object","properties":{"command":{"type":"string"},"timeoutMs":{"type":"integer"}},"required":["command"]}"""))
         }
-        return defs
+        return defs.filterNot { it.name in disabledTools }
     }
 
     override fun execute(name: String, arguments: JSONObject): String {
+        if (name in disabledTools) return "Error: tool '$name' is disabled by the active agent profile."
+        if (name == "run_command" && !allowCommandExecution) return "Error: command execution is disabled by the active agent profile."
         return try {
             when (name) {
                 "read_file" -> {
@@ -94,7 +101,6 @@ class BuiltInToolExecutor(
                     }
                 }
                 "run_command" -> {
-                    if (!allowCommandExecution) return "Error: command execution is disabled by the active agent profile."
                     val command = arguments.optString("command")
                     if (command.isBlank()) return "Error: command is required"
                     val timeoutMs = arguments.optLong("timeoutMs", 15000L).coerceIn(1000L, 60000L)
@@ -108,9 +114,7 @@ class BuiltInToolExecutor(
                 }
                 else -> "Error: unknown tool '$name'"
             }
-        } catch (e: Exception) {
-            "Error: ${e.message}"
-        }
+        } catch (e: Exception) { "Error: ${e.message}" }
     }
 }
 
@@ -129,8 +133,8 @@ object ToolCallProtocol {
                 val obj = JSONObject(jsonText)
                 val name = obj.optString("name").ifBlank { obj.optString("tool") }
                 if (name.isBlank()) continue
-                val args = obj.optJSONObject("arguments") ?: obj.optJSONObject("args") ?: JSONObject()
-                return AIToolCall(name, args, m.value)
+                val args = obj.optJSONObject("arguments") ?: obj.optJSONObject("args") ?: try { JSONObject(obj.optString("arguments", "{}")) } catch (_: Exception) { JSONObject() }
+                return AIToolCall(name, args ?: JSONObject(), m.value, obj.optString("id").ifBlank { null })
             } catch (_: Exception) {}
         }
         return null
@@ -146,5 +150,20 @@ object ToolCallProtocol {
         tools.forEach { t -> sb.append("- ${t.name}: ${t.description}\n  parameters: ${t.parametersJsonSchema}\n") }
         sb.append("\n")
         return sb.toString()
+    }
+
+    fun openAIToolsJson(tools: List<AIToolDef>): org.json.JSONArray {
+        val arr = org.json.JSONArray()
+        tools.forEach { t ->
+            arr.put(org.json.JSONObject().apply {
+                put("type", "function")
+                put("function", org.json.JSONObject().apply {
+                    put("name", t.name)
+                    put("description", t.description)
+                    put("parameters", try { org.json.JSONObject(t.parametersJsonSchema) } catch (_: Exception) { org.json.JSONObject().put("type","object").put("properties", org.json.JSONObject()) })
+                })
+            })
+        }
+        return arr
     }
 }
