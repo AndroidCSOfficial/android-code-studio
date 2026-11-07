@@ -11,7 +11,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Configure Custom Provider"
+        android:text="Custom Provider Profiles"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="?attr/colorOnSurface"
         android:layout_marginBottom="8dp" />
@@ -19,57 +19,84 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use any OpenAI-compatible API endpoint."
+        android:text="Save multiple OpenAI-compatible endpoints and switch between them."
         android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textColor="?attr/colorOnSurfaceVariant"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="16dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profileSelectorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Profile"
+        android:layout_marginBottom="12dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <AutoCompleteTextView
+            android:id="@+id/profileSelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/newProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Profile"
+        android:layout_marginBottom="12dp"
+        style="@style/Widget.Material3.Button.TextButton" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Profile Name"
+        android:layout_marginBottom="12dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profileNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Base URL"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/baseUrlInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textUri"
-            android:text="https://api.openai.com" />
-
+            android:inputType="textUri" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Model Name"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/modelNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="gpt-4o-mini" />
-
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="API Key (optional)"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         app:endIconMode="password_toggle"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/apiKeyInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -77,7 +104,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end">
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            style="@style/Widget.Material3.Button.TextButton" />
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
@@ -85,14 +118,11 @@
             android:text="Cancel"
             android:layout_marginEnd="8dp"
             style="@style/Widget.Material3.Button.TextButton" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="Save &amp; Activate"
             style="@style/Widget.Material3.Button" />
-
     </LinearLayout>
-
 </LinearLayout>

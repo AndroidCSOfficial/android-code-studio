@@ -23,6 +23,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.tom.rv2ide.artificial.dialogs.LocalLLMConfigDialog
 import com.tom.rv2ide.artificial.dialogs.CustomProviderConfigDialog
+import com.tom.rv2ide.artificial.dialogs.AgentProfilesDialog
+import com.tom.rv2ide.artificial.dialogs.McpServersDialog
 
 class AIPreferencesFragment(
     private val aiAgent: AIAgentManager,
@@ -57,6 +59,7 @@ class AIPreferencesFragment(
         setupProviderDropdown()
         setupModelDropdown()
         setupToggles()
+        setupAgentCapabilityButtons(view)
         updateCurrentStatus()
         startCompletionStateMonitoring()
     }
@@ -345,5 +348,10 @@ class AIPreferencesFragment(
     override fun onDestroyView() {
         stopCompletionStateMonitoring()
         super.onDestroyView()
+    }
+
+    private fun setupAgentCapabilityButtons(view: View) {
+        view.findViewById<android.view.View?>(R.id.agentProfilesButton)?.setOnClickListener { AgentProfilesDialog.show(requireContext()) }
+        view.findViewById<android.view.View?>(R.id.mcpServersButton)?.setOnClickListener { McpServersDialog.show(requireContext()) }
     }
 }
