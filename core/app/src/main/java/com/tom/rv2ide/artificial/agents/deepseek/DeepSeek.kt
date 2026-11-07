@@ -44,8 +44,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
-import org.json.JSONObject
-import org.json.JSONArray
 
 class DeepSeek : AIAgent {
 

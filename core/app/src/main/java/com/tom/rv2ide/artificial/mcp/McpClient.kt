@@ -31,7 +31,7 @@ class McpClient(private val config: McpServerConfig) {
         val out = mutableListOf<AIToolDef>()
         for (i in 0 until tools.length()) {
             val t = tools.optJSONObject(i) ?: continue
-            val name = t.optString("name").ifBlank { continue }
+            val name = t.optString("name"); if (name.isBlank()) continue
             val desc = t.optString("description", "")
             val schema = t.optJSONObject("inputSchema")?.toString() ?: "{\"type\":\"object\",\"properties\":{}}"
             out.add(AIToolDef(name = "mcp__${safe(config.name)}__${name}", description = "[MCP:${config.name}] $desc", parametersJsonSchema = schema))

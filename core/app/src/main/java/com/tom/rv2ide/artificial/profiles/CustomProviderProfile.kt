@@ -32,7 +32,7 @@ object CustomProviderProfileStore {
             val profiles = mutableListOf<CustomProviderProfile>()
             for (i in 0 until arr.length()) {
                 val p = arr.optJSONObject(i) ?: continue
-                val name = p.optString("name").ifBlank { continue }
+                val name = p.optString("name"); if (name.isBlank()) continue
                 profiles.add(
                     CustomProviderProfile(
                         id = p.optString("id").ifBlank { UUID.randomUUID().toString() },

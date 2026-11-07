@@ -44,7 +44,7 @@ object AgentPromptProfileStore {
             val profiles = mutableListOf<AgentPromptProfile>()
             for (i in 0 until arr.length()) {
                 val p = arr.optJSONObject(i) ?: continue
-                val name = p.optString("name").ifBlank { continue }
+                val name = p.optString("name"); if (name.isBlank()) continue
                 fun strList(key: String): List<String> { val a = p.optJSONArray(key) ?: return emptyList(); return (0 until a.length()).map { a.optString(it) }.filter { it.isNotBlank() } }
                 profiles.add(AgentPromptProfile(
                     id = p.optString("id").ifBlank { UUID.randomUUID().toString() },
