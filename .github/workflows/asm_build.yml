@@ -29,11 +29,18 @@ on:
         options:
           - Debug
           - Release
+      version:
+        description: 'Release version'
+        required: true
+        default: 'v1.0.0+gh.r05'
+        type: string
 
 jobs:
   build_release_apk:
     name: Build APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.12.1
@@ -52,6 +59,8 @@ jobs:
           BUILD_TYPE="${SELECTED_TYPE:-Debug}"
           echo "BUILD_TYPE=$BUILD_TYPE" >> $GITHUB_ENV
           echo "BUILD_TYPE_LOWER=$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          INPUT_VERSION="${{ github.event.inputs.version }}"
+          echo "VERSION=${INPUT_VERSION:-v1.0.0+gh.r05}" >> $GITHUB_ENV
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -134,6 +143,17 @@ jobs:
               SIGNING_KEY_PASSWORD="$SIGNING_KEY_PASSWORD" \
               ./gradlew assemble${{ env.BUILD_TYPE }} -DSIGNING_STORE_PASSWORD="$SIGNING_STORE_PASSWORD" -DSIGNING_KEY_PASSWORD="$SIGNING_KEY_PASSWORD"
 
+      - name: Rename APKs
+        run: |
+          cd core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}
+          for abi in arm64-v8a armeabi-v7a x86_64 universal; do
+            for f in *"$abi"*.apk; do
+              if [ -f "$f" ]; then
+                mv "$f" "android-code-studio-${abi}-${BUILD_TYPE_LOWER}-${VERSION}.apk"
+              fi
+            done
+          done
+
       - name: List APK files
         run: ls -la core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/ || echo "Directory not found"
 
@@ -151,16 +171,13 @@ jobs:
           path: core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/*armeabi-v7a*.apk
         if: always()
 
-      - name: Upload x86_64 APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-x86_64-${{ env.BUILD_TYPE_LOWER }}
-          path: core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/*x86_64*.apk
-        if: always()
 
-      - name: Upload universal APK
-        uses: actions/upload-artifact@v4
+      - name: Publish GitHub Release
+        if: env.BUILD_TYPE == 'Release'
+        uses: softprops/action-gh-release@v2
         with:
-          name: apk-universal-${{ env.BUILD_TYPE_LOWER }}
-          path: core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/*universal*.apk
-        if: always()
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
+          fail_on_unmatched_files: true
+          files: core/app/build/outputs/apk/release/android-code-studio-*.apk
