@@ -46,6 +46,12 @@ jobs:
           submodules: 'recursive'
           fetch-depth: 0
 
+      - name: Init submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --force
+          git submodule status --recursive
+
       - name: Determine Build Type Configuration
         run: |
           SELECTED_TYPE="${{ github.event.inputs.build_type }}"
