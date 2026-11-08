@@ -66,7 +66,10 @@ jobs:
           distribution: 'adopt'
 
       - name: Generating missing dirs
-        run: mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/debug/desugarDebugFileDependencies && mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/l8_art_profile/release/l8DexDesugarLibRelease
+        run: |
+          mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/debug/desugarDebugFileDependencies
+          mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/l8_art_profile/release/l8DexDesugarLibRelease
+          mkdir -p /home/runner/work/android-code-studio/android-code-studio/composite-builds/build-logic/desugaring-core
 
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
