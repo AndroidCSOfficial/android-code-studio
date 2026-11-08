@@ -46,12 +46,6 @@ jobs:
           submodules: 'recursive'
           fetch-depth: 0
 
-      - name: Init submodules
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive --force
-          git submodule status --recursive
-
       - name: Determine Build Type Configuration
         run: |
           SELECTED_TYPE="${{ github.event.inputs.build_type }}"
@@ -135,7 +129,10 @@ jobs:
         env:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-        run: ./gradlew assemble${{ env.BUILD_TYPE }}
+        run: |
+          env SIGNING_STORE_PASSWORD="$SIGNING_STORE_PASSWORD" \
+              SIGNING_KEY_PASSWORD="$SIGNING_KEY_PASSWORD" \
+              ./gradlew assemble${{ env.BUILD_TYPE }} -DSIGNING_STORE_PASSWORD="$SIGNING_STORE_PASSWORD" -DSIGNING_KEY_PASSWORD="$SIGNING_KEY_PASSWORD"
 
       - name: List APK files
         run: ls -la core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/ || echo "Directory not found"
