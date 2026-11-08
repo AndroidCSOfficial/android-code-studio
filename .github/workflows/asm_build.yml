@@ -75,7 +75,6 @@ jobs:
           done
           cd "$ANDROID_HOME/platforms"
           ls
-          # AGP looks for platforms/android-37, but the package may install as android-37.0
           if [ ! -d android-37 ] && [ -d android-37.0 ]; then
             ln -s android-37.0 android-37
           fi
@@ -123,6 +122,7 @@ jobs:
           grep -nE 'const val (version|versionCode) =' "$VERSIONS_FILE"
           chmod +x ./gradlew
           ./gradlew :editor:publishToMavenLocal -I ~/no-sign.init.gradle
+          find ~/.m2/repository -name "*.pom" | grep -i editor
 
       - name: Create local.properties
         run: |
