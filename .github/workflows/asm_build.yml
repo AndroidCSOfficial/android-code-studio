@@ -65,6 +65,13 @@ jobs:
           java-version: '21'
           distribution: 'adopt'
 
+      - name: Install Android SDK platform 37
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" "platforms;android-37" || "$SDKMANAGER" "platforms;android-37.0"
+          ls "$ANDROID_HOME/platforms"
+
       - name: Generating missing dirs
         run: |
           mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/debug/desugarDebugFileDependencies
@@ -83,6 +90,26 @@ jobs:
           key: ${{ runner.os }}-gradle-v2-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Generate no-sign init script
+        run: |
+          cat > ~/no-sign.init.gradle << 'EOF'
+          gradle.projectsEvaluated {
+              rootProject.allprojects { p ->
+                  def s = p.extensions.findByName("signing")
+                  if (s != null) {
+                      s.required = false
+                  }
+              }
+          }
+          EOF
+
+      - name: Build and publish sora-editor to Maven Local
+        run: |
+          git clone --depth 1 https://github.com/nullij/sora-editor.git ~/sora-editor
+          cd ~/sora-editor
+          chmod +x ./gradlew
+          ./gradlew :editor:publishToMavenLocal -I ~/no-sign.init.gradle
 
       - name: Create local.properties
         run: |
