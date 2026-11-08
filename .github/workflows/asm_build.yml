@@ -143,6 +143,13 @@ jobs:
           ./gradlew :editor:publishToMavenLocal -I ~/no-sign.init.gradle
           find ~/.m2/repository -name "*.pom" | grep -i editor
 
+      - name: Point editor version to snapshot
+        run: |
+          for f in $(find . -name "libs.versions.toml" -not -path "*/build/*"); do
+            sed -i 's/^\(editor = \)"0.24.7-acs"/\1"0.24.7-acs-SNAPSHOT"/' "$f"
+            grep -n '^editor = ' "$f"
+          done
+
       - name: Create local.properties
         run: |
           echo "signing.storeFile=signing/signing-key.jks" >> local.properties
