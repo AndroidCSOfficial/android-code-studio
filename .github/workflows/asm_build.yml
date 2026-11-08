@@ -86,6 +86,7 @@ jobs:
       - name: Generating missing dirs
         run: |
           mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/debug/desugarDebugFileDependencies
+          mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/external_file_lib_dex_archives/release/desugarReleaseFileDependencies
           mkdir -p /home/runner/work/android-code-studio/android-code-studio/core/app/build/intermediates/l8_art_profile/release/l8DexDesugarLibRelease
           mkdir -p /home/runner/work/android-code-studio/android-code-studio/composite-builds/build-logic/desugaring-core
 
@@ -170,7 +171,6 @@ jobs:
           name: apk-armeabi-v7a-${{ env.BUILD_TYPE_LOWER }}
           path: core/app/build/outputs/apk/${{ env.BUILD_TYPE_LOWER }}/*armeabi-v7a*.apk
         if: always()
-
 
       - name: Publish GitHub Release
         if: env.BUILD_TYPE == 'Release'
