@@ -1,18 +1,18 @@
 /*
- * This file is part of AndroidIDE.
+ *  This file is part of AndroidIDE.
  *
- * AndroidIDE is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  AndroidIDE is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * AndroidIDE is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  AndroidIDE is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 package com.tom.rv2ide.tooling.api.util
 
@@ -71,7 +71,6 @@ import com.tom.rv2ide.tooling.events.work.WorkItemOperationDescriptor
 import com.tom.rv2ide.tooling.events.work.WorkItemOperationResult
 import com.tom.rv2ide.tooling.events.work.WorkItemProgressEvent
 import com.tom.rv2ide.tooling.events.work.WorkItemStartEvent
-import io.github.nullij.crystal.crystalizeCli
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -91,10 +90,8 @@ object ToolingApiLauncher {
       `in`: InputStream?,
       out: OutputStream?,
   ): Launcher<T> {
-    // Re-enabled Crystallizer wrapper to protect against high content lengths throwing OOMs
-    val input = `in`?.crystalizeCli(MAX_CONTENT_LENGTH_BYTES) ?: `in`
     return Launcher.Builder<T>()
-        .setInput(input)
+        .setInput(`in`)
         .setOutput(out)
         .setLocalService(local)
         .setRemoteInterface(remote)
@@ -214,10 +211,8 @@ object ToolingApiLauncher {
       `in`: InputStream?,
       out: OutputStream?,
   ): Launcher<Any> {
-    // Re-enabled Crystallizer wrapper to protect against high content lengths throwing OOMs
-    val input = `in`?.crystalizeCli(MAX_CONTENT_LENGTH_BYTES) ?: `in`
     return Launcher.Builder<Any>()
-        .setInput(input)
+        .setInput(`in`)
         .setOutput(out)
         .setExecutorService(Executors.newCachedThreadPool())
         .setLocalServices(listOf(*locals))
@@ -241,17 +236,4 @@ object ToolingApiLauncher {
         out,
     )
   }
-
-  // Max size (bytes) allowed for a single JSON-RPC message body before we refuse to
-  // read it. Enforced by ContentLengthLimitingInputStream (see the contentcap library)
-  // wrapped around the process's stdout/stdin before LSP4J ever sees it -- LSP4J's own
-  // reader trusts the wire's Content-Length outright and would otherwise allocate a
-  // buffer that big with no cap.
-  //
-  // Sized against the server subprocess's -Xmx256m (see ToolingServerRunner's spawn
-  // command) -- deliberately well under it, not just under it, because Gson
-  // deserializing raw JSON bytes into a live object graph typically costs several
-  // times the raw byte count, not 1:1. If -Xmx changes, revisit this value; it is not
-  // meant to track it automatically.
-  private const val MAX_CONTENT_LENGTH_BYTES = 7_000_000
 }
