@@ -1,9 +1,0 @@
-com.tom.androidcodestudio.acsprovider-pngs-0 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/generated/res/pngs/debug
-com.tom.androidcodestudio.acsprovider-updated_navigation_xml-1 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/generated/updated_navigation_xml/debug
-com.tom.androidcodestudio.acsprovider-mergeDebugResources-2 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
-com.tom.androidcodestudio.acsprovider-mergeDebugResources-3 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
-com.tom.androidcodestudio.acsprovider-debug-4 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/intermediates/merged_res/debug/mergeDebugResources
-com.tom.androidcodestudio.acsprovider-debug-5 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/build/intermediates/packaged_res/debug/packageDebugResources
-com.tom.androidcodestudio.acsprovider-debug-6 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/src/debug/res
-com.tom.androidcodestudio.acsprovider-main-7 /data/data/com.termux/files/home/MinAndroidProjects/TomAndroidIDE/external/acsprovider/src/main/res
-gradleHome-0 /data/data/com.termux/files/home/.gradle
