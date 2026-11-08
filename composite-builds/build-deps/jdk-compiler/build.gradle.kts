@@ -26,5 +26,6 @@ java {
 }
 
 dependencies {
-  api(projects.buildDeps.javaCompiler)
+  api(files("../libs/java-compiler.jar"))
+  // api(projects.buildDeps.javaCompiler)
 }

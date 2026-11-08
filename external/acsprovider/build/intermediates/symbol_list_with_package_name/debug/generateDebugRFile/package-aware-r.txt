@@ -4062,6 +4062,7 @@ drawable ic_drawing
 drawable ic_email
 drawable ic_error
 drawable ic_expand_less_22px
+drawable ic_expand_more
 drawable ic_expand_more_22px
 drawable ic_expand_selection
 drawable ic_extensions
@@ -4131,6 +4132,7 @@ drawable ic_package
 drawable ic_palette
 drawable ic_password_input
 drawable ic_pin
+drawable ic_play
 drawable ic_preview_layout
 drawable ic_publish
 drawable ic_qq
@@ -4219,6 +4221,7 @@ drawable ic_widget_viewswitcher
 drawable ic_widget_webview
 drawable ic_wrap_text
 drawable icon_background
+drawable line_break
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
 drawable m3_bottom_sheet_drag_handle
@@ -4307,6 +4310,8 @@ drawable round_select_all_20
 drawable rounded_background
 drawable shadow_bottom
 drawable shadow_top
+drawable softwrap_left
+drawable softwrap_right
 drawable test_level_drawable
 drawable text_select_handle_left_material
 drawable text_select_handle_right_material
@@ -4698,6 +4703,7 @@ id reinstall_btn
 id remove_btn
 id report_drawn
 id result_item_desc
+id result_item_detail
 id result_item_image
 id result_item_label
 id retreat
@@ -5228,6 +5234,9 @@ string all_saved
 string app_logs
 string app_name
 string app_name_dcm
+string app_subtitle
+string app_title_line_1
+string app_title_line_2
 string appbar_scrolling_view_behavior
 string back
 string backup_success
@@ -5295,6 +5304,8 @@ string delete_file
 string delete_project_message
 string delete_project_title
 string deleted
+string desc_project_options
+string desc_toggle_theme
 string discussions_on_qq
 string discussions_on_telegram
 string err_authority_not_allowed
@@ -5834,8 +5845,11 @@ string mtrl_timepicker_confirm
 string name_already_exists
 string native_error_title
 string native_language
+string nav_help_support
+string nav_plugins
 string nav_rail_collapsed_a11y_label
 string nav_rail_expanded_a11y_label
+string nav_whats_new
 string ndk_version_auto
 string need_help
 string new_file
@@ -5853,6 +5867,7 @@ string no_acs_title
 string no_internet
 string no_projects_found
 string no_projects_match_search
+string no_recent_projects
 string not_set
 string notification_action_exit
 string notification_action_wake_lock
@@ -5896,6 +5911,7 @@ string project_rename_failed
 string project_renamed_success
 string quick_run_debug
 string recent_badge
+string recent_projects
 string redo
 string rename
 string rename_failed
@@ -5945,8 +5961,15 @@ string sora_editor_replaceAll
 string sora_editor_replacement
 string sora_editor_text_to_search
 string status_bar_notification_info_overflow
+string subtitle_create_project
 string subtitle_desc
+string subtitle_docs
+string subtitle_git_clone_repo
+string subtitle_ide_configurations
 string subtitle_install_tools
+string subtitle_open_existing_project
+string subtitle_open_terminal
+string subtitle_preferences
 string summary_anonymous_usage_stats
 string summary_collapsed_preference_list
 string summary_contribute
@@ -6133,9 +6156,12 @@ string use_cmake
 string use_gradle_kotlin_dsl
 string v7_preference_off
 string v7_preference_on
+string view_all
 string view_diags
 string view_search_results
 string warning
+string welcome_back
+string welcome_back_subtitle
 string widget_analog_clock
 string widget_auto_complete_textview
 string widget_button

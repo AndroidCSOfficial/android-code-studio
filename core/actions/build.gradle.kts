@@ -20,8 +20,9 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins{
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
+    // id("kotlin-android")
+    // id("kotlin-kapt")
 }
 
 
@@ -31,8 +32,9 @@ android {
 }
 
 dependencies {
-    kapt(libs.google.auto.service)
-
+    // kapt(libs.google.auto.service)
+    ksp("dev.zacsweers.autoservice:auto-service-ksp:1.2.0")
+  
     api(libs.androidx.nav.fragment)
     api(libs.androidx.nav.ui)
 

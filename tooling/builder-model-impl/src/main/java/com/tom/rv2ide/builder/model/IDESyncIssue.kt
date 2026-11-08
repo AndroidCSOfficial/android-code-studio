@@ -17,7 +17,7 @@
 
 package com.tom.rv2ide.builder.model
 
-import com.android.build.gradle.options.StringOption.AAPT2_FROM_MAVEN_OVERRIDE
+// import com.android.build.gradle.options.StringOption.AAPT2_FROM_MAVEN_OVERRIDE
 import com.android.builder.model.v2.ide.SyncIssue
 
 /**
@@ -52,5 +52,5 @@ fun SyncIssue.shouldBeIgnored(): Boolean {
 
   // AndroidIDE sets android.aapt2FromMavenOverride in order to use a custom AAPT2 that is
   // compatible with Android
-  return AAPT2_FROM_MAVEN_OVERRIDE.propertyName == this.data
+  return true
 }

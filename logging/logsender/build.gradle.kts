@@ -17,7 +17,7 @@ description = "LogSender is used to read logs from applications built with Andro
 
 android {
     namespace = "${BuildConfig.packageName}.logsender"
-
+    buildToolsVersion = "35.0.0"
     defaultConfig {
         minSdk = 16
         vectorDrawables.useSupportLibrary = true

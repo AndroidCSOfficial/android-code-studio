@@ -50,7 +50,10 @@ object ContentReadWrite {
       try {
         for (lineIdx in 0..lastLine) {
           val line = getLine(lineIdx)
-          writer.write(line.backingCharArray, 0, line.length)
+          // Those changes reflect the changes of nullij editor fork.
+          // ContentLine.backingCharArray was removed; ContentLine implements CharSequence now.
+          // writer.write(line.backingCharArray, 0, line.length)
+          writer.append(line)
 
           val separatorChars = line.lineSeparator.chars
           writer.write(separatorChars)

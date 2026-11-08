@@ -4061,6 +4061,7 @@ int drawable ic_drawing 0x0
 int drawable ic_email 0x0
 int drawable ic_error 0x0
 int drawable ic_expand_less_22px 0x0
+int drawable ic_expand_more 0x0
 int drawable ic_expand_more_22px 0x0
 int drawable ic_expand_selection 0x0
 int drawable ic_extensions 0x0
@@ -4130,6 +4131,7 @@ int drawable ic_package 0x0
 int drawable ic_palette 0x0
 int drawable ic_password_input 0x0
 int drawable ic_pin 0x0
+int drawable ic_play 0x0
 int drawable ic_preview_layout 0x0
 int drawable ic_publish 0x0
 int drawable ic_qq 0x0
@@ -4218,6 +4220,7 @@ int drawable ic_widget_viewswitcher 0x0
 int drawable ic_widget_webview 0x0
 int drawable ic_wrap_text 0x0
 int drawable icon_background 0x0
+int drawable line_break 0x0
 int drawable m3_avd_hide_password 0x0
 int drawable m3_avd_show_password 0x0
 int drawable m3_bottom_sheet_drag_handle 0x0
@@ -4306,6 +4309,8 @@ int drawable round_select_all_20 0x0
 int drawable rounded_background 0x0
 int drawable shadow_bottom 0x0
 int drawable shadow_top 0x0
+int drawable softwrap_left 0x0
+int drawable softwrap_right 0x0
 int drawable test_level_drawable 0x0
 int drawable text_select_handle_left_material 0x0
 int drawable text_select_handle_right_material 0x0
@@ -4697,6 +4702,7 @@ int id reinstall_btn 0x0
 int id remove_btn 0x0
 int id report_drawn 0x0
 int id result_item_desc 0x0
+int id result_item_detail 0x0
 int id result_item_image 0x0
 int id result_item_label 0x0
 int id retreat 0x0
@@ -5227,6 +5233,9 @@ int string all_saved 0x0
 int string app_logs 0x0
 int string app_name 0x0
 int string app_name_dcm 0x0
+int string app_subtitle 0x0
+int string app_title_line_1 0x0
+int string app_title_line_2 0x0
 int string appbar_scrolling_view_behavior 0x0
 int string back 0x0
 int string backup_success 0x0
@@ -5294,6 +5303,8 @@ int string delete_file 0x0
 int string delete_project_message 0x0
 int string delete_project_title 0x0
 int string deleted 0x0
+int string desc_project_options 0x0
+int string desc_toggle_theme 0x0
 int string discussions_on_qq 0x0
 int string discussions_on_telegram 0x0
 int string err_authority_not_allowed 0x0
@@ -5833,8 +5844,11 @@ int string mtrl_timepicker_confirm 0x0
 int string name_already_exists 0x0
 int string native_error_title 0x0
 int string native_language 0x0
+int string nav_help_support 0x0
+int string nav_plugins 0x0
 int string nav_rail_collapsed_a11y_label 0x0
 int string nav_rail_expanded_a11y_label 0x0
+int string nav_whats_new 0x0
 int string ndk_version_auto 0x0
 int string need_help 0x0
 int string new_file 0x0
@@ -5852,6 +5866,7 @@ int string no_acs_title 0x0
 int string no_internet 0x0
 int string no_projects_found 0x0
 int string no_projects_match_search 0x0
+int string no_recent_projects 0x0
 int string not_set 0x0
 int string notification_action_exit 0x0
 int string notification_action_wake_lock 0x0
@@ -5895,6 +5910,7 @@ int string project_rename_failed 0x0
 int string project_renamed_success 0x0
 int string quick_run_debug 0x0
 int string recent_badge 0x0
+int string recent_projects 0x0
 int string redo 0x0
 int string rename 0x0
 int string rename_failed 0x0
@@ -5944,8 +5960,15 @@ int string sora_editor_replaceAll 0x0
 int string sora_editor_replacement 0x0
 int string sora_editor_text_to_search 0x0
 int string status_bar_notification_info_overflow 0x0
+int string subtitle_create_project 0x0
 int string subtitle_desc 0x0
+int string subtitle_docs 0x0
+int string subtitle_git_clone_repo 0x0
+int string subtitle_ide_configurations 0x0
 int string subtitle_install_tools 0x0
+int string subtitle_open_existing_project 0x0
+int string subtitle_open_terminal 0x0
+int string subtitle_preferences 0x0
 int string summary_anonymous_usage_stats 0x0
 int string summary_collapsed_preference_list 0x0
 int string summary_contribute 0x0
@@ -6132,9 +6155,12 @@ int string use_cmake 0x0
 int string use_gradle_kotlin_dsl 0x0
 int string v7_preference_off 0x0
 int string v7_preference_on 0x0
+int string view_all 0x0
 int string view_diags 0x0
 int string view_search_results 0x0
 int string warning 0x0
+int string welcome_back 0x0
+int string welcome_back_subtitle 0x0
 int string widget_analog_clock 0x0
 int string widget_auto_complete_textview 0x0
 int string widget_button 0x0

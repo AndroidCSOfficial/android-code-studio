@@ -24,7 +24,7 @@ import com.tom.rv2ide.build.config.downloadVersion
 import com.tom.rv2ide.plugins.tasks.AddAndroidJarToAssetsTask
 import com.tom.rv2ide.plugins.tasks.AddFileToAssetsTask
 import com.tom.rv2ide.plugins.tasks.GenerateInitScriptTask
-import com.tom.rv2ide.plugins.tasks.GradleWrapperGeneratorTask
+// import com.tom.rv2ide.plugins.tasks.GradleWrapperGeneratorTask
 import com.tom.rv2ide.plugins.util.SdkUtils.getAndroidJar
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -39,8 +39,8 @@ class AndroidIDEAssetsPlugin : Plugin<Project> {
 
   override fun apply(target: Project) {
     target.run {
-      val wrapperGeneratorTaskProvider =
-          tasks.register("generateGradleWrapper", GradleWrapperGeneratorTask::class.java)
+      // val wrapperGeneratorTaskProvider =
+          // tasks.register("generateGradleWrapper", GradleWrapperGeneratorTask::class.java)
 
       val androidComponentsExtension =
           extensions.getByType(ApplicationAndroidComponentsExtension::class.java)
@@ -58,10 +58,10 @@ class AndroidIDEAssetsPlugin : Plugin<Project> {
         // variant.sources.jniLibs?.addGeneratedSourceDirectory(setupAapt2TaskTaskProvider,
         // SetupAapt2Task::outputDirectory)
 
-        variant.sources.assets?.addGeneratedSourceDirectory(
-            wrapperGeneratorTaskProvider,
-            GradleWrapperGeneratorTask::outputDirectory,
-        )
+        // variant.sources.assets?.addGeneratedSourceDirectory(
+            // wrapperGeneratorTaskProvider,
+            // GradleWrapperGeneratorTask::outputDirectory,
+        // )
 
         variant.sources.assets?.addGeneratedSourceDirectory(
             addAndroidJarTaskProvider,

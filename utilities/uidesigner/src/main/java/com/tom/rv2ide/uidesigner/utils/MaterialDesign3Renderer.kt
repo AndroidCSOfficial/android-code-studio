@@ -76,8 +76,6 @@ class MaterialDesign3Renderer(private val workspace: IWorkspace? = null) {
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is FloatingActionButton ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
-      is BadgeDrawable ->
-          view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is AppBarLayout ->
           view.applyM3Preview(attributeName, attributeValue, context, workspace, layoutFile)
       is MaterialToolbar ->

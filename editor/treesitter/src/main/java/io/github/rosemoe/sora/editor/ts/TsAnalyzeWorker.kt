@@ -25,7 +25,8 @@ import com.tom.rv2ide.treesitter.api.TreeSitterInputEdit
 import com.tom.rv2ide.treesitter.api.TreeSitterQueryCapture
 import com.tom.rv2ide.treesitter.api.safeExecQueryCursor
 import com.tom.rv2ide.treesitter.string.UTF16String
-import io.github.rosemoe.sora.data.ObjectAllocator
+// Those changes reflect the changes of nullij editor fork where ObjectAllocator has been removed.
+// import io.github.rosemoe.sora.data.ObjectAllocator
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory
 import io.github.rosemoe.sora.lang.analysis.StyleReceiver
 import io.github.rosemoe.sora.lang.styling.CodeBlock
@@ -241,15 +242,21 @@ class TsAnalyzeWorker(
             spanFactory,
         )
 
-    val oldBlocks = styles.blocks
+    // Those changes reflect the changes of nullij editor fork where CodeBlock recycling is no longer used.
+    // val oldBlocks = styles.blocks
     updateCodeBlocks()
-    oldBlocks?.also { ObjectAllocator.recycleBlockLines(it) }
+    // oldBlocks?.also { ObjectAllocator.recycleBlockLines(it) }
 
     stylesReceiver?.setStyles(analyzer, styles) { oldTree?.close() }
 
     stylesReceiver?.updateBracketProvider(analyzer, TsBracketPairs(copied, languageSpec))
   }
 
+  /**
+   * Update code blocks for styling and code folding.
+   *
+   * Those changes reflect the changes of nullij editor fork.
+   */
   private fun updateCodeBlocks() {
     if (
         languageSpec.blocksQuery.patternCount == 0 ||
@@ -274,7 +281,9 @@ class TsAnalyzeWorker(
         }
 
         match.captures.forEach { capture ->
-          val block = ObjectAllocator.obtainBlockLine()
+          // Those changes reflect the changes of nullij editor fork where CodeBlock is directly instantiated.
+          // val block = ObjectAllocator.obtainBlockLine()
+          val block = CodeBlock()
           var node = capture.node
           val start = node.startPoint
 
@@ -293,7 +302,9 @@ class TsAnalyzeWorker(
               }
           block.endLine = end.row
           block.endColumn = end.column / 2
-          if (block.endLine - block.startLine > 1) {
+          // Those changes reflect the changes of nullij editor fork for code folding support.
+          // if (block.endLine - block.startLine > 1) {
+          if (block.endLine > block.startLine) {
             blocks.add(block)
           }
 

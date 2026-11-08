@@ -25,8 +25,7 @@ plugins {
 dependencies {
     implementation(projects.utilities.shared)
 
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/jaxp.jar")))
-    // implementation(libs.composite.jaxp)
+    implementation(libs.composite.jaxp)
     
     implementation(libs.common.jsoup)
     implementation(libs.common.jsonrpc)

@@ -20,8 +20,8 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    // id("kotlin-android")
+    // id("kotlin-kapt")
 }
 
 
@@ -30,18 +30,17 @@ android {
     namespace = "${BuildConfig.packageName}.lsp.api"
 }
 
-kapt {
-    arguments {
-        arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspApiEventsIndex")
-    }
-}
+// kapt {
+    // arguments {
+        // arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspApiEventsIndex")
+    // }
+// }
 
 dependencies {
     
-    kapt(projects.annotation.processors)
+    // kapt(projects.annotation.processors)
 
-    // implementation(libs.composite.fuzzysearch)
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/fuzzysearch.jar")))
+    implementation(libs.composite.fuzzysearch)
 
     implementation(libs.common.editor)
     implementation(projects.event.eventbusEvents)

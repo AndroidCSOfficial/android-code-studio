@@ -1,18 +1,18 @@
 /*
- *  This file is part of AndroidIDE.
+ * This file is part of AndroidIDE.
  *
- *  AndroidIDE is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * AndroidIDE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  AndroidIDE is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * AndroidIDE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.tom.rv2ide.xml.internal.versions
@@ -27,9 +27,11 @@ import java.util.concurrent.ConcurrentHashMap
 import org.slf4j.LoggerFactory
 
 /**
- * Default implementation of [ApiVersionsRegistry].
+ * Default implementation of [ApiVersionsRegistry] that bypasses XML parsing.
+ * This effectively disables API version checks and prevents parsing issues.
  *
  * @author Akash Yadav
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
  */
 @AutoService(ApiVersionsRegistry::class)
 @VisibleForTesting
@@ -55,62 +57,13 @@ class DefaultApiVersionsRegistry : ApiVersionsRegistry {
   }
 
   private fun readApiVersions(platform: File): ApiVersions? {
-    val versionsFile = File(platform, "data/api-versions.xml")
-    if (!versionsFile.exists() || !versionsFile.isFile) {
-      return null
-    }
-
     if (isLoggingEnabled) {
-      log.info("Creating API versions table for platform dir: $platform")
+      log.info("API version parsing bypassed for platform dir: $platform")
     }
-
-    return versionsFile.inputStream().buffered().use { inputStream ->
-      // we do not implement the parsing logic in the registry itself for thread safety
-      val versions = DefaultApiVersions()
-      val parser = ApiVersionsParserInternal(versions)
-      parser.parse(inputStream)
-      versions
-    }
+    return DefaultApiVersions()
   }
 
   override fun clear() {
     versions.clear()
-  }
-
-  private class ApiVersionsParserInternal(private val currentApiVersions: DefaultApiVersions) :
-      ApiVersionsParser() {
-    override fun isDuplicateClass(name: String): Boolean {
-      return currentApiVersions.containsClass(name)
-    }
-
-    override fun isDuplicateMember(className: String, memberName: String): Boolean {
-      return currentApiVersions.containsClassMember(className, memberName)
-    }
-
-    override fun consumeClassVersionInfo(name: String, apiVersion: ApiVersion) {
-      if (apiVersion.isSinceInception()) {
-        return
-      }
-      currentApiVersions.putClass(name, apiVersion)
-    }
-
-    override fun consumeMemberVersionInfo(
-        className: String,
-        member: String,
-        memberType: String,
-        apiVersion: ApiVersion,
-    ) {
-      if (apiVersion.isSinceInception()) {
-        return
-      }
-
-      var identifier = member
-      if (memberType == TAG_METHOD) {
-        // strip return type to save some memory
-        identifier = member.substring(0, member.lastIndexOf(')') + 1)
-      }
-
-      currentApiVersions.putMember(className, identifier, apiVersion)
-    }
   }
 }

@@ -29,7 +29,7 @@ object BuildConfig {
   const val packageName = "com.tom.rv2ide"
 
   /** The compile SDK version. */
-  const val compileSdk = 34
+  const val compileSdk = 37
   
   /** The build tools version. */
   const val buildToolsVersion = "35.0.0"
@@ -43,5 +43,5 @@ object BuildConfig {
   const val ndkVersion = "26.1.10909125"
 
   /** The source and target Java compatibility. */
-  val javaVersion = JavaVersion.VERSION_11
+  val javaVersion = JavaVersion.VERSION_17
 }

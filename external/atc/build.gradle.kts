@@ -19,21 +19,25 @@
 
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    // alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.tom.androidcodestudio.atc"
-    compileSdk = 36
+    compileSdk = 37
 
-    defaultConfig { minSdk = 21 }
-    
+    defaultConfig {
+        minSdk = 21
+    }
+
     buildFeatures {
         buildConfig = false
     }
-    
-    kotlinOptions {
-        jvmTarget = "17"
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 }
 

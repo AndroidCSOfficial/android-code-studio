@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Three overlapping rounded squares (pink, lavender, purple) rotated at
+  slight offsets, used as a "floating sticker" backdrop behind the ACS
+  logo mark on the welcome header.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="140dp"
+    android:height="140dp"
+    android:viewportWidth="140"
+    android:viewportHeight="140">
+
+    <!-- Pink square, rotated -12deg, back layer -->
+    <group
+        android:pivotX="70"
+        android:pivotY="70"
+        android:rotation="-14">
+        <path
+            android:fillColor="?attr/colorSurfaceContainer"
+            android:fillAlpha="0.9"
+            android:pathData="M30,30 h80 a10,10 0 0 1 10,10 v80 a10,10 0 0 1 -10,10 h-80 a10,10 0 0 1 -10,-10 v-80 a10,10 0 0 1 10,-10 Z" />
+    </group>
+
+    <!-- Lavender square, rotated 10deg, middle layer -->
+    <group
+        android:pivotX="70"
+        android:pivotY="70"
+        android:rotation="10">
+        <path
+            android:fillColor="?attr/colorSurfaceContainerHigh"
+            android:fillAlpha="0.9"
+            android:pathData="M25,25 h90 a10,10 0 0 1 10,10 v90 a10,10 0 0 1 -10,10 h-90 a10,10 0 0 1 -10,-10 v-90 a10,10 0 0 1 10,-10 Z" />
+    </group>
+
+</vector>

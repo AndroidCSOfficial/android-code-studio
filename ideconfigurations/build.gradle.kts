@@ -19,8 +19,9 @@
 import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+  alias(libs.plugins.android.library)
+    // id("com.android.library")
+    // id("kotlin-android")
 }
 
 android {

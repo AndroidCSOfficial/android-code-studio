@@ -177,6 +177,13 @@ public class SchemeAndroidIDE extends EditorColorScheme {
     setColor(TODO_COMMENT, 0xfff1fa8c);
     setColor(FIXME_COMMENT, 0xffff5555);
     setColor(COMMENT, 0xff6272a4);
+
+    // Those changes reflect the changes of nullij editor fork.
+    // TEXT_INLAY_HINT_FOREGROUND and TEXT_INLAY_HINT_BACKGROUND were not set before,
+    // causing the folding '...' inlay hint to render with black text (the light-theme
+    // fallback from EditorColorScheme). Set them explicitly for the Dracula dark theme.
+    setColor(TEXT_INLAY_HINT_FOREGROUND, 0xfff8f8f2);
+    setColor(TEXT_INLAY_HINT_BACKGROUND, 0x40bd93f9);
   }
 
   @Override

@@ -19,7 +19,6 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-android")
 }
 
 android {
@@ -37,10 +36,8 @@ dependencies {
   api(libs.aapt2.common)
   api(libs.google.protobuf)
 
-  // api(libs.composite.layoutlibApi)
-  api(files(rootProject.file("composite-builds/build-deps/libs/layoutlib-api.jar")))
-  api(files(rootProject.file("composite-builds/build-deps/libs/jaxp.jar")))
-  // api(libs.composite.jaxp)
+  api(libs.composite.layoutlibApi)
+  api(libs.composite.jaxp)
 
   implementation(projects.utilities.shared)
 }

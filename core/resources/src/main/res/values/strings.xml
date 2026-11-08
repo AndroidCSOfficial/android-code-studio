@@ -1041,4 +1041,32 @@ This AI agent is designed to assist you in developing Android applications direc
   <string name="lsp_ok_button">OK</string>
   <string name="lsp_installation_failed_description">Failed to install update: %s</string>
   <string name="lsp_retry_button">Retry</string>
+
+    <string name="app_title_line_1">Android</string>
+    <string name="app_title_line_2">Code Studio</string>
+    <string name="app_subtitle">Your ideas, Anywhere</string>
+
+    <string name="welcome_back">Welcome back!</string>
+    <string name="welcome_back_subtitle">Ready to build something amazing?</string>
+
+    <string name="recent_projects">Recent projects</string>
+    <string name="view_all">View all</string>
+    <string name="no_recent_projects">No recent projects yet. Create or open one to get started.</string>
+
+    <string name="subtitle_create_project">Start a new Android project</string>
+    <string name="subtitle_open_existing_project">Open a project from disk</string>
+    <string name="subtitle_git_clone_repo">Clone a project from Git</string>
+    <string name="subtitle_open_terminal">Open integrated terminal</string>
+    <string name="subtitle_preferences">Customize the IDE</string>
+    <string name="subtitle_ide_configurations">Configure SDK, tools &amp; more</string>
+    <string name="subtitle_docs">Read docs and guides</string>
+
+    <string name="nav_whats_new">What\'s new</string>
+    <string name="nav_plugins">Plugins</string>
+    <string name="nav_help_support">Help &amp; support</string>
+
+    <string name="desc_toggle_theme">Toggle theme</string>
+    <string name="desc_project_options">Project options</string>
+    
+
 </resources>

@@ -20,7 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-android")
+  // id("kotlin-android")
   kotlin("plugin.serialization") version "1.9.10"
 }
 

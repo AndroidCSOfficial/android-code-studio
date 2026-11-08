@@ -150,6 +150,10 @@ class MainActivity : EdgeToEdgeIDEActivity() {
     for (fragment in arrayOf(binding.main, binding.templateList, binding.templateDetails)) {
       fragment.isVisible = fragment == currentFragment
     }
+
+    // The redesigned main screen draws its own full-bleed header, so the shared app bar is
+    // only needed on the other screens.
+    binding.appbar.isVisible = screen != SCREEN_MAIN
   }
 
   override fun bindLayout(): View {

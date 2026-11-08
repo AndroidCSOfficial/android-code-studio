@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Abstract background decoration: soft, low-opacity lavender blobs/ribbons
+  flowing in from the top-right corner. Intended to sit behind the header
+  content, clipped by the parent's bounds.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="412dp"
+    android:height="360dp"
+    android:viewportWidth="412"
+    android:viewportHeight="360">
+
+    <!-- Large soft circle, top-right, ~6% opacity -->
+    <path
+        android:fillColor="?attr/colorSurfaceContainer"
+        android:fillAlpha="0.06"
+        android:pathData="M 520,-40 m -220,0 a 220,220 0 1,0 440,0 a 220,220 0 1,0 -440,0" />
+
+    <!-- Organic ribbon shape flowing diagonally, ~8% opacity -->
+    <path
+        android:fillColor="?attr/colorSurfaceContainerHigh"
+        android:fillAlpha="0.08"
+        android:pathData="M 260,10
+                            C 340,-20 420,30 400,110
+                            C 385,175 300,190 250,160
+                            C 200,130 190,60 260,10 Z" />
+
+    <!-- Small accent blob, ~5% opacity -->
+    <path
+        android:fillColor="?attr/colorSurfaceContainerLow"
+        android:fillAlpha="0.05"
+        android:pathData="M 350,140 m -70,0 a 70,70 0 1,0 140,0 a 70,70 0 1,0 -140,0" />
+
+</vector>

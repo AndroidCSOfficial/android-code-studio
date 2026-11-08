@@ -1,18 +1,18 @@
 /*
- *  This file is part of AndroidCodeStudio.
+ * This file is part of AndroidCodeStudio.
  *
- *  AndroidCodeStudio is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ * AndroidCodeStudio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  AndroidCodeStudio is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * AndroidCodeStudio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *   along with AndroidCodeStudio.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with AndroidCodeStudio.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.tom.rv2ide.lsp.kotlin
@@ -67,23 +67,24 @@ class KotlinServerProcessManager(context: Context) {
       return
     }
 
-    KslLogs.info("Starting Kotlin Language Server with standard JSON-RPC...")
+    KslLogs.info("Starting Kotlin Language Server via distribution script...")
 
     val serverHome = Environment.SERVERS_KOTLIN_DIR
-    val libDir = File(serverHome, "lib")
+    
+    // Look for the executable script in bin directory, with a fallback
+    var executableFile = File(serverHome, "bin/kotlin-language-server")
+    if (!executableFile.exists()) {
+        executableFile = File(serverHome, "server/bin/kotlin-language-server")
+    }
 
-    if (!serverHome.exists() || !libDir.exists()) {
-      KslLogs.error("Server not found at: {}", serverHome.absolutePath)
+    if (!executableFile.exists()) {
+      KslLogs.error("Server executable not found at: {}", executableFile.absolutePath)
       return
     }
 
-    val jars = libDir.listFiles { file: File -> file.name.endsWith(".jar") }
-    if (jars == null || jars.isEmpty()) {
-      KslLogs.error("No JAR files found in: {}", libDir.absolutePath)
-      return
-    }
+    // Ensure the script has execute permissions
+    executableFile.setExecutable(true)
 
-    val classpath = jars.joinToString(":") { jar -> jar.absolutePath }
     val javaExec = findJavaExecutable()
     val androidClasspath = classpathProvider.getClasspath()
 
@@ -95,15 +96,9 @@ class KotlinServerProcessManager(context: Context) {
         }
     
     val klsCacheDir = "${Environment.HOME}/klsCacheDir"
-    val command =
-        listOf(
-            javaExec,
-            "-classpath",
-            classpath,
-            "org.javacs.kt.MainKt",
-            "--useCacheDir",
-            klsCacheDir
-        )
+    
+    // Execute the bash/sh script directly using 'sh' to avoid shebang issues on Android
+    val command = listOf("sh", executableFile.absolutePath)
 
     val processBuilder =
         ProcessBuilder(command).apply {
@@ -153,7 +148,7 @@ class KotlinServerProcessManager(context: Context) {
 
       sendInitialization()
 
-      KslLogs.info("Server started successfully with standard JSON-RPC and JAVA_HOME: {}", javaHome)
+      KslLogs.info("Server started successfully with JAVA_HOME: {}", javaHome)
     } catch (e: Exception) {
       KslLogs.error("Failed to start server", e)
     }

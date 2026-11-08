@@ -49,9 +49,24 @@ open class IDEEditorSearcher(editor: IDEEditor) : EditorSearcher(editor) {
     super.replaceAll(replacement, whenFinished)
   }
 
-  override fun replaceThis(replacement: String) {
+  // Those changes reflect the changes of nullij editor fork.
+  // EditorSearcher.replaceThis was renamed to replaceCurrentMatch in the nullij fork.
+  // The old override is kept as a non-override compat shim so callers (e.g. ReplaceAction.kt)
+  // continue to compile without changes.
+  //
+  // override fun replaceThis(replacement: String) {
+  //   markSearching()
+  //   super.replaceThis(replacement)
+  // }
+
+  override fun replaceCurrentMatch(replacement: String) {
     markSearching()
-    super.replaceThis(replacement)
+    super.replaceCurrentMatch(replacement)
+  }
+
+  /** Compat shim: delegates to [replaceCurrentMatch]. Retained for callers that use the old name. */
+  fun replaceThis(replacement: String) {
+    replaceCurrentMatch(replacement)
   }
 
   override fun gotoNext(): Boolean {

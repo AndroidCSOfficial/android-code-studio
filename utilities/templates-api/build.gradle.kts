@@ -20,7 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("org.jetbrains.kotlin.android")
+  // id("org.jetbrains.kotlin.android")
 }
 
 
@@ -30,9 +30,8 @@ android {
 }
 
 dependencies {
-  // api(libs.composite.javapoet)
-  api(files(rootProject.file("composite-builds/build-deps/libs/java-compiler.jar")))
-  api(files(rootProject.file("composite-builds/build-deps/libs/javapoet.jar")))
+  api(libs.composite.javapoet)
+  api(libs.composite.javaCompiler)
   
   api(projects.core.common)
   api(projects.core.resources)

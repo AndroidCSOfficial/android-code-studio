@@ -20,11 +20,13 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
+    // id("kotlin-kapt")
 }
 
 dependencies {
-    kapt(libs.google.auto.service)
+    // kapt(libs.google.auto.service)
+    ksp(libs.dev.zacsweers.autoservice)
 
     implementation(projects.logging.logger)
     implementation(projects.utilities.shared)

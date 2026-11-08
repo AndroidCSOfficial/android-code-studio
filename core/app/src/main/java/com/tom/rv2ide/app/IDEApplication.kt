@@ -42,10 +42,6 @@ import com.tom.rv2ide.activities.editor.IDELogcatReader
 import com.tom.rv2ide.buildinfo.BuildInfo
 import com.tom.rv2ide.editor.schemes.IDEColorSchemeProvider
 import com.tom.rv2ide.eventbus.events.preferences.PreferenceChangeEvent
-import com.tom.rv2ide.events.AppEventsIndex
-import com.tom.rv2ide.events.EditorEventsIndex
-import com.tom.rv2ide.events.LspApiEventsIndex
-import com.tom.rv2ide.events.LspJavaEventsIndex
 import com.tom.rv2ide.preferences.internal.DevOpsPreferences
 import com.tom.rv2ide.preferences.internal.GeneralPreferences
 import com.tom.rv2ide.preferences.internal.StatPreferences
@@ -125,17 +121,7 @@ class IDEApplication : TermuxApplication() {
       if (DevOpsPreferences.dumpLogs) {
         startLogcatReader()
       }
-      // initializeMemoryProfiler()
     }
-
-    EventBus.builder()
-        .addIndex(AppEventsIndex())
-        .addIndex(EditorEventsIndex())
-        .addIndex(LspApiEventsIndex())
-        .addIndex(LspJavaEventsIndex())
-        .installDefaultEventBus(true)
-
-    EventBus.getDefault().register(this)
 
     AppCompatDelegate.setDefaultNightMode(GeneralPreferences.uiMode)
 
@@ -148,13 +134,8 @@ class IDEApplication : TermuxApplication() {
     ReflectionUtils.bypassHiddenAPIReflectionRestrictions()
     GlobalScope.launch { IDEColorSchemeProvider.init() }
 
-    // Initialize memory management
-    // initializeMemoryManagement()
     extractLoggerRuntime()
     extractJetbrainsMono()
-
-    // DISABLED: Plugin system completely disabled to prevent Tooling API issues
-    // initializePluginSystem()
   }
 
   /**

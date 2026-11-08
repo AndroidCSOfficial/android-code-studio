@@ -25,6 +25,9 @@ plugins {
 
 
 dependencies {
+    
+    implementation("io.github.nullij:libcrystalizer:1.020260715")
+    
     api(projects.logging.logger)
     api(projects.tooling.events)
     api(projects.tooling.model)

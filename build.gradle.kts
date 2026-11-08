@@ -45,6 +45,15 @@ buildscript {
 project.group = BuildConfig.packageName
 
 subprojects {
+    configurations.configureEach {
+        exclude(
+            group = "org.jetbrains.kotlin",
+            module = "kotlin-android-extensions-runtime"
+        )
+    }
+}
+
+subprojects {
   if (project != rootProject) {
     var group = project.parent!!.group
     if (project.parent != rootProject) {

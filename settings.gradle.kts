@@ -28,6 +28,7 @@ pluginManagement {
     gradlePluginPortal()
     google()
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
   }
 }
 
@@ -35,9 +36,17 @@ dependencyResolutionManagement {
   val dependencySubstitutions = mapOf(
     "build-deps" to arrayOf(
       "appintro",
-      "logback-core",
+      "fuzzysearch",
       "google-java-format",
-      "javac"
+      "java-compiler",
+      "javac",
+      "javapoet",
+      "jaxp",
+      "jdk-compiler",
+      "jdk-jdeps",
+      "jdt",
+      "layoutlib-api",
+      "logback-core"
     ),
 
     "build-deps-common" to arrayOf(
@@ -68,9 +77,10 @@ dependencyResolutionManagement {
   }
 }
 
+// Root project configuration
 gradle.rootProject {
-    val appMainVersion = System.getenv("MAIN_VERSION") ?: "1.0.0"
-    val revision = "r${System.getenv("REVISION_NUM") ?: "04"}"
+    val appMainVersion = System.getProperty("MAIN_VERSION") ?: "1.0.0"
+    val revision = "r${System.getProperty("REVISION_NUM") ?: "05"}"
     val baseVersion = "$appMainVersion+gh.$revision"
     println("Android code studio version: $baseVersion")
     project.setProperty("version", baseVersion)
