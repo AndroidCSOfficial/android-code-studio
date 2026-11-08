@@ -108,6 +108,10 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/nullij/sora-editor.git ~/sora-editor
           cd ~/sora-editor
+          VERSIONS_FILE=build-logic/convention/src/main/kotlin/Versions.kt
+          sed -i 's/private const val version = "0.24.6"/private const val version = "0.24.7-acs"/' "$VERSIONS_FILE"
+          sed -i 's/const val versionCode = 95/const val versionCode = 96/' "$VERSIONS_FILE"
+          grep -nE 'const val (version|versionCode) =' "$VERSIONS_FILE"
           chmod +x ./gradlew
           ./gradlew :editor:publishToMavenLocal -I ~/no-sign.init.gradle
 
