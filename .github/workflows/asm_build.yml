@@ -69,8 +69,17 @@ jobs:
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           yes | "$SDKMANAGER" --licenses > /dev/null || true
-          "$SDKMANAGER" "platforms;android-37" || "$SDKMANAGER" "platforms;android-37.0"
-          ls "$ANDROID_HOME/platforms"
+          "$SDKMANAGER" --list 2>/dev/null | grep -i "platforms;android-37" || true
+          for pkg in "platforms;android-37.0" "platforms;android-37"; do
+            "$SDKMANAGER" "$pkg" && break
+          done
+          cd "$ANDROID_HOME/platforms"
+          ls
+          # AGP looks for platforms/android-37, but the package may install as android-37.0
+          if [ ! -d android-37 ] && [ -d android-37.0 ]; then
+            ln -s android-37.0 android-37
+          fi
+          test -f android-37/android.jar
 
       - name: Generating missing dirs
         run: |
