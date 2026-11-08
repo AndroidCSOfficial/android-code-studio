@@ -103,8 +103,41 @@ public abstract class BaseEditorWindow extends AbstractPopupWindow {
 
     final var line = getEditor().getCursor().getLeftLine();
     final var column = getEditor().getCursor().getLeftColumn();
-    int x = (int) ((getEditor().getOffset(line, column) - (getWidth() / 2)));
-    int y = (int) (getEditor().getRowHeight() * line) - getEditor().getOffsetY() - getHeight() - 5;
+
+    // Those changes reflect the changes of nullij editor fork.
+    // The old positioning used raw arithmetic (getRowHeight() * line) which is broken
+    // with code folding active because hidden lines shift row positions.
+    // getCharOffsetX and getCharOffsetY delegate to layout.getCharLayoutOffset() which is
+    // fold-aware and handles code folding properly.
+    // Note that getCharOffsetY returns the bottom of the cursor row in view coordinates,
+    // so the row top is (getCharOffsetY - getRowHeight()).
+    // setLocationAbsolutely converts view coordinates to editor document coordinates.
+    //
+    // Old calculation (commented out):
+    // int x = (int) ((getEditor().getOffset(line, column) - (getWidth() / 2)));
+    // int y = (int) (getEditor().getRowHeight() * line) - getEditor().getOffsetY() - getHeight() - 5;
+    // setLocationAbsolutely(x, y);
+
+    float charX = getEditor().getCharOffsetX(line, column);
+    float charY = getEditor().getCharOffsetY(line, column);
+    float rowTop = charY - getEditor().getRowHeight();
+    int margin = dp2px(4f);
+
+    int minX = dp2px(8f);
+    int maxX = Math.max(minX, getEditor().getWidth() - getWidth() - minX);
+    int x = (int) (charX - (getWidth() / 2f));
+    x = Math.max(minX, Math.min(x, maxX));
+
+    int y = (int) (rowTop - getHeight() - margin);
+    if (y < 0) {
+      int yBelow = (int) (charY + margin);
+      if (yBelow + getHeight() <= getEditor().getHeight()) {
+        y = yBelow;
+      } else {
+        y = 0;
+      }
+    }
+
     setLocationAbsolutely(x, y);
     show();
   }

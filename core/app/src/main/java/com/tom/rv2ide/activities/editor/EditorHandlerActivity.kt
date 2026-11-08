@@ -548,7 +548,7 @@ open class EditorHandlerActivity : ProjectHandlerActivity(), IEditorHandler {
     }
 
     editor?.close() ?: run { log.error("Cannot save file before close. Editor instance is null") }
-
+    editor?.let { onEditorDestroyed(it) }
     editorViewModel.removeFile(index)
     content.apply {
       tabs.removeTabAt(index)
@@ -614,7 +614,9 @@ open class EditorHandlerActivity : ProjectHandlerActivity(), IEditorHandler {
 
     // Files were already saved, close all files one by one
     for (i in 0 until count) {
-      getEditorAtIndex(i)?.close() ?: run { log.error("Unable to close file at index {}", i) }
+      val editor = getEditorAtIndex(i)
+      editor?.close() ?: run { log.error("Unable to close file at index {}", i) }
+      editor?.let { onEditorDestroyed(it) }
     }
 
     editorViewModel.removeAllFiles()

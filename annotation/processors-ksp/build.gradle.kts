@@ -21,13 +21,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("jvm")
-  kotlin("kapt")
+  // kotlin("kapt")
 }
 
 
 
 dependencies {
-  kapt(libs.google.auto.service)
+// kapt(libs.google.auto.service)
   implementation(libs.google.auto.service.annotations)
 
   implementation(kotlin("stdlib"))

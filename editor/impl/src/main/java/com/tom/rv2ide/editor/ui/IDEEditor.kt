@@ -76,6 +76,8 @@ import io.github.rosemoe.sora.event.ContentChangeEvent
 import io.github.rosemoe.sora.event.SelectionChangeEvent
 import io.github.rosemoe.sora.lang.EmptyLanguage
 import io.github.rosemoe.sora.lang.Language
+import io.github.rosemoe.sora.lang.diagnostic.DiagnosticsContainer
+import io.github.rosemoe.sora.lang.folding.ImportFoldingProvider
 import io.github.rosemoe.sora.widget.CodeEditor
 import io.github.rosemoe.sora.widget.EditorSearcher
 import io.github.rosemoe.sora.widget.IDEEditorSearcher
@@ -118,6 +120,17 @@ constructor(
   private var _diagnosticWindow: DiagnosticWindow? = null
   private var fileVersion = 0
   internal var isModified = false
+  private var directDiagnostics: DiagnosticsContainer? = null
+
+  /**
+   * Set diagnostics on the editor.
+   *
+   * Those changes reflect the changes of nullij editor fork.
+   */
+  fun setDiagnostics(diagnostics: DiagnosticsContainer?) {
+    directDiagnostics = diagnostics
+    post { invalidateDiagnostics() }
+  }
 
   private val selectionChangeHandler = Handler(Looper.getMainLooper())
   private var selectionChangeRunner: Runnable? = Runnable {
@@ -696,6 +709,15 @@ constructor(
     inputType = createInputTypeFlags()
     val backgroundColor = getSystemBackgroundColor()
     setBackgroundColor(backgroundColor)
+
+    // Those changes reflect the changes of nullij editor fork to enable code folding.
+    isCodeFoldingEnabled = true
+    registerFoldingProvider(ImportFoldingProvider())
+
+    // Those changes reflect the changes of nullij editor fork for diagnostics.
+    registerDiagnosticProvider { container ->
+      directDiagnostics?.let { container.addDiagnostics(it.regions) }
+    }
     
     val window = EditorCompletionWindow(this)
     window.setAdapter(CompletionListAdapter())

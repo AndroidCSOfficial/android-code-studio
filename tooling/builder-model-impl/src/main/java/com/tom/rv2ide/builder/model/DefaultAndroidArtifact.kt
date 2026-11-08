@@ -19,11 +19,13 @@ package com.tom.rv2ide.builder.model
 import com.android.builder.model.v2.ide.AndroidArtifact
 import com.android.builder.model.v2.ide.BytecodeTransformation
 import com.android.builder.model.v2.ide.CodeShrinker
-import com.android.builder.model.v2.ide.PrivacySandboxSdkInfo
+// import com.android.builder.model.v2.ide.PrivacySandboxSdkInfo
 import java.io.File
 import java.io.Serializable
 
-/** @author Akash Yadav */
+/** @author Akash Yadav
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
+ */
 class DefaultAndroidArtifact : AndroidArtifact, Serializable {
 
   private val serialVersionUID = 1L
@@ -48,8 +50,10 @@ class DefaultAndroidArtifact : AndroidArtifact, Serializable {
   override var ideSetupTaskNames: Set<String> = emptySet()
   override var targetSdkVersionOverride: DefaultApiVersion? = null
   override var modelSyncFiles: Collection<Void> = emptyList()
-  override var privacySandboxSdkInfo: PrivacySandboxSdkInfo? = null
   override var desugaredMethodsFiles: Collection<File> = emptyList()
   override val generatedClassPaths: Map<String, File> = emptyMap()
   override val bytecodeTransformations: Collection<BytecodeTransformation> = emptyList()
+
+  override val mappingR8TextFile: File? = null
+  override val mappingR8PartitionFile: File? = null
 }

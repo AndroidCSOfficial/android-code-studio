@@ -17,6 +17,7 @@
 
 package com.tom.rv2ide.services.builder
 
+import android.util.Log
 import ch.qos.logback.core.CoreConstants
 import com.termux.shared.reflection.ReflectionUtils
 import com.tom.rv2ide.shell.executeProcessAsync
@@ -169,6 +170,19 @@ internal class ToolingServerRunner(
                         log.info("ToolingServerThread has been cancelled or interrupted.")
                       }
 
+                      // The message read loop died (e.g. LSP4J converted an IOException
+                      // into a JsonRpcException). If we don't kill the process here, it
+                      // keeps writing to a pipe nobody is draining, blocks once the OS
+                      // pipe buffer fills, and process.waitFor() in processJob below
+                      // never returns -- everything hangs forever with nothing logged.
+                      log.error("Tooling API message loop failed, killing server process", err)
+                      Log.e(
+                          "ToolingServerRunner",
+                          "Tooling API message loop failed, killing server process",
+                          err,
+                      )
+                      process?.destroyForcibly()
+
                       // rethrow the error
                       throw err
                     }
@@ -179,6 +193,7 @@ internal class ToolingServerRunner(
             } catch (e: Throwable) {
               if (e !is CancellationException) {
                 log.error("Unable to start tooling API server", e)
+                Log.e("ToolingServerRunner", "Unable to start tooling API server", e)
               }
             }
           }

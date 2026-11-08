@@ -25,8 +25,9 @@ import java.util.Properties
 plugins {
   id("com.tom.rv2ide.core-app")
   id("com.android.application")
-  id("kotlin-android")
-  id("kotlin-kapt")
+  alias(libs.plugins.ksp)
+  // id("kotlin-android")
+  // id("kotlin-kapt")
   id("kotlinx-serialization")
   id("kotlin-parcelize")
   id("androidx.navigation.safeargs.kotlin")
@@ -78,9 +79,9 @@ android {
           val keyStorePath = "${rootProject.projectDir}/signing/signing-key.jks"
           val keyStoreFile = file(keyStorePath)
           
-          val signing_storePassword = System.getenv("SIGNING_STORE_PASSWORD") ?: ""
-          val signing_keyPassword = System.getenv("SIGNING_KEY_PASSWORD") ?: ""
-          
+          val signing_storePassword = System.getProperty("SIGNING_STORE_PASSWORD") ?: ""
+          val signing_keyPassword = System.getProperty("SIGNING_KEY_PASSWORD") ?: ""
+                    
           storeFile = keyStoreFile
           storePassword = signing_storePassword
           keyAlias = "androidcs"
@@ -168,18 +169,18 @@ android {
   }
 }
 
-kapt { arguments { arg("eventBusIndex", "${BuildConfig.packageName}.events.AppEventsIndex") } }
+// kapt { arguments { arg("eventBusIndex", "${BuildConfig.packageName}.events.AppEventsIndex") } }
 
 desugaring {
   replacements {
     includePackage(
         "org.eclipse.jgit",
+        "openjdk.tools.javac",
     )
 
     applyJavaIOReplacements()
   }
 }
-
 
 dependencies {
   // debugImplementation(libs.common.leakcanary)
@@ -197,9 +198,11 @@ dependencies {
 	implementation(libs.external.seasonal.effects)
   
   // Annotation processors
-  kapt(libs.common.glide.ap)
-  kapt(libs.google.auto.service)
-  kapt(projects.annotation.processors)
+  // kapt(libs.common.glide.ap)
+  // kapt(libs.google.auto.service)
+  implementation(libs.google.auto.service.annotations)
+  ksp("dev.zacsweers.autoservice:auto-service-ksp:1.2.0")
+  // kapt(projects.annotation.processors)
 
   implementation(libs.common.editor)
   implementation(libs.common.utilcode)
@@ -212,7 +215,6 @@ dependencies {
   implementation(libs.common.hiddenApiBypass)
   implementation(libs.aapt2.common)
 
-  implementation(libs.google.auto.service.annotations)
   implementation(libs.google.gson)
   implementation(libs.google.guava)
 
@@ -256,8 +258,7 @@ dependencies {
   // Dependencies in composite build
   implementation(libs.composite.appintro)
   implementation(libs.composite.desugaringCore)
-  // implementation(libs.composite.javapoet)
-  implementation(files(rootProject.file("composite-builds/build-deps/libs/javapoet.jar")))
+  implementation(libs.composite.javapoet)
 
   // Local projects here
   implementation(projects.core.projectdata)

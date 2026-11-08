@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  This file is part of AndroidIDE.
+  ~
+  ~  AndroidIDE is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  AndroidIDE is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<!--
+  Colors for the Material 3 Expressive "Android Code Studio" welcome screen.
+  Kept in a dedicated file so they don't collide with the app's existing
+  colors.xml. Merge into your main colors.xml if you'd rather have one file.
+-->
+<resources>
+
+    <!-- Base surfaces -->
+    <color name="acs_bg_lavender">#FAF8FF</color>
+    <color name="acs_surface_white">#FFFFFF</color>
+
+    <!-- Brand -->
+    <color name="acs_primary">#6D4CFF</color>
+    <color name="acs_secondary">#8B5CF6</color>
+    <color name="acs_tertiary">#D6C8FF</color>
+
+    <!-- Pastel accents (icon square backgrounds) -->
+    <color name="acs_accent_pink">#F3C5F8</color>
+    <color name="acs_accent_mint">#D9F7EE</color>
+    <color name="acs_accent_blue">#D8E8FF</color>
+    <color name="acs_accent_orange">#FFE7B8</color>
+    <color name="acs_accent_lavender_pale">#EDE7FF</color>
+
+    <!-- Pastel accents (dark "on" icon color drawn atop the accent squares) -->
+    <color name="acs_accent_mint_on">#1FAE7A</color>
+    <color name="acs_accent_blue_on">#3B7DDE</color>
+    <color name="acs_accent_pink_on">#C24FCF</color>
+    <color name="acs_accent_orange_on">#C97A0E</color>
+
+    <!-- Text -->
+    <color name="acs_text_primary">#1A1A1A</color>
+    <color name="acs_text_secondary">#6D6D6D</color>
+
+    <!-- Welcome card -->
+    <color name="acs_welcome_card_bg">#33E4DDFF</color> <!-- ~20% opacity lavender -->
+
+    <!-- Chevron / round icon buttons -->
+    <color name="acs_chevron_bg">#F0EBFF</color>
+
+    <!-- Background decoration blobs, very low opacity -->
+    <color name="acs_blob_purple_soft">#146D4CFF</color> <!-- ~8% opacity -->
+    <color name="acs_blob_purple_softer">#0D6D4CFF</color> <!-- ~5% opacity -->
+
+    <!-- Bottom nav -->
+    <color name="acs_nav_selected">#6D4CFF</color>
+    <color name="acs_nav_unselected">#8A8A8A</color>
+
+</resources>

@@ -25,6 +25,7 @@ plugins {
 
 
 dependencies {
+    
     api(projects.logging.logger)
     api(projects.tooling.events)
     api(projects.tooling.model)

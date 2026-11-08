@@ -25,7 +25,8 @@ plugins {
 
 
 dependencies {
-  api(libs.tooling.builderModel)
+  // api(libs.tooling.builderModel)
+  api("com.android.tools.build:builder-model:9.4.0-alpha04")
 
   implementation(libs.common.jkotlin)
 

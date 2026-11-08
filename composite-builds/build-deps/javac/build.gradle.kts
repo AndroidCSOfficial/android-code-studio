@@ -20,15 +20,14 @@ plugins {
     id("java-library")
 }
 
-configurations.all {
-    resolutionStrategy {
-        cacheChangingModulesFor(0, "seconds")
-    }
-}
+// configurations.all {
+    // resolutionStrategy {
+        // cacheChangingModulesFor(0, "seconds")
+    // }
+// }
 
 
 dependencies {
     api(files("../libs/java-compiler.jar"))
-    api(files("../libs/jdk-compiler.jar"))
-    // api(projects.buildDeps.jdkCompiler)
+    api(projects.buildDeps.jdkCompiler)
 }

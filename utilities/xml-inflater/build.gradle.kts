@@ -20,7 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-android")
+  // id("kotlin-android")
   id("kotlin-parcelize")
   id("com.google.devtools.ksp") version libs.versions.ksp
 }

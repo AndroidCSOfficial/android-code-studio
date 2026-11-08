@@ -20,7 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
+    // id("kotlin-android")
 }
 
 
@@ -30,8 +30,7 @@ android {
 }
 
 dependencies {
-    // implementation(libs.composite.fuzzysearch)
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/fuzzysearch.jar")))
+    implementation(libs.composite.fuzzysearch)
 
     implementation(projects.core.common)
 

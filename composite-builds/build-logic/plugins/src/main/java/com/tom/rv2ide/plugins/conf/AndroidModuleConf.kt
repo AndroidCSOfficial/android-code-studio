@@ -17,7 +17,8 @@
 
 package com.tom.rv2ide.plugins.conf
 
-import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.FilterConfiguration
@@ -39,7 +40,7 @@ import org.gradle.api.provider.Provider
  * For example, if the base version code of the IDE is 270 (for v2.7.0), then for arm64-v8a flavor,
  * the version code will be `100 * 270 + 1` i.e. `27001`
  */
-internal val flavorsAbis = mapOf("arm64-v8a" to 0, "armeabi-v7a" to 0)
+internal val flavorsAbis = mapOf("arm64-v8a" to 0, "armeabi-v7a" to 1)
 
 fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModuleDependency>) {
   val isAppModule = plugins.hasPlugin("com.android.application")
@@ -60,35 +61,10 @@ fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModu
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  extensions.getByType(CommonExtension::class.java).run {
-    lint { checkDependencies = true }
-
-    packaging {
-      resources {
-        excludes.addAll(
-            arrayOf(
-                "META-INF/CHANGES",
-                "META-INF/README.md",
-            )
-        )
-        pickFirsts.addAll(
-            arrayOf(
-                "META-INF/eclipse.inf",
-                "META-INF/LICENSE.md",
-                "META-INF/AL2.0",
-                "META-INF/LGPL2.1",
-                "META-INF/INDEX.LIST",
-                "about_files/LICENSE-2.0.txt",
-                "plugin.xml",
-                "plugin.properties",
-                "about.mappings",
-                "about.properties",
-                "about.ini",
-                "modeling32.png",
-            )
-        )
-      }
-    }
+  if (isAppModule) {
+    extensions.getByType(ApplicationExtension::class.java).configureLintAndPackaging()
+  } else {
+    extensions.getByType(LibraryExtension::class.java).configureLintAndPackaging()
   }
 
   extensions.getByType(BaseExtension::class.java).run {
@@ -184,6 +160,68 @@ fun Project.configureAndroidModule(coreLibDesugDep: Provider<MinimalExternalModu
 
     buildFeatures.viewBinding = true
     buildFeatures.buildConfig = true
+  }
+}
+
+private fun ApplicationExtension.configureLintAndPackaging() {
+  lint { checkDependencies = true }
+
+  packaging {
+    resources {
+      excludes.addAll(
+          arrayOf(
+              "META-INF/CHANGES",
+              "META-INF/README.md",
+          )
+      )
+      pickFirsts.addAll(
+          arrayOf(
+              "META-INF/eclipse.inf",
+              "META-INF/LICENSE.md",
+              "META-INF/AL2.0",
+              "META-INF/LGPL2.1",
+              "META-INF/INDEX.LIST",
+              "about_files/LICENSE-2.0.txt",
+              "plugin.xml",
+              "plugin.properties",
+              "about.mappings",
+              "about.properties",
+              "about.ini",
+              "modeling32.png",
+          )
+      )
+    }
+  }
+}
+
+private fun LibraryExtension.configureLintAndPackaging() {
+  lint { checkDependencies = true }
+
+  packaging {
+    resources {
+      excludes.addAll(
+          arrayOf(
+              "META-INF/CHANGES",
+              "META-INF/README.md",
+          )
+      )
+      pickFirsts.addAll(
+          arrayOf(
+              "META-INF/eclipse.inf",
+              "META-INF/LICENSE.md",
+              "META-INF/AL2.0",
+              "META-INF/LGPL2.1",
+              "META-INF/INDEX.LIST",
+              "about_files/LICENSE-2.0.txt",
+              "plugin.xml",
+              "plugin.properties",
+              "about.mappings",
+              "about.properties",
+              "about.ini",
+              "modeling32.png",
+          )
+      )
+    }
   }
 }
 

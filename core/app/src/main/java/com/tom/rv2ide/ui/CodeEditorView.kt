@@ -120,6 +120,8 @@ class CodeEditorView(context: Context, file: File, selection: Range) :
       dividerWidth = SizeUtils.dp2px(2f).toFloat()
       colorScheme = SchemeAndroidIDE.newInstance(context)
       lineSeparator = LineSeparator.LF
+      // Those changes reflect the changes of nullij editor fork to enable code folding.
+      isCodeFoldingEnabled = true
     }
 
     _searchLayout = EditorSearchLayout(context, binding.editor).apply {

@@ -143,7 +143,6 @@ object Main {
         "-Dsun.stderr.encoding=UTF-8",
         "-Dnative.encoding=UTF-8",
         "-Dorg.gradle.daemon.idletimeout=10800000",  // 3 hours in milliseconds
-        "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError",
         
     )
 

@@ -153,7 +153,7 @@ class MemoryUsageWatcher(private val updateInterval: Long = DEFAULT_UPDATE_INTER
 
       // values are in kB, convert to bytes
       val usageBytes = usage * 1024L
-      memoryUsage[pid]!!.apply {
+      proc.apply {
         // we insert the usage entry at the start of the array, then increment the shift amount by 1
         // this makes the newly inserted usage entry the last element in the array
         // and the oldest usage entry the first element in the array

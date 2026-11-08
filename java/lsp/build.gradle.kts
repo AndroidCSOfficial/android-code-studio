@@ -20,8 +20,9 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-android")
-  id("kotlin-kapt")
+  alias(libs.plugins.ksp)
+  // id("kotlin-android")
+  // id("kotlin-kapt")
 }
 
 android {
@@ -34,15 +35,16 @@ android {
   }
 }
 
-kapt {
-  arguments {
-    arg("eventBusIndex", "${BuildConfig.packageName}.events.LspJavaEventsIndex")
-  }
-}
+// kapt {
+  // arguments {
+    // arg("eventBusIndex", "${BuildConfig.packageName}.events.LspJavaEventsIndex")
+  // }
+// }
 
 dependencies {
-  kapt(projects.annotation.processors)
-  kapt(libs.google.auto.service)
+  // kapt(projects.annotation.processors)
+  // kapt(libs.google.auto.service)
+  ksp(libs.dev.zacsweers.autoservice)
 
   api(projects.core.indexingApi)
   api(projects.core.projectdata)
@@ -72,14 +74,10 @@ dependencies {
   implementation(projects.java.javacServices)
 
   implementation(libs.composite.javac)
-  // implementation(libs.composite.javapoet)
-  // implementation(libs.composite.jaxp)
-  // implementation(libs.composite.jdkJdeps)
-  // implementation(libs.composite.jdt)
-  implementation(files(rootProject.file("composite-builds/build-deps/libs/jdt.jar")))
-  implementation(files(rootProject.file("composite-builds/build-deps/libs/jdk-jdeps.jar")))
-  implementation(files(rootProject.file("composite-builds/build-deps/libs/jaxp.jar")))
-  implementation(files(rootProject.file("composite-builds/build-deps/libs/javapoet.jar")))
+  implementation(libs.composite.javapoet)
+  implementation(libs.composite.jaxp)
+  implementation(libs.composite.jdkJdeps)
+  implementation(libs.composite.jdt)
   implementation(libs.composite.googleJavaFormat)
 
   implementation(libs.androidx.core.ktx)

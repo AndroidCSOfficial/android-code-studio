@@ -1,18 +1,18 @@
 [versions]
-agp = "8.13.0"
-agp-tooling = "8.13.0"
-gradle-tooling = "8.9"
+agp = "9.5.0"
+agp-tooling = "9.5.0"
+gradle-tooling = "9.4.0"
 # gradle-tooling = "v1.0-t2"
 
 junit-jupiter = "5.10.2"
-kotlin = "2.1.0"
+kotlin = "2.4.0"
 kotlin-coroutines = "1.10.2"
 tree-sitter = "1.0.1"
-editor = "0.23.7"
+editor = "0.24.7-acs" # nullij fork [https://github.com/nullij/sora-editor]
 glide = "5.0.4"
 androidx-vectordrawable = "1.2.0"
 androidx-navigation = "2.7.7"
-ksp = "2.1.0-1.0.28"
+ksp = "2.3.10"
 antlr4 = "4.13.2"
 androidx-work = "2.9.0"
 androidx-espresso = "3.5.1"
@@ -25,11 +25,13 @@ benchmark-junit4 = "1.2.4"
 okhttp = "4.12.0"
 gson = "2.10.1"
 customizable-cardview = "v1.0"
-
+zacksp = "1.2.0"
 
 
 
 [libraries]
+dev-zacsweers-autoservice = { module = "dev.zacsweers.autoservice:auto-service-ksp", version.ref = "zacksp" }
+
 # External deps here
 external-customizable-cardview = { module = "com.github.Mohammed-baqer-null:CustomizableCardView", version.ref = "customizable-cardview" }
 external-seasonal-effects = { module = "com.github.mdbqnull:seasonal-effects-android", version = "1.0.0" }
@@ -232,3 +234,4 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
 com-github-jk1-tcdeps = { id = "com.github.jk1.tcdeps", version = "1.6.2" }
 com-jaredsburrows-license = { id = "com.jaredsburrows.license", version = "0.9.8" }
 io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

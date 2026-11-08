@@ -3,7 +3,7 @@ lint.sh
 fmt.sh
 clear_runs.py
 autopush.sh
-server
+/server
 local.properties
 
 # Crowdin
@@ -110,3 +110,4 @@ build.log
 
 external/logwire/build
 external/atc/build
+external/acsprovider/build

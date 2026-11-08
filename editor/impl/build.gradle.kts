@@ -20,8 +20,8 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    //id("kotlin-android")
+    //id("kotlin-kapt")
     id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
@@ -31,15 +31,15 @@ android {
     namespace = "${BuildConfig.packageName}.editor"
 }
 
-kapt {
-    arguments {
-        arg ("eventBusIndex", "${BuildConfig.packageName}.events.EditorEventsIndex")
-    }
-}
+//kapt {
+//    arguments {
+//        arg ("eventBusIndex", "${BuildConfig.packageName}.events.EditorEventsIndex")
+//    }
+//}
 
 dependencies {
     ksp(projects.annotation.processorsKsp)
-    kapt(projects.annotation.processors)
+//    kapt(projects.annotation.processors)
     
     api(libs.androidide.ts)
     api(libs.androidide.ts.java)
@@ -61,8 +61,7 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
 
     implementation(libs.common.utilcode)
-    // implementation(libs.composite.jdt)
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/jdt.jar")))
+    implementation(libs.composite.jdt)
     
     implementation(libs.google.material)
 

@@ -20,7 +20,10 @@ import com.android.builder.model.v2.ide.SourceProvider
 import java.io.File
 import java.io.Serializable
 
-/** @author Akash Yadav */
+/*
+ * @author Akash Yadav
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
+ */
 class DefaultSourceProvider() : SourceProvider, Serializable {
   private val serialVersionUID = 1L
   override var aidlDirectories: Collection<File>? = null
@@ -36,7 +39,9 @@ class DefaultSourceProvider() : SourceProvider, Serializable {
   override var resDirectories: Collection<File>? = null
   override var resourcesDirectories: Collection<File> = emptyList()
   override var shadersDirectories: Collection<File>? = null
-  override var baselineProfileDirectories: Collection<File>? = null
+  override var baselineProfileDirectories: Collection<File>? = null 
+  override val keepRulesDirectories: Collection<File>? = null
+  override val aarKeepRulesDirectories: Collection<File>? = null
 
   companion object {
     @JvmStatic val NoFile = File("<does-not-exist>")

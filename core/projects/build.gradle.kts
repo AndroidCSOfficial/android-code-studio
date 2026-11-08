@@ -20,9 +20,10 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-android")
+  // id("kotlin-android")
   id("kotlin-parcelize")
-  id("kotlin-kapt")
+  // id("kotlin-kapt")
+  alias(libs.plugins.ksp)
 }
 
 
@@ -31,16 +32,17 @@ android {
   namespace = "${BuildConfig.packageName}.projects"
 }
 
-kapt {
-  arguments {
-    arg("eventBusIndex", "${BuildConfig.packageName}.events.ProjectsApiEventsIndex")
-  }
-}
+// kapt {
+  // arguments {
+    // arg("eventBusIndex", "${BuildConfig.packageName}.events.ProjectsApiEventsIndex")
+  // }
+// }
 
 dependencies {
 
-  kapt(projects.annotation.processors)
-  kapt(libs.google.auto.service)
+  // kapt(projects.annotation.processors)
+  // kapt(libs.google.auto.service)
+  ksp(libs.dev.zacsweers.autoservice)
 
   api(projects.event.eventbus)
   api(projects.event.eventbusEvents)

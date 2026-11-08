@@ -133,7 +133,13 @@ abstract class EdgeToEdgeIDEActivity : IDEActivity() {
         this.onApplyWindowInsetsListener,
     )
 
-    this.window.decorView.doOnAttach { onApplySystemBarInsets(getSystemBarInsets(it)) }
+    this.window.decorView.doOnAttach { view ->
+      // Post rather than call directly: doOnAttach invokes its callback synchronously if the
+      // view is already attached (e.g. on activity relaunch), which can run this before the
+      // subclass's onCreate() has finished calling bindLayout(). Posting ensures the subclass's
+      // onCreate() body — including view binding setup — has completed first.
+      view.post { onApplySystemBarInsets(getSystemBarInsets(view)) }
+    }
   }
 
   /**

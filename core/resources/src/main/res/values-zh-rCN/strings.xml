@@ -205,8 +205,6 @@
   <string name="idepref_kotlin_indexing_notif_title">Kotlin 通知横幅</string>
   <string name="idepref_kotlin_indexing_notif_summary">当 Kotlin 项目被 Kotlin 语言服务器索引时显示通知横幅。</string>
 
-  <string name="closing_project">正在关闭项目</string>
-
   <string name="include_test_str">包括安卓测试</string>
   <string name="use_cmake">使用 CMake 构建系统</string>
   <string name="native_language">原生语言</string>

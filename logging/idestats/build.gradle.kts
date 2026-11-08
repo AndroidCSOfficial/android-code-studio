@@ -20,7 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("org.jetbrains.kotlin.android")
+  // id("org.jetbrains.kotlin.android")
 }
 
 

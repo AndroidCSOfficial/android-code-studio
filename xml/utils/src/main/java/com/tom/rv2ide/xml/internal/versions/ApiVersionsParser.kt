@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory
  * Parser for parsing `api-versions.xml` file from the Android SDK and building [ApiVersion] models.
  *
  * @author Akash Yadav
+ * Modified by Mohammed-baqer-null @ https://github.com/Mohammed-baqer-null
  */
 open class ApiVersionsParser {
 
@@ -161,6 +162,26 @@ open class ApiVersionsParser {
     }
   }
 
+  /**
+   * Parses an attribute value as an integer, tolerating float-formatted values such as `"37.0"`
+   * which some `api-versions.xml` files use for API level attributes (`since`, `deprecated`,
+   * `removed`). Falls back to a strict [String.toInt] first since that is the common case and is
+   * cheaper; only attempts a [Double] parse if that fails.
+   */
+  private fun String.toApiVersionInt(): Int {
+    toIntOrNull()?.let { return it }
+
+    val asDouble =
+        toDoubleOrNull()
+            ?: throw NumberFormatException("Not a valid API version integer: \"$this\"")
+
+    check(asDouble == Math.floor(asDouble)) {
+      "Expected API version attribute to be a whole number, but got: \"$this\""
+    }
+
+    return asDouble.toInt()
+  }
+
   private fun StartElement.parseAttrs(): Pair<String, Int> {
     var name: String? = null
     var since = 1
@@ -172,9 +193,9 @@ open class ApiVersionsParser {
 
       when (attribute.name.localPart) {
         ATTR_NAME -> name = attribute.value
-        ATTR_SIN -> since = attribute.value.toInt()
-        ATTR_DEPR -> deprecated = attribute.value.toInt()
-        ATTR_REM -> removed = attribute.value.toInt()
+        ATTR_SIN -> since = attribute.value.toApiVersionInt()
+        ATTR_DEPR -> deprecated = attribute.value.toApiVersionInt()
+        ATTR_REM -> removed = attribute.value.toApiVersionInt()
       }
     }
 

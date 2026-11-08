@@ -20,8 +20,8 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    // id("kotlin-android")
+    // id("kotlin-kapt")
 }
 
 
@@ -30,15 +30,15 @@ android {
     namespace = "${BuildConfig.packageName}.xml.lsp"
 }
 
-kapt {
-    arguments {
-        arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspXmlEventsIndex")
-    }
-}
+// kapt {
+    // arguments {
+        // arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspXmlEventsIndex")
+    // }
+// }
 
 dependencies {
     
-    kapt(projects.annotation.processors)
+    // kapt(projects.annotation.processors)
     
     implementation(libs.common.editor)
     implementation(libs.common.utilcode)

@@ -20,8 +20,7 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -29,16 +28,14 @@ android {
 }
 
 dependencies {
-    kapt(libs.google.auto.service)
+    ksp(libs.dev.zacsweers.autoservice)
 
     api(projects.utilities.lookup)
     api(projects.xml.resourcesApi)
 
     implementation(libs.common.kotlin)
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/jdt.jar")))
-    // implementation(libs.composite.jdt)
-    implementation(files(rootProject.file("composite-builds/build-deps/libs/jaxp.jar")))
-    // implementation(libs.composite.jaxp)
+    implementation(libs.composite.jdt)
+    implementation(libs.composite.jaxp)
     implementation(libs.google.auto.service.annotations)
 
     implementation(projects.core.common)

@@ -20,9 +20,9 @@ import com.tom.rv2ide.build.config.BuildConfig
 
 @Suppress("JavaPluginLanguageLevel")
 plugins {
-  id("com.github.johnrengelman.shadow") version "8.1.1"
+  id("com.gradleup.shadow") version "9.5.1"
   id("java-library")
-  id("kotlin-kapt")
+  // id("kotlin-kapt")
   id("org.jetbrains.kotlin.jvm")
 }
 
@@ -64,7 +64,7 @@ dependencies {
 
   implementation("io.hotmoka:toml4j:0.7.3")
   
-  kapt(libs.google.auto.service)
+  // kapt(libs.google.auto.service)
 
   api(projects.tooling.api)
 
