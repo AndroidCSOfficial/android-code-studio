@@ -78,6 +78,29 @@ object ApiKey {
         val key = getGrokApiKey()
         return key.isNotBlank() && key.length > 20
     }
+
+    // Custom Provider (OpenAI-compatible)
+    fun getCustomApiKey(): String {
+        return prefManager.getString("ai_agent_custom_api_key", "")
+    }
+
+    fun getCustomBaseUrl(): String {
+        return prefManager.getString("ai_agent_custom_base_url", "")
+    }
+
+    fun getCustomModelName(): String {
+        return prefManager.getString("ai_agent_custom_model_name", "")
+    }
+
+    fun hasCustomKey(): Boolean {
+        // Custom provider can work without an API key; configuration is URL + model.
+        val key = getCustomApiKey()
+        return key.isNotBlank()
+    }
+
+    fun hasCustomProviderConfig(): Boolean {
+        return getCustomBaseUrl().isNotBlank() && getCustomModelName().isNotBlank()
+    }
     
     // Legacy methods for backward compatibility
     @Deprecated("Use getGeminiApiKey() instead", ReplaceWith("getGeminiApiKey()"))
@@ -93,6 +116,7 @@ object ApiKey {
         if (hasDeepseekKey()) providers.add("Deepseek")
         if (hasAnthropicKey()) providers.add("Anthropic")
         if (hasGrokKey()) providers.add("Grok")
+        if (hasCustomProviderConfig()) providers.add("Custom")
         return providers
     }
     
@@ -103,13 +127,14 @@ object ApiKey {
             "openai" to getOpenAIApiKey(),
             "deepseek" to getDeepseekApiKey(),
             "anthropic" to getAnthropicApiKey(),
-            "grok" to getGrokApiKey()
+            "grok" to getGrokApiKey(),
+            "custom" to getCustomApiKey()
         ).filterValues { it.isNotBlank() }
     }
     
     // Check if any API key is configured
     fun hasAnyApiKey(): Boolean {
         return hasGeminiKey() || hasOpenAIKey() || hasDeepseekKey() || 
-               hasAnthropicKey() || hasGrokKey()
+               hasAnthropicKey() || hasGrokKey() || hasCustomProviderConfig()
     }
 }

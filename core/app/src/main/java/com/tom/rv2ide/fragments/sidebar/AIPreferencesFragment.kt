@@ -22,6 +22,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.tom.rv2ide.artificial.dialogs.LocalLLMConfigDialog
+import com.tom.rv2ide.artificial.dialogs.CustomProviderConfigDialog
+import com.tom.rv2ide.artificial.dialogs.AgentProfilesDialog
+import com.tom.rv2ide.artificial.dialogs.McpServersDialog
 
 class AIPreferencesFragment(
     private val aiAgent: AIAgentManager,
@@ -56,6 +59,7 @@ class AIPreferencesFragment(
         setupProviderDropdown()
         setupModelDropdown()
         setupToggles()
+        setupAgentCapabilityButtons(view)
         updateCurrentStatus()
         startCompletionStateMonitoring()
     }
@@ -89,10 +93,11 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "custom" to "Custom Provider"
         )
         
-        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm")
+        val allProviderIds = listOf("gemini", "openai", "claude", "deepseek", "grok", "localllm", "custom")
         val providerNames = allProviderIds.map { providerMap[it] ?: it }
         
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, providerNames)
@@ -104,10 +109,10 @@ class AIPreferencesFragment(
             val selectedProviderId = allProviderIds[position]
             val selectedProviderName = providerNames[position]
             
-            if (selectedProviderId == "localllm") {
-                showLocalLLMConfigDialog(selectedProviderName)
-            } else {
-                handleProviderChange(selectedProviderId, selectedProviderName)
+            when (selectedProviderId) {
+                "localllm" -> showLocalLLMConfigDialog(selectedProviderName)
+                "custom" -> showCustomProviderConfigDialog(selectedProviderName)
+                else -> handleProviderChange(selectedProviderId, selectedProviderName)
             }
         }
     }
@@ -118,6 +123,13 @@ class AIPreferencesFragment(
         }
         dialog.show(parentFragmentManager, "LocalLLMConfigDialog")
     }
+
+    private fun showCustomProviderConfigDialog(providerName: String) {
+        val dialog = CustomProviderConfigDialog { baseUrl, modelName, apiKey ->
+            handleProviderChange("custom", providerName)
+        }
+        dialog.show(parentFragmentManager, "CustomProviderConfigDialog")
+    }
     
     private fun updateProviderDropdownSelection() {
         val providerMap = mapOf(
@@ -126,7 +138,8 @@ class AIPreferencesFragment(
             "claude" to "Anthropic Claude",
             "deepseek" to "DeepSeek",
             "grok" to "xAI Grok",
-            "localllm" to "Local LLM"
+            "localllm" to "Local LLM",
+            "custom" to "Custom Provider"
         )
         
         val currentProviderId = agents.getProvider()
@@ -147,6 +160,7 @@ class AIPreferencesFragment(
             "deepseek" -> "DeepSeek"
             "grok" -> "xAI Grok"
             "localllm" -> "Local LLM"
+            "custom" -> "Custom Provider"
             else -> currentProvider.uppercase()
         }
         
@@ -334,5 +348,10 @@ class AIPreferencesFragment(
     override fun onDestroyView() {
         stopCompletionStateMonitoring()
         super.onDestroyView()
+    }
+
+    private fun setupAgentCapabilityButtons(view: View) {
+        view.findViewById<android.view.View?>(R.id.agentProfilesButton)?.setOnClickListener { AgentProfilesDialog.show(requireContext()) }
+        view.findViewById<android.view.View?>(R.id.mcpServersButton)?.setOnClickListener { McpServersDialog.show(requireContext()) }
     }
 }

@@ -23,6 +23,19 @@ import com.google.ai.client.generativeai.type.content
 import com.tom.rv2ide.artificial.agents.AIAgent
 import com.tom.rv2ide.artificial.agents.AIAgentRegistry
 import com.tom.rv2ide.artificial.agents.ModificationAttempt
+import com.tom.rv2ide.artificial.tools.AIToolCall
+import com.tom.rv2ide.artificial.tools.AIToolDef
+import com.tom.rv2ide.artificial.tools.AIToolResult
+import com.tom.rv2ide.artificial.tools.ToolAwareResponse
+import com.tom.rv2ide.artificial.tools.ToolCallProtocol
+import com.tom.rv2ide.artificial.tools.BuiltInToolExecutor
+import com.tom.rv2ide.artificial.profiles.AgentPromptProfileStore
+import com.tom.rv2ide.artificial.mcp.McpServerStore
+import com.tom.rv2ide.artificial.mcp.McpToolExecutor
+import org.json.JSONArray
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import com.tom.rv2ide.artificial.secrets.ApiKey
 import com.tom.rv2ide.artificial.services.ArtificialService
 import com.tom.rv2ide.artificial.rules.WritingRules
@@ -41,6 +54,11 @@ import com.tom.rv2ide.artificial.agents.Agents
 class Gemini : AIAgent {
 
   private var generativeModel: GenerativeModel? = null
+  private var apiKey: String? = null
+  private var selectedModel: String = "gemini-2.5-pro"
+  private var appContext: Context? = null
+  private val nativeContents = JSONArray()
+  private var nativeToolsActive = false
   private val writingRules = WritingRules.Instructions()
   private var projectTreeResult: ProjectTreeResult? = null
   private var fileWriter: AIFileWriter? = null
@@ -86,6 +104,8 @@ class Gemini : AIAgent {
               agents?.setProvider("gemini")
           }
           
+          this.apiKey = apiKey
+          this.selectedModel = selectedModel
           generativeModel = GenerativeModel(
               modelName = selectedModel,
               apiKey = apiKey,
@@ -101,6 +121,7 @@ class Gemini : AIAgent {
   }
 
   override fun setContext(context: Context) {
+    appContext = context.applicationContext
     fileWriter = AIFileWriter(context)
   }
 
@@ -109,6 +130,7 @@ class Gemini : AIAgent {
   }
 
   override fun clearConversation() {
+    nativeToolsActive = false; while (nativeContents.length() > 0) nativeContents.remove(0)
     conversationHistory.clear()
     modificationHistory.clear()
     currentAttemptCount = 0
@@ -391,6 +413,108 @@ class Gemini : AIAgent {
     }
     
     return modifications
+  }
+
+
+  private fun composeSystemPrompt(ctx: Context, includeTextToolDefs: Boolean): String {
+    val sb = StringBuilder(writingRules.useThis())
+    val agentProfile = AgentPromptProfileStore.getActive()
+    val extra = agentProfile?.systemPrompt?.trim().orEmpty()
+    if (extra.isNotEmpty()) sb.append("\n\n=== AGENT PROFILE INSTRUCTIONS ===\n").append(extra).append("\n")
+    if (includeTextToolDefs && agentProfile?.enableTools != false) {
+      val builtIn = BuiltInToolExecutor(ctx, projectTreeResult, null, agentProfile?.allowCommandExecution == true, agentProfile?.disabledTools?.toSet() ?: emptySet())
+      val mcpDefs = if (agentProfile?.enableMcpTools != false) { try { val servers = McpServerStore.load().filter { s -> agentProfile?.enabledMcpServerIds.isNullOrEmpty() || agentProfile!!.enabledMcpServerIds.contains(s.id) }; McpToolExecutor(servers).definitions().filterNot { it.name in (agentProfile?.disabledTools?.toSet() ?: emptySet()) } } catch (_: Exception) { emptyList() } } else emptyList()
+      sb.append(ToolCallProtocol.formatDefinitions(builtIn.definitions() + mcpDefs))
+    }
+    return sb.toString()
+  }
+  private fun clearNative() { nativeToolsActive = false; while (nativeContents.length() > 0) nativeContents.remove(0) }
+
+  private fun geminiToolsJson(tools: List<AIToolDef>): JSONArray {
+    val decls = JSONArray()
+    tools.forEach { t ->
+      decls.put(JSONObject().apply {
+        put("name", t.name)
+        put("description", t.description)
+        put("parameters", try { JSONObject(t.parametersJsonSchema) } catch (_: Exception) { JSONObject().put("type","object").put("properties", JSONObject()) })
+      })
+    }
+    return JSONArray().put(JSONObject().put("functionDeclarations", decls))
+  }
+
+  private fun callGeminiNative(contents: JSONArray, system: String, tools: List<AIToolDef>?): ToolAwareResponse {
+    val key = apiKey ?: throw IllegalStateException("Gemini not initialized")
+    val model = selectedModel.ifBlank { "gemini-2.5-pro" }
+    val endpoint = "https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent?key=$key"
+    val connection = URL(endpoint).openConnection() as HttpURLConnection
+    try {
+      connection.requestMethod = "POST"
+      connection.setRequestProperty("Content-Type", "application/json")
+      connection.doOutput = true
+      connection.connectTimeout = 30000
+      connection.readTimeout = 90000
+      val body = JSONObject().apply {
+        put("contents", contents)
+        put("systemInstruction", JSONObject().put("parts", JSONArray().put(JSONObject().put("text", system))))
+        if (!tools.isNullOrEmpty()) put("tools", geminiToolsJson(tools))
+        put("generationConfig", JSONObject().put("temperature", 0.7))
+      }
+      connection.outputStream.use { it.write(body.toString().toByteArray()) }
+      val code = connection.responseCode
+      val text = (if (code in 200..299) connection.inputStream else connection.errorStream)?.bufferedReader()?.readText().orEmpty()
+      if (code !in 200..299) throw Exception("Gemini API error ($code): $text")
+      val json = JSONObject(text)
+      val parts = json.optJSONArray("candidates")?.optJSONObject(0)
+        ?.optJSONObject("content")?.optJSONArray("parts") ?: JSONArray()
+      val sb = StringBuilder()
+      val calls = mutableListOf<AIToolCall>()
+      for (i in 0 until parts.length()) {
+        val p = parts.optJSONObject(i) ?: continue
+        if (p.has("text")) sb.append(p.optString("text"))
+        if (p.has("functionCall")) {
+          val fc = p.optJSONObject("functionCall") ?: continue
+          val name = fc.optString("name")
+          val args = fc.optJSONObject("args") ?: JSONObject()
+          if (name.isNotBlank()) calls.add(AIToolCall(name, args, fc.toString(), null))
+        }
+      }
+      val out = sb.toString()
+      if (calls.isEmpty()) ToolCallProtocol.parse(out)?.let { calls.add(it) }
+      return ToolAwareResponse(out, calls)
+    } finally { connection.disconnect() }
+  }
+
+  override fun supportsNativeTools(): Boolean = true
+  override suspend fun generateWithTools(prompt: String, context: String?, language: String, projectStructure: String?, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val ctx = appContext ?: return@withContext Result.failure(IllegalStateException("No context"))
+      clearNative(); nativeToolsActive = true
+      nativeContents.put(JSONObject().put("role","user").put("parts", JSONArray().put(JSONObject().put("text", prompt))))
+      val res = callGeminiNative(nativeContents, composeSystemPrompt(ctx, false), tools)
+      // store model response
+      val modelParts = JSONArray()
+      if (res.text.isNotBlank()) modelParts.put(JSONObject().put("text", res.text))
+      res.toolCalls.forEach { tc -> modelParts.put(JSONObject().put("functionCall", JSONObject().put("name", tc.name).put("args", tc.arguments))) }
+      if (modelParts.length() > 0) nativeContents.put(JSONObject().put("role","model").put("parts", modelParts))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
+  }
+  override suspend fun submitToolResults(toolResults: List<AIToolResult>, tools: List<AIToolDef>): Result<ToolAwareResponse> = withContext(Dispatchers.IO) {
+    try {
+      val ctx = appContext ?: return@withContext Result.failure(IllegalStateException("No context"))
+      if (!nativeToolsActive) return@withContext generateWithTools(toolResults.joinToString("\n"){it.result}, null, "kotlin", null, tools)
+      val parts = JSONArray()
+      toolResults.forEach { tr ->
+        parts.put(JSONObject().put("functionResponse", JSONObject().put("name", tr.name).put("response", JSONObject().put("name", tr.name).put("content", tr.result))))
+      }
+      nativeContents.put(JSONObject().put("role","user").put("parts", parts))
+      val res = callGeminiNative(nativeContents, composeSystemPrompt(ctx, false), tools)
+      val modelParts = JSONArray()
+      if (res.text.isNotBlank()) modelParts.put(JSONObject().put("text", res.text))
+      res.toolCalls.forEach { tc -> modelParts.put(JSONObject().put("functionCall", JSONObject().put("name", tc.name).put("args", tc.arguments))) }
+      if (modelParts.length() > 0) nativeContents.put(JSONObject().put("role","model").put("parts", modelParts))
+      Result.success(res)
+    } catch (e: Exception) { Result.failure(e) }
   }
 
   override fun isInitialized(): Boolean = generativeModel != null

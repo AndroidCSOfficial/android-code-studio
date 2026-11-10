@@ -98,7 +98,7 @@ android {
 
   buildTypes {
     debug {
-      signingConfig = signingConfigs.getByName("custom")
+      // Use default debug signing for test builds (custom keystore secrets unavailable on fork)
     }
 
     release {
