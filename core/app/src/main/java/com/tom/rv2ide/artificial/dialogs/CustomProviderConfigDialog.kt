@@ -9,13 +9,19 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.tom.rv2ide.R
+import com.tom.rv2ide.artificial.agents.custom.CustomProvider
 import com.tom.rv2ide.artificial.profiles.CustomProviderProfile
 import com.tom.rv2ide.artificial.profiles.CustomProviderProfileStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CustomProviderConfigDialog(
     private val onSave: (baseUrl: String, modelName: String, apiKey: String) -> Unit
@@ -30,6 +36,7 @@ class CustomProviderConfigDialog(
     private lateinit var saveButton: MaterialButton
     private lateinit var deleteButton: MaterialButton
     private lateinit var cancelButton: MaterialButton
+    private var fetchModelsButton: MaterialButton? = null
 
     private var profiles: MutableList<CustomProviderProfile> = mutableListOf()
     private var activeId: String? = null
@@ -50,6 +57,7 @@ class CustomProviderConfigDialog(
         saveButton = view.findViewById(R.id.saveButton)
         deleteButton = view.findViewById(R.id.deleteButton)
         cancelButton = view.findViewById(R.id.cancelButton)
+        fetchModelsButton = view.findViewById(R.id.fetchModelsButton)
 
         reload()
         setupSelector()
@@ -89,10 +97,48 @@ class CustomProviderConfigDialog(
         view.findViewById<MaterialButton?>(R.id.newProfileButton)?.setOnClickListener {
             selectedId = null
             profileNameInput.setText("New Profile")
-            baseUrlInput.setText("https://api.openai.com")
-            modelNameInput.setText("gpt-4o-mini")
+            baseUrlInput.setText("https://integrate.api.nvidia.com/v1")
+            modelNameInput.setText("")
             apiKeyInput.setText("")
             profileSelector.setText("(New Profile)", false)
+        }
+
+        fetchModelsButton?.setOnClickListener {
+            val baseUrl = baseUrlInput.text.toString().trim()
+            val apiKey = apiKeyInput.text.toString().trim()
+            if (baseUrl.isEmpty()) {
+                Toast.makeText(requireContext(), "Enter Base URL first", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            fetchModelsButton?.isEnabled = false
+            fetchModelsButton?.text = "Fetching…"
+            lifecycleScope.launch {
+                val result = withContext(Dispatchers.IO) { CustomProvider.fetchModels(baseUrl, apiKey) }
+                fetchModelsButton?.isEnabled = true
+                fetchModelsButton?.text = "Fetch Models"
+                result.onSuccess { models ->
+                    if (models.isEmpty()) {
+                        Toast.makeText(requireContext(), "No models returned by endpoint", Toast.LENGTH_LONG).show()
+                        return@onSuccess
+                    }
+                    val current = modelNameInput.text.toString().trim()
+                    val checked = models.indexOf(current).takeIf { it >= 0 } ?: -1
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Select Model (${models.size})")
+                        .setSingleChoiceItems(models.toTypedArray(), checked) { d, which ->
+                            modelNameInput.setText(models[which])
+                            d.dismiss()
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }.onFailure { e ->
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Failed to fetch models")
+                        .setMessage("${e.message}\n\nTips: check Base URL (e.g. https://integrate.api.nvidia.com/v1), API key, and network. You can still type a model name manually.")
+                        .setPositiveButton("OK", null)
+                        .show()
+                }
+            }
         }
 
         cancelButton.setOnClickListener { dismiss() }
@@ -103,7 +149,7 @@ class CustomProviderConfigDialog(
         activeId = aid
         profiles = list.toMutableList()
         if (profiles.isEmpty()) {
-            val def = CustomProviderProfile(name = "Default", baseUrl = "https://api.openai.com", modelName = "gpt-4o-mini")
+            val def = CustomProviderProfile(name = "Nvidia (example)", baseUrl = "https://integrate.api.nvidia.com/v1", modelName = "")
             CustomProviderProfileStore.save(def.id, listOf(def))
             profiles = mutableListOf(def)
             activeId = def.id
@@ -122,8 +168,8 @@ class CustomProviderConfigDialog(
             if (pos >= profiles.size) {
                 selectedId = null
                 profileNameInput.setText("New Profile")
-                baseUrlInput.setText("https://api.openai.com")
-                modelNameInput.setText("gpt-4o-mini")
+                baseUrlInput.setText("https://integrate.api.nvidia.com/v1")
+                modelNameInput.setText("")
                 apiKeyInput.setText("")
                 profileSelector.setText("(New Profile)", false)
             } else {
