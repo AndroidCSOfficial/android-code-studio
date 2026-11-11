@@ -107,9 +107,24 @@ object ApiKey {
         ).filterValues { it.isNotBlank() }
     }
     
+    // Custom Endpoint API Key + Base URL + Model
+    fun getCustomApiKey(): String {
+        return prefManager.getString("ai_agent_custom_api_key", "")
+    }
+    fun hasCustomKey(): Boolean {
+        val key = getCustomApiKey()
+        return key.isNotBlank() && key.length > 3
+    }
+    fun getCustomBaseUrl(): String {
+        return prefManager.getString("ai_agent_custom_base_url", "").trim().trimEnd('/')
+    }
+    fun getCustomModel(): String {
+        return prefManager.getString("ai_agent_custom_model", "custom-model").trim()
+    }
+
     // Check if any API key is configured
     fun hasAnyApiKey(): Boolean {
         return hasGeminiKey() || hasOpenAIKey() || hasDeepseekKey() || 
-               hasAnthropicKey() || hasGrokKey()
+               hasAnthropicKey() || hasGrokKey() || hasCustomKey()
     }
 }

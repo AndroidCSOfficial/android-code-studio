@@ -143,8 +143,14 @@ class Agents(ctx: Context) {
   private val localllm_models = arrayOf(
     "local-model"
   )
+
+  // custom: model dibaca dari prefs (user ketik bebas). Fallback contoh 9router.
+  private fun custom_models(): Array<String> {
+    val m = (sp.getString("ai_agent_custom_model", "") ?: "").trim()
+    return if (m.isNotBlank()) arrayOf(m) else arrayOf("cbai/deepseek-v4.1-flash", "oc/muse-spark-1.3-contributor-free", "custom-model")
+  }
   
-  val ai_agents = openai_models + claude_models + gemini_models + deepseek_models + grok_models + localllm_models
+  val ai_agents = openai_models + claude_models + gemini_models + deepseek_models + grok_models + localllm_models + custom_models()
   
   fun getModelsForProvider(providerId: String): Array<String> {
     return when(providerId) {
@@ -154,6 +160,7 @@ class Agents(ctx: Context) {
       "deepseek" -> deepseek_models
       "grok" -> grok_models
       "localllm" -> localllm_models
+      "custom" -> custom_models()
       else -> gemini_models
     }
   }
@@ -166,6 +173,7 @@ class Agents(ctx: Context) {
       modelName in deepseek_models -> "deepseek"
       modelName in grok_models -> "grok"
       modelName in localllm_models -> "localllm"
+      modelName in custom_models() -> "custom"
       else -> null
     }
   }

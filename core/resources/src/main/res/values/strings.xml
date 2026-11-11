@@ -70,6 +70,15 @@
 
   <!-- AI Agent Deepseek -->
   <string name="ai_agent_deepseek_api_key">Deepseek API Key</string>
+  <string name="ai_agent_custom_api_key">Custom Endpoint API Key</string>
+  <string name="ai_agent_custom_api_key_summary">API key untuk custom endpoint (9router/dll)</string>
+  <string name="ai_agent_custom_api_key_dialog_title">Enter Custom API Key</string>
+  <string name="ai_agent_custom_base_url">Custom Endpoint Base URL</string>
+  <string name="ai_agent_custom_base_url_summary">Cth: https://ai2.bytellm.web.id/v1</string>
+  <string name="ai_agent_custom_base_url_dialog_title">Enter Custom Base URL</string>
+  <string name="ai_agent_custom_model">Custom Endpoint Model</string>
+  <string name="ai_agent_custom_model_summary">Cth: cbai/deepseek-v4.1-flash</string>
+  <string name="ai_agent_custom_model_dialog_title">Enter Custom Model</string>
   <string name="ai_agent_deepseek_api_key_summary">Enter your Deepseek API key to use AI features</string>
   <string name="ai_agent_deepseek_api_key_dialog_title">Enter Deepseek API Key</string>
 
